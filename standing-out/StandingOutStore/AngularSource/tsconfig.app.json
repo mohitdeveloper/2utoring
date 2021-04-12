@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../wwwroot/compiled-typescript/app",
+    "module": "es2015",
+    "types": []
+  },
+  "exclude": [
+    "test.ts", //added in v9
+    "AngularSource/test.ts",
+    "**/*.spec.ts",
+    "../../AngularSource/src/environments/ *.ts" //added in v9
+  ]
+}

@@ -1,0 +1,132 @@
+﻿@using IdentityServer4.Extensions
+@{
+    string name = null;
+    if (!true.Equals(ViewData["signed-out"]))
+    {
+        name = Context.User?.GetDisplayName();
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | 2utoring</title>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-164684318-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-164684318-1');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KNRHDFL');</script>
+    <!-- End Google Tag Manager -->
+
+
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="57x57" href="~/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="~/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="~/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+    <link href="//fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNRHDFL"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+
+    <header>
+        <nav class="navbar d-flex align-items-center justify-content-between">
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand"><img src="/images/2utoring-logo.svg" height="47" alt="2utouring Logo" /></a>
+            @if (!User.IsAuthenticated())
+            {
+                <a href="http://www.2utoring.com/Home/SignIn" class="btn btn-accent btn-lg fs-15 fw-700 py-7 d-none d-lg-block cl-white">Sign in</a>
+            }
+        </nav>
+    </header>
+
+    <main>
+        <div class="Page__Container--size:medium mt-0">
+
+            @RenderBody()
+        </div>
+    </main>
+
+    @*<footer class="mt-122">
+            <div class="Page__Container Page__Container--size:content">
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <a class="d-block footer-link-normal mb-14" href="http://www.2utoring.com/">Home</a>
+                        <a class="d-block footer-link-normal mb-14" href="http://www.2utoring.com/find-a-lesson">Find a lesson</a>
+                        <a class="d-block footer-link-normal mb-14" href="http://www.2utoring.com/join-as-a-tutor">Become a Tutor</a>
+                        <a class="d-block footer-link-normal mb-14" href="http://www.2utoring.com/contact-us">Contact Us</a>
+                    </div>
+                    <div class="col-12 col-lg-8 d-flex align-items-center justify-content-lg-end mt-28 mt-lg-">
+                        <a href="https://www.linkedin.com/company/2utoring/" title="Connect with us on LinkedIn" target="_blank" class="text-decoration-none mr-35"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/2utoring_online_tuition/" title="Follow us on Instagram" target="_blank" class="text-decoration-none mr-35"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/2uToring" target="_blank" title="Follow us on Twitter" class="text-decoration-none mr-35"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.facebook.com/2utoring/?ref=py_c" title="Find us on Facebook" target="_blank" class="text-decoration-none"><i class="fab fa-facebook-square"></i></a>
+                    </div>
+                </div>
+                <div class="row my-49 align-items-end">
+                    <div class="col-12 col-lg-4 order-2 order-lg-1 mt-28 mt-0 mt-lg-0">
+
+                        2 Regent Road, Penn, Wolverhampton, WV4 4EL<br />&copy;
+                        <script type="text/javascript">document.write(new Date().getFullYear());</script> 2utoring - Business Company No, 10696411
+                    </div>
+                    <div class="col-12 col-lg-8 order-1 order-lg-2">
+                        <div class="fs-13 text-lg-right">
+                            <a class="d-block d-lg-inline-block footer-link-light my-7 my-lg-0" href="http://www.2utoring.com/cookie-policy" target="_blank">Cookie Policy</a>
+                            <span class="mx-14 d-none d-lg-inline-block">|</span>
+                            <a class="d-block d-lg-inline-block footer-link-light my-7 my-lg-0" href="http://www.2utoring.com/privacy-policy" target="_blank">GDPR Data Privacy Notice</a>
+                            <span class="mx-14 d-none d-lg-inline-block">|</span>
+                            <a class="d-block d-lg-inline-block footer-link-light my-7 my-lg-0" href="http://www.2utoring.com/terms-of-website-use" target="_blank">Terms of Website Use</a>
+                            <span class="mx-14 d-none d-lg-inline-block">|</span>
+                            <a class="d-block d-lg-inline-block footer-link-light my-7 my-lg-0" href="http://www.2utoring.com/website-acceptable-use-policy" target="_blank">Website Acceptable Use Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>*@
+
+    @await Component.InvokeAsync("Common")
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+    </html>

@@ -1,0 +1,131 @@
+﻿<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="align-items-start mb-0 mb-lg-14">
+                <h3 id="usersPageTitle" style="text-align:center;">{{title}} <i class="fa fa-info-circle Cursor--pointer" (click)="showStudentInfoBox(studentInfoBox)"></i></h3>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-start mb-0 mb-lg-14">
+                <h3 id="mainListTitleUsersPage">{{title}} <i *ngIf="userType!='Admin'" class="fa fa-info-circle Cursor--pointer" (click)="showStudentInfoBox(studentInfoBox)"></i></h3>
+                <!--<h3>Area:{{area}} ---- UserType:{{userType}}</h3>-->
+                <!--<a *ngIf="area == 'Admin'" href="/admin/admins/create" class="btn btn-info Button--largeVerticalPadding">Create</a>-->
+                <a *ngIf="area == 'Tutor'" href="/tutor" class="btn btn-info Button--largeVerticalPadding backToTimeTableUsersPage">Back to timetable</a>
+            </div>
+
+            <div class="row mb-21">
+                <div class="col-12 col-lg-auto mb-14 mb-lg-0">
+                    <select class="custom-select Textbox--largeVerticalPadding" [(ngModel)]="searchModel.take" (ngModelChange)="reloadData()">
+                        <option selected>Filter by</option>
+                        <option *ngFor="let option of takeValues" [ngValue]="option.take">{{option.name}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-auto mb-14 mb-lg-0">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control Textbox--iconPrepend Textbox--largeVerticalPadding" [(ngModel)]="searchModel.search" placeholder="Search" aria-label="Search" aria-describedby="button-search" (keydown)="onType($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-success Button--largeVerticalPadding" type="button" id="button-search" (click)="reloadData()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="styled">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <span>
+                                    Title
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('FirstName')">
+                                    First name
+                                    <span [hidden]="!(searchModel.sortType == 'FirstName' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'FirstName' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('LastName')">
+                                    Last name
+                                    <span [hidden]="!(searchModel.sortType == 'LastName' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'LastName' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <!--<th scope="col" *ngIf="area == 'Tutor'">
+                         <span (click)="alterOrder('Email')">
+                             Email
+                         <span [hidden]="!(searchModel.sortType == 'Email' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                         <span [hidden]="!(searchModel.sortType == 'Email' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                         </span>
+                    </th>-->
+                            <!--<th scope="col" *ngIf="userType == 'Super Admin'">-->
+                            <th scope="col" *ngIf="userType == 'Student'">
+                                <span (click)="alterOrder('IsParent')">
+                                    Parent
+                                    <span [hidden]="!(searchModel.sortType == 'IsParent' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'IsParent' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of results.data">
+                            <td>{{item.title}}</td>
+                            <td>{{item.firstName}}</td>
+                            <td>{{item.lastName}}</td>
+                            <!--<td *ngIf="area == 'Tutor'">{{item.email}}</td>-->
+                            <!--<td *ngIf="userType == 'Super Admin'"><span *ngIf="item.isParent">{{item.parentFirstName}} {{item.parentLastName}}</span></td>-->
+                            <td *ngIf="userType == 'Student'"><span *ngIf="item.isParent"> <span *ngIf="item.parentTitle">{{item.parentTitle}}.&nbsp;</span>{{item.parentFirstName}} {{item.parentLastName}}</span></td>
+                            <td>
+                                <!--<div class="d-flex justify-content-end" *ngIf="area == 'Admin'">
+                            <a href="/Admin/Admins/Delete/{{item.id}}" class="text-danger mr-14">Delete</a>
+                            <a href="/Admin/Admins/Edit/{{item.id}}" class="text-success">Edit</a>
+                        </div>-->
+
+                                <div class="d-flex justify-content-end" *ngIf="userType == 'Student'">
+                                    <a href="/{{area}}/Students/View/{{item.id}}" class="text-success">
+                                        <span *ngIf="area == 'Admin'">View</span>
+                                        <span *ngIf="area == 'Tutor'">View lessons</span>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center Pagination mt-35" *ngIf="results.paged !== undefined && results.paged != null">
+                <span class="pagination-info">Page {{results.paged.page}} of {{results.paged.totalPages}}</span>
+                <ul class="pagination justify-content-end mb-0">
+                    <li [class]="results.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+                        <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">{{results.paged.page}}</a></li>
+                    <li [class]="results.paged.page >= results.paged.totalPages ? 'page-item disabled' : 'page-item'">
+                        <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #studentInfoBox>
+    <h3 mat-dialog-title style="text-align:center; margin-top: 15px;">Students</h3>
+    <hr>
+    <div mat-dialog-content>
+        <!-- 3 means at the time tutor registration jurney type is company tutor-->
+        <div class="col-md-12">
+            <p style="text-indent:-1em; padding:0 0 0 20px;">1. From here you can see all the students that have purchased a lesson or course with you.</p>
+            <p style="text-indent:-1em; padding:0 0 0 20px;">2. You can view each student's lessons or courses and enter the classroom to collaborate, mark or give additional support on documents, sheets, slides or whiteboard work after a lesson has finished.</p>
+        </div>
+    </div>
+    <div style="margin-top:20px;margin-bottom:20px; text-align:center">
+        <button class="btn btn-primary btn-md" mat-raised-button mat-dialog-close tabindex="-1" (click)="hideStudnetBox()">Close</button>
+    </div>
+</ng-template>

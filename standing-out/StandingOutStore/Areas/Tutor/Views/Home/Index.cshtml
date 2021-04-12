@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Tutor Dashboard";
+    ViewData["PageName"] = "Home";
+}
+
+@section meta{
+    <meta name="title" content="@ViewData["Title"]" />
+    <meta name="robots" content="noindex">
+}
+
+<app-root id="app-angular" app-mode="tutor-dashboard"></app-root>
+
+@section scripts{
+
+    <script type="text/javascript">
+        var title = '@ViewData["Title"]';
+        var isTutor = true;
+        var isCourseCreate = localStorage.getItem('hasGoogleAccountLinked');
+        if (isCourseCreate) {
+            window.location.href = '/tutor/courses/create-course';
+        }
+
+    </script>
+
+    <environment names="Development">
+        <!-- Development versions of Angular (easier to debug) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/vendor.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/main.js"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <!-- Production versions of Angular (faster loading) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/main.js"></script>
+    </environment>
+
+}

@@ -1,0 +1,18 @@
+﻿<div class="modal-header">
+    <h2>Delete</h2>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col">
+            <p>Are you sure you wish to delete this? Doing so is permenant.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button type="button" (click)="remove(false)" class="btn btn-primary btn-lg">No, take me back</button>
+        </div>
+        <div class="col">
+            <button type="button" (click)="remove(true)" class="btn btn-danger btn-lg">Yes, delete this</button>
+        </div>
+    </div>
+</div>

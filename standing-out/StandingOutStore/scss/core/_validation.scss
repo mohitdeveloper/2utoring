@@ -1,0 +1,24 @@
+// ----------------------------------------------------
+// Validation Message
+// ----------------------------------------------------
+.error {
+    background-color: #FEF7F7;
+    border-left: 3px solid #EB5757;
+    border-radius: 2px;
+    color: #EB5757;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 14px;
+    padding: 10px 7px 10px 14px;
+}
+
+.n-success {
+    background-color: #E9F7EF;
+    border-left: 3px solid #27AE60;
+    border-radius: 2px;
+    color: #27AE60;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 14px;
+    padding: 10px 7px 10px 14px; 
+}

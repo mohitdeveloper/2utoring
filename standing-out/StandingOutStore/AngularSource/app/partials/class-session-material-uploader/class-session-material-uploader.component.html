@@ -1,0 +1,43 @@
+﻿<ng-container *ngIf="uploaderShow">
+    <h3 class="myTitleClassApply">{{titleInput}}</h3>
+    <p class="uploadedTitlePTag myContentClassApply" style="white-space: pre-line;" innerHTML="{{subtitleInput}}"></p>
+
+    <div ng2FileDrop
+         [ngClass]="{'nv-file-over': dropZoneOver}"
+         (fileOver)="fileOver($event)"
+         [uploader]="uploader"
+         (onFileDrop)="fileDropped($event)"
+         (click)="fileInput.click()"
+         class="File-Uploader mb-7">
+        <i class="fal fa-arrow-to-bottom"></i>Drag and drop files here or <u>Click here</u> to upload
+    </div>
+    <input type="file" #fileInput ng2FileSelect [uploader]="uploader" style="display:none;" (change)="fileDropped($event)" />
+
+    <div class="form-row mb-21">
+           <div class="col-12" *ngFor="let sessionDocument of sessionDocuments">
+            <div class="card mt-7">
+                <div class="card-body position-relative p-14">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <svg class="file-icon" width="63" height="62" viewBox="0 0 63 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="63" height="62" fill="white" />
+                                <path d="M8.20508 1.29501C8.20508 0.579933 8.76045 0.000244141 9.44554 0.000244141C10.1306 0.000244141 10.686 0.579933 10.686 1.29501V60.705C10.686 61.4201 10.1306 61.9998 9.44554 61.9998C8.76045 61.9998 8.20508 61.4201 8.20508 60.705V1.29501Z" fill="#2F80ED" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M43.24 10.2836H36.7075L36.7007 3.55552L43.24 10.2836ZM44.4972 12.8731V21.6835C44.4972 22.3986 45.0526 22.9783 45.7376 22.9783C46.4227 22.9783 46.9781 22.3986 46.9781 21.6835V11.5783C46.9781 10.9331 46.7976 10.4216 46.4291 9.95732C46.318 9.81733 46.2503 9.74478 46.0182 9.50591L37.7188 0.96695C37.1238 0.354658 36.3239 0.00839274 35.4886 0.000386871C35.478 0.000118226 35.4673 -1.10458e-05 35.4566 7.38496e-07C35.4489 9.23989e-06 35.4412 9.08301e-05 35.4336 0.000244879H21.2053L21.1828 0.000454366H3.21999C1.44118 0.000454366 0 1.505 0 3.36142V58.6383C0 60.4953 1.441 62 3.21999 62H43.7543C45.5351 62 46.9767 60.4959 46.9767 58.6383V55.7644C46.9767 55.0493 46.4214 54.4696 45.7363 54.4696C45.0512 54.4696 44.4958 55.0493 44.4958 55.7644V58.6383C44.4958 59.0655 44.1652 59.4105 43.7543 59.4105H3.21999C2.81141 59.4105 2.48092 59.0654 2.48092 58.6383V3.36142C2.48092 2.93506 2.81146 2.58999 3.21999 2.58999H21.6252L21.6477 2.58979H34.2188L34.2279 11.5797C34.2286 12.2943 34.7838 12.8731 35.4683 12.8731H44.4972Z" fill="#485465" />
+                                <text x="21" y="42" fill="#485465" font-size="14px" style="font-weight: 800; text-transform: uppercase;">{{sessionDocument.mimeType.split('/').pop()}}</text>
+                            </svg>
+                            <div class="d-block ml-14 fs-15 fw-700">{{sessionDocument.name.split('.')[0]}}</div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <!--<img *ngIf="type == 'Shared'" title="Share File" (click)="setPermissions(sessionDocument)" class="Cursor--pointer ml-auto mr-14" style="width:23px;" src="/images/share-4.svg" />-->
+                            <img *ngIf="type == 'Shared'" title="Share File" (click)="sharedPermissions()" class="Cursor--pointer ml-auto mr-14" style="width:23px;" src="/images/share-4.svg" />
+                            <!--<i *ngIf="type == 'Shared'" (click)="setPermissions(sessionDocument)" class="fal fa-file-alt Cursor--pointer ml-auto mr-14" style="font-size:15px"></i>-->
+                            <i *ngIf="type == 'Master'" title="Share File" (click)="setPermissions(sessionDocument)" class="fas fa-share-square Cursor--pointer ml-auto mr-14" style=" font-size: 21px; color: #000;"></i>
+                            <!--<i (click)="setPermissions(sessionDocument)" *ngIf="type == 'Shared' || type == 'Master'" class="fal fa-lock Cursor--pointer ml-auto mr-14"></i>-->
+                            <i (click)="deleteSessionDocument(sessionDocument)" title="Delete" class="fa fa-trash Cursor--pointer" style="font-size: 20px; color:red;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

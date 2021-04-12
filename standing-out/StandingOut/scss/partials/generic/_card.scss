@@ -1,0 +1,45 @@
+﻿.card {
+    background-color: $white;
+    border-radius: 3px;
+    box-shadow: $boxShadowDeep;
+    padding-bottom: spacing(loose);
+    padding-top: spacing(loose);
+    padding-left: spacing(loose);
+    padding-right: spacing(loose);
+
+    &--infoCard {
+        padding: 14px;
+
+        div {
+
+            &:nth-child(1) {
+                font-size: 34px;
+                font-weight: $fontWeightMedium;
+            }
+
+            &:nth-child(2) {
+                color: $grey;
+                font-size: 14px;
+                font-weight: $fontWeightMedium;
+            }
+        }
+    }
+
+    &--hasGrid {
+        padding-left: 0;
+        padding-right: 0;
+
+        .grid-x {
+            margin-left: spacing();
+            margin-right: spacing();
+        }
+    }
+
+    &--small {
+        max-width: 38rem;
+    }
+
+    &--medium {
+        max-width: 64rem;
+    }
+}

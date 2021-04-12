@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Tutor Course Index";
+}
+
+@section meta{
+    <meta name="title" content="@ViewData["Title"]" />
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="~/lib/assets/css/global.css" />
+    <link rel="stylesheet" href="~/lib/assets/css/bootstrap-datetimepicker.css" />
+    @*<script type="text/javascript" src="~/lib/assets/js/jquery-ui.min.js"></script>*@
+}
+
+<div class="container-fluid Container--narrow">
+    <div class="row">
+        <div class="col">
+            <app-root id="app-angular" app-mode="tutor-create-course"></app-root>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <environment names="Development">
+        <!-- Development versions of Angular (easier to debug) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/vendor.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/main.js"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <!-- Production versions of Angular (faster loading) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/main.js"></script>
+    </environment>
+
+}

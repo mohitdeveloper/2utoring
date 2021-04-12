@@ -1,0 +1,108 @@
+@model IEnumerable<StandingOut.Data.Models.StripePlan>
+
+@{
+    ViewData["Title"] = "Company Plans";
+    var companyPlan = Model.First(x => x.StripePlanType == StandingOut.Data.Enums.StripePlanType.Company).StripePlanId;
+}
+
+@section meta{
+    <meta name="title" content="@ViewData["Title"]" />
+    <meta name="description" content="View our company plans to see how you can move your tuition business online with 2utoring." />
+}
+
+<div class="Page__Container Page__Container--size:content">
+    <div class="row mt-lg-42 p-relative">
+        <img src="~/images/illustration-5.svg" alt="Illustration of girl studying at her desk" class="p-lg-absolute w-100 w-lg-auto o-100 o-lg-50 d-none d-lg-block" />
+        <div class="col-12 col-lg-7">
+            <a class="d-inline-block link-grey mb-21 text-decoration-none" href="/join-as-a-company"><i class="fal fa-arrow-left mr-14"></i>Back</a>
+            <h1 class="fw-800 mb-42">Join the Community</h1>
+            <p class="fs-18 fw-600 cl-dark mb-lg-21">Whether you’re just getting started with online tutoring or already have lesson’s you want to bring onto our platform, we’ve got you covered. </p>
+            <p class="fs-18 fw-600 cl-dark mb-lg-21">Register with a subscription now and create a company profile. Advertise your lessons on our learning marketplace, invite your tutors to teach.</p>
+            <p class="fs-18 fw-600 cl-dark mb-lg-21">All you need is to register an account to join the 2utoring community!</p>
+            @if (!User.Identity.IsAuthenticated && Model.Count() > 0)
+            {
+                <p class="fs-18 fw-600 cl-dark mb-lg-21">
+                    Everything Is Simple now, just
+                    <a href="@(ViewBag.IdentitySiteUrl + "/account/register?returnUrl=" + ViewBag.MainSiteUrl + "/company/register/process/" + companyPlan)">Subscribe now!</a>
+                </p>
+            }
+        </div>
+        <div class="col-12 col-lg-4 offset-lg-1">
+            @foreach (var stripePlan in Model)
+            {
+                if (stripePlan.StripePlanType == StandingOut.Data.Enums.StripePlanType.Company)
+                {
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card card--toRespond:small mx-lg-35 mt-42 mt-lg-0 ml-0 ml-lg-35">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="fs-28 fw-700">Company</div>
+                                    <span class="fs-15 fw-800">1 month free trial *</span>
+                                </div>
+                                <div class="mt-14">
+                                    <sup class="cl-light fs-24 fw-500 d-inline-block mr-7" style="transform: translateY(-10px);">£</sup>
+                                    <span class="fs-50 fw-800">29.99</span>
+                                    <span class="cl-light fs-24 fw-500 ml-7">/mo</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ul class="p-0 m-0" style="list-style: none;">
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> registered tutors</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> tutor profile pages</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> concurrent classrooms</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> live classes</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> students</li>
+                                    <li class="mb-14"><span class="fw-800">1-10</span> Collaborative class size</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> public and private lessons</li>
+                                    <li class="mb-14"><span class="fw-800">£3.50 - £2.25</span> Commission per student</li>
+                                </ul>
+                                <!-- <a href="https://testsecure.2utoring.com/account/register?returnUrl=https://test.2utoring.com/tutor/register/process/81070046-8dc3-4ca9-3129-08d7e6c57421"class="btn btn-accent btn-lg fs-16 cl-white w-100 my-21">Start your free trial</a>-->
+
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-controller="CompanyRegister" asp-action="Process" asp-route-id="@stripePlan.StripePlanId" asp-area="Admin"
+                                       class="btn btn-accent btn-lg fs-16 cl-white w-100 my-21">Start your free trial</a>
+                                }
+                                else
+                                {
+                                    <a href="@(ViewBag.IdentitySiteUrl + "/account/register?returnUrl=" + ViewBag.MainSiteUrl + "/company/register/process/" + stripePlan.StripePlanId)" class="btn btn-accent btn-lg fs-16 cl-white w-100 my-21">Subscribe now</a>
+                                }
+                                <button class="btn btn-primary btn-lg fs-16 cl-white w-100 my-21" type="button" data-toggle="collapse" data-target="#isCollapsed" aria-expanded="false" aria-controls="collapseExample">
+                                    Show what's included
+                                </button>
+
+                                <ul class="collapse" id="isCollapsed">
+                                    <ul>
+                                        <li>Company can create courses</li>
+                                        <li>Tutor's can create courses</li>
+                                        @*<li>Parent's can create courses using availability calendar</li>
+                                        <li>Student's can create courses using availability calendar</li>*@
+                                        <li>Create up to 100 lessons per course</li>
+                                        <li>Students can enter 30 minutes before lesson starts</li>
+                                        <li>Single, dual, tri and quad classroom panes</li>
+                                        <li>Availability calendar</li>
+                                        <li>Create up to 5 groups in a class</li>
+                                        <li>Teach under and over 18's</li>
+                                        <li>Profile approval</li>
+                                        <li>DBS checked</li>
+                                        <li>View previously completed lessons</li>
+                                        <li>All lessons recorded</li>
+                                    </ul>
+                                </div>
+
+
+                                <div class="mb-14">
+                                    <em class="fs-13 fw-500 cl-light">
+                                        * Monthly payment will start after
+                                        the 1st month, you can cancel your subscription at any time.
+                                    </em>
+                                </div>
+                            </div>
+
+
+                        </div> 
+                }
+            }
+        </div>
+    </div>
+</div>

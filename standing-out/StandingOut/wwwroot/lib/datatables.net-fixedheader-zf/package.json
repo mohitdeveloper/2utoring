@@ -1,0 +1,63 @@
+{
+  "_from": "datatables.net-fixedheader-zf@3.1.7",
+  "_id": "datatables.net-fixedheader-zf@3.1.7",
+  "_inBundle": false,
+  "_integrity": "sha512-QtEEofJiuOYw1/tkXoHvLKjhCWSIJqxc6/nDGUpNfB1cddRMHDwKonzjA7MFwsobI6Auj0bXOdLg9XmtC+fTmw==",
+  "_location": "/datatables.net-fixedheader-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "datatables.net-fixedheader-zf@3.1.7",
+    "name": "datatables.net-fixedheader-zf",
+    "escapedName": "datatables.net-fixedheader-zf",
+    "rawSpec": "3.1.7",
+    "saveSpec": null,
+    "fetchSpec": "3.1.7"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-fixedheader-zf/-/datatables.net-fixedheader-zf-3.1.7.tgz",
+  "_shasum": "8bea6ae78b491c1446f818fecb650fb75fc980e7",
+  "_spec": "datatables.net-fixedheader-zf@3.1.7",
+  "_where": "C:\\DevSO\\standing-out",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net-fixedheader": "3.1.7",
+    "datatables.net-zf": "^1.10.15",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "FixedHeader for DataTables with styling for [Zurb Foundation](http://foundation.zurb.com/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "fixed headers",
+    "sticky",
+    "DataTables",
+    "jQuery",
+    "table",
+    "Foundation"
+  ],
+  "license": "MIT",
+  "main": "js/fixedHeader.foundation.js",
+  "name": "datatables.net-fixedheader-zf",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-FixedHeader-Foundation.git"
+  },
+  "style": "css/fixedHeader.foundation.css",
+  "version": "3.1.7"
+}

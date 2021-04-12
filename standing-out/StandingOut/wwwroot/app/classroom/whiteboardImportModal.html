@@ -1,0 +1,18 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--upload" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()"><i class="fal fa-times-circle"></i></button>
+            <h2>Import</h2>
+        </div>
+        <div class="Modal__Content">
+            <form name="form">
+                <div class="upload-widget" ngf-multiple="true" ngf-allow-dir="false" ngf-drop="setFiles($files)" ngf-select="setFiles($files)" ngf-drag-over-class="dragover">
+                    <div class="upload-ui">
+                        <i class="fal fa-upload fa-3x"></i>
+                        <div class="upload-label">Drag &amp; drop or <u>select a file</u></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

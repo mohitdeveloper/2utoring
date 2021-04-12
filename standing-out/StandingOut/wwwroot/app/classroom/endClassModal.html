@@ -1,0 +1,23 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--eol" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()">×</button>
+            <h2>End your lesson</h2>
+        </div>
+        <div class="Modal__Content">
+            <div ng-show="!chooseFileActive">
+                <div class="grid-x">
+                    <p class="margin-bottom-tight">Are you sure you want to end the class, doing so will disconnect all users and end the session so make sure you've wrapped up!</p>
+                    <p class="margin-bottom-loose">To end the session, type <strong>Finished</strong> exactly as it is here and confirm.</p>
+                    <input class="form-control" type="text" ng-model="name" placeholder="Finished" />
+                </div>
+            </div>
+        </div>
+        <div class="Modal__Footer padding-top-none">
+            <div class="Footer__Buttons">
+                <button type="button" class="button button--tertiary" ng-click="cancel()">Cancel</button>
+                <button type="button" class="button button--success" ng-disabled="name != 'Finished' && name != 'finished' && name != '\'Finished\'' && name != '\'finished\''" ng-click="save()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>

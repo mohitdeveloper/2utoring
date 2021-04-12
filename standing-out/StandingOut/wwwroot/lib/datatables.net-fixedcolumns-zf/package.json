@@ -1,0 +1,62 @@
+{
+  "_from": "datatables.net-fixedcolumns-zf@3.3.2",
+  "_id": "datatables.net-fixedcolumns-zf@3.3.2",
+  "_inBundle": false,
+  "_integrity": "sha512-EViGMe1HFtQ7y5UwTvYSW0gbWoxWolkKE+8EuniF5TBugpRzwAnC1DiJKXNpme1plbOwsYjIVGkWTyj/5EFfbg==",
+  "_location": "/datatables.net-fixedcolumns-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "datatables.net-fixedcolumns-zf@3.3.2",
+    "name": "datatables.net-fixedcolumns-zf",
+    "escapedName": "datatables.net-fixedcolumns-zf",
+    "rawSpec": "3.3.2",
+    "saveSpec": null,
+    "fetchSpec": "3.3.2"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-fixedcolumns-zf/-/datatables.net-fixedcolumns-zf-3.3.2.tgz",
+  "_shasum": "f6a04ede9b348f7552a83c1b03b81d0fd405717e",
+  "_spec": "datatables.net-fixedcolumns-zf@3.3.2",
+  "_where": "C:\\DevSO\\standing-out",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net-fixedcolumns": "3.3.2",
+    "datatables.net-zf": "^1.10.15",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "FixedColumns for DataTables with styling for [Zurb Foundation](http://foundation.zurb.com/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "fixed columns",
+    "DataTables",
+    "jQuery",
+    "table",
+    "Foundation"
+  ],
+  "license": "MIT",
+  "main": "js/fixedColumns.foundation.js",
+  "name": "datatables.net-fixedcolumns-zf",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-FixedColumns-Foundation.git"
+  },
+  "style": "css/fixedColumns.foundation.css",
+  "version": "3.3.2"
+}

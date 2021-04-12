@@ -1,0 +1,127 @@
+﻿// Import Bootstrap
+@import "configuration/bootstrap-settings";
+@import "node_modules/bootstrap/scss/bootstrap";
+
+// Import Font Awesome Icons
+
+// FA Path Variable
+$fa-font-path: "/webfonts" !default;
+
+// FA Imports
+@import './node_modules/@fortawesome/fontawesome-pro/scss/fontawesome';
+@import './node_modules/@fortawesome/fontawesome-pro/scss/brands';
+@import './node_modules/@fortawesome/fontawesome-pro/scss/light';
+@import './node_modules/@fortawesome/fontawesome-pro/scss/solid';
+@import './node_modules/@fortawesome/fontawesome-pro/scss/regular';
+
+// Import Utilities
+@import 'core/utilities';
+@import 'core/spinner';
+
+// Import Components
+@import 'core/alerts';
+@import 'core/avatar';
+@import 'core/badge';
+@import 'core/button';
+@import 'core/cards';
+@import 'core/checkbox';
+@import 'core/file-uploader';
+@import 'core/forms';
+@import 'core/interactions';
+@import 'core/layout';
+@import 'core/ng-select';
+@import 'core/radio';
+@import 'core/policy';
+@import 'core/select';
+@import 'core/status-icon';
+@import 'core/steps';
+@import 'core/table';
+@import 'core/typography';
+@import 'core/validation';
+
+@import 'core/error-text';
+
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-weight: 500;
+    min-height: 100vh;
+}
+
+body {
+    @include media-breakpoint-up(lg) {
+        background-image: url('../images/oval-left.svg');
+        background-position: top -7vw left;
+        background-repeat: no-repeat;
+        background-size: 100vw;
+    }
+    min-height: 100vh;
+}
+
+main {
+    min-height: calc(100vh - 275px);
+}
+
+footer {
+    width: 100%;
+
+    .fa-instagram {
+        color: #BAA6A6;
+        font-size: 35px;
+    }
+
+    .fa-twitter { 
+        color: #56CCF2;
+        font-size: 35px;
+    }
+
+    .fa-facebook-square {
+        color: #1D64C5;
+        font-size: 35px;
+    }
+
+    .fa-linkedin {
+        color: #0077B7;
+        font-size: 35px;
+    }
+
+}
+
+.seperator-bar {
+    margin-bottom: 28px;
+    
+    span {
+        align-items: center;
+        color: #d9d9d9;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        text-transform: uppercase;
+        
+        &:before {
+            content: '';
+            background-color: #d9d9d9;
+            height: 1px;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(50% - 15px);
+        }
+    
+        &:after {
+            content: '';
+            background-color: #d9d9d9;
+            height: 1px;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(50% - 15px);
+        }
+    }
+}

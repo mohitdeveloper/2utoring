@@ -1,0 +1,91 @@
+<div class="table-responsive">
+    <table class="styled">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <span (click)="alterOrder('Name')">
+                        Course Name
+                        <span [hidden]="!(searchModel.sortType == 'Name' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                        <span [hidden]="!(searchModel.sortType == 'Name' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                    </span>
+                </th>
+                <th scope="col">
+                    <span (click)="alterOrder('SubjectName')">
+                        Subject
+                        <span [hidden]="!(searchModel.sortType == 'SubjectName' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                        <span [hidden]="!(searchModel.sortType == 'SubjectName' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                    </span>
+                </th>
+                <th scope="col">
+                    <span (click)="alterOrder('StudyLevelName')">
+                        Level
+                        <span [hidden]="!(searchModel.sortType == 'StudyLevelName' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                        <span [hidden]="!(searchModel.sortType == 'StudyLevelName' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                    </span>
+                </th>
+                <th scope="col">
+                    <span (click)="alterOrder('SessionAttendeesCount')">
+                        Participants
+                        <span [hidden]="!(searchModel.sortType == 'SessionAttendeesCount' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                        <span [hidden]="!(searchModel.sortType == 'SessionAttendeesCount' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                    </span>
+                </th>
+                <th scope="col">
+                    <span (click)="alterOrder('StartDate')">
+                        Date &amp; Time
+                        <span [hidden]="!(searchModel.sortType == 'StartDate' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                        <span [hidden]="!(searchModel.sortType == 'StartDate' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                    </span>
+                </th>
+                <th scope="col">
+                    <span (click)="alterOrder('Name')">
+                        Status
+                        <span [hidden]="!(searchModel.sortType == 'Name' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                        <span [hidden]="!(searchModel.sortType == 'Name' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                    </span>
+                </th>
+                <th scope="col">
+                    <span (click)="alterOrder('PricePerPerson')">
+                        Price
+                        <span [hidden]="!(searchModel.sortType == 'PricePerPerson' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                        <span [hidden]="!(searchModel.sortType == 'PricePerPerson' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                    </span>
+                </th>
+
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+           
+            <tr *ngFor="let item of results.data; let i = index;">
+                <td>{{item.name}}</td>
+                <td>{{item.subjectName}}</td>
+                <td>{{item.studyLevelName}}</td>
+                <td><a href="/Tutor/ClassSessions/ClassRegister/{{item.classSessionId}}" Title="Number of Participants, click for more information" class="ml-14 text-info">{{item.sessionAttendeesCount}}</a></td>
+                <td>{{item.startDate | date: 'dd/MM/yyyy hh:mma'}}</td>
+                <td><span class="badge badge-info" style="padding: 7px 14px; font-size: 13px;">{{item.currentStatus}}</span></td>
+                <td>{{item.pricePerPerson | currency:'GBP':'symbol':'1.2-2'}}</td>
+                <td class="text-right">
+                    <a href="/Tutor/ClassSessions/Edit/{{item.classSessionId}}" class="ml-14 text-success">Edit Lesson</a>
+                    <a (click)="getLink(item)" class="ml-14 text-info text-decoration-underline Cursor--pointer">Direct Booking Link </a>
+                    <a *ngIf="searchModel.filter == 'previous'" (click)="enterLesson(results.data.courseId)"
+                       class="ml-14 text-info text-decoration-underline Cursor--pointer">View Lesson</a>
+                    <span *ngIf="item.complete">.</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-between align-items-center Pagination mt-28" *ngIf="results.paged !== undefined && results.paged != null">
+    <span class="pagination-info">Page {{results.paged.page}} of {{results.paged.totalPages}}</span>
+    <ul class="pagination justify-content-end mb-0">
+        <li [class]="results.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+            <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">{{results.paged.page}}</a></li>
+        <li [class]="results.paged.page >= results.paged.totalPages+1 ? 'page-item disabled' : 'page-item'">
+            <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+        </li>
+    </ul>
+</div>

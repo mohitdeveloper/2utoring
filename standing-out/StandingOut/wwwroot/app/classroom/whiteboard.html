@@ -1,0 +1,149 @@
+﻿<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_SVG"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+</script>
+
+<div id="whiteboard-controls" ng-controller="WhiteboardController as ctrl" ng-init="init(pane.id, pane.toolBar)" ng-cloak class="Whiteboard__Container">
+    <div class="io-tab-container">
+        <ul class="io-tabs tabs--visible" id="whiteboard-tabs">
+            <li class="artboardTab" data-tab="qtnpanel{{$index}}" ng-if="whiteboardTab != null" ng-repeat="whiteboardTab in whiteboardTabs track by $index" id="qtntab-title-{{$index}}" ng-click="setTabActive($index)" ng-class="{'active' : $first}">
+                <input ng-if="whiteboardTab.userId == userId" ng-disabled="tabIndex != $index" type="text" id="{{'whiteTabName_'+ $index}}" ng-model="whiteboardTab.name" class="Input__typeFileName" ng-change="nameChanged($index)" ng-model-options="{ updateOn: 'blur'}" />
+                <span ng-if="whiteboardTab.userId != userId" class="text-align-center tabName">
+                    {{whiteBoardTabName($index)}}
+                </span>
+                <i class="far fa-eye" ng-show="whiteboardTab.tutorCollaborating" title="The tutor is now viewing this artboard"></i>
+            </li>
+            <li class="margin-left-auto | li--widthFixed" ng-click="addWhiteBoardTab()"><i class="fal fa-plus-square margin-right-extra-tight"></i>New</li>
+            <li class="li--widthFixed" ng-click="openWhiteBoardTab()"><i class="fal fa-folder-open margin-right-extra-tight"></i>Open</li>
+            <li class="li--widthFixed" ng-if="isTutor" ng-click="collaborateWhiteBoardTab()"><i class="fab fa-slideshare margin-right-extra-tight"></i>Collaborate</li>
+        </ul>
+
+        <div class="io-tab-content content infoquestion-tab-content" ng-if="whiteboardTab != null" ng-class="($first ? 'active ' : '') + (toolBar ? 'tabs--visible' : 'tabs--hidden')" ng-repeat="whiteboardTab in whiteboardTabs track by $index" id="qtnpanel{{$index}}" ng-keydown="alterText($event, $index)">
+
+
+
+            <div class="Whiteboard" ng-class="(toolBar ? 'Whiteboard--visible' : 'Whiteboard--hidden') + ' ' + (whiteboardTab.toolsBarOpen ? 'Whiteboard__ToolBar--active' : '')">
+                <div class="Whiteboard__TopBar">
+                    <div class="Whiteboard__Icons">
+                        <button class="File__Button File__Button--showTools" title="Open Tools Panel" ng-click="showToolPanelDropdown($index)"><i class="far fa-chevron-down"></i></button>
+                        <button class="File__Button" title="Import Whiteboard Screenshot" ng-click="loadIntoWhiteBoard($index)"><i class="far fa-arrow-square-down"></i></button>
+                        <button class="File__Button" title="Save Whiteboard Screenshot" ng-click="save($index)"><i class="far fa-save"></i></button>
+                        <button class="File__Button" title="Clear Whiteboard" ng-click="clear($index)"><i class="far fa-trash"></i></button>
+                        <button class="File__Button" title="Import Image" ng-click="import($index)"><i class="far fa-image"></i></button>
+                        <button class="File__Button" title="Import Image From My Files" ng-click="openRootFolder()" ng-show="classSession != undefined && classSession.requiresGoogleAccount == true"><i class="fab fa-google"></i></button>
+                        <button class="File__Button" title="Export Image" ng-click="export($index)"><i class="far fa-file-export"></i></button>
+                        <button class="File__Button" title="Duplicate Whiteboard" ng-click="duplicate($index)"><i class="far fa-copy"></i></button>
+
+
+
+                        <button class="File__Button" title="Undo" ng-click="undo($index)" ng-disabled="whiteboardTab.undoHolder.length == 0 && !whiteboardTab.selectionOn && !whiteboardTab.holdOn"><i class="far fa-undo"></i></button>
+                        <button class="File__Button" title="Redo" ng-click="redo($index)" ng-disabled="whiteboardTab.undoStore.length == 0"><i class="far fa-redo"></i></button>
+
+                        <div class="border-left border-right padding-right-none">
+                            <div class="Tool__Name">Size</div>
+                            <input ng-model="whiteboardTab.sizeX" class="padding-x-extra-tight" type="number" maxlength="4" ng-keyup="checkEnterResize($event, $index)" ng-change="numbersOnlyX($index)" />
+                            <span class="margin-x-tight">x</span>
+                            <input ng-model="whiteboardTab.sizeY" class="padding-x-extra-tight" type="number" ng-keyup="checkEnterResize($event, $index)" ng-change="numbersOnlyY($index)" />
+                            <button class="File__Button" title="Resize" ng-click="alterSize($index)"><i class="far fa-crop"></i></button>
+                        </div>
+
+                        <button class="File__Button" title="Share Whiteboard" ng-show="isTutor" ng-click="shareModal($index)"><i class="far fa-share-alt"></i></button>
+                        <button class="File__Button" ng-disabled="!isTutor || sessionEnded" title="{{sessionEnded && whiteboardTab.userId == null ? 'Locked' : (isTutor ? ((whiteboardTab.locked ? 'Unlock' : 'Lock') + ' whiteboard') : ('Whiteboard ' + (whiteboardTab.locked || whiteboardTab.writeDisabled ? 'Locked' : 'Unlocked')))}}" ng-click="lockBoard($index)"><i class="far" ng-class="(sessionEnded && whiteboardTab.userId == null) || whiteboardTab.locked || whiteboardTab.writeDisabled ? 'fa-lock' : 'fa-lock-open'"></i></button>
+                        <button class="File__Button" title="Close Whiteboard" ng-show="whiteboardTab.userId != null || (isTutor && whiteboardTab.sessionGroupId != null)" ng-click="closeTab($index)"><i class="far fa-times"></i></button>
+
+                    </div>
+                </div>
+
+                <div class="Whiteboard__Tools" ng-class="whiteboardTab.toolsBarOpen ? 'Whiteboard__Tools--active' : '' ">
+                    <button class="Tool__Button" id="drawTool_{{$index}}" title="Draw" ng-click="changeToolType($index, 'draw')" ng-class="(whiteboardTab.tooltype == 'draw') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_pencil.svg" alt="Pencil" /></button>
+                    <button class="Tool__Button" id="eraserTool_{{$index}}" title="Eraser" ng-click="changeToolType($index, 'erase')" ng-class="(whiteboardTab.tooltype == 'erase') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_eraser.svg" alt="Eraser" /></button>
+                    <button class="Tool__Button" ng-if="false" id="fillTool_{{$index}}" title="Fill" ng-click="changeToolType($index, 'fill')" ng-class="(whiteboardTab.tooltype == 'fill') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_fill.svg" alt="Fill" /></button>
+                    <div class="Tool__Group">
+                        <button class="Tool__Button" id="shapeTool_{{$index}}" title="Shapes" ng-class="whiteboardTab.shapeSelect ? 'active' : '' " ng-click="openToolPanel($index)"><img ng-src="/images/whiteboard-tool-icons/icon_{{whiteboardTab.shapeSelectIcon}}.svg" alt="{{whiteboardTab.shapeSelectIcon}}" /></button>
+                        <div class="Tool__Panel Tool__Panel--shapes hidden" ng-class="whiteboardTab.shapeSelect ? 'show' : 'hidden' ">
+                            <button class="Tool__Button" id="shapeLineTool_{{$index}}" title="Line" ng-click="changeToolTypeShape($index, 'line')" ng-class="(whiteboardTab.tooltype == 'line') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_line.svg" alt="Line" /></button>
+                            <button class="Tool__Button" id="shapeRectangleTool_{{$index}}" title="Rectangle" ng-click="changeToolTypeShape($index, 'rectangle')" ng-class="(whiteboardTab.tooltype == 'rectangle') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_rectangle.svg" alt="Rectangle" /></button>
+                            <button class="Tool__Button" id="shapeCircleTool_{{$index}}" title="Circle" ng-click="changeToolTypeShape($index, 'circle')" ng-class="(whiteboardTab.tooltype == 'circle') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_circle.svg" alt="Circle" /></button>
+                            <button class="Tool__Button" id="shapeEllipseTool_{{$index}}" title="Ellipse" ng-click="changeToolTypeShape($index, 'ellipse')" ng-class="(whiteboardTab.tooltype == 'ellipse') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_ellipse.svg" alt="Ellipse" /></button>
+                            <button class="Tool__Button" id="shapeTriangleTool_{{$index}}" title="Triangle" ng-click="changeToolTypeShape($index, 'triangle')" ng-class="(whiteboardTab.tooltype == 'triangle') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_triangle.svg" alt="Triangle" /></button>
+                            <button class="Tool__Button" id="shapeRTriangleTool_{{$index}}" title="Right Angle Triangle" ng-click="changeToolTypeShape($index, 'triangleR')" ng-class="(whiteboardTab.tooltype == 'triangleR') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_triangleR.svg" alt="Right Angle Triangle" /></button>
+                            <button class="Tool__Button" id="shapePentagonTool_{{$index}}" title="Pentagon" ng-click="changeToolTypeShape($index, 'pentagon')" ng-class="(whiteboardTab.tooltype == 'pentagon') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_pentagon.svg" alt="Pentagon" /></button>
+                            <button class="Tool__Button" id="shapeHexagonTool_{{$index}}" title="Hexagon" ng-click="changeToolTypeShape($index, 'hexagon')" ng-class="(whiteboardTab.tooltype == 'hexagon') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_hexagon.svg" alt="Hexagon" /></button>
+                            <button class="Tool__Button" id="shapeOctagonTool_{{$index}}" title="Octagon" ng-click="changeToolTypeShape($index, 'octagon')" ng-class="(whiteboardTab.tooltype == 'octagon') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_octagon.svg" alt="Octagon" /></button>
+                            <button class="Tool__Button" id="shapeRhombusTool_{{$index}}" title="Rhombus" ng-click="changeToolTypeShape($index, 'rhombus')" ng-class="(whiteboardTab.tooltype == 'rhombus') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_rhombus.svg" alt="Rombus" /></button>
+                            <button class="Tool__Button" id="shapeCuboidTool_{{$index}}" title="Cuboid" ng-click="changeToolTypeShape($index, 'cuboid')" ng-class="(whiteboardTab.tooltype == 'cuboid') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_cuboid.svg" alt="Cuboid" /></button>
+                        </div>
+                    </div>
+                    <button class="Tool__Button" id="textTool_{{$index}}" title="Text" ng-click="changeToolType($index, 'text')" ng-class="(whiteboardTab.tooltype == 'text') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_text.svg" alt="Text" /></button>
+                    <button class="Tool__Button" id="selectionTool_{{$index}}" title="Selection" ng-click="changeToolType($index, 'selection')" ng-class="(whiteboardTab.tooltype == 'selection') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_select.svg" alt="Select" /></button>
+                    <button class="Tool__Button" id="equationTool_{{$index}}" title="Equation" ng-click="changeToolType($index, 'equation')" ng-class="(whiteboardTab.tooltype == 'equation') ? 'active' : '' "><img src="/images/whiteboard-tool-icons/icon_eqa.svg" alt="Equation" /></button>
+                    <div class="Tool__Color" title="Fill Colour">
+                        <input type='text' id="fillColourInput_{{$index}}" title="Fill Colour" ng-model="whiteboardTab.fillColor" class="fill-colour-picker" />
+                    </div>
+                    <div class="Tool__Color Tool__Color--border" title="Pencil/Outline Colour">
+                        <input type='text' id="fillColourBorder_{{$index}}" title="Pencil/Outline Colour" ng-model="whiteboardTab.color" class="colour-picker" />
+                    </div>
+                    <div class="Tool__Group">
+                        <button class="Tool__Button" ng-class="whiteboardTab.zoomSelected ? 'active' : '' " ng-click="openZoomPanel($index)"><img src="/images/whiteboard-tool-icons/icon_zoom.svg" alt="Text" /></button>
+                        <div class="Tool__Panel Tool__Panel--zoom hidden" ng-class="whiteboardTab.zoomSelected ? 'show' : 'hidden' ">
+                            <input ng-model="whiteboardTab.zoomIndex" type="range" min="0" max="6" value="3" />
+                        </div>
+                    </div>
+                </div>
+                <div class="Whiteboard__Canvas" id="canvasContainer_{{$index}}">
+                    <canvas oncontextmenu="return false;" ng-style="{'zoom': $parent.zoomSet[whiteboardTab.zoomIndex]}" id="canvas_{{$index}}" ng-mousedown="handleMouseDown($event, $index)" ondragstart="return false;" ng-mouseup="handleMouseUp($event, $index)" ng-mousemove="mouseMove($event, $index)" ng-mouseleave="mouseLeave($event, $index)"></canvas>
+                    <canvas oncontextmenu="return false;" ng-style="{'zoom': $parent.zoomSet[whiteboardTab.zoomIndex]}" id="canvas_intermediate_{{$index}}"></canvas>
+                    <canvas oncontextmenu="return false;" ng-style="{'zoom': $parent.zoomSet[whiteboardTab.zoomIndex]}" id="canvas_temp_{{$index}}"></canvas>
+                </div>
+                <div class="Whiteboard__BottomBar">
+                    <div class="Whiteboard__Properties">
+                        <div>
+                            <div class="Tool__Name">{{whiteboardTab.toolSelected}}</div>
+                            <input ng-model="whiteboardTab.width" type="range" min="3" max="100" value="3">
+                            <div class="margin-left-tight" style="width: 30px; text-align: center">{{whiteboardTab.width}}</div>
+                        </div>
+                        <div>
+                            <div class="Tool__Name">Font</div>
+                            <select class="Font__Options" ng-model="whiteboardTab.font" ng-style="{'font-family': whiteboardTab.font}">
+                                <option value="arial">Arial</option>
+                                <option value="arial black">Arial Black</option>
+                                <option value="comic sans ms">Comic Sans</option>
+                                <option value="courier">Courier</option>
+                                <option value="garamond">Garamond</option>
+                                <option value="georgia">Georgia</option>
+                                <option value="helvetica">Helvetica</option>
+                                <option value="impact">Impact</option>
+                                <option value="times new roman">Times New Roman</option>
+                                <option value="trebuchet ms">Trebuchet</option>
+                                <option value="verdana">Verdana</option>
+                            </select>
+                            <select class="Font__Size" ng-model="whiteboardTab.fontSize">
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="14">14</option>
+                                <option value="16">16</option>
+                                <option value="18">18</option>
+                                <option value="20">20</option>
+                                <option value="24">24</option>
+                                <option value="28">28</option>
+                                <option value="32">32</option>
+                                <option value="40">40</option>
+                                <option value="48">48</option>
+                            </select>
+                            <input type="text" ng-model="whiteboardTab.text" class="hiddenInput" id="{{'whiteboardText' + whiteboardTab.sessionWhiteBoardId}}" ng-change="alterText($event, $index)" />
+                            <input type="text" ng-model="whiteboardTab.equation" class="hiddenInput" id="{{'whiteboardEquation' + whiteboardTab.sessionWhiteBoardId}}" ng-change="alterEquation($event, $index)" />
+                            <div class="Tool__Color Tool__Color--text" title="Text Colour">
+                                <input type='text' title="Text Colour" ng-model="whiteboardTab.textColor" class="font-colour-picker" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="mathjax-container-{{$index}}" style="position:absolute; left:-100000px;">
+                ${}$
+            </div>
+        </div>
+    </div>
+</div>

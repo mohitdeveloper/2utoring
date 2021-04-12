@@ -1,0 +1,29 @@
+.my-dialog {
+    font-size: 12px !important;
+    overflow: scroll !important;
+}
+.cdk-overlay-pane.my-dialog {
+    position: relative !important;
+}
+
+/*.close.mat-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    line-height: 14px;
+    min-width: auto;
+}
+.close {
+    background-color: red !important;
+    color: white !important;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+}*/
+  
+.myClass {
+    border-radius: 10px !important;
+    overflow-y:auto;
+}
+

@@ -1,0 +1,901 @@
+<!-- <div class="loading-bg loading" style="display: none;">
+    <div class="loader-container">
+        <div class="Roller-Loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+</div> -->
+<div class="my-35 my-md-28 my-lg-84 Page--process:SignUp" style="padding-bottom:15%;">
+    <div class="Page__Container">
+
+        <div class="row">
+
+
+            <div class="col-md-3 col-sm-12 mb-28 mb-lg-0" *ngIf="!isProfileEdited">
+                <!--<div>Registration progress:{{companyInitialRegistrationStep}}</div>-->
+                <div *ngIf="companyInitialRegistrationStep>=CompanyRegistrationStep.BasicInfo"
+                     class="Step__Progress Step__Progress--Completed">
+                    <a (click)="navigate(CompanyRegistrationStep.BasicInfo)">Company Details</a>
+                </div>
+                <div *ngIf="companyInitialRegistrationStep<CompanyRegistrationStep.BasicInfo" class="Step__Progress">
+                    <a href="#">Company Details</a>
+                </div>
+                <div *ngIf="companyInitialRegistrationStep>=CompanyRegistrationStep.Payment"
+                     class="Step__Progress Step__Progress--Completed">
+                    <a>Payments</a>
+                </div>
+                <div *ngIf="companyInitialRegistrationStep<CompanyRegistrationStep.Payment" class="Step__Progress">
+                    <a href="#">Payments</a>
+                </div>
+                <div *ngIf="companyInitialRegistrationStep>=CompanyRegistrationStep.Profile"
+                     class="Step__Progress Step__Progress--Completed">
+                    <a (click)="navigate(CompanyRegistrationStep.Profile)">Company Profile Page</a>
+                </div>
+                <div *ngIf="companyInitialRegistrationStep<CompanyRegistrationStep.Profile" class="Step__Progress">
+                    <a href="#">Company Profile Page</a>
+                </div>
+                <div *ngIf="companyInitialRegistrationStep>=CompanyRegistrationStep.Price"
+                     class="Step__Progress Step__Progress--Completed">
+                    <a (click)="navigate(CompanyRegistrationStep.Price)">Price Setup</a>
+                </div>
+                <div *ngIf="companyInitialRegistrationStep<CompanyRegistrationStep.Price" class="Step__Progress">
+                    <a href="#">Price Setup</a>
+                </div>
+                <div *ngIf="companyInitialRegistrationStep>=CompanyRegistrationStep.Finish"
+                     class="Step__Progress Step__Progress--Completed">
+                    <a (click)="navigate(CompanyRegistrationStep.Finish)">Finish</a>
+                </div>
+                <div *ngIf="companyInitialRegistrationStep<CompanyRegistrationStep.Finish" class="Step__Progress">
+                    <a href="#">Finish</a>
+                </div>
+                <span id="dvInfo"></span>
+
+                <!-- <div *ngIf="1>=9" class="Step__Progress Step__Progress--Completed"><a (click)="navigate(CompanyRegistrationStep.Subjects)">Subjects</a></div>
+    <div *ngIf="1<9" class="Step__Progress"><a href="#">Subjects</a></div>
+    <div *ngIf="1>=10" class="Step__Progress Step__Progress--Completed"><a (click)="navigate(CompanyRegistrationStep.Preview)">View profile</a></div>
+    <div *ngIf="1<10" class="Step__Progress"><a href="#">View profile</a></div>
+    <div *ngIf="1>=11" class="Step__Progress Step__Progress--Completed"><a (click)="navigate(CompanyRegistrationStep.Finish)">Finish</a></div>
+    <div *ngIf="1<11" class="Step__Progress"><a href="#">Finish</a></div> -->
+            </div>
+            
+            <!-- BASIC Info Step -->
+            <div class="col-md-8 col-sm-12 mb-24 mb-lg-0" *ngIf="step == CompanyRegistrationStep.BasicInfo">
+                <form [formGroup]="companyBasicInfoForm" (ngSubmit)="submitCompanyBasicInfoForm()">
+                    <h1 class="text-center">Company details</h1><!-- Screen 1 -->
+                    <h2 class="text-center">Let's set up your company account, It will take just a minute.</h2>
+
+                    <div class="Form__Block"
+                         style="border:1px solid #D9D9D9; padding:5%; border-radius: 5px; box-shadow: 5px 3px #D9D9D9;">
+                        <h3>Your details</h3>
+                        <div class="form-row">
+                            <div class="form-group col-12 col-lg-4">
+                                <label>Title *</label>
+                                <select id="title" name="title" formControlName="title" class="form-control">
+                                    <option [ngValue]="null">Select a title</option>
+                                    <option *ngFor="let userTitle of userTitles" [ngValue]="userTitle.name">{{userTitle.name}}</option>
+                                </select>
+                                <div *ngIf="basicInfoFormCompanyControls.title.errors && (basicInfoFormCompanyControls.title.dirty || basicInfoFormCompanyControls.title.touched || CompanyBasicInfoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.title.errors.maxlength">Title has a character limit of 250</div>
+                                    <div *ngIf="basicInfoFormCompanyControls.title.errors.required">Please select a title to continue. </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label>First Name *</label>
+                                <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control"
+                                       placeholder="First name" />
+                                <div *ngIf="basicInfoFormCompanyControls.firstName.errors && (basicInfoFormCompanyControls.firstName.dirty || basicInfoFormCompanyControls.firstName.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.firstName.errors.maxlength">
+                                        This field should
+                                        only
+                                        allow a first name of 20 characters (inc. spaces) to be added.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.firstName.errors.required">
+                                        Please enter your
+                                        first
+                                        name to continue.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="exampleInputEmail1">Surname *</label>
+                                <input type="text" id="lastName" name="lastName" formControlName="lastName"
+                                       class="form-control" placeholder="Surname" />
+                                <div *ngIf="basicInfoFormCompanyControls.lastName.errors && (basicInfoFormCompanyControls.lastName.dirty || basicInfoFormCompanyControls.lastName.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.lastName.errors.maxlength">
+                                        This field
+                                        should only
+                                        allow a first name of 20 characters (inc. spaces) to be added.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.lastName.errors.required">
+                                        Please enter your
+                                        surname to continue.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <label>Email address</label>
+                                <input type="email" id="email" name="email" formControlName="email" class="form-control"
+                                       placeholder="Email Address" readonly />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label>Telephone No. *</label>
+                                <input type="tel" id="telephoneNumber" name="telephoneNumber"
+                                       formControlName="telephoneNumber" class="form-control"
+                                       placeholder="Enter your telephone no." />
+                                <div *ngIf="basicInfoFormCompanyControls.telephoneNumber.errors && (basicInfoFormCompanyControls.telephoneNumber.dirty || basicInfoFormCompanyControls.telephoneNumber.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.telephoneNumber.errors.maxlength">
+                                        This
+                                        field
+                                        should only allow a telephone no. of 12 characters (inc. spaces) to be added.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.telephoneNumber.errors.required">
+                                        Please
+                                        enter a
+                                        valid telephone no. to continue.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.telephoneNumber.errors.pattern">
+                                        Please
+                                        enter a
+                                        valid telephone no.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Mobile No.</label>
+                                <input type="tel" id="mobileNumber" name="mobileNumber" formControlName="mobileNumber"
+                                       class="form-control" placeholder="Enter your mobile no." />
+                                <div *ngIf="basicInfoFormCompanyControls.mobileNumber.errors && (basicInfoFormCompanyControls.mobileNumber.dirty || basicInfoFormCompanyControls.mobileNumber.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.mobileNumber.errors.maxlength">
+                                        This field
+                                        should
+                                        only allow a mobile no. of 12 characters (inc. spaces) to be added.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.mobileNumber.errors.required">
+                                        Please enter
+                                        a valid
+                                        mobile no. to continue
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.mobileNumber.errors.pattern">
+                                        Please enter a
+                                        valid
+                                        mobile no.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="Form__Block"
+                         style="border:1px solid #D9D9D9; padding:5%; border-radius: 5px;box-shadow: 5px 3px #D9D9D9;">
+                        <h3>Company details</h3>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <label>Company Name *</label>
+                                <input type="text" id="companyName" name="companyName" formControlName="companyName"
+                                       class="form-control" placeholder="Company name" />
+                                <div *ngIf="basicInfoFormCompanyControls.companyName.errors && (basicInfoFormCompanyControls.companyName.dirty || basicInfoFormCompanyControls.companyName.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.companyName.errors.maxlength">
+                                        This field
+                                        should
+                                        only allow a company name of 60 characters (inc. spaces) to be added.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.companyName.errors.required">
+                                        Please enter
+                                        company
+                                        name to continue.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label for="exampleInputEmail1">Registration No. </label>
+                                <input type="text" id="companyRegistrationNumber" name="companyRegistrationNumber"
+                                       formControlName="companyRegistrationNumber" class="form-control"
+                                       placeholder="Registration No." />
+                                <!--<div *ngIf="basicInfoFormCompanyControls.companyRegistrationNumber.errors && (basicInfoFormCompanyControls.companyRegistrationNumber.dirty || basicInfoFormCompanyControls.companyRegistrationNumber.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.companyRegistrationNumber.errors.maxlength">
+                                        This
+                                        field should only allow a registration no. of 20 characters (inc. spaces) to be
+                                        added.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.companyRegistrationNumber.errors.required">
+                                        Please
+                                        enter registration no. to continue.
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <label>Address Line1</label>
+                                <input type="text" id="addressLine1" name="addressLine1" formControlName="addressLine1" class="form-control" placeholder="Address" />
+                                <div *ngIf="basicInfoFormCompanyControls.addressLine1.errors && (basicInfoFormCompanyControls.addressLine1.dirty || basicInfoFormCompanyControls.addressLine1.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.addressLine1.errors.required">
+                                        Please
+                                        enter a
+                                        company address to continue.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <label>Address Line2</label>
+                                <input type="text" id="addressLine2" name="addressLine2"
+                                       formControlName="addressLine2" class="form-control" placeholder="Address" />
+                                <div *ngIf="basicInfoFormCompanyControls.addressLine2.errors && (basicInfoFormCompanyControls.addressLine2.dirty || basicInfoFormCompanyControls.addressLine2.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.addressLine2.errors.required">
+                                        Please
+                                        enter a
+                                        company address to continue.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <label>Country</label>
+                                <!--<select id="country" name="country" formControlName="country" class="form-control" placeholder="Select a country">
+                                                <option [ngValue]="null">Select your country</option>
+                                                <option *ngFor="let country of countries" [ngValue]="country.countryId">{{country.name
+                                }}</option>
+                                </select>
+                                <div *ngIf="basicInfoFormCompanyControls.country.errors && (basicInfoFormCompanyControls.country.dirty || basicInfoFormCompanyControls.country.touched || paymentFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.country.errors.maxlength">Country has a character limit of 250</div>
+                                    <div *ngIf="basicInfoFormCompanyControls.country.errors.required">Please select your country to continue.</div>
+                                </div>-->
+                                <input type="text" id="country" name="country"
+                                       formControlName="country" class="form-control" placeholder="Country" />
+                                <div *ngIf="basicInfoFormCompanyControls.country.errors && (basicInfoFormCompanyControls.country.dirty || basicInfoFormCompanyControls.country.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.country.errors.required">
+                                        Country
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <label>Postcode</label>
+                                <input type="text" id="companyPostcode" name="companyPostcode"
+                                       formControlName="companyPostcode" class="form-control" placeholder="Post code" />
+                                <div *ngIf="basicInfoFormCompanyControls.companyPostcode.errors && (basicInfoFormCompanyControls.companyPostcode.dirty || basicInfoFormCompanyControls.companyPostcode.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.companyPostcode.errors.required">
+                                        Postcode
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label>Telephone No. *</label>
+                                <input type="tel" id="companyTelephoneNumber" name="companyTelephoneNumber"
+                                       formControlName="companyTelephoneNumber" class="form-control"
+                                       placeholder="Enter your telephone no." />
+                                <div *ngIf="basicInfoFormCompanyControls.companyTelephoneNumber.errors && (basicInfoFormCompanyControls.companyTelephoneNumber.dirty || basicInfoFormCompanyControls.companyTelephoneNumber.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.companyTelephoneNumber.errors.maxlength">
+                                        This
+                                        field should only allow a telephone no. of 12 characters (inc. spaces) to be
+                                        added.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.companyTelephoneNumber.errors.required">
+                                        Please
+                                        enter a valid telephone no. to continue.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.companyTelephoneNumber.errors.pattern">
+                                        Please
+                                        enter a valid telephone no.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Mobile No.</label>
+                                <input type="tel" id="companyMobileNumber" name="companyMobileNumber"
+                                       formControlName="companyMobileNumber" class="form-control"
+                                       placeholder="Enter your mobile no." />
+                                <div *ngIf="basicInfoFormCompanyControls.companyMobileNumber.errors && (basicInfoFormCompanyControls.companyMobileNumber.dirty || basicInfoFormCompanyControls.companyMobileNumber.touched || CompanyBasicInfoFormSubmitted)"
+                                     class="error" role="alert">
+                                    <div *ngIf="basicInfoFormCompanyControls.companyMobileNumber.errors.maxlength">
+                                        This
+                                        field should only allow a mobile no. of 12 characters (inc. spaces) to be added.
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.companyMobileNumber.errors.required">
+                                        Please
+                                        enter a valid mobile no. to continue
+                                    </div>
+                                    <div *ngIf="basicInfoFormCompanyControls.companyMobileNumber.errors.pattern">
+                                        Please
+                                        enter a valid mobile no.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-12">
+                                <label>Email address</label>
+                                <input type="email" id="companyEmail" name="companyEmail" formControlName="companyEmail"
+                                       class="form-control" placeholder="Company Email Address" />
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-lg-12">
+                                    <label class="form-check" for="marketingAccepted" style="margin-left:11px;">
+                                        <input type="checkbox" class="form-control" id="marketingAccepted" name="marketingAccepted" formControlName="marketingAccepted" />
+                                        <span class="label">I would like to receive relevant tips, tricks and offers from the 2utoring team.</span>
+                                    </label>
+                                    <div *ngIf="basicInfoFormCompanyControls.marketingAccepted.errors && (basicInfoFormCompanyControls.marketingAccepted.dirty || basicInfoFormCompanyControls.marketingAccepted.touched || CompanyBasicInfoFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="basicInfoFormCompanyControls.marketingAccepted.errors.required">You need to accept our terms and conditions to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-lg-12">
+                                    <label class="form-check" style="margin-left:11px;">
+                                        <input type="checkbox" id="termsAndConditionsAccepted" name="termsAndConditionsAccepted" formControlName="termsAndConditionsAccepted" class="form-check-input" required />
+                                        <span class="label">I have read and accepted the <a class="termsCondition" target="_blank" href="/terms-of-website-use">terms and conditions</a>, <a class="termsCondition" href="/privacy-policy" target="_blank">privacy notice</a> and the <a class="termsCondition" target="_blank" href="/terms-of-use">Terms of use. </a></span>
+                                    </label>
+                                    <div *ngIf="basicInfoFormCompanyControls.termsAndConditionsAccepted.errors && (basicInfoFormCompanyControls.termsAndConditionsAccepted.dirty || basicInfoFormCompanyControls.termsAndConditionsAccepted.touched || CompanyBasicInfoFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="basicInfoFormCompanyControls.termsAndConditionsAccepted.errors.required">You need to accept our terms and conditions to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-lg-12">
+                                    <label>How would you like to use 2utoring?</label>
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label class="form-check">
+                                        <input type="radio" value="1" name="platformUse" formControlName="platformUse" class="form-check-input" />
+                                        <span class="label">Teach private lessons to my existing students</span>
+                                    </label>
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label class="form-check">
+                                        <input type="radio" value="2" name="platformUse" formControlName="platformUse" class="form-check-input" />
+                                        <span class="label">Attract new students through the 2utoring website</span>
+                                    </label>
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label class="form-check">
+                                        <input type="radio" value="3" name="platformUse" formControlName="platformUse" class="form-check-input" />
+                                        <span class="label">Both of the above</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="Form_Block-Controls">
+                            <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- Payment step -->
+            <div class="col-md-9 col-sm-12 row" *ngIf="step == CompanyRegistrationStep.Payment" style="border: 1px solid #D9D9D9; border-radius: 5px; box-shadow: 5px 3px #D9D9D9;">
+                <div class="col-md-6 col-sm-12" style="padding: 2%;">
+                    <form (ngSubmit)="submitPaymentForm()" [formGroup]="paymentForm" *ngIf="paymentForm != undefined">
+                        <h1>Payments</h1><!-- Screen 2 -->
+                        <!--<h2>
+                            Your monthly payment for your subscription will start after the 3rd month, you can
+                            cancel your subscription at any time prior to that date without being charged.
+                        </h2>-->
+                        <div class="Form__Block">
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Card Details</label>
+                                        <div class="card bxs-0" style="padding: 16px 14px">
+                                            <div id="card-info" class="padding-vertical-tight"></div>
+                                        </div>
+                                        <div id="card-errors" class="Error Error--alert margin-top-extra-tight"
+                                             role="alert"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Cardholder Name</label>
+                                        <input type="text" id="cardName" name="cardName" formControlName="cardName"
+                                               class="form-control"
+                                               placeholder="Enter the cardholders name as it appears on the card" />
+                                        <div *ngIf="paymentFormControls.cardName.errors && (paymentFormControls.cardName.dirty || paymentFormControls.cardName.touched || paymentFormSubmitted)"
+                                             class="error" role="alert">
+                                            <div *ngIf="paymentFormControls.cardName.errors.maxlength">
+                                                Card Name has a
+                                                character limit of 250
+                                            </div>
+                                            <div *ngIf="paymentFormControls.cardName.errors.required">
+                                                Please enter the
+                                                name on your payment card to continue.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-sm-12 col-md-8 col-lg-8">
+                                    <div class="form-group">
+                                        <label>First line of your billing address</label>
+                                        <input type="text" id="addressLine1" name="addressLine1"
+                                               formControlName="addressLine1" class="form-control"
+                                               placeholder="Enter the first line of the address your card is registered to" />
+                                        <div *ngIf="paymentFormControls.addressLine1.errors && (paymentFormControls.addressLine1.dirty || paymentFormControls.addressLine1.touched || paymentFormSubmitted)"
+                                             class="error" role="alert">
+                                            <div *ngIf="paymentFormControls.addressLine1.errors.maxlength">
+                                                First line
+                                                address has a character limit of 250
+                                            </div>
+                                            <div *ngIf="paymentFormControls.addressLine1.errors.required">
+                                                Please enter
+                                                the first line of your billing address to continue.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <label>Postcode</label>
+                                        <input type="text" id="postCode" name="postCode" formControlName="postCode"
+                                               class="form-control" placeholder="Postcode" />
+                                        <div *ngIf="paymentFormControls.postCode.errors && (paymentFormControls.postCode.dirty || paymentFormControls.postCode.touched || paymentFormSubmitted)"
+                                             class="error" role="alert">
+                                            <div *ngIf="paymentFormControls.postCode.errors.maxlength">
+                                                Postcode length 5
+                                            </div>
+                                            <div *ngIf="paymentFormControls.postCode.errors.required">
+                                                Please enter
+                                                postcode.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <select id="stripeCountryId" name="stripeCountryId"
+                                                formControlName="stripeCountryId" class="form-control"
+                                                placeholder="Select a country">
+                                            <option [ngValue]="null">Select your country</option>
+                                            <option *ngFor="let stripeCountry of stripeCountrys"
+                                                    [ngValue]="stripeCountry.stripeCountryId">
+                                                {{stripeCountry.name}}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="paymentFormControls.stripeCountryId.errors && (paymentFormControls.stripeCountryId.dirty || paymentFormControls.stripeCountryId.touched || paymentFormSubmitted)"
+                                             class="error" role="alert">
+                                            <div *ngIf="paymentFormControls.stripeCountryId.errors.maxlength">
+                                                Country
+                                                has a character limit of 250
+                                            </div>
+                                            <div *ngIf="paymentFormControls.stripeCountryId.errors.required">
+                                                Please
+                                                enter your country to continue.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Do you have a voucher code?</label>
+                                        <div class="d-flex">
+                                            <input formControlName="promoCode" type="text" name="promoCode"
+                                                   class="form-control" placeholder="Enter your voucher code here" />
+                                            <button type="button"
+                                                    [disabled]="paymentFormControls.promoCode.value == null || paymentFormControls.promoCode.value == ''"
+                                                    (click)="checkPromoCode()"
+                                                    class="btn btn-outline-dark btn-lg fs-14 ml-7">
+                                                Apply
+                                            </button>
+                                        </div>
+                                        <div class="error"
+                                             *ngIf="(paymentFormControls.promoCode.value != null && paymentFormControls.promoCode.value != '') && (paymentFormControls.promoCode.errors || promoCodeInvalid) && (paymentFormControls.promoCode.touched || paymentFormSubmitted)">
+                                            <p class="text-danger"
+                                               *ngIf="paymentFormControls.promoCode.errors && paymentFormControls.promoCode.errors.maxlength">
+                                                This field can be no longer than 250 characters.
+                                            </p>
+                                            <p class="text-danger" *ngIf="promoCodeInvalid">
+                                                The promo code you have
+                                                enter has either expired or is invalid
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="n-success"
+                                         *ngIf="promoCodeChecked && !promoCodeInvalid && validatedPromoCode == paymentFormControls.promoCode.value && coupon != null">
+                                        Promo code accepted
+                                        <div *ngIf="coupon.amountOff != null">
+                                            You have saved {{ coupon.amountOff}}
+                                            {{ coupon.currency }}
+                                        </div>
+                                        <div *ngIf="coupon.percentOff != null">
+                                            You have saved {{ coupon.percentOff}}%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row" *ngIf="showStripeError">
+                            <div class="col">
+                                <p class="error">{{stripeError}}</p>
+                            </div>
+                        </div>
+                        <div class="Form_Block-Controls">
+                            <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-6" style="padding-right: 0; margin-top: 30px; margin-left: -1px; padding-bottom:6%;">
+                    <subscription-plan stripePlanId="{{stripePlanId}}" subscriptionName="{{getSubscriptionName()}}" subscriptoinPrice="{{ getSubscriptionPrice() }}"></subscription-plan>
+                </div>
+
+                <!-- <div class="col-12 col-lg-4" *ngIf="stripePlan != null && stripePlan != undefined">
+                    <div class="card card--toRespond:small">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="fs-28 fw-700">Private Tutor Plan</div>
+                            </div>
+                            <div class="mt-14">
+                                <sup class="cl-light fs-24 fw-500 d-inline-block mr-7"
+                                    style="transform: translateY(-10px);">&pound;</sup>
+                                <span class="fs-63 fw-800">5.99</span>
+                                <span class="cl-light fs-24 fw-500 ml-7">/mo</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="fs-18 fw-700 mb-14">3 month free trial *</div>
+                            <ul class="p-0 m-0" style="list-style: none;">
+                                <li class="mb-14">Tutor profile page</li>
+                                <li class="mb-14">Secure online classroom</li>
+                                <li class="mb-14">Unlimited marketplace listings</li>
+                                <li class="mb-14">Teach up to 10 students per lesson</li>
+                                <li class="mb-14">Host private classes</li>
+                            </ul>
+                            <div class="mb-14"><em class="fs-13 fw-500 cl-light">* Monthly payment will start after the
+                                    3rd month, you can cancel your subscription at any time.</em></div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+
+
+            <div class="Overlay" *ngIf="step == CompanyRegistrationStep.PaymentProcessing">
+                <div class="d-flex flex-column justify-content-center mx-auto">
+                    <div class="Status__Icon mx-auto mb-56">
+                        <i class="fas fa-ellipsis-h success"></i>
+                    </div>
+                    <div class="h1 fw-600 text-center mb-35">Checking your card details</div>
+                </div>
+            </div>
+
+            <div class="Overlay" *ngIf="step == CompanyRegistrationStep.PaymentFailed">
+                <div class="d-flex flex-column justify-content-center mx-auto">
+                    <div class="Status__Icon mx-auto mb-56">
+                        <i class="fas fa-times danger"></i>
+                    </div>
+                    <div class="h1 fw-600 text-center mb-35">Payment Failed</div>
+                </div>
+            </div>
+
+            <div class="Overlay" *ngIf="step == CompanyRegistrationStep.PaymentApproved">
+                <div class="d-flex flex-column justify-content-center mx-auto" style="border: 1px solid #D9D9D9; padding: 5%; border-radius: 5px; box-shadow: 5px 3px #D9D9D9;">
+                    <div class="Status__Icon mx-auto mb-56">
+                        <i class="fas fa-check success"></i>
+                    </div>
+                    <!--<div class="h1 fw-600 text-center mb-35">Your card has been authorised</div>-->
+                    <h3 class="mb-14 fw-900">Your card has been authorised</h3>
+                    <button type="button" class="btn btn-primary btn-lg"
+                            (click)="navigate(CompanyRegistrationStep.Profile)">
+                        Create your profile
+                    </button>
+                </div>
+            </div>
+
+            <!-- Profile capture step -->
+            <div class="col-md-{{ colSize }}">
+                <div class="col-md-12 col-sm-12 mb-24 mb-lg-0" *ngIf="step == CompanyRegistrationStep.Profile" style=" border: 1px solid #D9D9D9; padding: 2%; border-radius: 5px; box-shadow: 5px 3px #D9D9D9;">
+                    <!-- <ng-template [ngTemplateOutlet]="SideBar"></ng-template> -->
+                    <div class="col-md-12 col-sm-12 col-lg-12 mb-28 mb-lg-0">
+                        <div>
+                            <h1 class="mb-14 fw-800" *ngIf="profileOneForm != undefined">Company Profile </h1>
+                            <h3 class="mb-14 fw-900">Company Info </h3>
+                            <form (ngSubmit)="submitProfileOneForm()" class="Form__Block" [formGroup]="profileOneForm"
+                                  *ngIf="profileOneForm != undefined && profileFormSubStep == 1">
+                                <div class="form-row">
+                                    <div class="form-group col-12">
+                                        <label for="header">Company Name</label>
+                                        <input type="text" readonly id="companyName" name="companyName"
+                                               formControlName="companyName" class="form-control" placeholder="Company name" />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-12">
+                                        <label>Description *</label>
+                                        <textarea rows="6" id="companyDescription" name="companyDescription" maxlength="2000"
+                                                  formControlName="companyDescription" class="form-control"
+                                                  placeholder="Please enter company description"></textarea>
+                                        <div *ngIf="profileOneFormControls.companyDescription.errors && (profileOneFormControls.companyDescription.dirty || profileOneFormControls.companyDescription.touched || profileOneFormSubmitted)"
+                                             class="error" role="alert">
+                                            <div *ngIf="profileOneFormControls.companyDescription.errors.required">
+                                                Description is required
+                                            </div>
+                                            <div *ngIf="profileOneFormControls.companyDescription.errors.maxlength">
+                                                Maximum of 2000 characters allowed.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PROFILE Image Upload -->
+                                <div class="form-group">
+                                    <h3 class="mb-0">Upload logo.</h3>
+                                    <label style="margin-top:2%;">Use a high resolution image.</label>
+                                    <div class="form-row">
+                                        <div class="col-12">
+                                            <div ng2FileDrop
+                                                 [ngClass]="{'nv-file-over': profileThreeDropZoneOver}"
+                                                 (fileOver)="fileOverProfileThreeUploader($event)"
+                                                 [uploader]="profileThreeUploader"
+                                                 (onFileDrop)="profileThreeUploaderFileDropped($event)"
+                                                 (click)="fileInput.click()"
+                                                 class="File-Uploader">
+                                                <!--<i class="fal fa-arrow-to-bottom"></i>Drag and drop a photo into this space or <u>click here</u> to select one from your computer-->
+                                                <div>
+                                                    <p class="text-center">
+                                                        <i class="fal fa-arrow-to-bottom"></i>Drag and drop a photo into this space or
+                                                    </p>
+                                                    <p class="text-center"><u>Click here</u> to select one from your computer</p>
+                                                </div>
+                                            </div>
+                                            <input type="file" #fileInput ng2FileSelect [uploader]="profileThreeUploader" style="display:none;" (change)="profileThreeUploaderFileDropped($event)" />
+                                        </div>
+                                        <div class="col-12">
+                                            <angular-cropper #angularCropper [cropperOptions]="config" [imageUrl]="profileThreeUploaderPreviewUrl"></angular-cropper>
+
+                                        </div>
+                                        <div class="row mt-35" *ngIf="profileThreeUploader.queue.length > 0">
+                                            <div class="col">
+                                                <strong>Logo preview:</strong>
+                                            </div>
+
+                                            <div class="col">
+                                                <div class="image-cropper">
+                                                    <img *ngIf="profileThreeUploader.queue.length > 0" [src]="profileThreeCroppedImage" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-35" *ngIf="profileThreeUploader.queue.length == 0 && companyStoreProfileImageDownload != null && companyStoreProfileImageDownload.length > 0">
+                                            <div class="col">
+                                                <strong>Current logo:</strong>
+                                            </div>
+                                            <div class="col">
+                                                <div class="Avatar Avatar--size:large">
+                                                    <img src="{{companyStoreProfileImageDownload}}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h3 class="mb-0 mt-14">About us</h3><br>
+                                <div class="form-group">
+                                    <label>Who we are</label>
+                                    <textarea rows="6" id="whoWeAre" name="whoWeAre" formControlName="whoWeAre" class="form-control" placeholder="Description" maxlength="2000"></textarea>
+                                    <div *ngIf="profileOneFormControls.whoWeAre.errors && (profileOneFormControls.whoWeAre.dirty || profileOneFormControls.whoWeAre.touched || profileOneFormSubmitted)"
+                                         class="error" role="alert">
+                                        <div *ngIf="profileOneFormControls.whoWeAre.errors.required">
+                                            Description is required
+                                        </div>
+                                        <div *ngIf="profileOneFormControls.whoWeAre.errors.maxlength">
+                                            Maximum of 2000 characters allowed.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>What we do</label>
+                                    <textarea rows="6" id="whatWeDo" name="whatWeDo" formControlName="whatWeDo" class="form-control" placeholder="Description" maxlength="2000"></textarea>
+                                    <div *ngIf="profileOneFormControls.whatWeDo.errors && (profileOneFormControls.whatWeDo.dirty || profileOneFormControls.whatWeDo.touched || profileOneFormSubmitted)"
+                                         class="error" role="alert">
+                                        <div *ngIf="profileOneFormControls.whatWeDo.errors.required">
+                                            Description is required
+                                        </div>
+                                        <div *ngIf="profileOneFormControls.whatWeDo.errors.maxlength">
+                                            Maximum of 2000 characters allowed.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Why we do it</label>
+                                    <textarea rows="6" id="whyWeDoIt" name="whyWeDoIt" formControlName="whyWeDoIt" class="form-control" placeholder="Description" maxlength="2000"></textarea>
+                                    <div *ngIf="profileOneFormControls.whyWeDoIt.errors && (profileOneFormControls.whyWeDoIt.dirty || profileOneFormControls.whyWeDoIt.touched || profileOneFormSubmitted)"
+                                         class="error" role="alert">
+                                        <div *ngIf="profileOneFormControls.whyWeDoIt.errors.required">
+                                            Description is required
+                                        </div>
+                                        <div *ngIf="profileOneFormControls.whyWeDoIt.errors.maxlength">
+                                            Maximum of 2000 characters allowed.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Why choose us</label>
+                                    <textarea rows="6" id="whyChooseUs" name="whyChooseUs" formControlName="whyChooseUs" class="form-control" placeholder="Description" maxlength="2000"></textarea>
+                                    <div *ngIf="profileOneFormControls.whyChooseUs.errors && (profileOneFormControls.whyChooseUs.dirty || profileOneFormControls.whyChooseUs.touched || profileOneFormSubmitted)"
+                                         class="error" role="alert">
+                                        <div *ngIf="profileOneFormControls.whyChooseUs.errors.required">
+                                            Description is required
+                                        </div>
+                                        <div *ngIf="profileOneFormControls.whyChooseUs.errors.maxlength">
+                                            Maximum of 2000 characters allowed.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="text-align:right; margin-top:-4%;">
+                                    <button type="submit" class="btn btn-primary btn-lg label-offset fs-15">
+                                        Save
+                                    </button>
+                                </div>
+
+
+                                <!--<div class="form-row col-md-2" style="margin-top: 100px;">
+                                    <button type="submit"
+                                            class="btn btn-outline-dark btn-lg label-offset fs-15">
+                                        Add
+                                    </button>
+                                </div>-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 mb-24 mb-lg-0" id="addTeamMembers" *ngIf="step == CompanyRegistrationStep.Profile" style=" border: 1px solid #D9D9D9; padding: 2%; margin-top:5%; border-radius: 5px; box-shadow: 5px 3px #D9D9D9;">
+                    <!-- <ng-template [ngTemplateOutlet]="SideBar"></ng-template> -->
+                    <div class="col-md-12 col-sm-12 col-lg-12 mb-28 mb-lg-0">
+                        <div>
+                            <form class="Form__Block" [formGroup]="profileTwoForm">
+
+                                <h3 class="mb-14 fw-900">
+                                    Add team members to your profile
+                                </h3>
+                                <div class="form-group">
+                                    <label>Meet the team *</label>
+                                    <input type="text" id="teamName" name="teamName" formControlName="teamName"
+                                           class="form-control" placeholder="Name" />
+                                    <div *ngIf="profileTwoFormControls.teamName.errors && (profileTwoFormControls.teamName.dirty || profileTwoFormControls.teamName.touched || profileTwoFormSubmitted)"
+                                         class="error" role="alert">
+                                        <div *ngIf="profileTwoFormControls.teamName.errors.required">
+                                            Name is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Role *</label>
+                                    <input type="text" id="teamRole" name="teamRole" formControlName="teamRole"
+                                           class="form-control" placeholder="Role" />
+                                    <div *ngIf="profileTwoFormControls.teamRole.errors && (profileTwoFormControls.teamRole.dirty || profileTwoFormControls.teamRole.touched || profileTwoFormSubmitted)"
+                                         class="error" role="alert">
+                                        <div *ngIf="profileTwoFormControls.teamRole.errors.required">
+                                            Role is required
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label>Description *</label>
+                                    <textarea rows="6" id="teamDescription" name="teamDescription"
+                                              formControlName="teamDescription" class="form-control"
+                                              placeholder="Please Enter Member Description" maxlength="2000"></textarea>
+                                    <div *ngIf="profileTwoFormControls.teamDescription.errors && (profileTwoFormControls.teamDescription.dirty || profileTwoFormControls.teamDescription.touched || profileTwoFormSubmitted)"
+                                         class="error" role="alert">
+                                        <div *ngIf="profileTwoFormControls.teamDescription.errors.required">
+                                            Description
+                                            is required
+                                        </div>
+                                        <div *ngIf="profileTwoFormControls.teamDescription.errors.maxlength">
+                                            Maximum of 2000 characters allowed.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="text-align:right">
+                                    <button type="button" (click)="submitProfileTwoForm()" class="btn btn-primary btn-lg fs-15">
+                                        Add to list
+                                    </button>
+                                </div>
+                            </form>
+                            <br>
+
+                            <div class="form-group">
+                                <label>Meet the team</label>
+                                <div id="myTeamHeader" style="height: 250px !important; overflow-y: auto;">
+                                    <table class="table table-striped table-responsive-md btn-table">
+                                        <thead style="background-color: #FAFAFA; border:1px solid #ccc;">
+                                            <tr>
+                                                <th><b>Name</b></th>
+                                                <th><b>Role</b></th>
+                                                <th><b>Description</b></th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="4" *ngIf="meetData.length == 0">No Records Found</td>
+                                            </tr>
+                                            <tr *ngFor="let teamMember of meetData;let indexOfelement=index;">
+                                                <td>{{teamMember.teamName}}</td>
+                                                <td>{{teamMember.teamRole}}</td>
+                                                <td style="text-align:left;">{{teamMember.teamDescription}}</td>
+                                                <td>
+                                                    <i class="fa fa-trash" style="cursor:pointer; color:red;" title="Delete"
+                                                       (click)="openDialog(teamMember.companyTeamId, indexOfelement)"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!--<hr>-->
+                            <div class="col-12 text-right">
+                                <a href="/Profile" class="btn btn-primary btn-lg fs-15" *ngIf="isGoBack == true">Go Back</a>
+                            </div>
+                            <div ngcontent-tcb-c421="" class="Form_Block-Controls" *ngIf="!isProfileEdited">
+                                <button type="button" (click)="navigate(CompanyRegistrationStep.Price)" class="btn btn-primary btn-lg ml-auto fs-15">
+                                    Continue
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- price capture step -->
+                <div class="col-md-12 col-sm-12 mb-24 mb-lg-0" *ngIf="step == CompanyRegistrationStep.Price" style="border: 1px solid #D9D9D9; padding: 2%; border-radius: 5px; box-shadow: 5px 3px #D9D9D9;" id="companyPriceSetup">
+                    <div class="col-md-12 col-sm-12 col-lg-12 mb-28 mb-lg-0" style="margin-top:-6%;">
+                        <div *ngIf="companyId">
+                            <app-subject-studylevel-setup-index [isRegistrationDone]="isRegistrationDone" [isFilterVisible]="11" [ownerEntityId]="companyId" [ownerEntityType]="ownerEntityType" [ownerRegisterTitle]="true"></app-subject-studylevel-setup-index>
+                        </div>
+                        <div class="Form_Block-Controls">
+                            <button type="button" (click)="navigate(CompanyRegistrationStep.Finish)" class="btn btn-primary btn-lg ml-auto" style="margin-right:3%;">
+                                Continue
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Finish step -->
+                <div class="row ng-star-inserted col-md-12 col-sm-12 mb-28 mb-lg-0" *ngIf="step == CompanyRegistrationStep.Finish" style="border: 1px solid #D9D9D9; padding: 5%; border-radius: 5px; box-shadow: 5px 3px #D9D9D9;">
+                    <div class="d-flex flex-column justify-content-center mx-auto">
+                        <div class="Status__Icon mx-auto mb-56">
+                            <i class="fas fa-check success"></i>
+                        </div>
+                        <h3 class="mb-14 fw-900">Your profile is complete</h3>
+                        <!--<a type="button" class="btn btn-primary btn-lg mb-14" href="/Tutor/Home/Middleware?redirect=0">Let's create your first lesson</a>-->
+                        <a type="button" class="btn btn-primary btn-lg" href="/Admin/Home/Middleware?redirect=1">Go to Dashboard</a>
+                    </div>
+                </div>
+            </div> 
+    </div>
+</div>

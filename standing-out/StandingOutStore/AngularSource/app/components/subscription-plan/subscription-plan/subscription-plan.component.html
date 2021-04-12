@@ -1,0 +1,18 @@
+
+<div class="col-sm-12 col-md-12">
+    <div *ngIf="isCompanyPlan()">
+        <company-plan-card [subscriptionName]="subscriptionName" [planSubscriptoinPrice]="planSubscriptoinPrice"></company-plan-card>
+    </div>
+    <div *ngIf="isStarterTutorPlan()">
+        <starter-tutor-plan-card></starter-tutor-plan-card>
+    </div>
+    <div *ngIf="isProfessionalTutorPlan()">
+        <professional-tutor-plan-card></professional-tutor-plan-card>
+    </div>
+    <div *ngIf="isNoFeeTutorPlan()">
+        <nofee-tutor-plan-card></nofee-tutor-plan-card>
+    </div>
+    <div *ngIf="isPrivateTutorPlan()">
+        <private-tutor-plan-card></private-tutor-plan-card>
+    </div>
+</div>

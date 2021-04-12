@@ -1,0 +1,40 @@
+
+@if (!User.Identity.IsAuthenticated || string.IsNullOrEmpty(User.Identity.Name))
+{
+    <!-- Anonimous -->
+    <script>
+
+        window.intercomSettings = {
+            app_id: '@ViewData["IntercomAppId"]',
+            name: null,
+            email: null,
+            created_at: null,
+            "isTutor": false,
+            "isParent": false,
+            "isStudent": false
+        };
+    </script>
+
+    <script>(function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', w.intercomSettings); } else { var d = document; var i = function () { i.c(arguments); }; i.q = []; i.c = function (args) { i.q.push(args); }; w.Intercom = i; var l = function () { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/qoskikpv'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); }; if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })();</script>
+}
+else
+{
+    <!-- Authorised -->
+<script>
+        window.intercomSettings = {
+            app_id: '@ViewData["IntercomAppId"]',
+            name: '@ViewData["IntercomName"]', // Full name
+            email: '@ViewData["IntercomEmail"]', // Email address
+            created_at: '@ViewData["IntercomCreatedAt"]', // Signup date as a Unix timestamp
+            user_id: '@ViewData["UserId"]',
+            "isTutor": @Html.Raw((bool)ViewData["isTutor"] == true ? "true" : "false"),
+            "isTutor": @Html.Raw((bool)ViewData["isTutor"] == true ? "true" : "false"),
+            "isParent": @Html.Raw((bool)ViewData["isParent"] == true ? "true" : "false"),
+            "isStudent": @Html.Raw((bool)ViewData["isStudent"] == true ? "true" : "false"),
+            custom_launcher_selector: '#intercom-help',
+            hide_default_launcher: true
+        };
+</script>
+
+    <script>(function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', w.intercomSettings); } else { var d = document; var i = function () { i.c(arguments); }; i.q = []; i.c = function (args) { i.q.push(args); }; w.Intercom = i; var l = function () { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/qoskikpv'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); }; if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })();</script>
+}

@@ -1,0 +1,234 @@
+<style>
+    .mat-dialog-container {
+        padding: 0 !important;
+    }
+
+    .step-col {
+        margin-bottom: 0px !important;
+    }
+
+    .myClass {
+        border-radius: 10px !important;
+    }
+</style>
+
+<!--<h2 style="text-align:center" mat-dialog-title>Add Event</h2>
+
+<ngb-alert *ngIf="showAlert" [type]="alert.type" (close)="showAlert=false">{{ alert.message }}</ngb-alert>
+
+<mat-dialog-content class="mat-typography">
+    <div class="form-group">
+        <label for="inputsm">Selected {{weekDayLabel}}</label>
+        <input class="form-control input-sm" name="selectedWeekDay" [readOnly]="true" [value]="selectedWeekDay" type="text">
+    </div>
+    <div class="form-group">
+        <label for="inputdefault">From Time</label>-->
+<!-- <input class="form-control" value="" name="fromTime" type="text" #fromTime > -->
+<!--<ngb-timepicker [(ngModel)]="fromTime" size="small"></ngb-timepicker>
+    </div>
+    <div class="form-group">
+        <label for="inputlg">To Time</label>
+        <ngb-timepicker [(ngModel)]="toTime" size="small"></ngb-timepicker>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button type="button" class="btn btn-danger mr-1" mat-dialog-close>Close</button>
+    <button type="button" [disabled]="isSubmit" (click)="submit()" class="btn btn-success mr-1">{{submitBtnText}}</button>
+    <button mat-dialog-close *ngIf="isDeleteVisible" type="button" (click)="submit(true)" class="btn btn-danger btn-success">Delete</button>
+
+</mat-dialog-actions>-->
+<!-- Copyright 2020 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
+
+<style>
+    .no-backdrop {
+        background: none;
+    }
+</style>
+<div class="step-col" *ngIf="!oldFromTime && !needConfirmation">
+    <div class="step-col-head">
+        <h3>Add Availability</h3>
+
+    </div>
+    <div class="step-col-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="create-sub-col selected-date">
+                    <label>SELECTED DATE</label>
+                    <input type="date" [value]="selectedDate.date.split('T')[0]" disabled />
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="create-sub-col from-time">
+                    <label>FROM TIME</label>
+                    <input type="time" [value]="fromTime" #inputFromTime />
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="create-sub-col to-time">
+                    <label>TO TIME</label>
+                    <input type="time" [value]="toTime" #inputToTime />
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="create-sub-col select-days">
+                    <div class="d-flex align-items-center day-repeat">
+                        <div class="checkbox switcher">
+                            <label for="repeat">
+                                <small>Repeat</small>
+                                <input type="checkbox" id="repeat" value="" #isRepeat>
+                                <span><small></small></span>
+                            </label>
+                        </div>
+                        <div class="num-week">
+                            <span>No. of weeks</span>
+                            <input type="text" value="10" #noOfWeek />
+                        </div>
+                    </div>
+                    <div class="d-flex day-by-day">
+                        <div class="checkbox switcher">
+                            <label for="day1">
+                                <small>Mon</small>
+                                <input type="checkbox" id="day1" value="1" #weekdayChkbox (click)="checkRepeated()">
+                                <span><small></small></span>
+                            </label>
+                        </div>
+                        <div class="checkbox switcher">
+                            <label for="day2">
+                                <small>Tue</small>
+                                <input type="checkbox" id="day2" value="2" #weekdayChkbox (click)="checkRepeated()">
+                                <span><small></small></span>
+                            </label>
+                        </div>
+                        <div class="checkbox switcher">
+                            <label for="day3">
+                                <small>Wed</small>
+                                <input type="checkbox" id="day3" value="3" #weekdayChkbox (click)="checkRepeated()">
+                                <span><small></small></span>
+                            </label>
+                        </div>
+                        <div class="checkbox switcher">
+                            <label for="day4">
+                                <small>Thu</small>
+                                <input type="checkbox" id="day4" value="4" #weekdayChkbox (click)="checkRepeated()">
+                                <span><small></small></span>
+                            </label>
+                        </div>
+                        <div class="checkbox switcher">
+                            <label for="day5">
+                                <small>Fri</small>
+                                <input type="checkbox" id="day5" value="5" #weekdayChkbox (click)="checkRepeated()">
+                                <span><small></small></span>
+                            </label>
+                        </div>
+                        <div class="checkbox switcher">
+                            <label for="day6">
+                                <small>Sat</small>
+                                <input type="checkbox" id="day6" value="6" #weekdayChkbox (click)="checkRepeated()">
+                                <span><small></small></span>
+                            </label>
+                        </div>
+                        <div class="checkbox switcher">
+                            <label for="day7">
+                                <small>Sun</small>
+                                <input type="checkbox" id="day7" value="0" #weekdayChkbox (click)="checkRepeated()">
+                                <span><small></small></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5" style="float: right;">
+                    <button id="calenderaCancelButton" type="reset" style="border: 1px solid; float: none; padding: 13px 20px;" class="close" data-dismiss="modal" aria-label="Close" (click)="closeDialog()">Cancel</button>
+                    <button type="submit" class="sub-next" data-dismiss="modal" (click)="submit()">Update</button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<div class="step-col" *ngIf="oldFromTime && !needConfirmation">
+    <div class="step-col-head">
+        <h3><img src="assets/images/edit-icon.svg" alt="" /> Edit Availability</h3>
+    </div>
+    <div class="step-col-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="create-sub-col selected-date">
+                    <label>SELECTED DATE</label>
+                    <input type="date" [value]="selectedDate.date" disabled />
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="create-sub-col from-time">
+                    <label>FROM TIME</label>
+                    <input type="time" value="09:00" #inputFromTime />
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="create-sub-col to-time">
+                    <label>TO TIME</label>
+                    <input type="time" value="10:00" #inputToTime />
+                </div>
+            </div>
+
+        </div>
+        <!--<div class=" d-flex justify-content-between mt-3">
+            <div class="del-day"><button type="button" (click)="submit(true)" class="sub-del">Delete <img src="/lib/assets/images/del-w.svg" alt="" /></button></div>
+            <div class="mt-2" style="float: right;">
+                <button type="reset" style="float: left;" class="close" data-dismiss="modal" aria-label="Close" (click)="closeDialog()">Cancel</button>
+                <button type="submit" class="sub-next" data-dismiss="modal" (click)="submit()">Update</button>
+            </div>
+        </div>-->
+
+        <div class="d-flex justify-content-between mt-3">
+            <div class="mt-2 col-sm-12">
+                <div class="pt-3 col-md-4 text-center" style="float:left;">
+                    <button type="submit" data-dismiss="modal" class="sub-next " (click)="submit()" style="width: 100%;" >Update</button>
+                </div>
+                <div class="pt-3 col-md-4 text-center" style="float:left;">
+                    <button type="reset" (click)="closeDialog()" data-dismiss="modal" aria-label="Close" class="close " style="border: 1px solid;float:none;width:100%;padding:13px 20px;">Cancel</button>
+                </div>
+                <div class="pt-3 col-md-4 text-center" style="float:left;">
+                    <button style="width: 100%;" type="button" (click)="submit(true)" class="sub-del" >Delete <img src="/lib/assets/images/del-w.svg" alt=""></button>
+                </div>
+                <!--<button type="submit" data-dismiss="modal" class="sub-next col-sm-12 col-md-6 col-lg-3" (click)="submit()" style="margin-top: 5px;margin-bottom: 5px;width: 100%;">Update</button>
+                <button type="reset" (click)="closeDialog()" data-dismiss="modal" aria-label="Close" class="close col-sm-12 col-md-6 col-lg-3" style="float: left;width: 100%;border: 1px solid;">Cancel</button>
+                <button type="button" (click)="submit(true)" class="sub-del col-sm-12 col-md-6 col-lg-3" style="width: 100%;">Delete <img src="/lib/assets/images/del-w.svg" alt=""></button>-->
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="step-col" *ngIf="needConfirmation">
+    <div class="step-col-head">
+        <h3>Repeat time slot</h3>
+
+    </div>
+    <div class="step-col-body">
+        <p>This is a one time slot in a repeated series. What do you want to modify?</p>
+        <div class="row align-self-baseline">
+            <div class="col-sm-12">
+                <div class="radio-group">
+                    <div class="custom_radio">
+                        <input type="radio" id="featured-1" name="featured" (change)="typeTimeSlot=1" checked=""><label for="featured-1">Just this one</label>
+                    </div>
+                    <div class="custom_radio">
+                        <input type="radio" id="featured-2" name="featured" (change)="typeTimeSlot=2"><label for="featured-2">The entire series</label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="text-right mt-3">
+            <button style="margin-left:1%;" type="reset" class="close" data-dismiss="modal" aria-label="Close" (click)="closeDialog()">Cancel</button>
+            <button type="button" class="sub-next" (click)="modifyTimeSlot()">Confirm</button>
+        </div>
+    </div>
+</div>

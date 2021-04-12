@@ -1,0 +1,57 @@
+<div style="padding:24px;">
+    <div class="d-flex align-items-start justify-content-between mb-35">
+        <div>
+            <div class="fs-28 fw-700 mb-7 cl-dark">DBS Check</div>
+        </div>
+        <button type="button" class="close" style="outline: none;" (click)="closeModal(dbsCheckData)">
+            <i class="fa fa-times-circle" style="color:red" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="Form__Block">
+        <form (ngSubmit)="submitDbsCheckFormSub()" [formGroup]="dbsCheckForm">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <h4 class="mb-21"><b>Do you have a Enhanced DBS certificate that allows you to teach children (under the age of 18)?</b></h4>
+                        <div class="row">
+                            <div class="col-12 mb-21">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="hasDbsCheck" name="hasDbsCheck" formControlName="hasDbsCheck" [value]="true" (change)="hasDbsCheckValueChange()" class="form-check-input" />
+                                        <span class="label">Yes I do have a DBS for Children</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" id="hasDbsCheck" name="hasDbsCheck" formControlName="hasDbsCheck" [value]="false" (change)="hasDbsCheckValueChange()" class="form-control" />
+                                        <span class="label">No I do not have a DBS for Children</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="dbsCheckFormControls.hasDbsCheck.errors && (dbsCheckFormControls.hasDbsCheck.dirty || dbsCheckFormControls.hasDbsCheck.touched || dbsCheckFormSubmitted)" class="error" role="alert">
+                            <div *ngIf="dbsCheckFormControls.hasDbsCheck.errors.required">Without a Valid DBS for Children, you will only be able to teach adults over the age of 18 on the system.</div>
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group" *ngIf="dbsCheckFormControls.hasDbsCheck.value">
+                        <label>DBS Certificate No. *</label>
+                        <input type="text" id="dbsCertificateNumber" name="dbsCertificateNumber" formControlName="dbsCertificateNumber" class="form-control" placeholder="Enter your DBS certificate no." />
+                        <div *ngIf="dbsCheckFormControls.dbsCertificateNumber.errors && (dbsCheckFormControls.dbsCertificateNumber.dirty || dbsCheckFormControls.dbsCertificateNumber.touched || dbsCheckFormSubmitted)" class="error" role="alert">
+                            <div *ngIf="dbsCheckFormControls.dbsCertificateNumber.errors.required">DBS Certificate No. is required</div>
+                            <div *ngIf="dbsCheckFormControls.dbsCertificateNumber.errors.maxlength">Please enter your valid DBS certificate no. to continue.</div>
+                        </div>
+                    </div>-->
+                    <div class="w-100 alert alert-warning mb-42 py-14 fw-500" role="alert" *ngIf="dbsCheckFormControls.hasDbsCheck.value == false">
+                        Without a DBS for Children, you will only be able to teach adult students who are aged 18 or over
+                    </div>
+                </div>
+            </div>
+            <div class="Form_Block-Controls">
+                <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+            </div>
+        </form>
+    </div>
+</div>

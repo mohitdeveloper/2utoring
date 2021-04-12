@@ -1,0 +1,145 @@
+<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-start mb-14 mb-lg-28">
+                <h1>{{title}}</h1>
+            </div>
+
+            <div class="d-flex mb-14 mb-lg-28 col-12 row">
+                <span class="col-md-4" style="font-size:18px;">Enhanced DBS checks <i (click)="showInformation('DBS')" style="cursor:pointer;" class="fa fa-info-circle" aria-hidden="true"></i></span>
+                <span class="col-md-6" style="font-size:18px;">Application for Enhanced DBS certificate <i (click)="showInformation('CRI')" style="cursor:pointer;" class="fa fa-info-circle" aria-hidden="true"></i></span>
+            </div>
+            <div class="d-flex justify-content-between align-items-start mb-14 mb-lg-28">
+                
+            </div>
+            <br>
+            <div class="row mb-21">
+                <div class="col-12 col-lg-auto mb-14 mb-lg-0 d-flex align-items-center">
+                    <label class="mb-0">Filter by ...</label>
+                </div>
+
+                <div class="col-12 col-lg-auto mb-14 mb-lg-0">
+                    <select class="custom-select Textbox--largeVerticalPadding" [(ngModel)]="searchModel.take" (ngModelChange)="reloadData()">
+                        <option *ngFor="let option of takeValues" [ngValue]="option.take">{{option.name}}</option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-lg-6 mb-14 mb-lg-0">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control Textbox--iconPrepend Textbox--largeVerticalPadding" [(ngModel)]="searchModel.search" placeholder="Search By Name" aria-label="Search By Name" aria-describedby="button-search" (keydown)="onType($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-success Button--largeVerticalPadding" type="button" id="button-search" (click)="reloadData()">Search</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-auto mb-14 mb-lg-0">
+                    <button class="btn btn-lg btn-success d-flex align-items-center justify-content-center w-100 w-lg-auto" type="button" id="button-search" (click)="popinviteTutorsModal()" style="height: calc(1.5em + 2rem + -3px)"><span class="w-100" style="margin-top: -3px">Invite tutor to register</span></button>
+                </div>
+            </div>
+
+
+            <div class="table-overflow">
+                <table class="styled">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <span (click)="alterOrder('User.Name')">
+                                    Name
+                                    <span [hidden]="!(searchModel.sortType == 'User.Name' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'User.Name' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('User.Email')">
+                                    Email
+                                    <span [hidden]="!(searchModel.sortType == 'User.Email' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'User.Email' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('User.googleEmail')">
+                                    Google registered
+                                    <span [hidden]="!(searchModel.sortType == 'User.googleEmail' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'User.googleEmail' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('StripeCustomerId')">
+                                    Tutor DOB
+                                    <span [hidden]="!(searchModel.sortType == 'StripeCustomerId' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'StripeCustomerId' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('PaymentStatus')">
+                                    Start Date
+                                    <span [hidden]="!(searchModel.sortType == 'PaymentStatus' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'PaymentStatus' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('PaymentStatus')">
+                                    DBS number
+                                    <span [hidden]="!(searchModel.sortType == 'PaymentStatus' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'PaymentStatus' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+
+
+                            <th scope="col">
+                                <span (click)="alterOrder('DbsAdminApproved')">
+                                    DBS Approved
+                                    <span [hidden]="!(searchModel.sortType == 'DbsAdminApproved' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'DbsAdminApproved' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('ProfileAuthorized')">
+                                    Profile Authorized
+                                    <span [hidden]="!(searchModel.sortType == 'ProfileAuthorized' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'ProfileAuthorized' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of results.data">
+                            <td>{{item.userTitle}} {{item.userFullName}}</td>
+                            <td>{{item.userEmail}}</td>
+                            <td>{{!(item.googleEmail)?'N':'Y'}}</td>
+                            <td>{{item.dateOfBirth | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{item.startDate | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{item.dbsCertificateNumber}}</td>
+                            <td>{{item.dbsApprovalStatus}}</td>
+                            <td>{{item.profileApprovalStatus}}</td>
+
+                            <td>
+                                <div>
+                                    <a href="/admin/tutors/details/{{item.tutorId}}"  class="btn btn-sm btn-textonly-success">View</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center Pagination mt-28" *ngIf="results.paged !== undefined && results.paged != null">
+                <span class="pagination-info">Page {{results.paged.page}} of {{results.paged.totalPages}}</span>
+                <ul class="pagination justify-content-end mb-0">
+                    <li [class]="results.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+                        <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">{{results.paged.page}}</a></li>
+                    <li [class]="results.paged.page >= results.paged.totalPages ? 'page-item disabled' : 'page-item'">
+                        <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

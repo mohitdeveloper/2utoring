@@ -1,0 +1,197 @@
+// ----------------------------------------------------
+// Utilities
+// ----------------------------------------------------
+
+$base-font-size: 14px;
+
+@function rem($value) {
+  $unit: unit($value);
+  @if $unit == "rem" {
+    @return $value;
+  } @else if $unit == "px" {
+    @return $value / $base-font-size * 1rem;
+  } @else if $unit == "em" {
+    @return $unit / 1em * 1rem;
+  } @else {
+    @error 'Value must be in px, em, or rem.';
+  }
+}
+
+// Font Size Data
+
+// Mobile
+$m-font-size-data: (
+  10: 10px,
+  12: 12px,
+  13: 13px,
+  14: 14px,
+  15: 15px,
+  16: 16px,
+  18: 18px - 3,
+  21: 21px - 7,
+  24: 24px - 7,
+  28: 28px - 7,
+  35: 35px - 7,
+  50: 50px - 14,
+  63: 63px - 14,
+) !default;
+
+//Mobile
+@media screen and (max-width: 1199px) {
+  @each $key, $value in $m-font-size-data {
+    .fs-#{$key} {
+      font-size: rem($value) !important;
+    }
+  }
+}
+
+// Desktop
+$d-font-size-data: (
+  10: 10px,
+  12: 12px,
+  13: 13px,
+  14: 14px,
+  15: 15px,
+  16: 16px,
+  18: 18px,
+  21: 21px,
+  24: 24px,
+  28: 28px,
+  35: 35px,
+  50: 50px,
+  63: 63px,
+) !default;
+
+@media screen and (min-width: 1200px) {
+  @each $key, $value in $d-font-size-data {
+    .fs-#{$key} {
+      font-size: rem($value) !important;
+    }
+  }
+}
+
+// Line Height
+@each $key, $value in $d-font-size-data {
+  .lh-#{$key} {
+    line-height: rem($value + 14) !important;
+  }
+}
+
+.lh-normal {
+  line-height: normal !important;
+}
+
+// Font Weight Data
+$font-weight-data: (
+  200: $font-weight-lighter,
+  300: $font-weight-light,
+  400: $font-weight-normal,
+  500: $font-weight-medium,
+  600: $font-weight-bold,
+  700: $font-weight-bolder,
+  800: 800,
+) !default;
+
+// Font Weight
+@each $key, $value in $font-weight-data {
+  .fw-#{$key} {
+    font-weight: #{$value} !important;
+  }
+}
+
+// Colour Data
+$color-data: (
+  "white": "#ffffff",
+  "lighter": "#F6F6F6",
+  "light": "#757F8D",
+  "dark": "#485465",
+  "primary": $orange,
+) !default;
+
+// Colour
+@each $name, $value in $color-data {
+  .bg-cl-#{$name} {
+    background-color: #{$value} !important;
+  }
+
+  .cl-#{$name} {
+    color: #{$value} !important;
+  }
+}
+
+// Border Raduis Data
+$border-radius-data: (3) !default;
+
+// Border Raduis
+@each $value in $border-radius-data {
+  .bdr-#{$value} {
+    border-radius: #{$value}px !important;
+  }
+}
+
+// Width Data
+$width-data: (
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%,
+) !default;
+
+// Width
+@each $name, $value in $width-data {
+  .flw-#{$name} {
+    flex: 1 1 #{$value} !important;
+  }
+}
+
+// Breakpoints for Width and Heights
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    @each $prop, $abbrev in (width: w, height: h) {
+      @each $size, $length in $sizes {
+        .#{$abbrev}-#{$breakpoint}-#{$size} {
+          #{$prop}: $length !important;
+        }
+      }
+    }
+  }
+}
+
+// Display Data
+$display-data: (none, block, inline, inline-block, flex, inline-flex) !default;
+
+// Display Utilities
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    @each $value in $display-data {
+      .d-#{$breakpoint}-#{$value} {
+        display: $value !important;
+      }
+    }
+  }
+}
+
+// Positiion Data
+$position-data: (fixed, absolute, relative, static) !default;
+
+// Positiion Utilities
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    @each $value in $position-data {
+      .p-#{$breakpoint}-#{$value} {
+        position: $value !important;
+      }
+    }
+  }
+}
+
+// Opacity steps
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    @for $i from 1 through 10 {
+      .o-#{$breakpoint}-#{$i * 10} {
+        opacity: $i / 10 !important;
+      }
+    }
+  }
+}

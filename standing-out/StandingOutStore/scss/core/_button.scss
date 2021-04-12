@@ -1,0 +1,51 @@
+// ----------------------------------------------------
+// Buttons
+// ----------------------------------------------------
+[class *=btn-outline] {
+    box-shadow: inset 0 0 0 1px currentColor;
+
+    &:hover {
+        box-shadow: none;
+    }
+}
+
+button.btn[disabled] {
+    background-color: #fff;
+    border-color: $gray-500;
+    color: $gray-500;
+    cursor: not-allowed;
+}
+
+button.btn-text {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+}
+
+.btn {
+    &-Google {
+        background-color: #4285F4;
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover {
+            color: #fff;
+            background-color: darken(#4285F4, 10%);
+        }
+
+        svg {
+            path, g {
+                fill : white;
+            }
+        }
+    }
+    &-GoogleCreate {
+        background-color: #fff;
+        border: 1px solid #485465;
+        color: #485465;
+        font-weight: 600;
+        text-decoration: none;
+    }
+}

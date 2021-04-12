@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /Admin/
+Disallow: /login
+Disallow: /tutor/register/process/*
+Sitemap: https://2utoring.com/sitemap.xml

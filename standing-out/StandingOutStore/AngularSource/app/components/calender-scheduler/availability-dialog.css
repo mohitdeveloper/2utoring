@@ -1,0 +1,35 @@
+﻿.mat-dialog-container {
+    padding: 0 !important;
+}
+
+.step-col {
+    margin-bottom: 0px !important;
+}
+
+.myClass {
+    border-radius: 10px !important;
+}
+
+button.close {
+    font-size: 16px;
+    color: #ffab4b;
+    font-weight: 400;
+    opacity: 1;
+    margin-right: 10px;
+    background: #fff;
+    box-shadow: none;
+    text-shadow: none;
+    padding: 14px 20px;
+    border-radius: 6px;
+}
+
+button.close:hover {
+    color: #fff;
+    background: #ffab4b;
+}
+
+@media (max-width: 767px) {
+    .day-by-day {
+        flex-wrap: wrap;
+    }
+}

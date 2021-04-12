@@ -1,0 +1,34 @@
+
+.mat-dialog-container {
+    padding: 0 !important;
+}
+
+.myClass {
+    border-radius: 10px !important;
+}
+
+.poupClose {
+    font-size: 16px;
+    color: #ffab4b;
+    font-weight: 400;
+    opacity: 1;
+    margin-right: 10px;
+    background: #fff;
+    box-shadow: none;
+    text-shadow: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border:none;
+}
+button.poupClose:hover {
+    color: #fff;
+    background: #ffab4b;
+}
+
+h1 {
+    margin-bottom: 0rem !important;
+}
+
+.Page--process\:LessonCreate, .Page--process\:SettingPage {
+    margin-top: 25px !important;
+}

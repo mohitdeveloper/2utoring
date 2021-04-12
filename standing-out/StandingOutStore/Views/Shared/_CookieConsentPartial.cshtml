@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner)
+{
+
+    <div class="Page__Container Page__Container--size:content mb-25" id="cookie-bar">
+        <div class="row">
+            @*<div class="col-12 mb-14">*@
+            <div class="col-12" style="margin-top: 10px; margin-bottom:0px">
+                <div id="cookieConsent" class="Alert Alert--type:Info fade show " role="alert">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 6C9 5.448 9.448 5 10 5C10.552 5 11 5.448 11 6C11 6.552 10.552 7 10 7C9.448 7 9 6.552 9 6ZM9 9C9 8.448 9.448 8 10 8C10.552 8 11 8.448 11 9V14C11 14.552 10.552 15 10 15C9.448 15 9 14.552 9 14V9ZM10 18C5.589 18 2 14.411 2 10C2 5.589 5.589 2 10 2C14.411 2 18 5.589 18 10C18 14.411 14.411 18 10 18ZM10 0C4.477 0 0 4.477 0 10C0 15.523 4.477 20 10 20C15.522 20 20 15.523 20 10C20 4.477 15.522 0 10 0Z" fill="#222B45"/>
+                    </svg>
+                    <div class="Alert__Text d-flex align-items-center justify-content-between w-100 flex-wrap felx-lg-no-wrap">
+                        <p class="fs-16 m-0 p-0" style="text-align:left;">We use cookies to serve relevant content, improve our site for you and help it function - <a asp-route="CookiePolicy">find out more</a></p>
+                        <button type="button" class="accept-policy mt-14 mt-sm-14 mt-md-14 mt-lg-0 ml-lg-auto" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString"><span aria-hidden="true">Accept</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function () {
+            var panel = document.querySelector('#cookie-bar');
+            var button = document.querySelector("#cookieConsent button[data-cookie-string]");
+            button.addEventListener("click", function (event) {
+                document.cookie = button.dataset.cookieString;
+                panel.remove();
+            }, false);
+        })();
+    </script>
+}

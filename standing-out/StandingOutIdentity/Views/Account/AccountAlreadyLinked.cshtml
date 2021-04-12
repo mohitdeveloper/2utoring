@@ -1,0 +1,12 @@
+@model RedirectViewModel
+
+@{
+    ViewData["Title"] = "Account Already Linked";
+}
+
+<div class="col-14 col-lg-8 offset-lg-2">
+    <div class="Card Card--toRepsond:small">
+        <h1 class="mb-5 fw-800">Link your google account</h1>
+        <p>This 2utoring.com account is already linked to a Google account. Please <a asp-controller="Home" asp-action="Redirect" asp-route-returnUrl="@Model.RedirectUrl">click here</a> to return.</p>
+    </div>
+</div>

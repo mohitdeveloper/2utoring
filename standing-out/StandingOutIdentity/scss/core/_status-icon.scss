@@ -1,0 +1,42 @@
+// ----------------------------------------------------
+// Status / Progress
+// ----------------------------------------------------
+.Status__Icon {
+    align-items: center;
+    border: 2px solid #EAEAEA;
+    border-radius: 50%;
+    box-shadow: 0 4px 0 #F4F4F4;
+    display: flex;
+    justify-content: center;
+    height: 111px;
+    width: 111px;
+
+    i {
+        font-size: 42px;
+
+        &.success {
+            color: $success;
+        }
+
+        &.danger {
+            color: $danger;
+        }
+
+        &.info {
+            color: $info;
+        }
+    }
+}
+
+.Overlay {
+    align-items: center;
+    background-color: #fff;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 400;
+}

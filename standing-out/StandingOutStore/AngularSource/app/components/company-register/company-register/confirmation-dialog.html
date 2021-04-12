@@ -1,0 +1,11 @@
+<div class="text-center">
+    <h3 mat-dialog-title>{{message}}</h3>
+    <div mat-dialog-content>
+        <i class="fa fa-exclamation-circle" style="font-size:80px;color:#FECB80;"></i>
+    </div>
+    <div style="margin:20px;">
+        <button class="btn btn-primary btn-lg" style="margin:0px 10px;" mat-raised-button (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
+        <button class="btn btn-danger btn-lg" mat-raised-button mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
+    </div>
+</div>
+

@@ -1,0 +1,68 @@
+label {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.form-row {
+    flex: 0 0 100%;
+    max-width: 100%;
+
+    & + & {
+      margin-top: $spacingLoose;
+    }
+
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 49px;
+  padding: 0 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #eaeaea;
+  border-radius: 0.357rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &::placeholder {
+    color: #a0a0a0;
+    opacity: 1;
+  }
+}
+
+input,
+select,
+textarea {
+    &:not([type='radio']) {
+        appearance: none;   
+    }
+
+    font-size: 14px;
+    font-family: inherit;
+    line-height: inherit;
+    margin: 0;
+}
+
+select {
+  background-image: url("/images/panel-icons/chevron-down.svg");
+  background-position: center right 14px;
+  background-repeat: no-repeat;
+}
+
+
+
+.help-block {
+  background-color: #fef7f7;
+  border-left: 3px solid #eb5757;
+  border-radius: 2px;
+  color: #eb5757;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 14px;
+  padding: 10px 7px 10px 14px;
+}

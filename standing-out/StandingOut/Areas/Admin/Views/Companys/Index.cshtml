@@ -1,0 +1,44 @@
+﻿@model IEnumerable<StandingOut.Data.Models.Company>
+
+@{
+    ViewData["Title"] = "Companies";
+}
+
+<div class="grid-container grid-container--wide">
+    <div class="grid-x margin-bottom-loose margin-top-extra-loose">
+        <div class="large-6 cell">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+        <div class="large-6 cell text-align-right display--flex flex--spaceBetween flex--alignCenter">
+            <a class="button button--primary button--hasIcon margin-left-auto" asp-action="Create"><i class="fal fa-plus"></i><span>Add Company</span></a>
+        </div>
+    </div>
+    <div class="grid-x">
+        <div class="large-12 cell">
+            <section class="table margin-top alignFilters">
+                <table class="datatable" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>
+                                <div class="display--flex flex--spaceBetween">
+                                    <a asp-action="Edit" asp-route-id="@item.CompanyId" class="button button--primary margin-left-auto">Edit</a>
+                                    <a href="/admin/companys/delete/@item.CompanyId" class="button button--distructive margin-left-tight">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>

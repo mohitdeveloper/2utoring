@@ -1,0 +1,33 @@
+@model StandingOut.Data.Models.User
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="large-3 cell"></div>
+        <div class="large-6 cell">
+            <div class="card card--hasGrid margin-x-auto margin-y-extra-loose">
+                <div class="grid-x align-middle">
+                    <div class="large-12 cell text-align-center">
+                        <h2>@ViewData["Title"]</h2>
+                    </div>
+                </div>
+                <hr class="margin-top-base margin-bottom-base" />
+                <section class="form text-align-center">
+                    <form asp-antiforgery="true">
+                        <input type="hidden" name="id" asp-for="Id" />
+                        <p class="margin-top-extra-tight padding-x-expansive">Are you sure you want to delete the user <strong>@Model.Email?</strong></p>
+                        <div class="display--flex margin-x-auto width--max-content">
+                            <a asp-action="Index" asp-controller="Users" class="button button--secondary margin-right-tight">Cancel</a>
+                            <button type="submit" class="button button--distructive" value="Yes">Delete User</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <div class="large-1 cell"></div>
+        </div>
+    </div>
+    <div class="large-3 cell"></div>
+</div>

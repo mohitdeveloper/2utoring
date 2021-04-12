@@ -1,0 +1,22 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--upload" ng-init>
+        <div class="Modal__Header" ng-show="!chooseFileActive">
+            <button type="button" class="Modal__Close" ng-click="cancel()"><i class="fal fa-times-circle"></i></button>
+            <h2>Save Whiteboard Screenshot</h2>
+        </div>
+
+        <div class="Modal__Content" ng-show="!chooseFileActive">
+            <div class="form-group">
+                <label for="whiteboardSaveName">Name</label>
+                <input type="text"name="whiteboardSaveName" class="form-control" ng-model="name" placeholder="Whiteboard Name" />
+            </div>
+        </div>
+
+        <div class="Modal__Footer" ng-show="!chsooseFileActive">
+            <div class="Footer__Buttons">
+                <button class="button button--tertiary" type="button" ng-click="cancel()">Close</button>
+                <button class="button button--success" type="button" ng-click="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

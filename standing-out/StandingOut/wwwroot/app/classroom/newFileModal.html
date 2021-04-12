@@ -1,0 +1,22 @@
+﻿<div class="popup-overlay" id="newFilePopup">
+    <div id="group" name="group" class="Modal Modal--upload" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()"><i class="fal fa-times-circle"></i></button>
+            <h2>Create a new {{ fileType }}</h2>
+        </div>
+
+        <div class="Modal__Content">
+            <div class="form-group">
+                <label>File name</label>
+                <input type="text" class="form-control" name="whiteboardSaveName" ng-model="name" placeholder="Name" />
+            </div>
+        </div>
+
+        <div class="Modal__Footer">
+            <div class="Footer__Buttons">
+                <button class="button button--tertiary" type="button" ng-click="cancel()">Close</button>
+                <button class="button button--success" type="button" ng-click="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

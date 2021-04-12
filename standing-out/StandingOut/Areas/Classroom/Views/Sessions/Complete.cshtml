@@ -1,0 +1,50 @@
+﻿@model StandingOut.Data.Models.ClassSession
+
+@{
+    ViewData["Title"] = "Session Complete";
+}
+
+@section styles  {
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #F4F6FA;
+            min-height: 100vh;
+        }
+    </style>
+}
+
+<div class="grid-container grid-container--narrow">
+    <div class="grid-x grid-margin-x margin-top-extra-loose">
+        <div class="large-12 cell">
+            <div class="card">
+                <h1 class="text-align-center margin-y-tight">Your Session has now ended</h1>
+                @if (Model.RequiresGoogleAccount == true)
+                {
+                    <p class="text-align-center">You will still be able to view session material in your Google Drive and can return to the learning experience at anytime to work individually.</p>
+                }
+                else
+                {
+                    <p class="text-align-center">You can return to the learning experience at any time to carry on your work in the classroom individually.</p>
+                }
+                <hr class="margin-y-loose" />
+                <div class="grid-x">
+                    <div class="large-6 cell">
+                        @if (Model.StartDate >= DateTime.Now.AddMinutes(30))
+                        {
+                            <a asp-route="ClassroomMain" asp-route-id="@Model.ClassSessionId" class="button button--primary">Back To Classrom</a>
+                        }
+                    </div>
+                    <div class="large-6 cell text-align-right">
+                        <a href="@(ViewBag.StoreSiteUrl)/my" class="button button--primary">Return to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

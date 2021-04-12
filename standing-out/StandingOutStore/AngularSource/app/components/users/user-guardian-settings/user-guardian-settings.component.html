@@ -1,0 +1,104 @@
+﻿<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <div class="form-row">
+        <div class="col-12">
+            <h1>Settings</h1>
+            <div class="Form__Block">
+                <app-payment-card></app-payment-card>
+                <form (ngSubmit)="submitUserForm()" class="mt-28" [formGroup]="userForm" *ngIf="userForm != undefined">
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label>First Name *</label>
+                            <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control" placeholder="Enter your first name" />
+                            <div *ngIf="userFormControls.firstName.errors && (userFormControls.firstName.dirty || userFormControls.firstName.touched || userFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="userFormControls.firstName.errors.maxlength">This field should only allow a first name of 20 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="userFormControls.firstName.errors.required">Please enter your first name to continue.</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="exampleInputEmail1">Surname *</label>
+                            <input type="text" id="lastName" name="lastName" formControlName="lastName" class="form-control" placeholder="Enter your surname" />
+                            <div *ngIf="userFormControls.lastName.errors && (userFormControls.lastName.dirty || userFormControls.lastName.touched || userFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="userFormControls.lastName.errors.maxlength">This field should only allow a first name of 20 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="userFormControls.lastName.errors.required">Please enter your surname to continue.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-12">
+                            <label>Email address</label>
+                            <input type="text" id="email" name="email" formControlName="email" class="form-control" placeholder="Email Address" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label>Telephone No. *</label>
+                            <input type="tel" id="telephoneNumber" name="telephoneNumber" formControlName="telephoneNumber" class="form-control" placeholder="Enter your telephone no." />
+                            <div *ngIf="userFormControls.telephoneNumber.errors && (userFormControls.telephoneNumber.dirty || userFormControls.telephoneNumber.touched || userFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="userFormControls.telephoneNumber.errors.maxlength">This field should only allow a telephone no. of 12 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="userFormControls.telephoneNumber.errors.required">Please enter a valid telephone no. to continue. </div>
+                                <div *ngIf="userFormControls.telephoneNumber.errors.pattern">Please enter a valid telephone no.</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>Mobile No.</label>
+                            <input type="tel" id="mobileNumber" name="mobileNumber" formControlName="mobileNumber" class="form-control" placeholder="Enter your mobile no." />
+                            <div *ngIf="userFormControls.mobileNumber.errors && (userFormControls.mobileNumber.dirty || userFormControls.mobileNumber.touched || userFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="userFormControls.mobileNumber.errors.maxlength">This field should only allow a mobile no. of 12 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="userFormControls.mobileNumber.errors.required">Please enter a valid mobile no. to continue</div>
+                                <div *ngIf="userFormControls.mobileNumber.errors.pattern">Please enter a valid mobile no.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-12">
+                            <label class="form-check" for="marketingAccepted">
+                                <input type="checkbox" class="form-control" id="marketingAccepted" name="marketingAccepted" formControlName="marketingAccepted" />
+                                <span class="label">I would like to recieve relevant tips, tricks and offers from the 2utoring team</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label>Childs First Name *</label>
+                            <input type="text" id="childFirstName" name="childFirstName" formControlName="childFirstName" class="form-control" placeholder="Enter your childs first name" />
+                            <div *ngIf="userFormControls.childFirstName.errors && (userFormControls.childFirstName.dirty || userFormControls.childFirstName.touched || userFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="userFormControls.childFirstName.errors.maxlength">This field should only allow a first name of 250 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="userFormControls.childFirstName.errors.required">Please enter your childs first name to continue.</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label>Childs Surname *</label>
+                            <input type="text" id="childLastName" name="childLastName" formControlName="childLastName" class="form-control" placeholder="Enter your childs surname" />
+                            <div *ngIf="userFormControls.childLastName.errors && (userFormControls.childLastName.dirty || userFormControls.childLastName.touched || userFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="userFormControls.childLastName.errors.maxlength">This field should only allow a first name of 250 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="userFormControls.childLastName.errors.required">Please enter your childs surname to continue.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <label>Childs Date of birth</label>
+                            <div class="form-row">
+                                <div class="col-4">
+                                    <input type="number" step="1" placeholder="DD" id="childDateOfBirthDay" name="childDateOfBirthDay" formControlName="childDateOfBirthDay" class="form-control" />
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" step="1" placeholder="MM" id="childDateOfBirthMonth" name="childDateOfBirthMonth" formControlName="childDateOfBirthMonth" class="form-control" />
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" step="1" placeholder="YYYY" id="childDateOfBirthYear" name="childDateOfBirthYear" formControlName="childDateOfBirthYear" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a href="#" (click)="back()" class="link-grey">Go back</a>
+                        <button type="submit" class="btn btn-primary btn-lg ml-auto">Save</button>
+                    </div>
+                </form>
+                <app-user-change-password *ngIf="user != null && user != undefined && user.localLogin == true"></app-user-change-password>
+                <app-user-link-account *ngIf="user != null && user != undefined" [tutor]="false"></app-user-link-account>
+            </div>
+        </div>
+    </div>
+</div>

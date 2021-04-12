@@ -1,0 +1,324 @@
+﻿@using StandingOut.Business.Services;
+@using StandingOut.Data.Enums;
+@using StandingOut.Shared;
+
+@{
+    ViewData["Title"] = "Home Page";
+    var subscriptionFeatureSet = ViewBag.ClassSessionSubscriptionFeatures as SubscriptionFeatureSet;
+    var featuresSetAvailable = (subscriptionFeatureSet != null);
+    var triPanesAvailable = featuresSetAvailable && subscriptionFeatureSet.TriPane(FeatureArea.ClassroomMenu, FeatureContext.Panes);
+    var quadPanesAvailable = featuresSetAvailable && subscriptionFeatureSet.QuadPane(FeatureArea.ClassroomMenu, FeatureContext.Panes);
+}
+
+@* @section styles
+        {
+        <style>
+            video {
+                height: 100px !important;
+            }
+
+            .tutorVideo video {
+                position: relative;
+            }
+        </style>
+    } *@
+
+<div class="container">
+    <div ng-include="'/app/classroom/enterClassroomModal.html?v=1'"></div>
+
+    <div class="header" ng-controller="HeaderController as ctrl" ng-cloak>
+        <div class="header__info">
+            <div class="header__logo">2utoring Learning Experience</div>
+            <div class="header__timeRemaining">
+                <i class="fal fa-stopwatch"></i>
+                <div>
+                    <div id="countdown" ng-class="{ 'blink': showBlink && !sessionEnded }" style="display:none;">{{sessionEnded ? '00:00:00' : counter}}</div>
+                    <div>{{sessionEnded ? 'Session finished' : 'Time remaining'}}</div>
+                    @if (User.IsInRole("Tutor"))
+                    {
+                        <div ng-show="sessionEnd == true">
+                            <button type="button" ng-click="endSession()">End Session</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="header__viewingOptions">
+            <nav class="navigation">
+                <div class="navigation__item">
+                    <div class="item__icon" ng-click="changePane('full')" id="fullPaneButton" title="View full pane">
+                        <img src="~/images/panel-icons/panel--fullscreen.svg" alt="Set pane to fullscreen" />
+                        <div>Full Pane</div>
+                    </div>
+                </div>
+                <div class="navigation__item">
+                    <div class="item__icon" ng-click="changePane('half')" id="halfPaneButton" title="View half panes">
+                        <img src="~/images/panel-icons/panel--half.svg" alt="Split pane in half" />
+                        <div>Half Pane</div>
+                    </div>
+                </div>
+
+                @if (triPanesAvailable)
+                {
+                    <div class="navigation__item Hide--Medium">
+                        <div class="item__icon" ng-click="changePane('thirds')" id="thirdPaneButton" title="View third panes">
+                            <img src="~/images/panel-icons/panel--third.svg" alt="Split pane into thirds" />
+                            <div>Tri Pane</div>
+                        </div>
+                    </div>
+                }
+                @if (quadPanesAvailable)
+                {
+                    <div class="navigation__item Hide--Medium">
+                        <div class="item__icon" ng-click="changePane('quad')" id="quadPaneButton" title="View quad panes">
+                            <img src="~/images/panel-icons/panel--quad.svg" alt="Split pane into quarters" />
+                            <div>Quad Pane</div>
+                        </div>
+                    </div>
+                }
+            </nav>
+        </div>
+
+        @*<div class="footerNavigation__item" ng-controller="ClassroomHelpController" ng-cloak>
+                <div class="item__container" ng-show="isOpen">
+                    Raise hand for help Content
+                </div>
+                <div class="label" ng-click="toggle()">
+                    <i class="fal fa-info"></i>
+                    <div>Ask for help</div>
+                    <i class="fal fa-chevron-up" ng-hide="isOpen"></i>
+                    <i class="fal fa-times" ng-show="isOpen"></i>
+                </div>
+            </div>*@
+
+        @*<div class="footerNavigation__item" ng-controller="ClassroomHelpController" ng-cloak>
+                <div class="item__container" ng-show="isOpen">
+                    Raise hand for help Content
+                </div>
+                <div class="label" ng-click="toggle()">
+                    <i class="fal fa-info"></i>
+                    <div>Ask for help</div>
+                    <i class="fal fa-chevron-up" ng-hide="isOpen"></i>
+                    <i class="fal fa-times" ng-show="isOpen"></i>
+                </div>
+            </div>*@
+
+        <div class="header__controls">
+            @if (!User.IsInRole("Tutor"))
+            {
+                <div class="controls__askForHelp" title="{{sessionEnded ? 'Ask for Help is not available to use out of class' : 'Ask for Help'}}">
+                    <div class="navigation" ng-click="toggleAskForHelp()">
+                        <div class="navigation__item">
+                            <div class="item__icon">
+                                <svg ng-show="sessionEnded" width="12" height="31" viewBox="0 0 12 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 25.7324V26.2324H9.5H10.75C11.1764 26.2324 11.5 26.5683 11.5 26.9434V29.7891C11.5 30.2085 11.1934 30.5 10.75 30.5H1.25C0.98395 30.5 0.803115 30.4159 0.691648 30.3079C0.581605 30.2013 0.5 30.0339 0.5 29.7891V26.9434C0.5 26.5519 0.777717 26.2324 1.25 26.2324H2.5H3V25.7324V16.9531V16.4531H2.5H1.25C0.777717 16.4531 0.5 16.1336 0.5 15.7422V12.8359C0.5 12.4445 0.777717 12.125 1.25 12.125H8.25C8.67644 12.125 9 12.4609 9 12.8359V25.7324ZM2 4.35938C2 2.28459 3.76563 0.5 6 0.5C8.17644 0.5 10 2.28903 10 4.35938C10 6.48584 8.18103 8.21875 6 8.21875C3.76106 8.21875 2 6.49026 2 4.35938Z" stroke="#485465" />
+                                </svg>
+                                <svg ng-show="!sessionEnded" ng-class="{ 'active' : askedForHelp, 'inactive' : !askedForHelp}" width="12" height="31" viewBox="0 0 12 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 25.7324V26.2324H9.5H10.75C11.1764 26.2324 11.5 26.5683 11.5 26.9434V29.7891C11.5 30.2085 11.1934 30.5 10.75 30.5H1.25C0.98395 30.5 0.803115 30.4159 0.691648 30.3079C0.581605 30.2013 0.5 30.0339 0.5 29.7891V26.9434C0.5 26.5519 0.777717 26.2324 1.25 26.2324H2.5H3V25.7324V16.9531V16.4531H2.5H1.25C0.777717 16.4531 0.5 16.1336 0.5 15.7422V12.8359C0.5 12.4445 0.777717 12.125 1.25 12.125H8.25C8.67644 12.125 9 12.4609 9 12.8359V25.7324ZM2 4.35938C2 2.28459 3.76563 0.5 6 0.5C8.17644 0.5 10 2.28903 10 4.35938C10 6.48584 8.18103 8.21875 6 8.21875C3.76106 8.21875 2 6.49026 2 4.35938Z" stroke="#485465" />
+                                    @*<path d="M23 13.5625V14.0625H23.5H25C26.3639 14.0625 27.5 15.1855 27.5 16.4688V28.0938C27.5 29.4309 26.3708 30.5 25 30.5H3C1.57356 30.5 0.5 29.4375 0.5 28.0938V16.4688C0.5 15.1788 1.58042 14.0625 3 14.0625H4.5H5V13.5625V9.20312C5 4.46662 9.01323 0.5 14 0.5C18.9264 0.5 23 4.46872 23 9.20312V13.5625ZM18.5 14.0625H19V13.5625V9.20312C19 6.55081 16.6986 4.34375 14 4.34375C11.2344 4.34375 9 6.55526 9 9.20312V13.5625V14.0625H9.5H18.5ZM14 26.6562C15.6277 26.6562 17 25.426 17 23.7344V20.8281C17 19.2051 15.6361 17.9062 14 17.9062C12.2931 17.9062 11 19.2132 11 20.8281V23.7344C11 25.4179 12.3014 26.6562 14 26.6562Z" stroke="#485465" />*@
+                                </svg>
+                                <div>Ask for Help</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls__askForHelp">
+                    <div class="navigation" ng-click="toggleReportAbuse()">
+                        <div class="navigation__item">
+                            <div class="item__icon">
+                                <svg width="10" height="31" viewBox="0 0 10 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.06189 1.54958L1.06204 1.54957L1.06115 1.53745C1.02085 0.990872 1.46674 0.5 2.0625 0.5H7.875C8.47076 0.5 8.91665 0.990872 8.87635 1.53745L8.87621 1.53744L8.87561 1.54958L8.06361 18.008C8.0201 18.4573 7.56611 18.875 7.0625 18.875H2.875C2.37139 18.875 1.9174 18.4573 1.87389 18.008L1.06189 1.54958ZM5 21.8125C7.48894 21.8125 9.5 23.7832 9.5 26.1562C9.5 28.5859 7.49309 30.5 5 30.5C2.44856 30.5 0.5 28.5899 0.5 26.1562C0.5 23.7792 2.4527 21.8125 5 21.8125Z" stroke="#485465" />
+                                </svg>
+                                <div>Report User</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="controls__calculator">
+                <div class="navigation" ng-click="toggleCalculator()">
+                    <div class="navigation__item">
+                        <div class="item__icon">
+                            <img src="~/images/panel-icons/calculator.svg" alt="Calculator" />
+                            <div>Calculator</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="controls__screenshot">
+                <div class="navigation" ng-click="takeScreenshot()">
+                    <div class="navigation__item">
+                        <div class="item__icon">
+                            <img src="~/images/panel-icons/screenshot.svg" alt="Screenshot" />
+                            <div>Screenshot</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (User.IsInRole("Tutor"))
+            {
+                <div class="controls__endSession" ng-if="!sessionStarted">
+                    <div class="navigation" ng-click="startSession()">
+                        <div class="navigation__item">
+                            <div class="item__icon">
+                                <img src="~/images/panel-icons/start-lesson.svg" alt="Start lesson" />
+                                <div>Start Class</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls__endSession" ng-if="sessionStarted && sessionEnded == false">
+                    <div class="navigation" ng-click="endSession()">
+                        <div class="navigation__item">
+                            <div class="item__icon">
+                                <img src="~/images/panel-icons/end-lesson.svg" alt="End lesson" />
+                                <div>End Class</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="controls__logOut">
+                <div class="navigation so-dropdown-parent">
+                    @if (!string.IsNullOrEmpty(ViewBag.UserProfileImageUrl))
+                    {
+                        <div class="navigation__item">
+                            <div class="item__icon">
+                                <img class="so-classrooom-user-img" src="@ViewBag.UserProfileImageUrl" />
+                                <div class="">User</div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="navigation__item">
+                            <div class="item__icon">
+                                <div class="so-classrooom-user-initials">@ViewBag.Initials</div>
+                                <div class="">User</div>
+                            </div>
+                        </div>
+                    }
+                    <div class="so-user-dropdown-wrapper">
+                        <div class="so-user-dropdown-container">
+                            <ul>
+                                <li><a href="@(ViewBag.StoreSiteUrl)/terms-of-website-use" target="_blank">Terms of Use</a></li>
+                                <li><a href="@(ViewBag.StoreSiteUrl)/privacy-policy" target="_blank">Privacy</a></li>
+                                <li><a href="@(ViewBag.StoreSiteUrl)/my" class="so-bold">Leave Session</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="controls__userLoggedIn">@ViewData["UserHandle"]</div>
+        </div>
+    </div>
+
+
+    <div ng-controller="ClassroomCalculatorController" ng-cloak>
+        <div class="Calculator">
+            <div class="Calculator__Panel ng-hide" ng-show="isOpen">
+                <div class="Calculator__Display">
+                    <div class="displayText" id="display">0</div>
+                </div>
+                <div class="Calculator__Keypad-buttons">
+                    <button class="button--number" id="clear">AC</button>
+                    <button class="button--number" id="plus_minus">&#177;</button>
+                    <button class="button--number" id="square">x<sup>2</sup></button>
+                    <button class="button--operator" id="divide">÷</button>
+                    <button class="button--number" id="seven">7</button>
+                    <button class="button--number" id="eight">8</button>
+                    <button class="button--number" id="nine">9</button>
+                    <button class="button--operator" id="multiply">×</button>
+                    <button class="button--number" id="four">4</button>
+                    <button class="button--number" id="five">5</button>
+                    <button class="button--number" id="six">6</button>
+                    <button class="button--operator" id="subtract">−</button>
+                    <button class="button--number" id="one">1</button>
+                    <button class="button--number" id="two">2</button>
+                    <button class="button--number" id="three">3</button>
+                    <button class="button--operator" id="add">+</button>
+                    <button class="button--number" id="zero">0</button>
+                    <button class="button--number" id="decimal">.</button>
+                    <button class="button--equals" id="equals">=</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main ng-include="'/app/classroom/main.html'"></main>
+
+    <div class="Footer">
+
+
+
+        <div class="Footer__Block" id="intercom-help" title="Intercom Help">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.5 9.5C8.5 7.57 10.07 6 12 6C13.93 6 15.5 7.57 15.5 9.5C15.5 11.08 14.44 12.403 13 12.837V14C13 14.553 12.553 15 12 15C11.447 15 11 14.553 11 14V12C11 11.447 11.447 11 12 11C12.827 11 13.5 10.327 13.5 9.5C13.5 8.673 12.827 8 12 8C11.173 8 10.5 8.673 10.5 9.5C10.5 10.053 10.053 10.5 9.5 10.5C8.947 10.5 8.5 10.053 8.5 9.5ZM11 17C11 16.447 11.447 16 12 16C12.553 16 13 16.447 13 17C13 17.553 12.553 18 12 18C11.447 18 11 17.553 11 17ZM12 20C7.589 20 4 16.411 4 12C4 7.589 7.589 4 12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20M12 2C6.486 2 2 6.486 2 12C2 17.514 6.486 22 12 22C17.514 22 22 17.514 22 12C22 6.486 17.514 2 12 2" fill="#231F20" />
+            </svg>
+        </div>
+
+        <div ng-include="'/app/classroom/chat.html'"></div>
+
+        @if (User.IsInRole("Tutor"))
+        {
+            <div ng-include="'/app/classroom/tutorCommand.html'"></div>
+        }
+
+        @if (!User.IsInRole("Tutor"))
+        {
+            <div ng-include="'/app/classroom/studentCommand.html'"></div>
+        }
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var classSessionId = '@ViewBag.ClassSessionId';
+        var sessionAttendeeId = '@ViewBag.SessionAttendeeId';
+        var tutorId = '@ViewBag.TutorId';
+        var groupId = '@ViewBag.GroupId';
+        var hubUrl = '@ViewBag.HubUrl'; // This is used to determine which hub server to use for signalR this session
+
+        //do not use userId for any API requests, this should only be used for the chat left/right position!!
+        var userId = '@ViewBag.UserId';
+        var isTutor = '@User.IsInRole("Tutor")';
+        var accessToken = '@ViewBag.AccessToken';
+        var devMode = '@ViewBag.DevMode' == 'True' ? true : false;
+        var sessionEnded = @ViewBag.SessionEnded.ToString().ToLower();
+        //var sessionEnded = true;
+        var studentFolderId = '@ViewBag.studentFolderId'
+    </script>
+
+    <script src="~/lib/twilio-video/dist/twilio-video.js"></script>
+
+    <script>
+        window.addEventListener('beforeunload', function (e) {
+            if (sessionEnded == false) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+
+
+            console.log(sessionEnded);
+            var scope = angular.element(document.getElementById("ClassroomWebcamV2Controller")).scope();
+            scope.$apply(function () {
+                scope.leaveRoom();
+            });
+
+            if (sessionEnded == false) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    </script>
+    <script>
+        var wdth = $(window).width();
+        console.log('screen width:', wdth);
+        if (wdth < 1400) {
+            $('body').css('zoom', "67%");
+        } else {
+            $('body').css('zoom', "100%");
+        }
+    </script>
+}

@@ -1,0 +1,679 @@
+@{
+    ViewData["Title"] = "IO Studios Base Style Guide";
+}
+
+@section meta{
+    <meta name="robots" content="noindex">
+    <meta name="title" content="@ViewData["Title"]" />
+    @*<meta name="description" content="[[METAREQUIRED]]" />
+        <meta name="keywords" content="[[METAREQUIRED]]" />*@
+
+}
+
+<div class="Container--large mx-auto my-4">
+
+    <h2>@ViewData["Title"]</h2>
+    <h3>@ViewData["Message"]</h3>
+
+    <p>Some useful styling examples</p>
+</div>
+
+<div class="Container--large mx-auto">
+
+    <!-- Tab Headers -->
+    <div class="TabBar mt-5 mb-3">
+
+        <div class="row">
+
+            <div class="col">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="tab1" data-toggle="tab" href="#tab1Content" role="tab" aria-controls="tab1Content">Tab 1</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab2" data-toggle="tab" href="#tab2Content" role="tab" aria-controls="tab2Content">Tab 2</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content" id="myTabContent">
+
+        <!-- Tab 1 Content -->
+        <div class="tab-pane fade show active" id="tab1Content" role="tabpanel" aria-labelledby="tab1">
+
+            <div class="Accordion__Wrapper">
+
+                <div class="accordion" id="Accordion1">
+
+                    <!-- Accordion Section 1 -->
+                    <div class="card Accordion__Header Accordion__Header--section">
+
+                        <!-- Accordion Section 1 Heading -->
+                        <div class="card-header" id="accordion1Section1">
+
+                            <div class="row">
+
+                                <div class="col">
+                                    <span class="card-header-bold">Accordion Section 1</span>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#a_collapse1" aria-expanded="true" aria-controls="ai_collapse1">
+                                        <i class="far fa-chevron-down font-weight-bolder"></i>
+                                        <i class="far fa-chevron-up font-weight-bolder"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Accordion Section 1 Content -->
+                        <div id="a_collapse1" class="collapse" aria-labelledby="accordion1Section1" data-parent="#Accordion1">
+                            <div class="card-body card-body--SDN">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>Accordion Section 1 Content</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Accordion Section 2 -->
+                    <div class="card Accordion__Header Accordion__Header--section">
+
+                        <div class="card-header" id="accordion1Section2">
+
+                            <div class="row">
+
+                                <div class="col">
+                                    <span class="card-header-bold">Accordion Section 2</span>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#a_collapse2" aria-expanded="true" aria-controls="a_collapse2">
+                                        <i class="far fa-chevron-down font-weight-bolder"></i>
+                                        <i class="far fa-chevron-up font-weight-bolder"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div id="a_collapse2" class="collapse" aria-labelledby="accordion1Section2" data-parent="#Accordion1">
+                            <div class="card-body card-body--SDN">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>Accordion Section 2 Content</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Accordion Section 3 -->
+                    <div class="card Accordion__Header Accordion__Header--section">
+
+                        <div class="card-header" id="accordion1Section3">
+
+                            <div class="row">
+
+                                <div class="col">
+                                    <span class="card-header-bold">Accordion Section 3</span>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#a_collapse3" aria-expanded="true" aria-controls="a_collapse3">
+                                        <i class="far fa-chevron-down font-weight-bolder"></i>
+                                        <i class="far fa-chevron-up font-weight-bolder"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div id="a_collapse3" class="collapse show" aria-labelledby="accordion1Section3" data-parent="#Accordion1">
+                            <div class="card-body card-body--SDN">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>Accordion Section 3 Content</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Accordion Section 4 -->
+                    <div class="card Accordion__Header Accordion__Header--section">
+
+                        <div class="card-header" id="accordion1Section4">
+
+                            <div class="row">
+
+                                <div class="col">
+                                    <span class="card-header-bold">Accordion Section 4</span>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#a_collapse4" aria-expanded="true" aria-controls="a_collapse4">
+                                        <i class="far fa-chevron-down font-weight-bolder"></i>
+                                        <i class="far fa-chevron-up font-weight-bolder"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div id="a_collapse4" class="collapse" aria-labelledby="accordion1Section4" data-parent="#Accordion1">
+                            <div class="card-body card-body--SDN">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>Accordion Section 4 Content</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Accordion Section 5 -->
+                    <div class="card Accordion__Header Accordion__Header--section">
+
+                        <div class="card-header" id="accordion1Section5">
+
+                            <div class="row">
+
+                                <div class="col">
+                                    <span class="card-header-bold">Accordion Section 5</span>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="btn btn-link " type="button" data-toggle="collapse" data-target="#a_collapse5" aria-expanded="true" aria-controls="a_collapse5">
+                                        <i class="far fa-chevron-down font-weight-bolder"></i>
+                                        <i class="far fa-chevron-up font-weight-bolder"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div id="a_collapse5" class="collapse" aria-labelledby="accordion1Section5" data-parent="#Accordion1">
+                            <div class="card-body card-body--SDN">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>Accordion Section 5 Content</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Tab 2 Content -->
+        <div class="tab-pane fade" id="tab2Content" role="tabpanel" aria-labelledby="tab2">
+
+            <div class="Accordion__Wrapper">
+
+                <div class="accordion" id="Accordion2">
+
+                    <div class="card Accordion__Header Accordion__Header--main">
+
+                        <div class="card-header">
+                            <div class="row">
+
+                                <div class="col-2">
+                                    <a href="#" class="text-muted">
+                                        Main Heading 1
+                                        <span class="fas fa-caret-down"></span>
+                                        <!--<span class="fas fa-caret-up"></span> -->
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <a href="#" class="text-muted">
+                                        Main Heading 2
+                                        <span class="fas fa-caret-down"></span>
+                                        <!--<span class="fas fa-caret-up"></span> -->
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Accordion Section 1-->
+                    <div class="card Accordion__Header Accordion__Header--section">
+
+                        <div class="card-header " id="accordion2Section1">
+
+                            <div class="row">
+
+                                <div class="col-2">
+                                    <span>Acc Section 1 Heading 1</span>
+                                </div>
+
+                                <div class="col">
+                                    <span>Acc Section 1 Heading 2</span>
+                                </div>
+
+                                <div class="col-auto">
+                                    <a href="#" class="btn btn-sm btn-textonly-info">An Important Link</a>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                        <div>
+                                            <span class="btn-chevron-text show">Hide changes</span>
+                                            <i class="far fa-chevron-up"></i>
+
+                                            <span class="btn-chevron-text hide">Show changes</span>
+                                            <i class="far fa-chevron-down"></i>
+                                        </div>
+                                    </button>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div id="collapse1" class="collapse show" aria-labelledby="accordion2Section1" data-parent="#Accordion2">
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Date / Time
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!--<span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                User
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Field Name
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Before Value
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                After Value
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Change comment
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Marc Bouchard</td>
+                                                        <td>Leese identifier</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Lucie Adams</td>
+                                                        <td>UK Region</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Marc Bouchard</td>
+                                                        <td>Leese identifier</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Lucie Adams</td>
+                                                        <td>UK Region</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Accordion Card 2 -->
+                    <div class="card Accordion__Header Accordion__Header--section">
+
+                        <div class="card-header" id="accordion2Section2">
+
+                            <div class="row">
+
+                                <div class="col-2">
+                                    <span>Acc Section 2 Heading 1</span>
+                                </div>
+
+                                <div class="col">
+                                    <span>Acc Section 2 Heading 2</span>
+                                </div>
+
+                                <div class="col-auto">
+                                    <a href="#" class="btn btn-sm btn-textonly-info">An Important Link</a>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                                        <div>
+                                            <span class="btn-chevron-text show">Hide changes</span>
+                                            <i class="far fa-chevron-up"></i>
+
+                                            <span class="btn-chevron-text hide">Show changes</span>
+                                            <i class="far fa-chevron-down"></i>
+                                        </div>
+                                    </button>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div id="collapse2" class="collapse" aria-labelledby="accordion2Section2" data-parent="#Accordion2">
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Date / Time
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!--<span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                User
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Field Name
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Before Value
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                After Value
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Change comment
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Marc Bouchard</td>
+                                                        <td>Leese identifier</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Lucie Adams</td>
+                                                        <td>UK Region</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Marc Bouchard</td>
+                                                        <td>Leese identifier</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Lucie Adams</td>
+                                                        <td>UK Region</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Accordion Card 3 -->
+                    <div class="card Accordion__Header Accordion__Header--section">
+
+                        <div class="card-header" id="accordion2Section3">
+
+                            <div class="row">
+
+                                <div class="col-2">
+                                    <span>Acc Section 3 Heading 1</span>
+                                </div>
+
+                                <div class="col">
+                                    <span>Acc Section 3 Heading 2</span>
+                                </div>
+
+                                <div class="col-auto">
+                                    <a href="#" class="btn btn-sm btn-textonly-info">An Important Link</a>
+                                </div>
+
+                                <div class="col-auto">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse3" aria-expanded="true" aria-controls="collapse3">
+                                        <div>
+                                            <span class="btn-chevron-text show">Hide changes</span>
+                                            <i class="far fa-chevron-up"></i>
+
+                                            <span class="btn-chevron-text hide">Show changes</span>
+                                            <i class="far fa-chevron-down"></i>
+                                        </div>
+                                    </button>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div id="collapse3" class="collapse" aria-labelledby="accordion2Section3" data-parent="#Accordion2">
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Date / Time
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!--<span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                User
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Field Name
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Before Value
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                After Value
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <a href="#">
+                                                                Change comment
+                                                                <span class="fas fa-caret-down"></span>
+                                                                <!-- <span class="fas fa-caret-up"></span> -->
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Marc Bouchard</td>
+                                                        <td>Leese identifier</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Lucie Adams</td>
+                                                        <td>UK Region</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Marc Bouchard</td>
+                                                        <td>Leese identifier</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18/05/2018 10:15am</td>
+                                                        <td>Lucie Adams</td>
+                                                        <td>UK Region</td>
+                                                        <td>An old value</td>
+                                                        <td>A new value</td>
+                                                        <td>Name mismatch</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

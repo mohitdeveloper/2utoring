@@ -1,0 +1,43 @@
+.time_title{
+    text-align: center;
+    background-color: green;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 2px;
+}
+
+.week_day_box{
+    width:14.28%;
+    height:196px;
+    border: 1px solid #ccc;
+    margin-bottom:10px;
+    overflow-y: auto;
+}
+.fc-event-time{
+    display:none;
+}
+.alert .alert-dismissible .close {
+    background-color: transparent !important;
+}
+.alert .alert-danger .alert-dismissible .ng-star-inserted {
+    background-color: transparent !important;
+}
+.fc-toolbar-title {
+    color: #ffac38 !important;
+}
+.fc-daygrid-event-harness {
+    /* border: 1px solid; */
+    text-align: center !important;
+    padding-left: 13% !important;
+    border-radius: 19px !important;
+    background-color: #F2F2F2 !important;
+}
+
+.fc-right .fc-prev-button, .fc-right .fc-next-button {
+    background-color: green !important;
+}   
+/*.mat-dialog-container {
+    overflow: hidden !important;
+}*/
+

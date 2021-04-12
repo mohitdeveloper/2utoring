@@ -1,0 +1,108 @@
+// ----------------------------------------------------
+// Radio Buttons
+// ----------------------------------------------------
+
+.form-check {
+
+    $size: 24px !default;
+    $selectedColor: $green !default;
+    $defaultColor: #d9d9d9;
+
+    // Remove Bootstrap default Radio / Checkbox padding - MC
+    padding-left: 0;
+
+    .label {
+        white-space: initial;
+    }
+
+    input[type="radio"] {
+        cursor: pointer;
+        height: $size;
+        position: absolute;
+        margin: 0;
+        opacity: 0;
+        width: $size;
+        z-index: 1;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+
+        &:focus + .label::before {
+            -webkit-box-shadow: 0 0 0 1px $selectedColor;
+            box-shadow: 0 0 0 1px $selectedColor;
+            border-width: 1px;
+        }
+
+        &:checked + .label {
+            &::before {
+                border: 1px solid $selectedColor;
+            }
+
+            &::after {
+                opacity: 1
+            }
+        }
+        &:disabled:checked + .label {
+            cursor: not-allowed;
+            &::before {
+                border: 1px solid $defaultColor;
+                opacity: .5;
+            }
+
+            &::after {
+                opacity: .5
+            }
+        }
+        &:disabled:not(:checked) + .label {
+            cursor: not-allowed;
+            &::before {
+                border: 1px solid $defaultColor;
+                opacity: 0.5;
+            }
+
+            &::after {
+                opacity: 0
+            }
+        }
+    }
+
+    input[type="radio"] + .label {
+        display: inline-block;
+        margin-bottom: 0;
+        cursor: pointer;
+        position: relative;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        height: $size;
+        line-height: $size;
+        padding-left: $size + ($size / 2);
+
+        &::before {
+            content: "";
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid $defaultColor;
+            border-radius: 50%;
+            background: transparent;
+            height: $size;
+            width: $size;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            opacity: 0;
+            background: $selectedColor;
+            border: $size / 4 solid $selectedColor;
+            left: $size / 4;
+            top: $size / 4;
+        }
+    }
+}

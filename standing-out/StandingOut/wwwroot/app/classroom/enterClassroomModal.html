@@ -1,0 +1,16 @@
+﻿<div ng-controller="EnterClassroomModalController as ctrl">
+    <div class="popup-overlay" ng-if="!entered">
+        <div class="Modal">
+            <div class="Modal__Header text-align-center">
+                <img src="/images/2utoringClassroom.svg" alt="Logo" class="margin-y-loose" width="72" />
+                <h2 class="margin-bottom-tight">Welcome to the classroom!</h2>
+                <p class="margin-bottom-base">Your camera and microphone will be turned on as you enter.</p>
+            </div>
+            <div class="Modal__Footer padding-top-none">
+                <div class="display--flex flex--alignCenter flex--justifyCenter">
+                    <button type="button" class="button button--success width--75" ng-disabled="!timeCheck" ng-click="enter()">Enter classroom</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

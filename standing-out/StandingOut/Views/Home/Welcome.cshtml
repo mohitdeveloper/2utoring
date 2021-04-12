@@ -1,0 +1,40 @@
+﻿@model StandingOut.Data.DTO.WelcomeUser
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<main class="so-content-page">
+    <section class="so-section-img-text grid-container full">
+        <div class="grid-x">
+            <div class="cell large-6 large-order-2">
+                <div class="so-content-background so-bkgd-img-classroom-lesson"></div>
+            </div>
+            @if (Model.IsParent)
+            {
+                <div class="cell large-6 large-order-1">
+                    <div class="so-content-text">
+                        <div class="so-content-container">
+                            <p class="strapline">Welcome to 2utoring.com - @Model.FirstName @Model.LastName - GUARDIAN</p>
+                            <h1>A brand-new platform for students and teachers to collaborate online - GUARDIAN</h1>
+                            <p class="strapline">Creating a unique learning experience for tutors, students and parents at every stage with 2utoring - GUARDIAN</p>
+                        </div>
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="cell large-6 large-order-1">
+                    <div class="so-content-text">
+                        <div class="so-content-container">
+                            <p class="strapline">Welcome to 2utoring.com - @Model.FirstName @Model.LastName - ATTENDEE</p>
+                            <h1>A brand-new platform for students and teachers to collaborate online - ATTENDEE</h1>
+                            <p class="strapline">Creating a unique learning experience for tutors, students and parents at every stage with 2utoring - ATTENDEE</p>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+</main>

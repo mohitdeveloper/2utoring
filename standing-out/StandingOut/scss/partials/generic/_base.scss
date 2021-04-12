@@ -1,0 +1,63 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+    display: none !important;
+}
+
+html, body {
+    font-family: $fontFamily;
+}
+
+hr {
+    clear: both;
+    height: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid lighten($borderColor, 20%);
+    border-left: 0;
+}
+
+.view {
+    height: $PaneHeight--withHeader;
+    margin: $offset;
+    position: relative;
+
+    &--fullHeight {
+       height: $PaneHeight--WithoutHeaderFooter;
+    }
+
+    &--headerVisibleFooterHidden {
+        height: $PaneHeight--withHeader;
+    }
+
+    &--headerVisibleFooterVisible {
+        height: $PaneHeight;
+    }
+
+    &--headerVisible {
+        height: $PaneHeight--withHeader;
+    }
+
+    &--footerVisible {
+        height: $PaneHeight--withFooter;
+    }
+
+    &__panel {
+        background-color: $bodyColour;
+        border: 1px solid rgba(46,56,77,0.04);
+        border-radius: 2px;
+        padding-bottom: 28px;
+        position: absolute;
+        overflow-y: auto;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.FillWidth {
+    max-width:100%;
+}

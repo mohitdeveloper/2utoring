@@ -1,0 +1,135 @@
+﻿<div ng-controller="ClassroomWebcamController as ctrl" id="classroomWebcamController" ng-init="showControls=false" class="Webcam__Bar">
+    <div class="label padding-x-base" title="{{sessionEnded ? 'Webcam and Audio are not available out of class' : 'Webcam and Audio'}}" ng-click="toggle()" ng-disabled="deviceOptions.paneMode">
+        <i>
+            <i class="fal fa-webcam"></i>
+            <i class="fal fa-microphone"></i>
+            <i class="fal fa-desktop" ng-show="deviceOptions.screenShareMode"></i>
+        </i>
+        <div class="margin-left-base">Webcam / Audio</div>
+        <div class="margin-left-auto">
+            <i class="fal fa-times" ng-show="isOpen && !deviceOptions.paneMode && !sessionEnded"></i>
+            <i class="fal fa-chevron-up" ng-hide="isOpen || !deviceOptions.popupEnabled || sessionEnded || (!isTutor && !sessionStarted) || deviceOptions.paneMode"></i>
+            <i class="fal fa-keynote" ng-if="(!deviceOptions.popupEnabled && !isOpen) || sessionEnded || (!isTutor && !sessionStarted) || deviceOptions.paneMode"></i>
+        </div>
+    </div>
+    <div class="Webcam item__container item__container--noPadding item__container--small" ng-show="isOpen && !sessionEnded" id="webcamToggleButton">
+        <div class="vidyoPanel">
+            <div id="webcam-area-outer" class="webcam-area-outer">
+                <div id="webcam-area">
+                    <div class="Webcam__Grid">
+                        <div class="Webcam__User" ng-class="(forceMode && externalParticipant.isTutor) || (!forceMode && ((!videoLock && externalParticipant.userId == dominantSpeaker) || (videoLock && externalParticipant.userId == videoLockUserId))) ? 'dominant' : 'normal'">
+                            <div id="controls" class="Webcam__Controls">
+                                <div id="preview">
+                                    <p class="instructions"></p>
+                                    <div id="local-media"></div>
+                                    <div class="Webcam__Username">You</div>
+                                    <div class="Webcam__Buttons">
+                                        <button class="button button--mini button--primary" id="button-preview" ng-show="(!sessionInProgress || (deviceOptions.localvideomuted && !deviceOptions.screenShareMode)) && deviceOptions.showvideo && !deviceOptions.screenShareMode && previewTracks == null && screenTrack == null" ng-click="preview()" title="Preview your webcam">Preview</button>
+                                        <button class="button button--mini button--distructive" id="button-previews-off" ng-show="(!sessionInProgress || (deviceOptions.localvideomuted && !deviceOptions.screenShareMode)) && ((deviceOptions.showvideo && previewTracks != null) || (deviceOptions.screenShareMode && screenTrack != null))" ng-click="previewTracks != null ? preview() : previewScreenshare()" title="Stop preview">Preview</button>
+                                        <button class="button button--mini button--primary" id="button-video" ng-show="deviceOptions.showvideo && sessionInProgress && !deviceOptions.screenShareMode" ng-click="genericMute('video')" title="{{ deviceOptions.localvideomuted ? 'Unmute video' : 'Mute video' }}"><i ng-if="deviceOptions.localvideomuted" class="fal fa-webcam"></i><i ng-if="!deviceOptions.localvideomuted" class="fal fa-webcam-slash inactive"></i></button>
+                                        <!--<button class="button button--mini button--primary" id="button-preview-screen" ng-show="deviceOptions.screenShareEnabled == true && sessionInProgress == false && previewTracks == null && screenTrack == null" ng-click="previewScreenshare()" title="Preview your screen"><i class="fal fa-desktop inactive"></i></button>-->
+                                        <button class="button button--mini button--primary" ng-show="sessionInProgress" ng-disabled="forceMode" ng-class="!forceMode && videoLock && videoLockUserId == null ? 'selected' : ''" ng-click="lockVideo()" title="Set as Dominate Speaker"><i class="fal fa-keynote"></i></button>
+                                        <button class="button button--mini button--primary" title="Fullscreen" ng-show="((sessionInProgress && (!deviceOptions.localvideomuted || deviceOptions.screenShareMode)) || previewActive) && (!forceMode || isTutor)" ng-click="fullscreenVideo()"><i class="fal fa-expand"></i></button>
+                                        <button class="button button--mini button--primary" title="Webcam &amp; Audio settings" ng-click="showControls=true"><i class="fal fa-cog"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="Webcam__User" ng-show="externalParticipants.length > 0" ng-class="(forceMode && externalParticipant.isTutor) || (!forceMode && ((!videoLock && externalParticipant.userId == dominantSpeaker) || (videoLock && externalParticipant.userId == videoLockUserId))) ? 'dominant' : 'normal'" ng-repeat="externalParticipant in externalParticipants | orderBy: 'isTutor'">
+                            <div id="remote-media">
+                                <div id="{{externalParticipant.userId}}_media" ng-class="{tutorVideo: externalParticipant.isTutor == true}"></div>
+                                <div class="Webcam__Username">{{externalParticipant.fullName}}</div>
+                                <div class="Webcam__Buttons">
+                                    <button class="button button--mini button--primary" ng-disabled="forceMode" ng-class="(!forceMode && videoLock && videoLockUserId == externalParticipant.userId) || (forceMode && externalParticipant.isTutor) ? 'selected' : ''" ng-click="lockVideo($index)"><i class="fal fa-keynote color--blue"></i></button>
+                                    <button class="button button--mini button--primary" title="Fullscreen" ng-show="(!forceMode || externalParticipant.isTutor) && externalParticipant.videoActive" ng-click="fullscreenVideo(externalParticipant.userId + '_media')"><i class="fal fa-expand"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="Webcam__User normal" ng-show="awaitingUsers.length > 0" ng-repeat="awaitingUser in awaitingUsers">
+                            <div id="remote-media-placeholders">
+                                <div id="{{awaitingUser.userId}}_placeholder_media"></div>
+                                <div class="Webcam__Username">{{awaitingUser.fullName}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="deviceOptions.paneMode" class="pane-settings">
+                        <div class="Controls__Hide" title="Show/Hide Webcam controls" ng-click="showWebcamControls()"><i class="fal fa-angle-double-down"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="padding-x-base padding-y-tight">
+                <p ng-show="sessionInProgress"><i>Your webcam and microphone is being recorded for safeguarding purposes</i></p>
+                <div id="log"></div>
+            </div>-->
+
+            <div id="room-controls-outer">
+                <div class="Controls" id="room-controls-inner">
+                    <div class="Controls__Group">
+                        <div>
+                            <label>Your contacts</label>
+                            <select ng-model="roomToJoin" class="input--full" id="roomToJoin" name="roomToJoin" ng-options="item as item.text for item in groupsToJoin" ng-disabled="sessionInProgress" ng-change="setPermissions()"></select>
+                        </div>
+                        <div ng-show="!sessionInProgress && deviceOptions.roomJoinEnabled && sessionStarted">
+                            <button id="button-join" class="button button--primary button--small" ng-click="joinLogic(false)">Join room</button>
+                            <button id="button-call" class="button button--primary button--small" ng-show="!isTutor && roomToJoin.isIndividual == true" ng-click="callUser()">Call User</button>
+                            <button id="button-enableforcejoin" class="button button--primary button--small" ng-click="forceModeJoin()" ng-show="isTutor">Broadcast</button>
+                        </div>
+                        <button id="button-leave" class="button button--small button--distructive button--join" ng-show="sessionInProgress && !forceMode" ng-click="leaveRoom()">Leave Room</button>
+                    </div>
+                    <div class="Controls__Group flex-wrap">
+                        <div ng-show="!deviceOptions.paneMode" class="display--flex flex--alignCenter">
+                            <label class="display--block margin-bottom-none">View in this pane</label>
+                            <select ng-model="deviceOptions.paneNumber" class="input--full" id="paneNumber" name="paneNumber" ng-options="item.value as item.text for item in paneNumberOptions" ng-disabled="deviceOptions.paneMode" style="width: 60px">
+                                <option value="undefined">Select a pane</option>
+                            </select>
+                        </div>
+                        <button id="button-pane" class="button button--small button--primary" ng-show="deviceOptions.paneNumber != undefined" ng-click="triggerPane()">{{deviceOptions.paneMode ? 'Bar Mode' : 'Open in pane'}}</button>
+                    </div>
+                    <div class="Controls__Group Controls__Group--buttons" ng-show="sessionInProgress">
+                        <button id="button-startscreenshare" class="button button--small button--primary" ng-click="startShareScreen()" ng-show="!deviceOptions.screenShareMode && deviceOptions.screenShareEnabled && canScreenShare()">ScreenShare</button>
+                        <button id="button-stopscreenshare" class="button button--small button--distructive button--join" ng-click="stopShareScreen(false)" ng-show="deviceOptions.screenShareMode">Stop ScreenShare</button>
+                        <button id="button-enableforce" class="button button--small button--primary" ng-click="toggleForceMode()" ng-show="isTutor"><span ng-show="tutorSetForceMode">Stop </span>Broadcast</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup-overlay" ng-show="showControls">
+        <div id="group" name="group" class="Modal Modal--save" ng-init>
+            <div class="Modal__Header">
+                <button type="button" class="Modal__Close" ng-click="showControls=false"><i class="fal fa-times-circle"></i></button>
+                <h2>Webcam &amp; Audio Settings</h2>
+            </div>
+            <div class="Modal__Content">
+                <div class="Webcam__Controls--Modal">
+                    <div id="audio-volume">
+                        <label>Audio Volume</label>
+                        <input ng-model="deviceOptions.audioVolume" ng-mouseup="setVolume()" type="range" step="0.1" min="0" max="1" value="1">
+                        <div></div>
+                    </div>
+                    <div id="video-settings">
+                        <label>Video</label>
+                        <select ng-show="!deviceOptions.showvideo" disabled>
+                            <option selected>The Tutor has removed webcam access</option>
+                        </select>
+                        <select id="videodevices" ng-options="item.value as item.label for item in videodeviceOptions" ng-model="deviceOptions.videodevice" ng-show="deviceOptions.showvideo" ng-change="updateVideoDevice()"></select>
+                        <button class="button button--secondary" ng-click="genericMute('video')" ng-show="deviceOptions.showvideo && sessionInProgress"><span ng-show="deviceOptions.localvideomuted">Show</span><span ng-show="!deviceOptions.localvideomuted">Hide</span></button>
+                    </div>
+                    <div id="audio-settings">
+                        <label>Audio</label>
+                        <select ng-show="!deviceOptions.showaudio" disabled>
+                            <option selected>The Tutor has removed microphone access</option>
+                        </select>
+                        <select id="audiodevices" ng-options="item.value as item.label for item in audiodeviceOptions" ng-model="deviceOptions.audiodevice" ng-show="deviceOptions.showaudio" ng-change="updateAudioDevice()"></select>
+                        <button class="button button--secondary" ng-click="genericMute('audio')" ng-show="deviceOptions.showaudio && sessionInProgress"><span ng-show="deviceOptions.localaudiomuted">Un</span>Mute</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

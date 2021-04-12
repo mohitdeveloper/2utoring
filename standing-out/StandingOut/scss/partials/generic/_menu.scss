@@ -1,0 +1,69 @@
+﻿.off-canvas {
+    background: $panelColor;
+    border-right: 1px solid rgba(#2E384D, 0.04);
+
+    &.position-left {
+        &.is-transition-push {
+            box-shadow: none;
+        }
+    }
+
+    img {
+        display: inherit;
+        margin: auto;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+    .menu {
+
+        li {
+
+            a {
+                padding: 0.7rem 1rem;
+                padding-left: 20px;
+                line-height: 2;
+                font-size: 16px;
+                display: block;
+                color: $bodyTextColor;
+                font-weight: $fontWeightBase;
+
+                &:hover {
+                    background: $white;
+                    color: $bodyTextColor;
+                }
+
+                i {
+                    min-width: 25px;
+                    margin-right: 15px;
+                    margin-left: 10px;
+                    font-size: 1.2rem;
+                    position: relative;
+                }
+            }
+
+            &.active {
+                a {
+                    background: #76aeef;
+                    color: white;
+                }
+            }
+        }
+    }
+}
+
+.top-bar {
+    background: $panelColor;
+    border-bottom: 1px solid rgba(#2E384D, 0.04);
+
+    ul.menu {
+        background-color: transparent;
+
+        li {
+
+            &.menu-text {
+                font-weight: $fontWeightBase;
+            }
+        }
+    }
+}

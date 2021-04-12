@@ -1,0 +1,139 @@
+﻿@import 'foundation';
+@include foundation-accordion;
+@include foundation-breadcrumbs;
+@include foundation-callout;
+@include foundation-drilldown-menu;
+@include foundation-dropdown;
+@include foundation-float-classes;
+@include foundation-flex-classes;
+@include foundation-pagination;
+@include foundation-tooltip;
+@include foundation-table;
+@include foundation-xy-grid-classes;
+@include foundation-visibility-classes;
+@include foundation-tabs;
+
+
+// Layout components
+@include foundation-reveal;
+@include foundation-sticky;
+@include foundation-title-bar;
+@include foundation-top-bar;
+
+// Menu-based containers
+@include foundation-menu;
+@include foundation-menu-icon;
+@include foundation-accordion-menu;
+@include foundation-drilldown-menu;
+@include foundation-dropdown-menu;
+
+@import '_variables.scss';
+@import '_utils.scss';
+
+@import '_website-new.scss';
+
+// website partials
+@import 'partials/website/_tutorsearch.scss';
+
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: $fontFamily;
+}
+
+div, span, section {
+    $scrollbarSize: 10px!default;
+
+    &::-webkit-scrollbar {
+        border: 1px solid $borderColorAccent;
+        border-radius: $scrollbarSize / 2;
+
+        &:horizontal {
+            height: $scrollbarSize;
+        }
+
+        &:vertical {
+            width: $scrollbarSize;
+        }
+    }
+
+    &::-webkit-scrollbar-track {
+        border: 1px solid $borderAccentColor;
+        border-radius: $scrollbarSize / 2;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $orange;
+        border-radius: $scrollbarSize / 2;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: $green;
+    }
+}
+
+.grid-container {
+    max-width: 95rem !important;
+
+    &--wide {
+        max-width: 90vw !important;
+    }
+
+    &--narrow {
+        max-width: 60rem !important;
+    }
+}
+
+.header {
+    background-color: white;
+    box-shadow: $boxShadowBase;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+    width: 100%;
+
+    &__controls {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.controls__userLoggedIn {
+    div {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+
+        & > * {
+            &:not(:last-child) {
+                margin-right: 14px;
+            }
+        }
+
+        img {
+            border-radius: 17.5px;
+            width: 35px;
+        }
+    }
+}
+
+.navigation {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    &__item {
+        a {
+            display: inline-block;
+            margin: 0 14px;
+            text-decoration: none;
+        }
+    }
+}

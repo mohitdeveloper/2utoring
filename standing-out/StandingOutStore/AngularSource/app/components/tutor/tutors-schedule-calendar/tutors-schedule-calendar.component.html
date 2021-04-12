@@ -1,0 +1,12 @@
+<div class="col-12 mt-14 mb-42" style="margin:0 auto;" *ngIf="selectedTutorsData">
+
+    <div class="full-celander-box">
+        <div class="text-right mt-3 mb-0 mb-lg-14">
+            <button type="button" (click)="saveAvailability()" class="btn btn-primary btn-md ml-auto col-md-12 col-sm-12 col-lg-1">Save</button>
+        </div>
+        <!--<mat-slide-toggle style="float:right;" [(ngModel)]="editSlot" [ngModelOptions]="{standalone: true}">Edit Availability Slots</mat-slide-toggle>-->
+        <app-calender-scheduler #calendarRef [fromSettingPage]="fromSettingPage" [isBookedSlotVisible]="isBookedSlotVisible" [bookedSlot]="selectedTutorsData.bookedSlot" [registerdEvents]="selectedTutorsData.tutorAvailabilities" [tutorId]="selectedTutorsData.tutorId" [isWeekVisible]="false" [isDateEventEditable]="true" [isViewOnly]="false">
+        </app-calender-scheduler>
+
+    </div>
+</div>

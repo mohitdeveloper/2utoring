@@ -1,0 +1,79 @@
+﻿@model StandingOut.Data.Models.SafeguardReport
+
+@{
+    ViewData["Title"] = "View Safeguard";
+}
+
+<div class="grid-container">
+    <div class="grid-x ">
+        <div class="large-1 cell"></div>
+        <div class="large-10 cell">
+            <div class="card card--hasGrid margin-left-auto margin-right-auto margin-bottom-base margin-top-extra-loose">
+                <div class="grid-x margin-top-tight margin-bottom-base">
+                    <div class="large-3 cell display--flex flex--alignCenter">
+                        <a class="button button--primary button--hasIcon" asp-action="Index"><i class="fal fa-arrow-left"></i> Back</a>
+                    </div>
+                    <div class="large-6 cell display--flex flex--alignCenter flex--justifyCenter">
+                        <h2 class="text-align-center">@ViewData["Title"]</h2>
+                    </div>
+                    <div class="large-3 cell display--flex flex--alignCenter flex--justifyEnd">
+                        @if (Model.Status == StandingOut.Data.Enums.SafeguardReportStatus.Awaiting)
+                        {
+                            <a class="button button--primary" href="/admin/safeguarding/updatestatus/@Model.SafeguardReportId?status=InProgress">Mark as In Progress</a>
+                        }
+                        else if (Model.Status == StandingOut.Data.Enums.SafeguardReportStatus.Progressing)
+                        {
+                            <a class="button button--primary" href="/admin/safeguarding/updateStatus/@Model.SafeguardReportId?status=Awaiting">Mark as Awaiting</a>
+                            <a class="button button--primary" href="/admin/safeguarding/updateStatus/@Model.SafeguardReportId?status=Complete">Mark as Complete</a>
+                        }
+                        else if (Model.Status == StandingOut.Data.Enums.SafeguardReportStatus.Complete)
+                        {
+                            <a class="button button--primary" href="/admin/safeguarding/updateStatus/@Model.SafeguardReportId?status=InProgress">Mark as In Progress</a>
+                        }
+                    </div>
+                </div>
+                <section class="form margin-top-loose">
+                    <div class="grid-x grid-margin-y">
+                        <div class="large-3 cell">
+                            <label class="display--block text-bolder">Class Session</label>
+                            @Html.DisplayFor(modelItem => Model.ClassSession.Name)
+                        </div>
+                        <div class="large-3 cell">
+                            <label class="display--block text-bolder">Tutor Name</label>
+                            @Html.DisplayFor(modelItem => Model.ClassSession.Owner.FullName)
+                        </div>
+                        <div class="large-3 cell">
+                            <label class="display--block text-bolder">Student</label>
+                            @Html.DisplayFor(modelItem => Model.User.FullName)
+                        </div>
+                        <div class="large-3 cell">
+                            <label class="display--block text-bolder">Date</label>
+                            @Model.LogDate.ToString("dd/MM/yyyy HH:mm")
+                        </div>
+                        <div class="large-3 cell">
+                            <label class="display--block text-bolder">Title</label>
+                            @Html.DisplayFor(modelItem => Model.Title)
+                        </div>
+                        <div class="large-3 cell">
+                            <label class="display--block text-bolder">Status</label>
+                            @Html.DisplayFor(modelItem => Model.Status)
+                        </div>
+                        <div class="large-3 cell">
+                            <label class="display--block text-bolder">Description</label>
+                            @Html.DisplayFor(modelItem => Model.Description)
+                        </div>
+                        <div class="large-12 cell">
+                            <form asp-antiforgery="true" action="/Admin/Safeguarding/UpdateNotes" method="post">
+                                <label asp-for="Notes"></label>
+                                <input type="text" asp-for="Notes" />
+                                <span asp-validation-for="Notes" class="text-danger"></span>
+                                <input type="submit" value="Save" class="button button--primary float-right" />
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="large-1 cell"></div>
+</div>

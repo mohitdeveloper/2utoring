@@ -1,0 +1,223 @@
+@model IEnumerable<StandingOut.Data.Models.StripePlan>
+
+@{
+    ViewData["Title"] = "Tutor Plans";
+}
+
+@section meta{
+    <meta name="title" content="@ViewData["Title"]" />
+    <meta name="description" content="View our tutor plans to see how you can move your tuition business online with 2utoring." />
+}
+
+<div class="Page__Container Page__Container--size:content">
+    <div class="row mt-lg-42 p-relative">
+        <img src="~/images/illustration-5.svg" alt="Illustration of girl studying at her desk" class="p-lg-absolute w-100 w-lg-auto o-100 o-lg-50 d-none d-lg-block" />
+        <div class="col-12 col-lg-7">
+            <a class="d-inline-block link-grey mb-21 text-decoration-none" href="/join-as-a-tutor"><i class="fal fa-arrow-left mr-14"></i>Back</a>
+            <h1 class="fw-800 mb-42">Join the Community</h1>
+            <p class="fs-18 fw-600 cl-dark mb-lg-21">Whether you’re just getting started with online tutoring or already have lesson’s you want to bring onto our platform, we’ve got you covered. </p>
+            <p class="fs-18 fw-600 cl-dark mb-lg-21">Register with three months FREE subscription and create a tutor profile. Advertise your lesson's on our learning marketplace or invite your students to learn.</p>
+            <p class="fs-18 fw-600 cl-dark mb-lg-21">All you need is to register an account to join the 2utoring community!</p>
+            @if (!User.Identity.IsAuthenticated && Model.Count() > 0)
+            {
+                <p class="fs-18 fw-600 cl-dark mb-lg-21">Everything Is Simple now, just <a href="@(ViewBag.IdentitySiteUrl + "/account/register?returnUrl=" + ViewBag.MainSiteUrl + "/tutor/register/process/" + Model.First().StripePlanId)">Start your free trial</a></p>
+            }
+        </div>
+        <div class="col-12 col-lg-4 offset-lg-1">
+                @{ var stripePlan = Model.OrderBy(x => x.Subscription.SubscriptionPrice).ToArray(); }
+                @if (stripePlan[0].StripePlanType == StandingOut.Data.Enums.StripePlanType.Tutor)
+                {
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card card--toRespond:small mx-lg-35 mt-42 mt-lg-0 ml-0 ml-lg-35">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="fs-28 fw-700">Basic</div>
+                                    <span class="fs-15 fw-800">1 month free trial *</span>
+                                </div>
+                                <div class="mt-14">
+                                    <sup class="cl-light fs-24 fw-500 d-inline-block mr-7" style="transform: translateY(-10px);">£</sup>
+                                    <span class="fs-50 fw-800">@(stripePlan[0].Subscription.SubscriptionPrice > 0 ? stripePlan[0].Subscription.SubscriptionPrice.ToString("#.##"):"Free")</span>
+                                    <span class="cl-light fs-24 fw-500 ml-7">@(stripePlan[0].Subscription.SubscriptionPrice > 0 ? "/mo": "")</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ul class="p-0 m-0" style="list-style: none;">
+                                    <li class="mb-14"><span class="fw-800">1</span> X Concurrent classrooms</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> live classes</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> students</li>
+                                    <li class="mb-14"><span class="fw-800">1-2</span> Collaborative class size</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> private lessons</li>
+                                    <li class="mb-14"><span class="fw-800">£4.00 - £2.75</span> Commission per student</li>
+                                </ul>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-controller="Register" asp-action="Process" asp-route-id="@stripePlan[0].StripePlanId" asp-area="Tutor" class="btn btn-accent btn-lg fs-16 cl-white w-100 my-21">Start your free trial</a>
+                                }
+                                else
+                                {
+                                    <a href="@(ViewBag.IdentitySiteUrl + "/account/register?returnUrl=" + ViewBag.MainSiteUrl + "/tutor/register/process/" + stripePlan[0].StripePlanId)" class="btn btn-accent btn-lg fs-16 cl-white w-100 my-21">Start your free trial</a>
+                                }
+                                <button class="btn btn-primary btn-lg fs-16 cl-white w-100 my-21" type="button" data-toggle="collapse" data-target="#P1" aria-expanded="false" aria-controls="P1">
+                                    Show what's included
+                                </button>
+                                <div class="collapse" id="P1">
+                                    <ul>
+                                        <li>Tutor can create courses</li>
+                                        <li>1 lesson per course</li>
+                                        <li>Students can enter 5 minutes before lesson starts</li>
+                                        <li>Single and dual classroom panes</li>
+                                        <li>Availability calendar</li>
+                                        <li>Teach over 18's only</li>
+                                    </ul>
+                                </div>
+                                <div class="mb-14">
+                                    <em class="fs-13 fw-500 cl-light">
+                                        * Monthly payment will start after
+                                        the 1st month, you can cancel your subscription at any time.
+                                    </em>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                }
+                @if (stripePlan[2].StripePlanType == StandingOut.Data.Enums.StripePlanType.Tutor)
+                {
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card card--toRespond:small mx-lg-35 mt-42 mt-lg-0 ml-0 ml-lg-35">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="fs-28 fw-700">Starter</div>
+                                    <span class="fs-15 fw-800">1 month free trial *</span>
+                                </div>
+                                <div class="mt-14">
+                                    <sup class="cl-light fs-24 fw-500 d-inline-block mr-7" style="transform: translateY(-10px);">£</sup>
+                                    <span class="fs-50 fw-800">@stripePlan[2].Subscription.SubscriptionPrice.ToString("#.##")</span>
+                                    <span class="cl-light fs-24 fw-500 ml-7">/mo</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ul class="p-0 m-0" style="list-style: none;">
+                                    <li class="mb-14"><span class="fw-800">1</span> X Profile pages</li>
+                                    <li class="mb-14"><span class="fw-800">1</span> X Concurrent classrooms</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> live classes</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> students</li>
+                                    <li class="mb-14"><span class="fw-800">1-5</span> Collaborative class size</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> public and private lessons</li>
+                                    <li class="mb-14"><span class="fw-800">£4.00 - £2.75</span> Commission per student</li>
+                                </ul>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-controller="Register" asp-action="Process" asp-route-id="@stripePlan[2].StripePlanId" asp-area="Tutor" class="btn btn-accent btn-lg fs-16 cl-white w-100 my-21">Start your free trial</a>
+                                }
+                                else
+                                {
+                                    <a href="@(ViewBag.IdentitySiteUrl + "/account/register?returnUrl=" + ViewBag.MainSiteUrl + "/tutor/register/process/" + stripePlan[2].StripePlanId)" class="btn btn-accent btn-lg fs-16 cl-white w-100 my-21">@stripePlan[2].Description</a>
+                                }
+
+                                <button class="btn btn-primary btn-lg fs-16 cl-white w-100 my-21" type="button" data-toggle="collapse" data-target="#P2" aria-expanded="false" aria-controls="P2">
+                                    Show what's included
+                                </button>
+
+                                <div class="collapse" id="P2">
+                                       <ul>
+                                        <li>Tutor can create courses</li>
+                                        @*<li>Parent's can create courses using availability calendar</li>
+                                        <li>Student's can create courses using availability calendar</li>*@
+                                        <li>Create up to 5 lessons per course</li>
+                                        <li>Students can enter 15 minutes before lesson starts</li>
+                                        <li>Single, dual, tri and quad classroom panes</li>
+                                        <li>Availability calendar</li>
+                                        <li>Create up to 2 groups in a class</li>
+                                        <li>Teach under and over 18's</li>
+                                        <li>Profile approval</li>
+                                        <li>DBS checks and approval</li>
+                                        <li>View previously completed lessons</li>
+                                        <li>All lessons recorded</li>
+                                       </ul>
+                                </div>
+
+
+                                <div class="mb-14">
+                                    <em class="fs-13 fw-500 cl-light">
+                                        * Monthly payment will start after
+                                        the 1st month, you can cancel your subscription at any time.
+                                    </em>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                }
+                @if (stripePlan[3].StripePlanType == StandingOut.Data.Enums.StripePlanType.Tutor)
+                {
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card card--toRespond:small mx-lg-35 mt-42 mt-lg-0 ml-0 ml-lg-35">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="fs-28 fw-700">Professional</div>
+                                    <span class="fs-12 fw-800">1 month free trial *</span>
+                                </div>
+                                <div class="mt-14">
+                                    <sup class="cl-light fs-24 fw-500 d-inline-block mr-7" style="transform: translateY(-10px);">£</sup>
+                                    <span class="fs-50 fw-800">@stripePlan[3].Subscription.SubscriptionPrice.ToString("#.##")</span>
+                                    <span class="cl-light fs-24 fw-500 ml-7">/mo</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ul class="p-0 m-0" style="list-style: none;">
+                                    <li class="mb-14"><span class="fw-800">1</span> X Profile pages</li>
+                                    <li class="mb-14"><span class="fw-800">1</span> X Concurrent classrooms</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> live classes</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> students</li>
+                                    <li class="mb-14"><span class="fw-800">1-10</span> Collaborative class size</li>
+                                    <li class="mb-14"><span class="fw-800">Unlimited</span> public and private lessons</li>
+                                    <li class="mb-14"><span class="fw-800">£3.50 - £2.25</span> Commission per student</li>
+                                </ul>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-controller="Register" asp-action="Process" asp-route-id="@stripePlan[3].StripePlanId" asp-area="Tutor" class="btn btn-accent btn-lg fs-16 cl-white w-100 my-21">Start your free trial</a>
+                                }
+                                else
+                                {
+                                    <a href="@(ViewBag.IdentitySiteUrl + "/account/register?returnUrl=" + ViewBag.MainSiteUrl + "/tutor/register/process/" + stripePlan[3].StripePlanId)" class="btn btn-accent btn-lg fs-16 cl-white w-100 my-21">@stripePlan[3].Description</a>
+                                }
+
+                                <button class="btn btn-primary btn-lg fs-16 cl-white w-100 my-21" type="button" data-toggle="collapse" data-target="#P3" aria-expanded="false" aria-controls="P3">
+                                    Show what's included
+                                </button>
+                                <div class="collapse" id="P3">
+                                        <ul>
+                                            <li>Tutor can create courses</li>
+                                            @*<li>Parent's can create courses using availability calendar</li>
+                                            <li>Student's can create courses using availability calendar</li>*@
+                                            <li>Create up to 25 lessons per course</li>
+                                            <li>Students can enter 30 minutes before lesson starts</li>
+                                            <li>Single, dual, tri and quad classroom panes</li>
+                                            <li>Availability calendar</li>
+                                            <li>Create up to 5 groups in a class</li>
+                                            <li>Teach under and over 18's</li>
+                                            <li>Profile approval</li>
+                                            <li>DBS checks and approval</li>
+                                            <li>View previously completed lessons</li>
+                                            <li>All lessons recorded</li>
+                                        </ul>
+                                </div>
+
+                                <div class="mb-14">
+                                    <em class="fs-13 fw-500 cl-light">
+                                        * Monthly payment will start after
+                                        the 1st month, you can cancel your subscription at any time.
+                                    </em>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                }
+            </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+// ----------------------------------------------------
+// Alerts
+// ----------------------------------------------------
+
+$alert-status-data: (
+    Error: #FFE0E0,
+    Warning: #FAF7D5,
+    Info: #D5EDFA,
+    Success: #D5FAE4
+)!default;
+
+.Alert {
+    border-radius: rem(6px);
+    display: flex;
+    padding: rem(28px);
+    position: relative;
+    width: 100%;
+
+    i {
+        font-size: 18px;
+        opacity: .8;
+        position: absolute;
+        top: 21px;
+        right: 21px;
+    }
+
+    & + & {
+        margin-top: 14px;
+    }   
+
+    @include media-breakpoint-up(lg) {
+        align-items: center;
+    }
+
+    svg {
+        min-width: 20px;
+        margin-right: rem(28px);
+
+        @include media-breakpoint-down(lg) {
+            margin-top: rem(7px);
+        }
+    }
+
+    h5 {
+        color: #485465;
+        font-size: rem(14px);
+        font-weight: 800;
+        margin-bottom: rem(7px)
+    }
+
+    p {
+        color: #485465;
+        font-size: rem(13px);
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+
+    @each $name, $color in $alert-status-data {
+        &--type\:#{$name} {
+            background-color: $color;
+        }
+    }
+}

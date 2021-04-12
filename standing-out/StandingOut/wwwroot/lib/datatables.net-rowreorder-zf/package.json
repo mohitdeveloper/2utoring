@@ -1,0 +1,62 @@
+{
+  "_from": "datatables.net-rowreorder-zf@1.2.7",
+  "_id": "datatables.net-rowreorder-zf@1.2.7",
+  "_inBundle": false,
+  "_integrity": "sha512-YtYvbvkWNmAgz0JORF0HCMiOscuhsZYiWkQP9DrKl6zR5XS0ZDQHoHyHbBElIClXwkdNxpCn3SpFn57dMIOYzA==",
+  "_location": "/datatables.net-rowreorder-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "datatables.net-rowreorder-zf@1.2.7",
+    "name": "datatables.net-rowreorder-zf",
+    "escapedName": "datatables.net-rowreorder-zf",
+    "rawSpec": "1.2.7",
+    "saveSpec": null,
+    "fetchSpec": "1.2.7"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-rowreorder-zf/-/datatables.net-rowreorder-zf-1.2.7.tgz",
+  "_shasum": "c6ad8868a939042a92c273e46738c9fa5db529a9",
+  "_spec": "datatables.net-rowreorder-zf@1.2.7",
+  "_where": "C:\\DevSO\\standing-out",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net-rowreorder": "1.2.7",
+    "datatables.net-zf": "^1.10.15",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "RowReorder for DataTables with styling for [Zurb Foundation](http://foundation.zurb.com/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "row reordering",
+    "DataTables",
+    "jQuery",
+    "table",
+    "Foundation"
+  ],
+  "license": "MIT",
+  "main": "js/rowReorder.foundation.js",
+  "name": "datatables.net-rowreorder-zf",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-RowReorder-Foundation.git"
+  },
+  "style": "css/rowReorder.foundation.css",
+  "version": "1.2.7"
+}

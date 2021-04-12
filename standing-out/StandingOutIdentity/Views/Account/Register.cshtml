@@ -1,0 +1,86 @@
+@model StandingOut.Data.DTO.SystemObjects.RegisterUser
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="col-14 col-lg-8 offset-lg-2">
+    @*<partial name="_ValidationSummary" />*@
+    <form asp-route="Register">
+        <div class="Card Card--toRepsond:small">
+            <div class="d-flex justify-content-between">
+                <h1 class="mb-5 fw-800">Create an account</h1>
+                <a class="btn btn-default" id="backButton">Back</a>
+            </div>
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input class="form-control" placeholder="Enter your email address" asp-for="Email">
+                <div class="invalid-feedback d-block">
+                    <span asp-validation-for="Email"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input type="password" class="form-control" placeholder="Enter a password" asp-for="Password" autocomplete="off">
+                <div class="invalid-feedback d-block">
+                    <span asp-validation-for="Password"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input type="password" class="form-control" placeholder="Confirm your password" asp-for="ConfirmPassword" autocomplete="off">
+                <div class="invalid-feedback d-block">
+                    <span asp-validation-for="ConfirmPassword"></span>
+                </div>
+            </div>
+            <div class="form-group mb-0">
+                <div>
+                    @*@if (ViewData["Msg"] != null)
+                    {
+                    <span>@ViewData["Msg"]</span>
+                    }*@
+                </div>
+                <button class="btn btn-accent btn-lg fs-15 fw-700 py-14 cl-white w-100" name="button">Register</button>
+            </div>
+        </div>
+        @if (ViewBag.GoogleAuthenticationScheme != "")
+        {
+            <a class="Button Button--Google" style="text-align:center"
+               asp-controller="External"
+               asp-action="Challenge"
+               asp-route-provider="@ViewBag.GoogleAuthenticationScheme"
+               asp-route-link="false"
+               asp-route-returnUrl="@Model.ReturnUrl">
+                <div>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-7">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.64 9.20439C17.64 8.56629 17.5827 7.95259 17.4764 7.36349H9V10.8449H13.8436C13.635 11.9699 13.0009 12.9231 12.0477 13.5613V15.8194H14.9564C16.6582 14.2526 17.64 11.9453 17.64 9.20439Z" fill="#4285F4" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 8.99998 14.4204C6.65588 14.4204 4.67178 12.8372 3.96408 10.71H0.957275V13.0418C2.43818 15.9831 5.48178 18 8.99998 18Z" fill="#34A853" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.9641 10.7101C3.7841 10.1701 3.6818 9.5933 3.6818 9.0001C3.6818 8.4069 3.7841 7.8301 3.9641 7.2901V4.9583H0.9573C0.3477 6.1733 0 7.5478 0 9.0001C0 10.4523 0.3477 11.8269 0.9573 13.0419L3.9641 10.7101Z" fill="#FBBC05" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 3.5795C10.3214 3.5795 11.5077 4.0336 12.4405 4.9255L15.0218 2.3441C13.4632 0.8918 11.4259 0 8.99998 0C5.48178 0 2.43818 2.0168 0.957275 4.9582L3.96408 7.29C4.67178 5.1627 6.65588 3.5795 8.99998 3.5795Z" fill="#EA4335" />
+                    </svg>
+                    <span>
+                        Sign in with existing Google Account
+                    </span>
+                </div>
+            </a>
+
+            <a class="Button Button--Google" style="text-align:center"
+               href="https://accounts.google.com/signup/v2/webcreateaccount?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ltmpl=default&gmb=exp&biz=false&flowName=GlifWebSignIn&flowEntry=SignUp">
+                <div>
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-7">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.64 9.20439C17.64 8.56629 17.5827 7.95259 17.4764 7.36349H9V10.8449H13.8436C13.635 11.9699 13.0009 12.9231 12.0477 13.5613V15.8194H14.9564C16.6582 14.2526 17.64 11.9453 17.64 9.20439Z" fill="#4285F4" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 8.99998 14.4204C6.65588 14.4204 4.67178 12.8372 3.96408 10.71H0.957275V13.0418C2.43818 15.9831 5.48178 18 8.99998 18Z" fill="#34A853" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.9641 10.7101C3.7841 10.1701 3.6818 9.5933 3.6818 9.0001C3.6818 8.4069 3.7841 7.8301 3.9641 7.2901V4.9583H0.9573C0.3477 6.1733 0 7.5478 0 9.0001C0 10.4523 0.3477 11.8269 0.9573 13.0419L3.9641 10.7101Z" fill="#FBBC05" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 3.5795C10.3214 3.5795 11.5077 4.0336 12.4405 4.9255L15.0218 2.3441C13.4632 0.8918 11.4259 0 8.99998 0C5.48178 0 2.43818 2.0168 0.957275 4.9582L3.96408 7.29C4.67178 5.1627 6.65588 3.5795 8.99998 3.5795Z" fill="#EA4335" />
+                    </svg>
+                    <span>Sign in with a new Google Account</span>
+                </div>
+            </a>
+        }
+    </form>
+</div>
+
+@section scripts{
+    <script src="~/js/backFunction.js"></script>
+}

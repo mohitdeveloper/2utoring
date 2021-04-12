@@ -1,0 +1,315 @@
+﻿@{
+    Uri url = new Uri(String.Format("{0}://{1}{2}{3}", "https", Context.Request.Host, Context.Request.Path, Context.Request.QueryString));
+}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | 2utoring</title>
+    @RenderSection("meta", required: true)
+    <!-- Google Tag Manager -->
+    <script>
+    (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KNRHDFL');</script>
+    <!-- End Google Tag Manager -->
+
+
+
+
+    <link rel="apple-touch-icon" sizes="57x57" href="~/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="~/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="~/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/2utoring-com-v2-e00d9c71415a6ff11aeddf4.css" />
+        <link rel="stylesheet" href="~/css/components.css" />
+        <link rel="stylesheet" href="~/css/normalize.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/2utoring-com-v2-e00d9c71415a6ff11aeddf4.css" />
+        <link rel="stylesheet" href="~/css/components.css" />
+        <link rel="stylesheet" href="~/css/normalize.css" />
+    </environment>
+
+    <link rel="canonical" href="@url.ToString().ToLower()" />
+    @RenderSection("styles", required: false)
+
+</head>
+<body class="_2u_body">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNRHDFL"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- Header Start -->
+    
+    <div class="_2u_header webHeader">
+
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand"><img src="~/images/2utoring-logo.svg" height="47" alt="2utouring Logo" /></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mt-21 mt-lg-0">
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a asp-route="MyTimetable" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-calendar-alt"></i>
+                                <span class="fw-700">Timetable</span>
+                            </a>
+                        </li>
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a asp-route="MySafeguarding" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-life-ring"></i>
+                                <span class="fw-700">Safeguarding</span>
+                            </a>
+                        </li>
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a asp-route="MyReceipts" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-file-invoice"></i>
+                                <span class="fw-700">Receipts</span>
+                            </a>
+                        </li>
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a asp-route="MySettings" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-cog"></i>
+                                <span class="fw-700">Settings</span>
+                            </a>
+                        </li>
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a href="/" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-arrow-left"></i>
+                                <span class="fw-700">Back to site</span>
+                            </a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @*<li class="nav-item my-7 my-lg-0 mx-lg-14 d-inline-block">
+                                <a  asp-route-controller="Home" asp-route-action="SignIn" asp-route="default" class="btn btn-accent btn-lg fs-15 fw-700 py-7 cl-white">My Area</a>
+                            </li>*@
+                            <li class="nav-item my-7 my-lg-0 mx-lg-14  d-block d-lg-none">
+                                <form method="post" asp-route-controller="Account" asp-route-action="Logout" asp-route="default">
+                                    <button type="submit" class="SignOutBtn btn--removeApperance nav-link fs-18 fw-600 cl-dark">Sign out</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item my-7 my-lg-0 mx-lg-14 d-block d-lg-none">
+                                <a asp-route="SignIn" class="btn btn-accent btn-lg fs-15 fw-700 py-7 d-lg-none d-inline-block cl-white">Sign in</a>
+                            </li>
+                        }
+                    </ul>
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a asp-route="SignIn" class="btn btn-accent btn-lg fs-15 fw-700 py-7 cl-white d-none d-lg-inline-block">Sign in</a>
+                    }
+                </div>
+                @await Component.InvokeAsync("Profile", new { layotType = "Inner" })
+            </nav>
+        </header>
+        <!--<div class="_2u_wrapper-1">
+        <div data-collapse="medium" data-animation="default" data-duration="400" role="banner" class="_2u_navbar">
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand"><img src="~/images/2utoring-logo.svg" height="47" alt="2utouring Logo" /></a>
+            <nav role="navigation" class="_2u_nav-menu-2 w-nav-menu navbar-expand-lg navbar-light">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto mt-21 mt-lg-0">
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a asp-route="MyTimetable" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-calendar-alt"></i>
+                                <span class="fw-700">Timetable</span>
+                            </a>
+                        </li>
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a asp-route="MySafeguarding" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-life-ring"></i>
+                                <span class="fw-700">Safeguarding</span>
+                            </a>
+                        </li>
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a asp-route="MyReceipts" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-file-invoice"></i>
+                                <span class="fw-700">Receipts</span>
+                            </a>
+                        </li>
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a asp-route="MySettings" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-cog"></i>
+                                <span class="fw-700">Settings</span>
+                            </a>
+                        </li>
+                        <li class="nav-item text-lg-center mx-lg-14">
+                            <a href="/" class="nav-link cl-dark d-lg-flex flex-column">
+                                <i class="fs-21 d-none d-lg-block my-lg-7 mx-lg-auto fal fa-arrow-left"></i>
+                                <span class="fw-700">Back to site</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </nav>
+            <nav role="navigation" class="_2u_nav-menu w-nav-menu">
+                @await Component.InvokeAsync("Profile", new { layotType = "Inner" })
+            </nav>-->
+        @*<div class="w-nav-button" style="background: white;">
+            <div class="w-icon-nav-menu" style="background: white; color: black; margin-top: 2%;"></div>
+        </div>*@
+        <!--</div>
+    </div>-->
+        <div class="_2u_wrapper-2-header">
+            <div data-collapse="medium" data-animation="default" data-duration="400" data-doc-height="1" role="banner" class="_2u_navbar-2 w-nav" style="background:white">
+                <div class="_2u_container _2u_header w-container">
+                    @*<a asp-controller="Home" asp-action="Index" class="navbar-brand"><img src="~/images/2utoring-logo.svg" height="47" alt="2utouring Logo" /></a>*@
+                    <a asp-controller="Home" asp-action="Index" class="_2u_brand-2 w-nav-brand"><img src="~/images/2utoring-logo.svg" loading="lazy" alt=""></a>
+                    <nav role="navigation" class="_2u_nav-menu-3 w-nav-menu" style="background: white;">
+                        <div class="_2u_toolbar-links">
+                            <a asp-route="MyTimetable" class="_2u_nav-menu-link w-nav-link" style="color: #363638 !important;">Timetable</a>
+                            <a asp-route="MySafeguarding" class="_2u_nav-menu-link w-nav-link" style="color: #363638 !important;">Safeguarding</a>
+                            <a asp-route="MyReceipts" class="_2u_nav-menu-link w-nav-link" style="color: #363638 !important;">Receipts</a>
+                            <a asp-route="MySettings" class="_2u_nav-menu-link w-nav-link" style="color: #363638 !important;">Settings</a>
+                            <a href="/" class="_2u_nav-menu-link w-nav-link" style="color: #363638 !important;">Back to site</a>
+                        </div>
+                        <div class="_2u_toolbar-tools-2">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp-route-controller="Account" asp-route-action="Logout" asp-route="default" class="_2u_nav-menu-link _2u_grey _2u_sec w-nav-link">Sign Out</a>
+                            }
+                            else
+                            {
+                                <a asp-route="SignIn" class="_2u_nav-menu-link _2u_grey _2u_sec w-nav-link">Sign In</a>
+                            }
+
+                        </div>
+                    </nav>
+                    @await Component.InvokeAsync("Profile", new { layotType = "Inner" })
+                    <div class="_2u_menu-button w-nav-button" id="mobilViewHeaderAfterLogin">
+                        <div class="w-icon-nav-menu" style="padding-top: 50%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End (noscript) -->
+    <partial name="_CookieConsentPartial" />
+    @if (User.Identity.IsAuthenticated)
+    {
+        @await Component.InvokeAsync("NotificationMessage", new { pageName = ViewData["PageName"] })
+    }
+    <main>
+        <div class="Page__Container--size:content mb-56">
+            @RenderBody()
+        </div>
+    </main>
+
+
+    <div class="loading-bg loading" style="display: none">
+        <div class="loader-container">
+            <div class="Roller-Loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="Page__Container Page__Container--size:content">
+            <div class="row my-49 align-items-end">
+                <div class="col-12 col-lg-4 order-2 order-lg-1 mt-28 mt-0 mt-lg-0">
+
+                    2utoring is a trading name of Standing Out Ltd<br />&copy;
+                    <script type="text/javascript">document.write(new Date().getFullYear());</script> 2utoring - Business Company No, 10696411
+                </div>
+                <div class="col-12 col-lg-8 order-1 order-lg-2">
+                    <div class="fs-13 text-lg-right">
+                        <a class="d-block d-lg-inline-block footer-link-light my-7 my-lg-0" asp-route="CookiePolicy" target="_blank">Cookie Policy</a>
+                        <span class="mx-14 d-none d-lg-inline-block">|</span>
+                        <a class="d-block d-lg-inline-block footer-link-light my-7 my-lg-0" asp-route="PrivacyPolicy" target="_blank">GDPR Data Privacy Notice</a>
+                        <span class="mx-14 d-none d-lg-inline-block">|</span>
+                        <a class="d-block d-lg-inline-block footer-link-light my-7 my-lg-0" asp-route="TermsAndConditions" target="_blank">Terms of Website Use</a>
+                        <span class="mx-14 d-none d-lg-inline-block">|</span>
+                        <a class="d-block d-lg-inline-block footer-link-light my-7 my-lg-0" asp-route="AcceptableUse" target="_blank">Website Acceptable Use Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <environment names="Development,Staging,Production">
+        <!-- Global JS that doesn't change -->
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="~/lib/assets/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="//cdn.ckeditor.com/4.7.0/standard/ckeditor.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+            });
+
+            $('#mobilViewHeaderAfterLogin').click(function () {
+                $('.w-nav-button').css('background-color', 'hsla(0, 0%, 100%, 0)');
+                $('.w-nav-button').css('color', '#fa5');
+            });
+
+        </script>
+
+        <script src="~/js/2utoring-com-v2-e00d9c71415a6ff11aeddf4.js" type="text/javascript"></script>
+        <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+
+    </environment>
+
+    <environment names="Development">
+    </environment>
+
+    <environment names="Staging">
+    </environment>
+
+    <environment names="Production">
+    </environment>
+
+    <environment names="Staging,Production">
+    </environment>
+
+    @RenderSection("scripts", required: false)
+
+    @await Component.InvokeAsync("Intercom")
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,61 @@
+﻿@model StandingOut.Data.DTO.ContactUs
+
+@{
+    ViewData["Title"] = "Contact us";
+}
+
+<main class="so-content-page">
+
+    <section class="so-section-generic-text so-align-text-left so-generic-no-padding-top so-min-page-size">
+        <div class="grid-container">
+            <div class="grid-x align-center">
+                <div class="cell large-8">
+                    <h1 class="so-color-orange">@ViewData["Title"]</h1>
+                    <p>We would love to hear from you. Whether you're a Student who would like to enrol on one our courses, or an aspiring Tutor ready to teach a new generation, please use the form below to get in touch.</p>
+                    <p>Alternatively, feel free to connect with us on <a href="https://twitter.com/2utoring" target="_blank">Twitter</a>, <a href="https://www.instagram.com/standingout_ltd/" target="_blank">Instagram</a> or <a href="https://www.facebook.com/2utoring" target="_blank">Facebook</a> - we'd be happy to answer your query there as well.</p>
+                </div>
+            </div>
+
+            <form asp-antiforgery="true" action="/ContactUs" method="post" class="grid-x grid-padding-y align-center">
+                <div class="large-8 cell">
+                    <div class="grid-x grid-padding-x">
+                        <div class="small-3 cell">
+                            <label asp-for="Email" class="text-right middle"></label>
+                        </div>
+                        <div class="small-9 cell">
+                            <input asp-for="Email" type="email" maxlength="255" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="large-8 cell">
+                    <div class="grid-x grid-padding-x">
+                        <div class="small-3 cell">
+                            <label asp-for="Message" class="text-right middle"></label>
+                        </div>
+                        <div class="small-9 cell">
+                            <textarea asp-for="Message" maxlength="2000" required></textarea>
+                            <span asp-validation-for="Message" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="large-8 cell">
+                    <div class="grid-x grid-padding-x align-right">
+                        <div class="cell medium-3">
+                            <div class="grid-x align-right">
+                                <div class="medium-shrink">
+                                    <button type="submit" value="Send" class="button">Send Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+</main>
+
+
+
+

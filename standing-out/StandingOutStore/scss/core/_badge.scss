@@ -1,0 +1,31 @@
+// ----------------------------------------------------
+// Badge
+// ----------------------------------------------------
+.Badge {
+    $height: 35px !default;
+    align-items: center;
+    border-radius: 21px;
+    background-color: #485465;
+    display: inline-flex;
+    color: #fff;
+    min-height: 42px;
+    margin-bottom: $spacer;
+    padding: 1rem;
+    position: relative;
+    text-transform: capitalize;
+    max-width: 100%;
+
+    .Label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &:not(:last-child) {
+        margin-right: 14px;
+    }
+
+    i {
+        margin-left: $spacer;
+    }
+}

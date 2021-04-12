@@ -1,0 +1,20 @@
+﻿<div class="Call-modal">
+    <div class="Call-modal__Overlay">
+        <div class="Call-modal__Container" id="alert-popup">
+            <div class="Call-modal__Content">
+                <div class="Call-modal__Hero"><img src="/images/2utoringClassroom.svg" alt="Logo" /></div>
+                <audio id="tempphonering">
+                    <source src="/images/phonering.mp3" type="audio/mpeg">
+                </audio>
+
+                <h2>{{incomingUser.fullName}} calling</h2>
+                <p>
+                    Do you want to accept call?</p>
+                <div class="Button__group">
+                    <button type="button" ng-click="confirm(true)" class="button button--accept"><i class="fas fa-phone"></i></button>
+                    <button type="button" ng-click="confirm(false)" class="button button--decline"><i class="fas fa-phone-slash"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

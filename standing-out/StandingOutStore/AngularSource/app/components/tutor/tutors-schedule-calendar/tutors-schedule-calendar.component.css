@@ -1,0 +1,40 @@
+
+::ng-deep .mat-accent .mat-slider-thumb {
+    background-color: #ff9d2b !important;
+}
+
+::ng-deep .mat-accent .mat-slider-thumb-label {
+    background-color: #ff9d2b !important;
+}
+
+::ng-deep .mat-accent .mat-slider-track-fill {
+    background-color: #ff9d2b !important;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #ff9d2b !important;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #ff9d2b !important;
+}
+
+::ng-deep .mat-slider.mat-slider-horizontal .mat-slider-wrapper {
+    top: 18px;
+}
+
+::ng-deep .mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
+    height: 15px;
+    border-radius: 10px
+}
+ul.cource-creation-nav li a {
+    text-decoration:none;
+}
+.calbtn {
+    width: 50%;
+    float: right;
+    position: relative;
+    top: 50px;
+    /*z-index:9999;*/
+}
+

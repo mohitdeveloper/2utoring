@@ -1,0 +1,31 @@
+﻿body {
+
+    ul.tabs {
+        border-bottom: $defaultBorder;
+    }
+
+    .tabs {
+        background-color: transparent;
+
+        .tabs-title {
+            a {
+                border: 1px solid transparent;
+                border-bottom: 0;
+                border-radius: 2px 2px 0 0;
+
+                &:focus,
+                &:hover,
+                &[aria-selected='true'] {
+                    background-color: #fff;
+                    border: $defaultBorder;
+                    border-bottom: 0;
+                    font-weight: $fontWeightBold;
+
+                    &:after {
+                        background-color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}

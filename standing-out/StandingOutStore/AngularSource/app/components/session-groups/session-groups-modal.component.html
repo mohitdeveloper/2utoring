@@ -1,0 +1,37 @@
+﻿
+<h4 class="step-col-head col-md-12 ng-star-inserted">
+    <b>Group</b>
+    <span style="cursor: pointer; float: right; color: red; font-size: 25px;">
+        <i aria-hidden="true" title="close" (click)="closeModal()" class="fa fa-window-close"></i>
+    </span>
+</h4>
+<div class="col-sm-12">
+    <form (ngSubmit)="save(groupForm.value)" [formGroup]="groupForm" name="groupForm">
+        <input type="hidden" formControlName="classSessionId" id="classSessionId" />
+        <input type="hidden" formControlName="sessionGroupId" id="sessionGroupId" />
+
+        <div class="modal-form" style="padding:3%;">
+            <div class="d-flex subject-price">
+                <span>Group Name</span>
+                <input class="col-8" id="name" type="text" name="name" ngbAutofocus  formControlName="name" maxlength="250" placeholder="Name" />
+            </div>
+            <div *ngIf="groupFormControls.name.errors && (groupFormControls.name.dirty || groupFormControls.name.touched || groupFormSubmitted)"
+                 class="error" role="alert">
+                <div *ngIf="groupFormControls.name.errors.required">
+                    This field is required.
+                </div>
+                <div *ngIf="groupFormControls.name.errors.maxlength">
+                    This field can be no longer than 250 characters.
+                </div>
+            </div>
+
+
+        </div>
+        <div class="mt-3" style="float: right; margin-bottom: 2%;">
+            <button type="button" style="float: left;" (click)="closeModal()" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+            <button type="submit" class="sub-next" data-dismiss="modal" aria-label="Submit">Create group</button>
+        </div>
+
+    </form>
+</div>
+

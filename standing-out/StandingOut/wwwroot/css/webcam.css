@@ -1,0 +1,446 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap");
+/* line 1, StandingOut/scss/webcam.scss */
+.so-header,
+footer {
+  display: none;
+}
+
+/* line 9, StandingOut/scss/webcam.scss */
+body {
+  font-family: "Manrope", sans-serif;
+  font-weight: 500;
+}
+
+/* line 14, StandingOut/scss/webcam.scss */
+.Scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 14px;
+}
+
+/* line 20, StandingOut/scss/webcam.scss */
+.Webcam__Panel {
+  background-color: #f4f6fa;
+  border: 1px solid #f7f7f7;
+  display: inline-grid;
+  grid-template-rows: auto 1fr 112px;
+  margin-right: 21px;
+  height: 100vh;
+}
+
+/* line 28, StandingOut/scss/webcam.scss */
+.Webcam__Panel .Filter__Block {
+  background-color: #fff;
+  border: 1px solid #f7f7f7;
+  color: #485465;
+  padding: 21px;
+}
+
+/* line 36, StandingOut/scss/webcam.scss */
+.Webcam__Floater {
+  height: 170px;
+  width: 170px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+/* line 44, StandingOut/scss/webcam.scss */
+.Panel-Name {
+  color: #485465;
+  display: block;
+  font-size: 21px;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+/* line 52, StandingOut/scss/webcam.scss */
+.Panel-Intro {
+  color: #485465;
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* line 65, StandingOut/scss/webcam.scss */
+.Webcam__Header {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 21px;
+  padding: 21px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 73, StandingOut/scss/webcam.scss */
+.Webcam__Grid {
+  display: grid;
+  grid-template-columns: repeat(3, 170px);
+  grid-auto-rows: 170px;
+  grid-gap: 21px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* line 82, StandingOut/scss/webcam.scss */
+.Webcam__Tile {
+  border: 1px solid;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* line 88, StandingOut/scss/webcam.scss */
+.Webcam__Tile--type\:Dominant {
+  background-color: #485465;
+  color: white;
+  border-color: #485465;
+  height: 170px;
+}
+
+/* line 95, StandingOut/scss/webcam.scss */
+.Webcam__Tile--type\:Dominant .Webcam__Info {
+  background-color: #485465;
+  border-top: 1px solid #485465;
+}
+
+/* line 99, StandingOut/scss/webcam.scss */
+.Webcam__Tile--type\:Dominant .Webcam__Video {
+  height: 170px;
+}
+
+/* line 105, StandingOut/scss/webcam.scss */
+.Webcam__Tile--type\:Expand {
+  height: -webkit-calc((170px * 3) + (21px * (3 - 1)));
+  height: -moz-calc((170px * 3) + (21px * (3 - 1)));
+  height: calc((170px * 3) + (21px * (3 - 1)));
+  grid-column: 1/span 3;
+  grid-row: 1/span 3;
+}
+
+/* line 111, StandingOut/scss/webcam.scss */
+.Webcam__Tile--type\:Expand .Webcam__Video {
+  height: -webkit-calc( (170px * 3) + (21px * (3 - 1))) !important;
+  height: -moz-calc( (170px * 3) + (21px * (3 - 1))) !important;
+  height: calc( (170px * 3) + (21px * (3 - 1))) !important;
+}
+
+/* line 119, StandingOut/scss/webcam.scss */
+.Webcam__Tile--type\:Listening {
+  background-color: white;
+  color: #485465;
+  border-color: #EAEAEA;
+}
+
+/* line 125, StandingOut/scss/webcam.scss */
+.Webcam__Tile--type\:Listening .Webcam__Info {
+  background-color: white;
+  border-top: 1px solid #EAEAEA;
+}
+
+/* line 129, StandingOut/scss/webcam.scss */
+.Webcam__Tile--type\:Listening .Webcam__Video {
+  height: -webkit-calc(170px - 51px);
+  height: -moz-calc(170px - 51px);
+  height: calc(170px - 51px);
+}
+
+/* line 135, StandingOut/scss/webcam.scss */
+.Webcam__Tile--state\:Disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* line 141, StandingOut/scss/webcam.scss */
+.Webcam__Video {
+  -webkit-box-align: start;
+  -webkit-align-items: start;
+  -moz-box-align: start;
+  -ms-flex-align: start;
+  align-items: start;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* line 147, StandingOut/scss/webcam.scss */
+.Webcam__Video:after {
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  -webkit-transition: 500ms background-color linear;
+  -o-transition: 500ms background-color linear;
+  -moz-transition: 500ms background-color linear;
+  transition: 500ms background-color linear;
+  width: 100%;
+  z-index: 101;
+}
+
+/* line 159, StandingOut/scss/webcam.scss */
+.Webcam__Video:hover:after {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* line 163, StandingOut/scss/webcam.scss */
+.Webcam__Video:hover video {
+  -webkit-filter: blur(2px);
+  filter: blur(2px);
+}
+
+/* line 168, StandingOut/scss/webcam.scss */
+.Webcam__Video:hover .Webcam__Controls i {
+  color: #fff;
+}
+
+/* line 174, StandingOut/scss/webcam.scss */
+.Webcam__Video video {
+  -webkit-filter: blur(0px);
+  filter: blur(0px);
+  height: 100% !important;
+  -webkit-transition: 500ms -webkit-filter linear;
+  transition: 500ms -webkit-filter linear;
+  -o-transition: 500ms filter linear;
+  -moz-transition: 500ms filter linear;
+  transition: 500ms filter linear;
+  transition: 500ms filter linear, 500ms -webkit-filter linear;
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 100% !important;
+  z-index: 100;
+}
+
+/* line 184, StandingOut/scss/webcam.scss */
+.Webcam__Info {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  bottom: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -moz-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  left: 0;
+  padding: 14px;
+  position: absolute;
+  width: 100%;
+  z-index: 400;
+}
+
+/* line 195, StandingOut/scss/webcam.scss */
+.Webcam__Info span {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* line 201, StandingOut/scss/webcam.scss */
+.Webcam__Controls {
+  color: #c4c4c4;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: absolute;
+  z-index: 400;
+}
+
+/* line 208, StandingOut/scss/webcam.scss */
+.Webcam__Controls .Icon {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: transparent;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+  height: 28px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  -webkit-transition: 500ms color linear;
+  -o-transition: 500ms color linear;
+  -moz-transition: 500ms color linear;
+  transition: 500ms color linear;
+  width: 28px;
+}
+
+/* line 220, StandingOut/scss/webcam.scss */
+.Webcam__Controls .Icon:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* line 225, StandingOut/scss/webcam.scss */
+.Webcam__Controls--position\:TopLeft {
+  left: 7px;
+  top: 7px;
+}
+
+/* line 230, StandingOut/scss/webcam.scss */
+.Webcam__Controls--position\:TopRight {
+  right: 7px;
+  top: 7px;
+}
+
+/* line 236, StandingOut/scss/webcam.scss */
+.Webcam__Initials {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #c4c4c4;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 25px;
+  font-weight: 800;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 63px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  width: 63px;
+}
+
+/* line 254, StandingOut/scss/webcam.scss */
+.Webcam__Control-Buttons {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 21px;
+  padding-right: 21px;
+}
+
+/* line 260, StandingOut/scss/webcam.scss */
+.Webcam__Control-Buttons .Button {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -moz-box-orient: vertical;
+  -moz-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 63px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  width: 63px;
+}
+
+/* line 271, StandingOut/scss/webcam.scss */
+.Webcam__Control-Buttons .Button:not(:last-child) {
+  margin-right: 10px;
+}
+
+/* line 275, StandingOut/scss/webcam.scss */
+.Webcam__Control-Buttons .Button__Icon {
+  height: 21px;
+  width: 21px;
+}
+
+/* line 280, StandingOut/scss/webcam.scss */
+.Webcam__Control-Buttons .Button__Icon svg {
+  fill: #ffffff;
+  height: 100%;
+  width: 100%;
+}
+
+/* line 288, StandingOut/scss/webcam.scss */
+.Webcam__Control-Buttons .Button--status\:Active {
+  background-color: #485465;
+}
+
+/* line 292, StandingOut/scss/webcam.scss */
+.Webcam__Control-Buttons .Button--status\:InActive {
+  background-color: #eb5757;
+}
+
+/* line 296, StandingOut/scss/webcam.scss */
+.Webcam__Control-Buttons .Button span {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-top: 5px;
+  text-align: center;
+}
+
+/*# sourceMappingURL=../../sass */

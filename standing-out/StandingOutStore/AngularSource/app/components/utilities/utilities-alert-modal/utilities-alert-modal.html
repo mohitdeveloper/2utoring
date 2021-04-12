@@ -1,0 +1,9 @@
+﻿<div class="modal-body px-35 py-56">
+    <h2 class="fw-700 text-center my-14">{{title}}</h2>
+    <p class="fs-14 fw-500 text-center mb-21">{{message}}</p>
+    <p class="fs-14 fw-500 text-center mb-21" *ngIf="htmlMessage && htmlMessage.trim() != ''" [innerHTML]="htmlMessage"></p>
+    <div class="d-lg-flex justify-content-center align-items-center mt-35" *ngIf="confirmButtons == true">
+        <button type="button" (click)="confirm(false)" [class]="yesButtonClass">{{noButtonText}}</button>
+        <button type="button" (click)="confirm(true)" [class]="noButtonClass">{{yesButtonText}}</button>
+    </div>
+</div>

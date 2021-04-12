@@ -1,0 +1,6 @@
+<div *ngIf="type == 'Edit'" class="Page__Container--size:profile">
+    <app-tutor-profile-edit [tutorId]="tutorId"></app-tutor-profile-edit>
+</div>
+<div *ngIf="type == 'View'">
+    <app-tutor-profile-view [tutorId]="tutorId" [showEditButton]="true"></app-tutor-profile-view>
+</div>

@@ -1,0 +1,44 @@
+﻿<div ng-controller="SetupMediaController as ctrl">
+
+    <div class="display--flex align-justify margin-bottom-loose">
+        <button type="button" class="button button--primary margin-left-auto button--hasIcon" ng-click="addMedia()"><i class="fal fa-plus"></i><span>Add</span></button>
+    </div>
+
+    <div class="grid-x">
+        <div class="large-12 cell">
+            <section class="table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in media">
+                            <td>{{item.name}}</td>
+                            <td>{{item.type}}</td>
+                            <td>
+                                <div class="button--group">
+                                    <a href="#" ng-click="editMedia(item)" class="button button--primary margin-left-auto">Edit</a>
+                                    <a href="#" ng-click="deleteMedia(item)" class="button button--distructive">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+
+            <!--<div class="grid-x">
+                <div class="large-6 cell">
+                    <iframe ng-src="{{trustSrc(iframeTest)}}"></iframe>
+                </div>
+                <div class="large-6 cell">
+                    <iframe width="560" height="315" ng-src="{{trustSrc(youtubeTest)}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>-->
+        </div>

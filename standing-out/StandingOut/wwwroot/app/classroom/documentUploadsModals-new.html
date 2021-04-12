@@ -1,0 +1,75 @@
+﻿<div class="popup-overlay" id="fileUploadPopup" ng-show="showPopup">
+    <div id="group" name="group" class="Modal Modal--upload" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()"><i class="fal fa-times-circle"></i></button>
+            <h2 ng-show="chooseFileActive">Upload a file</h2>
+            <h2 ng-show="!chooseFileActive && isMaster">Share</h2>
+            <h2 ng-show="!chooseFileActive && !isMaster">Permissions</h2>
+        </div>
+        <div class="Modal__Content">
+            <div ng-show="chooseFileActive">
+                <div class="upload-widget" ngf-multiple="true" ngf-allow-dir="false" ngf-drop="setFiles($files)" ngf-select="setFiles($files)" ngf-drag-over-class="dragover">
+                    <div class="upload-ui">
+                        <i class="fal fa-upload fa-3x"></i>
+                        <div class="upload-label">Drag &amp; drop or <u>select a file</u></div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div ng-show="!chooseFileActive && (fileToUpload == undefined || fileToUpload == null)" class="large-12 cell">
+            <button type="button" ng-click="chooseFile()"></button>
+        </div>-->
+
+            <div ng-show="!chooseFileActive">
+
+                <h3>{{names}}</h3>
+
+                <div class="Permissions__Table">
+
+                    <div class="Permissions__Row">
+                        <div></div>
+                        <div>View only</div>
+                        <div>Edit</div>
+                    </div>
+                    <div class="Permissions__Row">
+                        <div>Student</div>
+                        <div><input type="checkbox" ng-change="setRead()" ng-disabled="!isMaster" ng-model="readToggle" /></div>
+                        <div><input type="checkbox" ng-change="setWrite()" ng-model="writeToggle" /></div>
+                    </div>
+
+
+                    <div class="Permissions__Row" ng-repeat="sessionAttendee in sessionAttendees">
+                        <div>{{sessionAttendee.name}}</div>
+                        
+                        {{ sessionAttendee.isReadable }}
+                        {{ sessionAttendee.isWriteable }}
+
+                        <div><input type="checkbox" ng-change="readChanged($index)" ng-disabled="!isMaster" ng-model="sessionAttendee.isReadable" /></div>
+                        <div><input type="checkbox" ng-change="writeChanged($index)" ng-model="sessionAttendee.isWriteable" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="Modal__Footer" ng-show="!chooseFileActive && !isMaster">
+            <div class="Footer__Buttons">
+                <button class="button button--tertiary" type="button" ng-click="cancel()">Cancel</button>
+                <button class="button button--success" type="button" ng-click="permissions()">Ok</button>
+            </div>
+        </div>
+
+        <div class="Modal__Footer" ng-show="!chooseFileActive && isMaster">
+            <div class="Footer__Buttons">
+                <button class="button button--tertiary" type="button" ng-click="cancel()">Close without sharing</button>
+                <button class="button button--success" type="button" ng-click="share()">Share</button>
+            </div>
+        </div>
+
+        <div class="Modal__Footer" ng-show="chooseFileActive">
+            <div class="Footer__Buttons">
+                <button class="button button--tertiary" type="button" ng-click="cancel()">Cancel</button>
+                <button class="button button--success" type="button" ng-click="continue()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,188 @@
+﻿@model IEnumerable<StandingOut.Data.Models.ClassSession>
+
+    @{
+        ViewData["Title"] = "Sessions";
+    }
+
+    @section scripts
+    {
+        <script>
+        var isCompany = '@ViewBag.isCompany' == 'True' ? true : false;
+        var isTutor = '@ViewBag.IsTutor' == 'True' ? true : false;
+        var isParent = '@ViewBag.IsParent' == 'True' ? true : false;
+        </script>
+    }
+
+    <div ng-controller="SessionIndexController">
+        <div class="grid-container grid-container--wide">
+            <div class="grid-x rid-margin-x margin-bottom-loose margin-top-extra-loose">
+                <div class="large-6 cell display--flex">
+                    <input type="text" maxlength="255" ng-model="searchText" />
+                    <button class="button button--primary margin-left-tight" ng-click="search()">Search</button>
+                </div>
+                <div class="large-offset-2 large-4 cell display--flex">
+                    <select ng-options="item as item for item in possibleTakes" ng-model="take" ng-change="takeChange()"></select>
+                    <a ng-if="!isTutor" class="button button--primary  margin-left-tight" ng-click="toggleReportAbuse()">Report User</a>
+                    <button class="button button--primary margin-left-tight" ng-if="isParent && !isTutor" ng-click="addFamily()">Add Family Member</button>
+                </div>
+            </div>
+        </div>
+        <div class="grid-container grid-container--wide margin-top-base">
+            <div class="grid-x grid-margin-x">
+                <div class="large-12 cell padding-top-tight">
+                    <ul class="tabs" data-tabs id="setup-tabs">
+                        <li class="tabs-title is-active"><a data-tabs-target="panelupcoming" href="#upcoming" aria-selected="true">Upcoming</a></li>
+                        <li class="tabs-title"><a data-tabs-target="panelprevious" href="#previous">Previous</a></li>
+                        <li class="tabs-title" ng-if="isParent && !isTutor"><a data-tabs-target="panelfamily" href="#family">Family</a></li>
+                        <li ng-if="isTutor" class="tabs-title"><a data-tabs-target="panelprofile" href="#profile">Profile</a></li>
+                    </ul>
+                    <div class="tabs tabs-content" data-tabs-content="setup-tabs">
+                        <div class="tabs-panel is-active" id="panelupcoming">
+                            <section class="table margin-top" ng-show="upcomingSessions.length > 0">
+                                <table cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Class</th>
+                                            <th>Date</th>
+                                            <th>Start Time</th>
+                                            <th>Duration</th>
+                                            <th>Tutor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in upcomingSessions">
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.duration}} mins</td>
+                                            <td>{{item.startDate | date : 'HH:mm'}}</td>
+                                            <td>{{item.startDate | date : 'dd/MM/yyyy'}}</td>
+                                            <td><a href="/tutors/{{item.tutorId}}" ng-if="item.tutorId != null">{{item.tutorName}}</a></td>
+                                            <td>
+                                                <div class="button--group float-right">
+                                                    <a ng-click="toSession(item.classSessionId)" ng-if="item.canEnter && !isParent" class="button button--primary">Enter Classrom</a>
+                                                    <a ng-click="toSetup(item.classSessionId)" ng-if="isTutor && !item.started" class="button button--primary">Classroom Setup</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="button" ng-show="upcomingSessionsSearch.page > 1" ng-click="prevPage('upcoming')">Prev Page</button>
+                                <span>Page {{upcomingSessionsSearch.page}}</span>
+                                <button type="button" ng-show="upcomingSessionsSearch.page < upcomingSessionsSearch.totalPages" ng-click="nextPage('upcoming')">Next Page</button>
+                            </section>
+                            <div ng-if="upcomingSessions.length == 0" class="margin-tight">
+                                You have not signed up to any classes yet. To do this, please sign up to a class by <a asp-controller="search" asp-route-type="tutors">finding-a-Tutor</a>.
+                            </div>
+                        </div>
+                        <div class="tabs-panel" id="panelprevious">
+                            <section class="table margin-top" ng-show="previousSessions.length > 0">
+                                <table cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Class</th>
+                                            <th>Date</th>
+                                            <th>Start Time</th>
+                                            <th>Duration</th>
+                                            <th>Tutor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in previousSessions">
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.startDate | date : 'dd/MM/yyyy'}}</td>
+                                            <td>{{item.startDate | date : 'HH:mm'}}</td>
+                                            <td>{{item.duration}} mins</td>
+                                            <td><a href="/tutors/{{item.tutorId}}" ng-if="item.tutorId != null">{{item.tutorName}}</a></td>
+                                            <td>
+                                                <div class="button--group float-right">
+                                                    <a ng-click="toSession(item.classSessionId)" ng-if="item.canEnter && !isParent" class="button button--primary">Enter Classrom</a>
+                                                    <a ng-click="toSetup(item.classSessionId)" ng-if="isTutor && !item.started" class="button button--primary">Classroom Setup</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button type="button" ng-show="previousSessionsSearch.page > 1" ng-click="prevPage('previous')">Prev Page</button>
+                                <span>Page {{previousSessionsSearch.page}}</span>
+                                <button type="button" ng-show="previousSessionsSearch.page < previousSessionsSearch.totalPages" ng-click="nextPage('previous')">Next Page</button>
+                            </section>
+                            <div ng-if="previousSessions.length == 0" class="margin-tight">
+                                You have not signed up to any classes yet. To do this, please sign up to a class by <a asp-controller="search" asp-route-type="tutors">finding-a-Tutor</a>.
+                            </div>
+                        </div>
+                        <div class="tabs-panel" id="panelfamily" ng-if="isParent && !isTutor">
+                            <section class="table margin-top" ng-show="familyLinks.length > 0">
+                                <table cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        <tr ng-repeat="item in familyLinks">
+                                            <td>{{item.childEmail}}</td>
+                                            <td>{{item.fullName == '' ? '-' : item.fullName}}</td>
+                                            <td>
+                                                <span ng-show="item.linked"><i class="far fa-check-circle"></i> Linked</span>
+                                                <span ng-show="!item.linked && item.recentRequest"><i class="far fa-question-circle"></i> Pending</span>
+                                                <span ng-show="!item.linked && !item.recentRequest"><i class="far fa-times-circle"></i> No Response</span>
+                                            </td>
+                                            <td>
+                                                <div class="button--group float-right">
+                                                    <button type="button" ng-click="resendFamily($index)" ng-show="!item.linked && !item.recentRequest" class="button button--primary">Resend</button>
+                                                    <button type="button" ng-click="removeFamily($index)" class="button button--secondary">Remove</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </section>
+                            <div ng-if="familyLinks.length == 0" class="margin-tight">
+                                No family members to show...
+                            </div>
+                        </div>
+                        <div class="tabs-panel" id="panelprofile">
+                            <section class="form margin-top">
+                                <form name="tutorForm" id="tutorForm" ng-submit="updateTutor()">
+                                    <div class="grid-x grid-margin-x grid-margin-y">
+                                        <div class="large-4 cell">
+                                            <label>Header</label>
+                                            <input type="text" name="header" id="header" ng-model="tutor.header" maxlength="250" required />
+                                            <span ng-messages="tutorForm.header.$error" ng-show="tutorForm.header.$invalid && (tutorForm.header.$touched || tutorForm.submitted)" class="text-danger field-validation-error">
+                                                <span ng-message="required">This field is required.</span>
+                                                <span ng-message="maxlength">This field has a max length of 250.</span>
+                                            </span>
+                                        </div>
+                                        <div class="large-4 cell">
+                                            <label>Sub Header</label>
+                                            <input type="text" name="subHeader" id="subHeader" ng-model="tutor.subHeader" maxlength="250" required />
+                                            <span ng-messages="tutorForm.subHeader.$error" ng-show="tutorForm.subHeader.$invalid && (tutorForm.subHeader.$touched || tutorForm.submitted)" class="text-danger field-validation-error">
+                                                <span ng-message="required">This field is required.</span>
+                                                <span ng-message="maxlength">This field has a max length of 250.</span>
+                                            </span>
+                                        </div>
+                                        <div class="large-4 cell">
+                                            <label>Biography</label>
+                                            <textarea name="biography" id="biography" ng-model="tutor.biography" maxlength="2000"></textarea>
+                                            <span ng-messages="tutorForm.biography.$error" ng-show="tutorForm.biography.$invalid && (tutorForm.biography.$touched || tutorForm.submitted)" class="text-danger field-validation-error">
+                                                <span ng-message="required">This field is required.</span>
+                                                <span ng-message="maxlength">This field has a max length of 2000.</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="grid-x grid-margin-x grid-margin-y">
+                                        <div class="large-4 cell">
+                                            <img ng-if="tutor.imageDirectory != null && tutor.imageDirectory != '' && tutor.imageName != null && tutor.imageName != ''" src="{{tutor.imageDownlaodUrl}}" />
+                                        </div>
+                                        <div class="large-8 cell">
+                                            <div class="upload-widget" ngf-multiple="true" ngf-allow-dir="false" ngf-drop="uploadFiles($files)" ngf-select="uploadFiles($files)" ngf-drag-over-class="dragover">
+                                                <div class="upload-ui">
+                                                    <i class="fal fa-upload fa-3x"></i>
+                                                    <div class="upload-label">Drag &amp; drop or <u>upload a profile picture</u></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="submit" value="Save" class="button button--primary" />
+                                </form>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

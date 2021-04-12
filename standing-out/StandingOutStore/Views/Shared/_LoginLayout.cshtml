@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | 2utoring</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+    <link href="~/fonts/font-awesome-5.9.0/css/all.min.css" rel="stylesheet" />
+    
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/mvc-components/login-form.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/mvc-components/login-form.min.css" asp-append-version="true" />
+    </environment>
+
+    @RenderSection("styles", required: false)
+</head>
+<body>
+
+    <header class="Header">
+        <div class="Container--large mx-auto">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#"><img src="~/images/2utoring-logo.svg" width="100" alt="Logo" /></a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    
+    <div class="loading-bg loading" style="display: none">
+        <div class="loader-container">
+           <div class="Roller-Loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        </div>
+    </div>
+
+    <footer>
+
+        <environment names="Development,Staging,Production">
+            <!-- Global JS that doesn't change -->
+
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+            <script type="text/javascript" src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+
+            <script type="text/javascript" src="~/lib/popper.js/dist/popper.min.js"></script>
+            <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+            <script src="//cdn.ckeditor.com/4.7.0/standard/ckeditor.js"></script>
+
+        </environment>
+
+        <environment names="Development">
+            <!-- Development versions of Angular (easier to debug) -->
+
+        </environment>
+
+        <environment names="Staging,Production">
+            <!-- Production versions of Angular (faster loading) -->
+
+
+        </environment>
+
+        <environment names="Development,Staging,Production">
+
+        </environment>
+
+        <script>
+
+        </script>
+
+        @RenderSection("scripts", required: false)
+
+    </footer>
+
+</body>
+</html>

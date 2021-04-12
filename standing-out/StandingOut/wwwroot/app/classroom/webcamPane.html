@@ -1,0 +1,54 @@
+<div ng-controller="FileController as ctrl">
+
+    <div class="grid-container margin-base">
+        <div class="grid-x grid-margin-y grid-margin-x" ng-if="selectedDocument === undefined || selectedDocument == null">
+            <div class="large-12 cell">
+                <div class="button--group margin-bottom-loose">
+                    <button class="button button--primary button--hasIcon" ng-if="parentFolder !== undefined && parentFolder != null" ng-click="navigateUp()">
+                        <i class="fal fa-arrow-left"></i>
+                    </button>
+                    <button class="button button--primary button--hasIcon" ng-click="refresh()">
+                        <i class="fal fa-redo"></i>
+                    </button>
+                    <button ng-if="isTutor" ng-hide="uploadDisabled()" class="button button--primary button--hasIcon" ng-click="upload()">
+                        <i class="fal fa-arrow-up"></i><span>Upload file</span>
+                    </button>
+                    <span ng-repeat="depthName in depthNames">{{depthName}} ></span>
+                </div>
+            </div>
+            <div class="large-12 cell Files">
+                <div ng-repeat="item in files" class="Files__Row">
+                    <div>{{item.name}}</div>
+                    <div>
+                        <a ng-show="inMaster() && !isFolder(item.mimeType)" ng-click="permissionsSingle(item)">Share</a>
+
+                        <a ng-show="downloadAvailable(item.mimeType)" href="{{item.webContentLink}}" target="_blank">Download</a>
+                        <a ng-show="openAvailable(item.mimeType) || isFolder(item.mimeType)" ng-click="open(item)">{{isFolder(item.mimeType) ? 'Open' : 'View'}}</a>
+                        <!--<a ng-hide="item.appProperties != null && item.appProperties['protectedFile'] === 'True'" ng-click="deleteDocument(item)">Delete</a>-->
+                        <a ng-show="openAvailable(item.mimeType) && !isFolder(item.mimeType)" ng-click="openPopUp(item)">View as Popup</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Pagination">
+                <div class="Pagination__Controls" ng-hide="files === undefined || files == null || files.length == 0">
+                    <button type="button" ng-show="previousPages !== undefined && previousPages.length > 0" ng-click="getPreviousPage()"><i class="fal fa-chevron-left"></i></button>
+                    <div>{{pageNumber}}</div>
+                    <button ng-show="nextPage !== undefined && nextPage != null" ng-click="getNextPage()"><i class="fal fa-chevron-right"></i></button>
+                </div>
+                <div class="Pagination__NoPages" ng-show="(files === undefined || files == null || files.length == 0) && !navigationRunning">
+                    No files to show
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="selectedDocument !== undefined && selectedDocument != null">
+            <button class="button button--primary button--hasIcon" ng-click="close()"><i class="fal fa-arrow-left"></i></button>
+            <div class="iframe__Container">
+                <iframe ng-src="{{trust(selectedDocument)}}"></iframe>
+            </div>
+        </div>
+
+    </div>
+
+</div>

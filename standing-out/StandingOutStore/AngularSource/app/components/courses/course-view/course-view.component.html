@@ -1,0 +1,13 @@
+﻿
+<div class="my-35 my-md-28 my-lg-56">
+    <div class="Page__Container Page__Container--size:content">
+        <div class="row Card__Group">
+            <div class="col-12 col-lg-8">
+                <app-course-card *ngIf="result != undefined" [lesson]="result.lessonList" [course]="result.course" [selected]="false" [displayTutor]="false" [displayLarge]="true" [canUserBuy]="canUserBuy" [isLoggedIn]="isLoggedIn" [isGuardian]="isGuardian"></app-course-card>
+            </div>
+            <div class="col-12 col-lg-4 mt-14 mt-md-0">
+                <app-tutor-card *ngIf="result != undefined" [tutor]="result.tutor"></app-tutor-card>
+            </div>
+        </div>
+    </div>
+</div>

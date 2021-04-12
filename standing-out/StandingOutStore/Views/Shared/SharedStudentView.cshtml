@@ -1,0 +1,201 @@
+﻿@model StandingOut.Data.DTO.ViewStudent
+@using StandingOut.Business.Services;
+@using storeService = StandingOut.Business.Services;
+@using StandingOut.Data.Enums;
+@using StandingOut.Shared;
+
+@{
+    var subscriptionFeatureSet = ViewBag.SubscriptionFeatureSet as SubscriptionFeatureSet;
+    var canViewLesson = subscriptionFeatureSet?.CompletedLesson(FeatureArea.TutorDashboard, FeatureContext.View) ?? false;
+    var openClassAllowed = true;
+    var classroomSiteUrl = ViewBag.ClassRoomSiteUrl;
+    var toastrUrl = $"{classroomSiteUrl}/lib/toastr/toastr.js";
+    var toastrCssUrl = $"{classroomSiteUrl}/lib/toastr/build/toastr.css";
+}
+
+@section styles{
+    <link rel="stylesheet" href="@toastrCssUrl" />
+}
+
+@section scripts{
+    <script src="@toastrUrl"></script>
+    <script type="text/javascript">
+        var showToastMsg = function () { };
+        $(document).ready(function () {
+            if (!toastr) return;
+
+            showToastMsg = function showToastr(msg, toastType = "error", timeOutSecs = 3) {
+                if (toastType == "info") toastr.info(msg, "", { timeOut: timeOutSecs * 1000 });
+                if (toastType == "warn") toastr.warning(msg, "", { timeOut: timeOutSecs * 1000 });
+                if (toastType == "error") toastr.error(msg, "", { timeOut: timeOutSecs * 1000 });
+            }
+        });
+    </script>
+}
+@section meta{
+
+    @*<meta name="description" content="[[METAREQUIRED]]" />
+        <meta name="keywords" content="[[METAREQUIRED]]" />*@
+
+}
+
+<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <a class="link-grey mb-28 d-inline-block" asp-action="Index"><i class="fal fa-arrow-left mr-14"></i><span>Back</span></a>
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="row mb-49 mb-lg-63">
+        <div class="col 12 col-lg-4">
+            <div class="Avatar Avatar--size:largest mb-35 mb-lg-0">
+                <img src="@Model.Student.GoogleProfilePicture" class="FillWidth" />
+            </div>
+        </div>
+        <div class="col-12 col-lg-8">
+            <div class="form-row">
+                <div class="form-group col-12 col-lg-8">
+                    <label asp-for="Student.FullName"></label>
+                    <input type="text" class="form-control" asp-for="Student.FullName" disabled />
+                </div>
+                <div class="form-group col-12 col-lg-4">
+                    <label asp-for="StudentSessions.Count">Sessions attended / to attend</label>
+                    <input type="text" class="form-control" asp-for="StudentSessions.Count" disabled />
+                </div>
+            </div>
+            @if (ViewBag.Area == "Admin")
+            {
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label asp-for="Student.Email"></label>
+                        <input type="text" class="form-control" asp-for="Student.Email" disabled />
+                    </div>
+                </div>
+            }
+
+            @if (ViewBag.Area == "Admin" && Model.Student.IsParent)
+            {
+                <div class="form-row">
+                    <div class="form-group col-12 col-lg-12">
+                        <label asp-for="Student.ParentFullName"></label>
+                        <input type="text" class="form-control" asp-for="Student.ParentFullName" disabled />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h3 class="mb-28">lessons</h3>
+            <div class="table-overflow">
+                <table class="styled" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Session</th>
+                            <th>Tutor</th>
+                            <th>Status</th>
+                            <th>Joined</th>
+                            <th>Total Attendees</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            @if (ViewBag.Area == "Tutor")
+                            {
+                                <th></th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.StudentSessions)
+                        {
+                            openClassAllowed = true;
+                            string classRoomUrl = string.Format("{0}/ClassRoom/Sessions/Main/{1}", ViewBag.ClassRoomSiteUrl, item.ClassSessionId);
+                            classRoomUrl = classRoomUrl.Replace("https://", "");
+
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.SessionName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TutorName)</td>
+                                <td id="lessonStatus_@item.ClassSessionId">
+                                    @*@Html.DisplayFor(modelItem => item.CurrentStatus)*@
+                                    @(item.SessionCompleted ? "Completed" : item.SessionStarted ? "Running" : item.SessionCancelled ? "Cancelled" : "Not Started")
+                                </td>
+                                <td>
+                                    @if (item.Attended == true)
+                                    {
+                                        <span>Yes</span>
+                                    }
+                                    else
+                                    {
+                                        <span>No</span>
+                                    }
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.TotalAttendees)</td>
+                                <td>@item.StartDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@item.EndDate.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+
+                                @if (ViewBag.Area == "Tutor")
+                                {
+                                    //if ((item.SessionCompleted) && (!canViewLesson))
+                                    //if(item.EndDate < DateTime.Now)
+                                    //{
+                                    //    openClassAllowed = false;
+                                    //}
+
+                                    //if ((DateTime.Now.ToUniversalTime() > item.StartDate.AddMinutes(15).UtcDateTime || item.SessionCancelled) && !item.SessionCompleted)
+                                    //{
+                                    //    openClassAllowed = false;
+                                    //}
+                                    <!-- Toastr library not included.. so cannot show toast notification -->
+                                    <td>
+                                        <div class="d-flex justify-content-end">
+                                            <a href="javascript:void(0)" class="text-info" onclick="viewLesson('@item.ClassSessionId','@item.SessionCompleted','@item.SessionCancelled')">Open classroom</a>
+                                            
+                                        </div>
+
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function viewLesson(id, isCompleted,isCancel) {
+        debugger;
+        var url = "@Html.Raw(ViewBag.ClassRoomSiteUrl)/c/" + id;
+        var tdId = "lessonStatus_" + id;
+        if (isCompleted == 'True') {
+            window.location.href = url;
+        }
+        else if (isCancel == "True")
+        {
+            showToastMsg('Sorry! Lesson Timeout', "warn");
+        }
+        else {
+            $.ajax({
+                type: "GET",
+                url: "/api/classSessions/cancelLesson/" + id,
+                contentType: "application/json",
+                dataType: "json",
+                success: function (success) {
+                    debugger;
+                    if (success == "Completed") {
+                        document.getElementById(tdId).innerHTML = "Completed";
+                        window.location.href = url;
+                    }
+                    else if (success == "Cancelled") {
+                        document.getElementById(tdId).innerHTML = "Cancelled";
+                        showToastMsg('Sorry! Lesson Timeout', "warn");
+                    }
+                    else {
+                        showToastMsg('Action not allowed.');
+                    }
+                },
+                failure: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    }
+</script>

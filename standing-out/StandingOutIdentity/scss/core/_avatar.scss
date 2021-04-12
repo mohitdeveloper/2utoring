@@ -1,0 +1,45 @@
+// ----------------------------------------------------
+// Avatar
+// ----------------------------------------------------
+.Avatar {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+    }
+
+    &--size\:smallest {
+        border-radius: 50%;
+        height: 42px;
+        width: 42px;
+    }
+
+    &--size\:small {
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 2px #EAEAEA;
+        border-radius: 50%;
+        height: 56px;
+        width: 56px;
+    }
+
+    &--size\:medium {
+        border: 2px solid #fff;
+        box-shadow: 0 0 0 2px #EAEAEA;
+        border-radius: 50%;
+        height: 90px;
+        width: 90px;
+    }
+
+    &--size\:largest {
+        border: 7px solid #fff;
+        box-shadow: 0 0 0 2px #EAEAEA, 0 4px 0 #F8F8F8;
+        border-radius: 50%;
+        max-height: 200px;
+        max-width: 200px;
+        min-height: 200px;
+        min-width: 200px;
+    }
+}

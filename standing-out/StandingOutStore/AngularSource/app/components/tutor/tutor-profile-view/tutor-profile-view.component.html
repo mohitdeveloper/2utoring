@@ -1,0 +1,425 @@
+<main>
+
+    <!-- Top search -->
+    <section class="sec top-search">
+        <div class="container breakMe">
+            <div class="search-teacher">
+                <div class="d-flex search-teacher-row">
+                    <div class="left-image">
+                        <a href="javascript:void(0);">
+                            <img *ngIf="tutor?.storeProfileImageDownload != ''" src="{{tutor?.storeProfileImageDownload}}" alt="{{tutor?.userFullName}}" />
+                            <img *ngIf="tutor?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{tutor?.userFullName}}" />
+                        </a>
+                    </div>
+                    <div class="detail-center">
+                        <div class="detail-center-top">
+                            <div class="clearfix">
+                                <a *ngIf="isAuthenticated == 'False'" href="javascript:void(0);" (click)="backToSearch('back')" class="back-to"><i class="fa fa-arrow-left"></i> Back</a>
+                                <a *ngIf="isAuthenticated == 'True' && (alertMessage?.userType == 'Student' || alertMessage?.userType == 'Parent' || alertMessage?.userType == 'Company')" href="javascript:void(0);" (click)="backToSearch('back')" class="back-to"><i class="fa fa-arrow-left"></i> Back</a>
+                                <a *ngIf="isAuthenticated == 'True' && !isLoggedInUser" href="javascript:void(0);" (click)="backToSearch('back')" class="back-to"><i class="fa fa-arrow-left"></i> Back</a>
+                                <a *ngIf="isAuthenticated == 'True' && isLoggedInUser && (alertMessage?.userType == 'Tutor' || alertMessage?.userType =='CompanyTutor')" href="javascript:void(0);" (click)="backToSearch('edit')" class="back-to"><i class="fa fa-pencil"></i> Edit Profile</a>
+
+                            </div>
+                            <h3>{{ tutor?.userFullName }}</h3>
+                            <!--<span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 12 REVIEWS</span>-->
+                            <div class="clearfix"></div>
+                            <span title="Enhanced DBS" class="head-tag" *ngIf="tutor?.dbsApprovalStatus == 'Approved'">Enhanced DBS <!--<span class="search-date">1 Jun 2018</span>--></span>
+                        </div>
+                        <p class="uni-link" *ngIf="(tutor?.tutorQualification) && tutor?.tutorQualification.length > 0">
+                            <a href="javascript:void(0);" *ngFor="let qualification of tutor?.tutorQualification">{{ qualification }}</a>
+                        </p>
+                        <p class="uni-tag" *ngIf="(tutor?.tutorSubjectNameList) && tutor?.tutorSubjectNameList.length > 0">
+                            <a href="javascript:void(0);" *ngFor="let subject of tutor?.tutorSubjectNameList">{{ subject }}</a>
+                        </p>
+                        <p class="detail-text" *ngIf="tutor?.header">{{ tutor?.header }}</p>
+                        <p class="detail-text" *ngIf="tutor?.subHeader">{{ tutor?.subHeader }}</p>
+                        <div class="d-flex detail-center-bottom">
+                            <div class="detail-center-bottom-col">
+                                <a href="javascript:void(0);" class="d-flex">
+                                    <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-icon.svg" alt="" /></span>
+                                    <span class="bottom-col-text">
+                                        <small>One-to-one</small>
+                                        {{ tutor?.tutorPriceLesson.oneToOneMinPrice | currency:'GBP':'symbol':'1.2-2' }}-{{ tutor?.tutorPriceLesson.oneToOneMaxPrice }} / hr
+                                    </span>
+                                </a>
+                                <p class="text-down">{{ tutor?.tutorPriceLesson.oneToOneLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                            </div>
+                            <div class="detail-center-bottom-col">
+                                <a href="javascript:void(0);" class="d-flex">
+                                    <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt="" /></span>
+                                    <span class="bottom-col-text">
+                                        <small>Group Lessons</small>
+                                        {{ tutor?.tutorPriceLesson.groupMinPrice | currency:'GBP':'symbol':'1.2-2' }}-{{ tutor?.tutorPriceLesson.groupMaxPrice }}/ hr
+                                    </span>
+                                </a>
+                                <p class="text-down">{{ tutor?.tutorPriceLesson.groupLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- letest semron -->
+    <section class="sec bg-light light-image-bg">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="tabs-container breakMe">
+                        <ul class="d-flex tabs teacher-tab">
+                            <li (click)="setProfileTabActive('tab1')" [ngClass]="{'active': profileTabActive ==='tab1'}" rel="tab1"><span>Professional Profile <i class="fa fa-angle-down"></i></span></li>
+                            <li (click)="setProfileTabActive('tab2')" [ngClass]="{'active': profileTabActive ==='tab2'}" rel="tab2"><span>Lessons & Courses <i class="fa fa-angle-down"></i></span></li>
+                            <li (click)="setTab()" [ngClass]="{'active': profileTabActive ==='tab3'}" rel="tab3"><span>Availability <i class="fa fa-angle-down"></i></span></li>
+                            <li (click)="setProfileTabActive('tab4')" [ngClass]="{'active': profileTabActive ==='tab4'}" rel="tab4"><span>Message Tutor <i class="fa fa-angle-down"></i></span></li>
+                        </ul>
+                        <div class="tab_container teacher-profile-tab">
+                            <h3 (click)="setProfileTabActive('tab1')" [ngClass]="{'d_active': profileTabActive ==='tab1'}" class="d_active tab_drawer_heading" rel="tab1">PROFESSIONAL PROFILE</h3>
+                            <div [style.display]="profileTabActive =='tab1' ? 'block' : 'none'" id="tab1" class="tab_content">
+                                <p class="sub-head">PROFESSIONAL PROFILE</p>
+                                <ng-template [ngTemplateOutlet]="noRecordFound"></ng-template>
+                                <div class="row">
+                                    <div [ngClass]="(tutor?.currentCompany)?'col-md-8 col-lg-9':'col-md-12 col-lg-12'" class="">
+                                        <div class="tab-row">
+                                            <div class="professional-profile">
+                                                <div class="d-flex detail-center-bottom">
+                                                    <div class="detail-center-bottom-col">
+                                                        <h4>SUBJECTS TAUGHT</h4>
+                                                        <p class="uni-tag">
+                                                            <a href="javascript:void(0);" *ngFor="let subject of tutor?.tutorSubjectNameList">{{ subject }}</a>
+                                                        </p>
+                                                    </div>
+                                                    <div class="detail-center-bottom-col">
+                                                        <h4>SKILLS AND ATTRIBUTES</h4>
+                                                        <p class="uni-tag">
+                                                            <span *ngIf="tutor?.dbsApprovalStatus == 'Approved'" class="head-tag">Enhanced DBS</span>
+                                                            <span *ngIf="tutor?.dbsApprovalStatus != 'Approved'" class="search-date">-</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <h5><span>PERSONAL BIOGRAPHY</span></h5>
+                                                <p>{{ tutor?.biography }}</p>
+
+                                                <h5><span>TEACHING EXPERIENCE</span></h5>
+                                                <p>{{ tutor?.profileTeachingExperiance }}</p>
+
+                                                <h5><span>HOW I TUTOR</span></h5>
+                                                <p>{{ tutor?.profileHowITeach }}</p>
+                                                <h5><span>TUTORING RATES</span></h5>
+                                                <div class="tutor-table table-overflow" style="max-height: 345px; overflow-y: auto;">
+
+
+                                                    <!--<div class="d-flex tutor-table-head">
+                                                        <div class="col-3">SUBJECT</div>
+                                                        <div class="col-3">LEVEL</div>
+                                                        <div class="col-3">ONE-TO-ONE TUTORING</div>
+                                                        <div class="col-3">GROUP TUTORING</div>
+                                                    </div>
+
+                                                    <div class="d-flex" *ngIf="tutor?.subjectStudyLevelSetup && tutor?.subjectStudyLevelSetup.length==0">
+                                                        <div class="col-12 text-center" style="padding:5%;">
+                                                            <p>No Subject Found</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex" *ngFor="let subLevelDetails of tutor?.subjectStudyLevelSetup">
+                                                        <div class="col-3">{{ subLevelDetails.subjectName }}</div>
+                                                        <div class="col-3">{{ subLevelDetails.studyLevelName }}</div>
+                                                        <div class="col-3">{{ subLevelDetails.pricePerPerson | currency:'GBP':'symbol':'1.2-2'}}/hr</div>
+                                                        <div class="col-3">{{ subLevelDetails.groupPricePerPerson | currency:'GBP':'symbol':'1.2-2'}}/hr</div>
+                                                    </div>-->
+
+                                                    
+                                                        <table class="styled">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">
+                                                                        <span>
+                                                                            SUBJECT
+                                                                        </span>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <span> LEVEL </span>
+                                                                    </th>
+                                                                    <th scope="col">
+                                                                        <span> ONE-TO-ONE TUTORING </span>
+                                                                    </th>
+
+                                                                    <th scope="col">
+                                                                        <span> GROUP TUTORING </span>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let subLevelDetails of tutor?.subjectStudyLevelSetup">
+                                                                    <td>{{ subLevelDetails.subjectName }}</td>
+                                                                    <td>{{ subLevelDetails.studyLevelName }}</td>
+                                                                    <td>{{ subLevelDetails.pricePerPerson | currency:'GBP':'symbol':'1.2-2' }}/hr</td>
+                                                                    <td>{{ subLevelDetails.groupPricePerPerson | currency:'GBP':'symbol':'1.2-2'}}/hr</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table> 
+                                                    </div>
+                                                 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="tutor?.currentCompany" class="col-md-4 col-lg-3">
+                                        <div class="tab-right-bar">
+                                            <span class="registered-agency-head">REGISTERED <strong>AGENCY</strong></span>
+                                            <div class="registered-agency-col">
+                                                <div class="registered-agency-logo">
+                                                    <a href="javascript:void(0);">
+                                                        <img *ngIf="tutor?.currentCompany.storeProfileImageDownload != ''" src="{{tutor?.currentCompany.storeProfileImageDownload}}" alt="{{tutor?.currentCompany.companyName }}" />
+                                                        <img *ngIf="tutor?.currentCompany.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{tutor?.currentCompany.companyName }}" />
+                                                    </a>
+                                                </div>
+                                                <h3>{{ tutor?.currentCompany.companyName }}</h3>
+                                                <!--<span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i></span>-->
+                                                <!--<span *ngIf="tutor?.dbsApprovalStatus == 'Approved'" class="head-tag">Enhanced DBS <span class="search-date">Staff</span></span>-->
+                                                <p class="link-color text-justify">{{ tutor?.currentCompany?.companyDescription | slice:0:700 }}{{tutor?.currentCompany?.companyDescription.length > 700 ? '...' : ''}}</p>
+
+                                                <div class=" d-flex align-items-center age-course-ava">
+                                                    <p class="age-course-ava-row" *ngIf="tutor?.currentCompany?.companyCourseCount > 0">
+                                                        <ng-container *ngFor="let t of tutor?.currentCompany?.companyCourses; let i = index;">
+                                                            <span class="age-course-ava-img">
+                                                                <!--<img src="/lib/assets/images/search-box-image5.png" title="{{t?.name}}" alt="{{t?.name}}" />-->
+                                                                <img [src]="i | randomimage:subjectsImages[t?.subjectName]:t?.subjectName" title="{{t?.name}}" alt="{{t?.name}}">
+                                                            </span>
+                                                        </ng-container>
+                                                    </p>
+                                                    <span class="age-course-ava-tit">
+                                                        <strong>{{ tutor?.currentCompany.companyCourseCount }} COURSES</strong> AVAILABLE
+                                                    </span>
+                                                </div>
+                                                <a href="javascript:void(0);" (click)="redirectMe('companyDetails', tutor?.currentCompany.companyId)" class="sm-btn">View Agency</a>
+                                            </div>
+                                        </div>
+                                        <!--<p class="sub-head">TUTOR REVIEWS</p>
+                                        <div class="tab-right-bar">
+                                            <div class="review-text">
+                                                <div class="review-head">
+
+                                                    <span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 5 Stars</span>
+                                                    <h3>Gemma Jones</h3>
+                                                </div>
+                                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat </p>
+                                                <a href="javascript:void(0);" class="link-color">READ MORE</a>
+                                            </div>
+                                            <div class="review-text">
+                                                <div class="review-head">
+
+                                                    <span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 5 Stars</span>
+                                                    <h3>Samatha Davies</h3>
+                                                </div>
+                                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat</p>
+                                                <a href="javascript:void(0);" class="link-color">READ MORE</a>
+                                            </div>
+                                        </div>-->
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- #tab1 -->
+                            <h3 (click)="setProfileTabActive('tab2')" [ngClass]="{'d_active': profileTabActive ==='tab2'}" class="d_active tab_drawer_heading" rel="tab2">LESSONS & COURSES</h3>
+                            <div [style.display]="profileTabActive =='tab2' ? 'block' : 'none'" id="tab2" class="tab_content">
+                                <p class="sub-head">LESSONS & COURSES</p>
+                                <!--<ng-template *ngIf="tutor?.tutorCourseList && tutor?.tutorCourseList.length==0" [ngTemplateOutlet]="noRecordFound"></ng-template>-->
+                                <ng-template [ngTemplateOutlet]="noRecordFound"></ng-template>
+
+                                <div class="lessons-courses">
+                                    <ng-container *ngFor="let t of tutor?.tutorCourseList |slice:0:currentLimit;  let i = index;">
+                                        <!--<ng-template *ngIf="i==4" [ngTemplateOutlet]="noRecordFound"></ng-template>-->
+                                        <div class="d-flex align-items-start tab-row">
+                                            <div class="left-image">
+                                                <a href="javascript:void(0);">
+                                                    <!--<img src="/lib/assets/images/search-box-image5.png" alt="">-->
+                                                    <img [src]="i | randomimage:subjectsImages[t?.subjectName]:t?.subjectName">
+                                                </a>
+                                            </div>
+                                            <div class="detail-center">
+                                                <div class="lessons-courses-head">
+                                                    <h2>{{ t.name }}</h2>
+                                                    <span class="s-ses">{{t.classSessionsCount}} Sessions</span>
+                                                    <p class="lessons-date-time">
+                                                        <span><i><img src="/lib/assets/images/celander-icon.svg" alt=""></i>Starts  {{t.classSessions[0].startDate | date:'EEEE d MMMM' }} </span>
+                                                        <span><i><img src="/lib/assets/images/watch-icon.svg" alt=""></i> {{t.classSessions[0].startDate  |date:'h:mm a' }} - {{t.classSessions[0].endDate |date:'h:mm a'}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="d-flex align-items-start">
+                                                    <div class="left-image">
+                                                        <a href="javascript:void(0);">
+                                                            <img *ngIf="tutor?.storeProfileImageDownload != ''" src="{{tutor?.storeProfileImageDownload  }}" alt="{{tutor?.userFullName}}" />
+                                                            <img *ngIf="tutor?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{tutor?.userFullName}}" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="detail-center">
+
+                                                        <div class="detail-center-top">
+                                                            <h3>{{t.tutorName}} </h3>
+                                                            <span class="head-tag" *ngIf="tutor?.dbsApprovalStatus == 'Approved'">Enhanced DBS</span>
+                                                        </div>
+                                                        <p class="uni-link" style="word-wrap:break-word;"><a href="javascript:void(0);" *ngFor="let qualification of tutor?.tutorQualification">{{ qualification }}</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex detail-center-bottom">
+                                                <!--<div class="course-with-agency-right">
+                                                    <a href="javascript:void(0);">
+                                                        <img *ngIf="t.currentCompany?.storeProfileImageDownload != ''" src="{{t.currentCompany?.storeProfileImageDownload}}" alt="{{t.tutorName}}" />
+                                                        <img *ngIf="t.currentCompany?.storeProfileImageDownload ==''" src="/lib/assets/images/home-school-logo.png" alt="{{t.tutorName}}" />
+                                                    </a>
+                                                </div>-->
+                                                <div class="d-flex detail-center-bottom">
+                                                    <div class="detail-center-bottom-col course-col-single">
+                                                        <a href="javascript:void(0);" class="d-flex">
+                                                            <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
+                                                            <span class="bottom-col-text">
+                                                                <small>Group Course</small>
+                                                                {{t.classSessionsTotalAmount | currency:'GBP':'symbol':'1.2-2'}}
+                                                            </span>
+                                                        </a>
+                                                        <p class="text-down">{{ t.maxClassSize - t.courseAttendeesCount }} PLACES  <span>LEFT TO BOOK</span></p>
+                                                    </div>
+                                                    <a href="javascript:void(0);" (click)="redirectMe('courseDetails',t?.courseId)" class="custom-btn btn-fill">Course Details</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <a *ngIf="(i==(currentLimit-1) && (tutor?.tutorCourseList) && (tutor?.tutorCourseList.length>currentLimit) )" href="javascript:void(0);" (click)="showMoreData()" class="button-full mt-4">Show more results</a>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+                            <!-- #tab2 -->
+                            <h3 (click)="setTab()" [ngClass]="{'d_active': profileTabActive ==='tab3'}" class="d_active tab_drawer_heading" rel="tab3">AVAILABILITY</h3>
+                            <div [style.display]="profileTabActive =='tab3' ? 'block' : 'none'" id="tab3" class="tab_content">
+                                <p class="sub-head">AVAILABILITY</p>
+                                <div class="tab-row">
+                                    <div class="full-celander-box">
+                                        <!--<mat-slide-toggle style="float:right;" [(ngModel)]="editSlot" [ngModelOptions]="{standalone: true}">Edit Availability Slots</mat-slide-toggle>-->
+                                        <app-calender-scheduler #calendarRef [fromSettingPage]="fromSettingPage" [isBookedSlotVisible]="isBookedSlotVisible" [bookedSlot]="selectedTutorsData.bookedSlot" [registerdEvents]="selectedTutorsData.tutorAvailabilities" [tutorId]="selectedTutorsData.tutorId" [isWeekVisible]="false" [isDateEventEditable]="false" [isViewOnly]="true">
+                                        </app-calender-scheduler>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #tab3-->
+
+                            <h3 (click)="setProfileTabActive('tab4')" [ngClass]="{'d_active': profileTabActive ==='tab4'}" class="d_active tab_drawer_heading" rel="tab4">CONTACT TUTOR</h3>
+                            <div [style.display]="profileTabActive =='tab4' ? 'block' : 'none'" id="tab4" class="tab_content">
+                                <p class="sub-head">CONTACT TUTOR</p>
+
+                                <div class="tab-row">
+                                    <h3>Send a message</h3>
+                                    <form [formGroup]="contactTutor">
+                                        <div class="contact-tutor">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-6 col-lg-3 contact-tutor-feild">
+                                                    <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" />
+                                                    <div *ngIf="contactTutorFormControls.firstName.errors && (contactTutorFormControls.firstName.dirty || contactTutorFormControls.firstName.touched || contactTutorFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="contactTutorFormControls.firstName.errors.maxlength">Title has a character limit of 20</div>
+                                                        <div *ngIf="contactTutorFormControls.firstName.errors.required">Please enter first name. </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-lg-3 contact-tutor-feild">
+                                                    <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" />
+                                                    <div *ngIf="contactTutorFormControls.lastName.errors && (contactTutorFormControls.lastName.dirty || contactTutorFormControls.lastName.touched || contactTutorFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="contactTutorFormControls.lastName.errors.maxlength">Title has a character limit of 20</div>
+                                                        <div *ngIf="contactTutorFormControls.lastName.errors.required">Please enter last name. </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-12 col-lg-6 contact-tutor-feild">
+                                                    <input type="email" class="form-control" placeholder="Email Address" formControlName="email" />
+                                                    <div *ngIf="contactTutorFormControls.email.errors && (contactTutorFormControls.email.dirty || contactTutorFormControls.email.touched || contactTutorFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="contactTutorFormControls.email.errors.required">Please enter email address. </div>
+                                                        <div *ngIf="contactTutorFormControls.email.errors.pattern">Please enter valid email address. </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-12 col-lg-12 contact-tutor-feild">
+                                                    <textarea class="form-control" placeholder="Message" formControlName="message"></textarea>
+                                                    <div *ngIf="contactTutorFormControls.message.errors && (contactTutorFormControls.message.dirty || contactTutorFormControls.message.touched || contactTutorFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="contactTutorFormControls.message.errors.required">Please enter message. </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <button type="button" (click)="sendMessageForTutor()" class="custom-btn btn-fill">Send Message</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!--<div class="contact-tutor">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-6 col-lg-3 contact-tutor-feild">
+                                                <input type="text" class="form-control" placeholder="First Name" />
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-3 contact-tutor-feild">
+                                                <input type="text" class="form-control" placeholder="Last Name" />
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-6 contact-tutor-feild">
+                                                <input type="text" class="form-control" placeholder="Email Address" />
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12 contact-tutor-feild">
+                                                <textarea class="form-control" placeholder="Message"></textarea>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <button type="submit" class="custom-btn btn-fill">Send Message</button>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </div>
+
+                            </div>
+                            <!-- #tab4 -->
+
+                        </div>
+                        <!-- .tab_container -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<ng-template #noRecordFound>
+    <div class="d-flex align-items-start tab-row">
+        <div class="left-image no-radius"><a href="javascript:void(0);"><img src="/lib/assets/images/search-box-image5.svg" alt=""></a></div>
+        <div class="detail-center">
+            <div class="lessons-courses-head">
+                <h2>Create your own course or lesson with {{ tutor?.userFullName }}</h2>
+
+                <p class="lessons-date-time">
+                    <span>Book your own course - you choose the currucuium, tutor and times </span>
+                </p>
+            </div>
+            <div class="d-flex align-items-start">
+                <div class="left-image">
+                    <a href="javascript:void(0);">
+                        <img *ngIf="tutor?.storeProfileImageDownload != ''" src="{{tutor?.storeProfileImageDownload}}" alt="{{tutor?.userFullName}}" />
+                        <img style="width: 100%; padding: 15%;" *ngIf="tutor?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{tutor?.userFullName}}" />
+                    </a>
+                </div>
+                <div class="detail-centers" style="width:calc(100% - 60px); padding:0 0 0 15px;">
+                    <div class="detail-center-top">
+                        <h3>{{tutor?.userFullName}}</h3>
+                        <span class="head-tag" *ngIf="tutor?.dbsApprovalStatus == 'Approved'">Enhanced DBS</span>
+                    </div>
+                    <p class="uni-link"><a href="javascript:void(0);" *ngFor="let qualification of tutor?.tutorQualification">{{ qualification }}</a></p>
+                </div>
+            </div>
+            <div class="btn-group-right">
+                <p class="mr-5">If you can't find the exact course that you're looking for, you can create your own lessons or courses with your chosen tutor, all in a few clicks and taps! </p>
+            </div>
+        </div>
+        <div class="detail-center-bottom text-center text-full" style="width:200px;flex-wrap:wrap;">
+            <p>Simply register or sign in to your account, invite your friends, find your tutor, create your course and start learning together.</p>
+            <div class="btn-group-right">
+                <a href="javascript:void(0)" (click)="goToTutorSearch();" class="custom-btn btn-fill">Create Now</a>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,59 @@
+
+    <div class="my-7">
+        <div class="row">
+            <div class="col-lg-2">
+                <a class="button button--tertiary button--hasIcon" onclick="window.history.back();"><i class="fal fa-arrow-left"></i><span>Back</span></a>
+            </div>
+            <div class="col-lg-8">
+                <h2>{{title}}</h2>
+            </div>
+            <div class="col-lg-2">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="table margin-top">
+                    <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+
+                        <li class="accordion-item" data-accordion-item *ngFor="let room of groups">
+                            <a href="#" class="accordion-title">Room {{room.id}}</a>
+                            <div class="accordion-content" data-tab-content>
+                                <table cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Date</th>
+                                            <th>Start Time</th>
+                                            <th>User Type</th>
+                                            <th align="right">Download</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of room.items">
+                                            <td>{{item.user.firstName}} {{item.user.lastName}}</td>
+                                            <td>{{item.createdDate | date: 'dd/MM/yyyy'}}</td>
+                                            <td>{{item.createdDate | date: 'HH:mm:ss'}}</td>
+                                            <td>
+                                                {{item.userId == classSessionOwnerId ? 'Tutor' : 'Student'}}
+                                            </td>
+                                            <td align="right">
+                                                <div class="display--flex">
+                                                    <a *ngIf="classSession.isUnder16 == false" href="#" class="link-grey disabled" (click)="viewRecording(item.classSessionVideoRoomId)">N/A Recording</a>
+                                                    <div *ngIf="classSession.isUnder16 == true">
+                                                        <a *ngIf="(item.compositionSid === undefined || item.compositionSid == null || item.compositionSid == '') && item.compositionDownloadReady == false" href="/admin/classsessions/generatecomposition/{{item.classSessionVideoRoomId}}" class="button button--primary margin-left-auto">View Recordings</a>
+                                                        <!--<a *ngIf="item.compositionDownloadReady == true" href="https://video.twilio.com/v1/Compositions/{{item.compositionSid}}/Media" class="button button--primary margin-left-auto" target="_blank">Download Composition</a>-->
+                                                        <a *ngIf="item.compositionDownloadReady == true" href="/admin/classsessions/downloadcomposition/{{item.classSessionVideoRoomId}}?compositionSid={{item.compositionSid}}" class="button button--primary margin-left-auto" target="_blank">Download Composition</a>
+                                                        <span *ngIf="!(item.compositionSid === undefined || item.compositionSid == null || item.compositionSid == '') && item.compositionDownloadReady == false" href="/admin/classsessions/generatecomposition/{{item.classSessionVideoRoomId}}">Composition Processing...</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </div>

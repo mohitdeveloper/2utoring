@@ -1,0 +1,98 @@
+<!-- specific header container for styling -->
+<div class="row Page-header-container">
+    
+    <!-- page title -->
+    <div class="col-6 Page-header-container__Title">
+        <h1>{{title}}</h1>
+    </div>
+    
+    <!-- any buttons/links etc-->
+    <div class="col-6 Page-header-container__Actions-buttons">
+        <a href="/admin/studyLevels/create" class="btn btn-info Button--largeVerticalPadding">Add</a>
+    </div>
+    
+    <div class="col-12">
+
+        <div class="row Page-header-container__Actions">
+            <!-- any filtering etc-->
+            <div class="col-auto">
+                <label class="Label--largeVerticalPadding">Filter by ...</label>    
+            </div>
+            <!-- page size -->
+            <div class="col-auto">
+                <select class="custom-select Textbox--largeVerticalPadding" [(ngModel)]="searchModel.take" (ngModelChange)="reloadData()">
+                    <option *ngFor="let option of takeValues" [ngValue]="option.take">{{option.name}}</option>
+                </select>
+            </div> 
+            <!-- page search -->
+            <div class="col">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="far fa-search"></i></span>
+                    </div>
+
+                    <input type="text" class="form-control Textbox--iconPrepend Textbox--largeVerticalPadding" [(ngModel)]="searchModel.search" placeholder="Search" aria-label="Search" aria-describedby="button-search" (keydown)="onType($event)">
+
+                    <div class="input-group-append">
+                        <button class="btn btn-success Button--largeVerticalPadding" type="button" id="button-search" (click)="reloadData()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                                <span (click)="alterOrder('Name')">
+                                    Name
+                                    <span [hidden]="!(searchModel.sortType == 'Name' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'Name' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                        </th>
+                        <th scope="col">
+                                <span (click)="alterOrder('Order')">
+                                    Order
+                                    <span [hidden]="!(searchModel.sortType == 'Order' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'Order' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                        </th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of results.data">
+                       							<td>{{item.name}}</td>
+							<td>{{item.order}}</td>
+
+                        <td>
+                            <div>
+                                <a href="/admin/studyLevels/delete/{{item.studyLevelId}}" class="btn btn-sm btn-textonly-danger">Delete</a>
+                                <a href="/admin/studyLevels/edit/{{item.studyLevelId}}" class="btn btn-sm btn-textonly-success">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-between align-items-center Pagination" *ngIf="results.paged !== undefined && results.paged != null">
+    <span class="pagination-info">Page {{results.paged.page}} of {{results.paged.totalPages}}</span>
+    <ul class="pagination justify-content-end mb-0">
+        <li [class]="results.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+            <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">{{results.paged.page}}</a></li>
+        <li [class]="results.paged.page >= results.paged.totalPages ? 'page-item disabled' : 'page-item'">
+            <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+        </li>
+    </ul>
+</div>

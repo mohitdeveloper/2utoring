@@ -1,0 +1,67 @@
+<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-start mb-14 mb-lg-28">
+                <h1>Tutor Bank Details</h1>
+            </div>
+
+            <div class="table-overflow">
+                <table class="styled">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <span (click)="alterOrder('UserFullName')">
+                                    Name
+                                    <span [hidden]="!(searchModel.sortType == 'UserFullName' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'UserFullName' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('Email')">
+                                    Email
+                                    <span [hidden]="!(searchModel.sortType == 'Email' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'Email' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('BankSortCode')">
+                                    Sort code
+                                    <span [hidden]="!(searchModel.sortType == 'BankSortCode' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'BankSortCode' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('BankAccountNumber')">
+                                    Account number
+                                    <span [hidden]="!(searchModel.sortType == 'BankAccountNumber' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'BankAccountNumber' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of results.data">
+                            <td>{{item.userFullName}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.bankSortCode}}</td>
+                            <td>{{item.bankAccountNumber}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center Pagination mt-28" *ngIf="results.paged !== undefined && results.paged != null">
+                <span class="pagination-info">Page {{results.paged.page}} of {{results.paged.totalPages}}</span>
+                <ul class="pagination justify-content-end mb-0">
+                    <li [class]="results.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+                        <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">{{results.paged.page}}</a></li>
+                    <li [class]="results.paged.page >= results.paged.totalPages ? 'page-item disabled' : 'page-item'">
+                        <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

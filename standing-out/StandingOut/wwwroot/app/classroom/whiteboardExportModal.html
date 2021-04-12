@@ -1,0 +1,14 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--save" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()"><i class="fal fa-times-circle"></i></button>
+            <h2>Export</h2>
+        </div>
+        <div class="Modal__Content cp-0">
+            <div class="c-button-group">
+                <button class="button button--success width--100" ng-click="exportToPc()">Save to computer</button>
+                <button class="button button--success width--100" ng-click="exportToDrive()" ng-show="classSession != undefined && classSession.requiresGoogleAccount == true">Save to Google Drive</button>
+            </div>
+        </div>
+    </div>
+</div>

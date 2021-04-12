@@ -1,0 +1,126 @@
+﻿<!--<div class="card card--toRepsond:smallFill card-stretch" *ngIf="course != undefined && course != null" (click)="moreInfo()" [ngStyle]="{'cursor': moreInfoNavOn ? 'pointer' : ''}">
+    <div class="card-body">
+        <div class="fs-15 mb-7 cl-light">{{course.subjectName}}{{course.subjectCategoryName != null && course.subjectCategoryName != '' ? (', ' + course.subjectCategoryName) : ''}}</div>
+        <div class="fs-24 fw-700 mb-7 cl-dark">{{course.name}}</div>
+        <div class="fs-14 cl-light mb-14">{{course.studyLevelName}}</div>
+        <div class="d-flex my-21" *ngIf="displayTutor">
+            <div class="Avatar Avatar--size:small mr-21">
+                <img [src]="lesson.tutorProfileImageFileLocation == null || lesson.tutorProfileImageFileLocation == '' ? '' : ('/Tutor/Home/DownloadTutorProfileImage/' + lesson.tutorId)"
+                     [alt]="(lesson.tutorSalutation == null || lesson.tutorSalutation == '' ? '' : (lesson.tutorSalutation + '. ')) + lesson.tutorFirstName + ' ' + lesson.tutorLastName" />
+            </div>
+            <div>
+                <div class="fs-16 fw-500 cl-dark mb-0">{{(lesson.tutorSalutation == null || lesson.tutorSalutation == '' ? '' : (lesson.tutorSalutation + '. ')) + lesson.tutorFirstName + ' ' + lesson.tutorLastName}} <svg *ngIf="lesson.isApproved" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.04731 0.678781C7.76592 0.329729 7.23409 0.329729 6.95269 0.678781C6.7236 0.96296 6.31512 1.02453 6.01244 0.820501C5.64067 0.569899 5.13246 0.726659 4.96646 1.14315C4.8313 1.48223 4.45912 1.66146 4.10975 1.55571C3.68062 1.42583 3.2412 1.72542 3.20533 2.17233C3.17613 2.53619 2.87331 2.81716 2.5083 2.81909C2.05995 2.82146 1.72836 3.23726 1.82581 3.6749C1.90515 4.03119 1.69861 4.38894 1.35038 4.49837C0.92265 4.63279 0.72835 5.12786 0.950469 5.51733C1.13131 5.83441 1.03938 6.23714 0.73888 6.44436C0.369776 6.69888 0.330032 7.22922 0.657079 7.53591C0.923343 7.7856 0.954213 8.19754 0.728138 8.48413C0.450454 8.83614 0.568797 9.35463 0.971713 9.5513C1.29975 9.71141 1.45066 10.0959 1.31911 10.4364C1.15751 10.8547 1.42343 11.3152 1.86641 11.3844C2.22707 11.4407 2.48463 11.7637 2.45927 12.1278C2.42813 12.5751 2.81799 12.9368 3.26168 12.8724C3.62291 12.8199 3.96422 13.0526 4.04733 13.408C4.14941 13.8446 4.62857 14.0753 5.03355 13.8829C5.36326 13.7263 5.75799 13.8481 5.94217 14.1632C6.1684 14.5503 6.69429 14.6296 7.02457 14.3264C7.29346 14.0795 7.70655 14.0795 7.97544 14.3264C8.30571 14.6296 8.8316 14.5503 9.05783 14.1632C9.24201 13.8481 9.63675 13.7263 9.96646 13.8829C10.3714 14.0753 10.8506 13.8446 10.9527 13.408C11.0358 13.0526 11.3771 12.8199 11.7383 12.8724C12.182 12.9368 12.5719 12.5751 12.5407 12.1278C12.5154 11.7637 12.7729 11.4407 13.1336 11.3844C13.5766 11.3152 13.8425 10.8547 13.6809 10.4364C13.5493 10.0959 13.7003 9.71141 14.0283 9.5513C14.4312 9.35463 14.5496 8.83614 14.2719 8.48413C14.0458 8.19754 14.0767 7.7856 14.3429 7.53591C14.67 7.22922 14.6302 6.69888 14.2611 6.44436C13.9606 6.23714 13.8687 5.83441 14.0495 5.51733C14.2717 5.12786 14.0774 4.63279 13.6496 4.49837C13.3014 4.38894 13.0948 4.03119 13.1742 3.6749C13.2716 3.23726 12.9401 2.82146 12.4917 2.81909C12.1267 2.81716 11.8239 2.53619 11.7947 2.17233C11.7588 1.72542 11.3194 1.42583 10.8903 1.55571C10.5409 1.66146 10.1687 1.48223 10.0335 1.14315C9.86754 0.726659 9.35934 0.569899 8.98756 0.820501C8.68488 1.02453 8.27641 0.96296 8.04731 0.678781ZM6.24629 9.86863C6.32898 9.95238 6.44448 9.99988 6.56523 9.99988H6.56829C6.68992 9.99904 6.80629 9.94988 6.88811 9.86404L10.8855 5.69733C11.0483 5.52774 11.036 5.26399 10.858 5.10899C10.6795 4.95399 10.403 4.96524 10.2394 5.13566L6.56086 8.96987L4.75617 7.14026C4.59123 6.97276 4.31429 6.96443 4.13798 7.12193C3.96211 7.27943 3.95292 7.54318 4.11873 7.71068L6.24629 9.86863Z" fill="#F2C94C" /></svg></div>-->
+                <!--<div class="fs-14 cl-light mb-0">{{getSubjectString()}}</div>-->
+                <!--<div class="fs-14 cl-light mb-0">{{lesson.tutorHeadline}}</div>
+            </div>
+        </div>
+        <div class="px-14 py-7 bdr-3 bg-cl-lighter mb-21">
+            <div class="row fs-14">-->
+                <!--<div class="col-sm-6 my-7" [ngClass]="{'col-lg-3 ': displayLarge}"><i class="w-icon fs-16 fal fa-stopwatch mr-14"></i><span class="fw-600">{{lesson.sessionDuration}} mins</span></div>-->
+                <!--<div class="col-sm-6 my-7" [ngClass]="{'col-lg-3 ': displayLarge}"><i class="w-icon fs-16 fal fa-users mr-14"></i><span class="fw-600">{{lesson.sessionRemainingSpaces > 0 ? lesson.sessionRemainingSpaces : 'No'}} space{{lesson.sessionRemainingSpaces != 1 ? 's' : ''}}</span></div>-->
+
+
+                <!--<div class="col-sm-6 my-7" [ngClass]="{'col-lg-3 ': displayLarge}"><i title="Lesson" class="w-icon fs-16 fal fa-book mr-14"></i><span class="fw-600">{{course.classSessionsCount > 0 ? course.classSessionsCount : '0'}}</span></div>
+                <div class="col-sm-6 my-7" [ngClass]="{'col-lg-3 ': displayLarge}"><i title="Date" class="w-icon fs-16 fal fa-calendar mr-14"></i><span class="fw-600">{{course.startDate | date : 'd/M/yyyy'}}</span></div>
+                <div class="col-sm-6 my-7" [ngClass]="{'col-lg-3 ': displayLarge}"><i title="Time" class="w-icon fs-16 fal fa-clock mr-14"></i><span class="fw-600">{{(course.startDate | date : 'h:mm a').toLowerCase()}}</span></div>
+            </div>
+        </div>
+        <h5 class="fs-15 fw-500 cl-dark mb-7">Course Description</h5>-->
+        <!--<p class="fs-13 cl-light"> {{lessonDescription()}}</p>-->
+        <!--<p class="fs-13 cl-light">
+            {{course.description}}
+        </p>
+        <div *ngIf="course.requiresGoogleAccount">
+            <div class="d-flex align-items-center" data-toggle="tooltip" data-placement="top" title="You will need an account with a linked Google Account to access this lesson">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-7">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.64 9.20439C17.64 8.56629 17.5827 7.95259 17.4764 7.36349H9V10.8449H13.8436C13.635 11.9699 13.0009 12.9231 12.0477 13.5613V15.8194H14.9564C16.6582 14.2526 17.64 11.9453 17.64 9.20439Z" fill="#4285F4" />
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 8.99998 14.4204C6.65588 14.4204 4.67178 12.8372 3.96408 10.71H0.957275V13.0418C2.43818 15.9831 5.48178 18 8.99998 18Z" fill="#34A853" />
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3.9641 10.7101C3.7841 10.1701 3.6818 9.5933 3.6818 9.0001C3.6818 8.4069 3.7841 7.8301 3.9641 7.2901V4.9583H0.9573C0.3477 6.1733 0 7.5478 0 9.0001C0 10.4523 0.3477 11.8269 0.9573 13.0419L3.9641 10.7101Z" fill="#FBBC05" />
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 3.5795C10.3214 3.5795 11.5077 4.0336 12.4405 4.9255L15.0218 2.3441C13.4632 0.8918 11.4259 0 8.99998 0C5.48178 0 2.43818 2.0168 0.957275 4.9582L3.96408 7.29C4.67178 5.1627 6.65588 3.5795 8.99998 3.5795Z" fill="#EA4335" />
+                </svg>
+                <span class="d-inline-block fw-700">Google Account Required</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between mt-21">
+            <div class="fs-18 fw-500">
+                {{
+course.classSessionsTotalAmount | currency : lesson.sessionCurrency
+                }}
+            </div>
+            <div *ngIf="selected != null && canUserBuy">
+                <button *ngIf="selected == false && lesson.sessionRemainingSpaces > 0" type="button" class="btn btn-success btn-sm px-14" (click)="selectLesson($event)">Buy Lesson</button>
+                <button *ngIf="selected == true" type="button" class="btn btn-danger btn-sm px-14" (click)="removeLesson($event)">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div  class="payment-col" *ngIf="course != undefined && course != null" (click)="moreInfo()" [ngStyle]="{'cursor': moreInfoNavOn ? 'pointer' : ''}">
+    <div  class="summary-box">
+        <div  class="row">
+            <div  class="col-sm-12">
+                <p>
+                    <span>COURSE NAME</span>
+                    {{course?.name}}
+                </p>
+            </div>
+            <div class="col-sm-12">
+                <p>
+                    <span>TUTOR</span>
+                    <span class="tutor-icon">
+                        <img *ngIf="course?.tutorImage != ''" src="{{course?.tutorImage}}" alt="{{course?.tutorName}}" width="50px;"/>
+                    </span>
+                    {{ course?.tutorName }}
+                </p>
+
+            </div>
+        </div>
+        <div  class="row">
+            <div class="col-sm-12 col-lg-6 col-md-12">
+                <div class="summary-col">
+                    <p>
+                        <span>SUBJECT</span>
+                        {{ course?.subjectName }}
+                    </p>
+                </div>
+                <div class="summary-col">
+                    <p>
+                        <span>LEVEL</span>
+                        {{ course?.studyLevelName}}
+                    </p>
+                </div>
+                <div class="summary-col">
+                    <p>
+                        <span>
+                            NO. OF LESSONS
+                        </span>
+                        {{ course?.classSessionsCount }}
+                    </p>
+                </div>
+                <div class="summary-col">
+                    <p>
+                        <span>CLASS SIZE</span>
+                        {{ course?.maxClassSize }}
+                    </p>
+                </div>
+
+                <div class="booked-courses">
+                    <p><span>DATES</span></p> 
+                    <p class="lessons-date-time" *ngFor="let t of course.classSessions; let i = index;">
+                        <i><img src="/lib/assets/images/celander-icon.svg" alt=""></i> {{t.startDate | date:'EEEE d MMMM' }}
+                        <i><img src="/lib/assets/images/watch-icon.svg" alt=""></i> {{t.startDate | date:' h:mm a' }}
+                    </p>
+                </div>
+
+            </div>
+            </div>
+        <div class="summary-total" style="border-bottom:none;">
+            <div class="summary-total-left">
+                <p>
+                    £ {{ course?.classSessionsTotalAmount }} <span>TOTAL COURSE PRICE</span>
+                </p>
+            </div>  
+        </div>
+    </div>
+</div>
+

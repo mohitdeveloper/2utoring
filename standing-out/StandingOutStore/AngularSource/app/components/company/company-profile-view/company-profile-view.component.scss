@@ -1,0 +1,39 @@
+//@import "./scss/configuration/bootstrap-settings";
+
+.Tutor {
+
+    &__Name {
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+
+    &__Headline {
+        font-size: 18px;
+        font-weight: 500;
+    }
+}
+
+/*h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: $spacer * 2;
+}*/
+
+p {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 28px;
+}
+
+#mySubjects {
+    max-height: 350px !important;
+    overflow-y: auto !important;
+}
+/*.agency-profile-tab i{
+    display:block !important;
+}*/
+
+.tutors-card .detail-center-bottom .text-down {
+    font-size:10px!important;
+}

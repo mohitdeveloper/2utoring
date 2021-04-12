@@ -1,0 +1,30 @@
+﻿@model StandingOut.Data.DTO.CodeVerification
+
+@{
+    ViewData["Title"] = "Code Verification";
+}
+
+<div class="col-14 col-lg-8 offset-lg-2">
+    <div class="Card Card--toRepsond:small">
+        <h1 class="mb-5 fw-800">Verification Code</h1>
+        <p>We have emailed you a verification code, please enter it here.</p>
+        <form asp-route="CodeVerification">
+            <partial name="_ValidationSummary" />
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="form-group">
+                <label asp-for="VCode"></label>
+                <input class="form-control" placeholder="Enter your code" asp-for="VCode">
+                <div class="invalid-feedback d-block">
+                    <span asp-validation-for="VCode"></span>
+                </div>
+
+            </div>
+            <div class="form-group mb-0">
+                <button type="submit" class="btn btn-accent btn-lg fs-15 fw-700 py-7 cl-white d-inline-block" name="button">Confirm</button>
+                <a class="btn btn-default" asp-controller="Account" asp-action="Login">Cancel</a>
+                @*<a  class="btn btn-default" asp-controller="Account" asp-action="ReSendVerificationCode" asp-route-id="@Model.UserId"> Resend</a>*@
+            </div>
+        </form>
+    </div>
+</div>

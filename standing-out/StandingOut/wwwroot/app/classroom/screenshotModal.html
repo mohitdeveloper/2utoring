@@ -1,0 +1,39 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--screenshot" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()">×</button>
+            <h2>Save a screenshot</h2>
+        </div>
+        <form name="mediaForm" novalidate ng-submit="save()">
+            <div class="Modal__Content">
+                <img width="100%" id="replaceable-img" class="margin-bottom-loose"/>
+
+                <div class="grid-x">
+                    <div class="large-12 cell margin-bottom-base">
+                        <div class="Form__Row">
+                            <label>Name</label>
+                            <input class="form-control" type="text" name="name" placeholder="{{placeHolder}}" ng-model="media.name" maxlength="250" ng-maxlength="250" />
+                        </div>
+                    </div>
+                    <div class="large-6 cell">
+                        <div class="display--flex">
+                            <div class="Form__Row margin-right-loose">
+                                <label><input type="radio" ng-model="uploadToDrive" name="uploadToDrive" ng-checked="true" value="false" /><span class="display-inline-block margin-left-tight">Download</span></label>
+                            </div>
+                            <div class="Form__Row" ng-show="classSession != undefined && classSession.requiresGoogleAccount == true">
+                                <label><input type="radio" ng-model="uploadToDrive" name="uploadToDrive" value="true" /><span class="display-inline-block margin-left-tight">Save to drive</span></label>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
+            <div class="Modal__Footer">
+                <div class="Footer__Buttons">
+                    <button class="button button--tertiary" type="button" ng-click="cancel()">Cancel</button>
+                    <button class="button button--success" id="screenshot-submit" type="submit">Save screenshot</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

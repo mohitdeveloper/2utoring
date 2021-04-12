@@ -1,0 +1,55 @@
+// ----------------------------------------------------
+// Card
+// ----------------------------------------------------
+.Card__Group {
+    & > div:not(:last-child) {
+        .card {
+            @include media-breakpoint-down(md) {
+                border-bottom: 0;
+            }
+        }
+    }
+}
+
+.card {
+    box-shadow: $box-shadow
+}
+
+.card-stretch {
+    align-items: stretch;
+    display: flex;
+    height: 100%;
+}
+
+.card--toRepsond\:small {
+    $offset: $spacer * 3;
+    $width: $offset * 2 !default;
+
+    @include media-breakpoint-down(md) {
+        margin-left: -#{$offset};
+        width: calc(100% + #{$width});
+    }
+}
+
+.card--toRepsond\:smallFill {
+    $offset: $spacer * 3;
+    $width: $offset * 2 !default;
+
+    @include media-breakpoint-down(md) {
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        box-shadow: none;
+        margin-left: -#{$offset};
+        width: calc(100% + #{$width});
+    }
+}
+
+
+// ----------------------------------------------------
+// Shadow
+// ----------------------------------------------------
+
+.bxs-0 {
+    box-shadow: none!important;
+}

@@ -1,0 +1,520 @@
+
+<main>
+    <!-- letest semron -->
+    <form class="row" [formGroup]="CompanyCourseForm">
+        <section class="sec bg-light light-image-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-lg-3 left-bar">
+
+                        <p>Create a course or lesson</p>
+                        <div class="cource-creation-left">
+                            <ul class="cource-creation-nav">
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(1,stepMove >= 1?'Y':'N',false)" [class]="currentStep == 1?'active-pros':(stepMove >= 1?'active-done':'')"><span *ngIf="(currentStep == 1 || stepMove < 1) else rightSymbol">1</span> AGE RANGE</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(2,stepMove >= 2?'Y':'N',false)" [class]="currentStep == 2?'active-pros':(stepMove >= 2?'active-done':'')"><span *ngIf="(currentStep == 2 || stepMove < 2) else rightSymbol">2</span> CLASS SIZE</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(3,stepMove >= 3?'Y':'N',false)" [class]="currentStep == 3?'active-pros':(stepMove >= 3?'active-done':'')"><span *ngIf="(currentStep == 3 || stepMove < 3) else rightSymbol">3</span> SUBJECT</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(4,stepMove >= 4?'Y':'N',false)" [class]="currentStep == 4?'active-pros':(stepMove >= 4?'active-done':'')"><span *ngIf="(currentStep == 4 || stepMove < 4) else rightSymbol">4</span> LEVEL</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(5,stepMove >= 5?'Y':'N',false)" [class]="currentStep == 5?'active-pros':(stepMove >= 5?'active-done':'')"><span *ngIf="(currentStep == 5 || stepMove < 5) else rightSymbol">5</span> SCHEDULE</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(6,stepMove >= 6?'Y':'N',false)" [class]="currentStep == 6?'active-pros':(stepMove >= 6?'active-done':'')"><span *ngIf="(currentStep == 6 || stepMove < 6) else rightSymbol">6</span> COURSE DETAILS</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(7,stepMove >= 7?'Y':'N',false)" [class]="currentStep == 7?'active-pros':(stepMove >= 7?'active-done':'')"><span *ngIf="(currentStep == 7 || stepMove < 7) else rightSymbol">7</span> CLASSROOM SETUP</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(8,stepMove >= 8?'Y':'N',false)" [class]="currentStep == 8?'active-pros':(stepMove >= 8?'active-done':'')"><span *ngIf="(currentStep == 8 || stepMove < 8) else rightSymbol">8</span> LESSON DETAILS</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(9,stepMove >= 9?'Y':'N',false)" [class]="currentStep == 9?'active-pros':(stepMove >= 9?'active-done':'')"><span *ngIf="(currentStep == 9 || stepMove < 9) else rightSymbol">9</span> PROMOTION</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(10,stepMove >= 10?'Y':'N',false)" [class]="currentStep == 10?'active-pros':(stepMove >= 10?'active-done':'')"><span *ngIf="(currentStep == 10 || stepMove < 10) else rightSymbol">10</span> INVITATIONS</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(11,stepMove >= 11?'Y':'N',false)" [class]="currentStep == 11?'active-pros':(isFinished=='Yes'?'active-done':'')"><span *ngIf="(currentStep == 11 || isFinished=='No') else rightSymbol">11</span> FINAL SUMMARY</a></li>
+                            </ul>
+                            <ng-container *ngIf="isUpdateAndFinished">
+                                <button *ngIf="!isChangeDetected" disabled style="background: #8dcb9c; color: #fff;border-color:#8dcb9c; cursor: not-allowed;" type="button" class="sub-next">Update</button>
+                                <button *ngIf="isChangeDetected" type="button" class="sub-next btn-success" (click)="submitCompanyCourseForm(currentStep)">Update</button>&nbsp;&nbsp;
+                                <button type="button" class="sub-next" (click)="exitCourse()">Exit</button>
+                            </ng-container>
+                        </div>
+
+                        <ng-template #rightSymbol>
+                            <span><img src="/lib/assets/images/check-icon.svg" alt="" /></span>
+                        </ng-template>
+                    </div>
+                    <div class="col-md-8 col-lg-9 right-bar" id="scroolHere">
+                        <div class="step-col" *ngIf="currentStep==1">
+                            <div class="step-col-head">
+                                <h3>Age Range</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>Select whether your lesson or course is for under 18s or over 18’s</p>
+                                <div class="checkbox switcher">
+                                    <label for="isUnder18">
+                                        <small>Over 18s</small>
+                                        <!--<input *ngIf="dbsApprovalStatus!='Approved'" type="checkbox" [checked]="false"  formControlName="isUnder18" id="isUnder18" disabled="disabled">
+                                        <input *ngIf="dbsApprovalStatus=='Approved'" type="checkbox" [checked]="CompanyCourseForm.controls['isUnder18'].value" formControlName="isUnder18" id="isUnder18" (change)="setAgeRange($event)">-->
+                                        <input type="checkbox" [checked]="CompanyCourseForm.controls['isUnder18'].value" formControlName="isUnder18" id="isUnder18" (change)="setAgeRange($event)">
+                                        <span><small></small></span>
+                                        <small>Under 18s</small>
+                                    </label>
+                                </div>
+
+                                <!--{{CompanyCourseForm.controls['isUnder18'].value}}-->
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(2)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=2">
+                            <div class="step-col-head">
+                                <h3>Class Size</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>Move the cursor to select the number of students you want to attend your lesson or course</p>
+                                <p style="margin-bottom:20px;"> {{noOfStudents?.value}} Students </p>
+                                <div class="set-student" id="date-range">
+                                    <!--<mat-slider #noOfStudents [(ngModel)]="selectedClassSizeValue" (input)="onClassSizeChange(noOfStudents)" [ngModelOptions]="{standalone: true}" min="1" max="{{maxSizeOfClass}}" style="width:70%; height:15px"></mat-slider><span style="margin-top:7px; margin-left:2%;"> {{noOfStudents.value}} Students </span>-->
+                                    <mat-slider thumbLabel #noOfStudents
+                                                [displayWith]="formatLabel"
+                                                [(ngModel)]="selectedClassSizeValue"
+                                                (input)="onClassSizeChange(noOfStudents)"
+                                                [ngModelOptions]="{standalone: true}"
+                                                min="1"
+                                                max="{{maxSizeOfClass}}"
+                                                style="width:70%; height:15px">
+                                    </mat-slider>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(3)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=3">
+                            <div class="step-col-head">
+                                <h3>Subject</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>Select the subject you want to teach or create a new subject, level and pricings</p>
+                                <div class="row create-sub-row">
+                                    <div class="col-sm-6">
+                                        <div class="select-sub-col">
+                                            <label>SELECT AN EXISTING SUBJECT</label>
+                                            <select class="sub-topic" id="subjectId" name="subjectId" formControlName="subjectId" (change)='onSubjectChange($event)'>
+                                                <option *ngIf="selectedSubjectId?false:true" value="">Select subject</option>
+                                                <option *ngFor="let subject of subjectData" value="{{subject.subjectId}}" [selected]="subject.subjectId==selectedSubjectId?'selected':''">
+                                                    {{ subject.name }}
+                                                </option>
+                                            </select>
+                                            <i class="fa fa-caret-down"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="create-sub-col">
+                                            <label>ADD NEW SUBJECT TO YOUR ACCOUNT</label>
+                                            <button type="button" (click)="addPriceForSubjects()" class="add-subject"><span>+</span>Create a new subject</button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(4)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=4">
+                            <div class="step-col-head">
+                                <h3>Level</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>Select the study level you want to teach at or create a new subject level </p>
+                                <div class="row align-self-baseline">
+                                    <div class="col-sm-6">
+                                        <div class="radio-group">
+                                            <div class="custom_radio" *ngFor="let studyLevel of StudyLevels">
+                                                <input type="radio" (change)="onLevelChange(studyLevel.name, studyLevel.studyLevelId)" id="{{studyLevel.studyLevelId}}" value="{{studyLevel.studyLevelId}}" formControlName="studyLevelId" name="studyLevelId" checked><label for="{{studyLevel.studyLevelId}}"> {{ studyLevel.name }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="create-sub-col">
+                                            <label>ADD NEW SUBJECT LEVEL TO YOUR ACCOUNT</label>
+                                            <button type="button" class="add-subject" (click)="addPriceForLevels()"><span>+</span>Create a new subject level</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 align-self-end">
+                                        <div class="text-right mt-3">
+                                            <button type="button" (click)="setCurrentStep(5)" class="sub-next">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=5">
+                            <div class="step-col-head">
+                                <h3>Schedule your course and lessons</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>
+                                    Select a single or multiple time slots from the calendar below <br>
+                                    To add or edit any time slots switch on edit availability slots below.
+                                </p>
+                                <ul class="schedule-course-lessons">
+                                    <li class="celander-date-time">
+
+                                        <ng-container *ngFor="let ev of selectedEvent; let i = index;">
+                                            <span>{{i+1}}</span>
+                                            <div class="form-group">
+                                                <div class="lesson-date">
+                                                    <span class="cel-date-icon"><img src="/lib/assets/images/celander-icon.svg" alt="" /></span>
+                                                    <input type="text" value="{{ev.start|date:'EEE d MMM y'}}" disabled="disabled" />
+                                                </div>
+                                                <div class="lesson-time">
+                                                    <span class="cel-date-icon"><img src="/lib/assets/images/watch-icon.svg" alt="" /></span>
+                                                    <input type="text" value="{{ev.start|date:'h:mm a'}}" disabled="disabled" />
+                                                </div>
+                                                <span (click)="deletSelectedEvent(ev, i)">
+                                                    <i class="fas fa-times" style="float:right; margin-top:12px; cursor: pointer; margin-right:15px;" title="delete"></i>
+                                                </span>
+                                            </div>
+                                        </ng-container>
+                                    </li>
+                                    <li id="myOtherLessonView" style="display:none;">
+                                        <div class="add-lesson" style="margin-bottom: 2%;"><a href="javascript:void(0)" style="text-decoration: none;"> <span> +</span> Add a lesson by selecting a date/time on calendar </a></div>
+                                    </li>
+                                    <!--  <li class="add-lesson">
+                                        <a style="text-decoration:none;" href="javascript:void(0)"><span>+</span> Add a lesson by selecting a date/time on calendar</a>
+                                    </li>-->
+                                </ul>
+                                <div class="full-celander-box">
+                                    <mat-slide-toggle class="courseCreate" [(ngModel)]="editSlot" [ngModelOptions]="{standalone: true}">Edit Availability Slots</mat-slide-toggle>
+                                    <app-calender-scheduler (renderComplete)="arrangeSerialNumberOnEvent()" #calendarRef [showAvailabilityPopup]="showAvailabilityPopup" [courseId]="courseId" [tutorId]="selectedTutorsData['tutorId']" [bookedSlot]="selectedTutorsData['bookedSlot']" [registerdEvents]="selectedTutorsData['tutorAvailabilities']" [isWeekVisible]="false"
+                                                            [isDateEventEditable]="editSlot" (getEventsOnSidebar)="getEventsOnSidebar($event)" [ownerId]="this.selectedTutorsData['userId']"></app-calender-scheduler>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" class="sub-reset" (click)="resetCalendar()">Reset</button>
+                                    <button type="button" (click)="setCurrentStep(6)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=6">
+                            <div class="step-col-head">
+                                <h3>Course details</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>
+                                    Give your lesson or course a name and write a detailed description of its learning content <br>
+                                    <i style="font-size:13px;">(Your students will see this information before purchasing your lesson or course)</i>
+                                </p>
+                                <div class="cource-detail">
+                                    <input type="text" class="form-control" id="name" placeholder="Course Name" formControlName="name" (blur)="checkCourseNameOnBlur()" maxlength="61">
+                                    <div *ngIf="CompanyCourseFormCompanyControls.name.errors && (CompanyCourseFormCompanyControls.name.dirty || CompanyCourseFormCompanyControls.name.touched || CompanycompanyCourseFormSubmitted)"
+                                         class="error" role="alert">
+                                        <div *ngIf="CompanyCourseFormCompanyControls.name.errors.required">
+                                            Name is required
+                                        </div>
+                                        <div *ngIf="CompanyCourseFormCompanyControls.name.errors?.maxlength">
+                                            Maximum of 60 characters allowed.
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <textarea placeholder="Course description" formControlName="description" maxlength="1000"></textarea>
+                                    <div *ngIf="CompanyCourseFormCompanyControls.description.errors?.maxlength && (CompanyCourseFormCompanyControls.description.dirty || CompanyCourseFormCompanyControls.description.touched)"
+                                         class="error" role="alert">
+                                        Maximum of 1000 characters allowed.
+                                    </div>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(7)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=7">
+                            <div class="step-col-head">
+                                <h3>Classroom Setup</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>
+                                    Move the cursor to add documents, sheets and slides to your classroom <br>
+                                    To work on whiteboards alone click next
+                                </p>
+                                <div class="checkbox switcher">
+                                    <label for="test1">
+                                        <small><span class="google-icon"><img src="/lib/assets/images/google-icon.svg" alt="" /></span>Enable Google Features</small>
+                                        <!--<input formControlName="requiresGoogleAccount" (change)="googleLink($event)" type="checkbox" id="test1">-->
+                                        <input type="checkbox" formControlName="requiresGoogleAccount" (change)="googleLink($event)" id="test1" [checked]="CompanyCourseForm.controls['requiresGoogleAccount'].value">
+                                        <span><small></small></span>
+                                    </label>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(8)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=8">
+                            <div class="step-col-head">
+                                <h3>Lesson details</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>
+                                    Give each lesson a name and write a detailed description of its learning content <br>
+                                    <i style="font-size:13px;">(Your clients will see this information before purchasing your lesson or course)</i> <br>
+                                    Add your lesson resources now or leave till later <i style="font-size:13px">(For Enabled Google Features only)</i>
+                                </p>
+                                <ng-container *ngFor="let contact of this.classSessions.controls; let i = index;" formArrayName="classSessions">
+
+                                    <div class="d-flex lesson-detail" [formGroupName]="i">
+                                        <input type="hidden" name="classSessionId" formControlName="classSessionId" [value]="getContactsFormGroup(i).controls['classSessionId'].value">
+                                        <div class="row lesson-detail-left">
+                                            <div class="celander-date-time lesson-detail-col-lg">
+                                                <span>{{i+1}}</span>
+                                                <div class="form-group">
+                                                    <div class="lesson-date">
+                                                        <span class="cel-date-icon"><img src="/lib/assets/images/celander-icon.svg" alt=""></span>
+                                                        <input type="hidden" [value]="getContactsFormGroup(i).controls['startDate'].value" formControlName="startDate">
+                                                        <input type="text" [value]="getContactsFormGroup(i).controls['startDate'].value | customdatetime:'date'" />
+
+                                                    </div>
+                                                    <div class="lesson-time">
+                                                        <span class="cel-date-icon"><img src="/lib/assets/images/watch-icon.svg" alt=""></span>
+                                                        <input type="hidden" [value]="getContactsFormGroup(i).controls['leassonTime'].value" formControlName="leassonTime">
+                                                        <input type="text" [value]="getContactsFormGroup(i).controls['leassonTime'].value | customdatetime:'time'" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="lesson-detail-col-sm">
+                                                <div class="lesson-rate">
+                                                    <span class="rate-sign">£</span>
+                                                    <span class="rate-stud">
+                                                        <input class='price-txt' *ngIf="pricePerPersonEditAllowed" formControlName="pricePerPerson" type="number" min="5" id="pricePerPerson"
+                                                               name="pricePerPerson" placeholder="Price"
+                                                               [value]="pricePerPerson" (blur)="checkLessonDetailsOnBlur()">
+                                                        <input class='price-txt' *ngIf="!pricePerPersonEditAllowed" formControlName="pricePerPerson" type="number" min="5" id="pricePerPerson"
+                                                               name="pricePerPerson" placeholder="Price"
+                                                               [value]="pricePerPerson" readonly="readonly">
+                                                        <small>Per Student</small>
+                                                    </span>
+                                                    <div *ngIf="getContactsFormGroup(i).controls['pricePerPerson'].errors && (getContactsFormGroup(i).controls['pricePerPerson'].dirty || getContactsFormGroup(i).controls['pricePerPerson'].touched || CompanycompanyCourseFormSubmitted)"
+                                                         class="error" role="alert">
+                                                        <div *ngIf="getContactsFormGroup(i).controls['pricePerPerson'].errors.required">
+                                                            Please enter per each student
+                                                        </div>
+                                                        <div *ngIf="getContactsFormGroup(i).controls['pricePerPerson'].errors.min">
+                                                            Price can't be less then {{5 | currency:'GBP':'symbol':'1.2-2'}}
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="lesson-detail-col-lg">
+                                                <input type="text" class="lesson-name" placeholder="Lesson name" formControlName="name" (blur)="checkLessonDetailsOnBlur()" maxlength="61" />
+                                                <div *ngIf="getContactsFormGroup(i).controls['name'].errors && (getContactsFormGroup(i).controls['name'].dirty || getContactsFormGroup(i).controls['name'].touched || CompanycompanyCourseFormSubmitted)"
+                                                     class="error" role="alert">
+                                                    <div *ngIf="getContactsFormGroup(i).controls['name'].errors.required"> Name required</div>
+                                                    <div *ngIf="getContactsFormGroup(i).controls['name'].errors.maxlength">
+                                                        Maximum of 60 characters allowed.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="lesson-detail-col-sm">
+                                                <select class="sub-topic" formControlName="subjectCategoryId">
+                                                    <option [value]="null">Optional</option>
+                                                    <option *ngFor="let subcat of subjectCategories" [ngValue]="subcat.id">
+                                                        {{ subcat.name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="lesson-detail-col-xl">
+                                                <textarea placeholder="Description (optional)" formControlName="lessonDescriptionBody" (blur)="checkLessonDetailsOnBlur()" maxlength="500"></textarea>
+                                                <div *ngIf="getContactsFormGroup(i).controls['lessonDescriptionBody'].errors && (getContactsFormGroup(i).controls['lessonDescriptionBody'].dirty || getContactsFormGroup(i).controls['lessonDescriptionBody'].touched || CompanycompanyCourseFormSubmitted)"
+                                                     class="error" role="alert">
+                                                    <!--<div *ngIf="getContactsFormGroup(i).controls['lessonDescriptionBody'].errors.required">
+                                                        Description required
+                                                    </div>-->
+                                                    <div *ngIf="getContactsFormGroup(i).controls['lessonDescriptionBody'].errors.maxlength"> Maximum of 500 characters allowed.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="lesson-detail-right">
+                                            <div class="del">
+                                                <a href="javascript:void(0)" (click)="deletSelectedEvent(false, i)" title="delete"><img src="/lib/assets/images/delete-icon.svg" alt="" /></a>
+                                            </div>
+
+                                            <!--<button type="button" (click)="getFileUploadWindow(getContactsFormGroup(i).controls['classSessionId'].value,i)" class="waves-effect waves-light btn saveDocs">
+                                                Upload course materials
+                                            </button>-->
+
+                                            <a href="javascript:void(0)" style="text-decoration:none;" (click)="getFileUploadWindow(getContactsFormGroup(i).controls['classSessionId'].value,i)" class="upload-lesson">
+                                                <i aria-hidden="true" class="fa fa-upload" style="float: left;margin-top: 3px;"></i>Lesson resources
+                                            </a>
+                                            <!--<a href="javascript:void(0)" style="text-decoration:none;" class="view-lesson">View lesson resources</a>-->
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="create-sub-col add-more-lesson">
+                                    <label>ADD ANOTHER LESSON TO YOUR COURSE</label>
+                                    <button type="button" class="add-subject" (click)="addMoreLessons(5)"><span>+</span>Add more lessons</button>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(9)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=9">
+                            <div class="step-col-head">
+                                <h3>Promoting your course</h3>
+                                <!--<p style="color:red;" *ngIf="profileApprovalStatus== 'Approved' && classSessions.controls.length <= 1">In order to access the market place you will need to add at least 1 more lesson to your course.</p>-->
+                                <!--<p style="color:red;" *ngIf="profileApprovalStatus== 'Pending' && classSessions.controls.length > 1">You can only access the market place once your profile has been approved.</p>-->
+                                <!--<p style="color:red;" *ngIf="profileApprovalStatus== 'NotRequired' && classSessions.controls.length > 1">In order to access the market place you will need to upgrade your subscription.</p>-->
+                                <p style="color:red;" *ngIf="profileApprovalStatus== 'Pending'">You can only access the market place once your profile has been approved.</p>
+                                <!--<p style="color:red;" *ngIf="profileApprovalStatus== 'Pending' && classSessions.controls.length <= 1">In order to access the market place you will need to add at least 1 more lesson to your course and have you profile approved.</p>-->
+                                <!--<p style="color:red;" *ngIf="profileApprovalStatus== 'NotRequired'">In order to access the market place you will need to upgrade your subscription.</p>-->
+                                <!--<p style="color:red;" *ngIf="profileApprovalStatus== 'NotRequired' && classSessions.controls.length == 1">In order to access the market place you will need to add at least 1 more lesson to your course and upgrade your subscription.</p>-->
+                            </div>
+                            <div class="step-col-body">
+                                <p>Promote your courses for free on the 2utoring.com website to gain new students and boost your income</p>
+
+                                <div class="checkbox switcher pTitleMobile">
+                                    <label for="test01">
+                                        Private
+                                        <!--<input *ngIf="profileApprovalStatus== 'Approved' && classSessions.controls.length > 1" type="checkbox" [checked]="CompanyCourseForm.controls['courseType'].value==1" (change)="setCourseType($event)" id="test01" value="">
+                                        <input *ngIf="profileApprovalStatus!= 'Approved' || classSessions.controls.length <= 1" type="checkbox" [checked]="false" id="test01" value="0" disabled="disabled">-->
+                                        <input *ngIf="profileApprovalStatus == 'Approved'" type="checkbox" [checked]="CompanyCourseForm.controls['courseType'].value==1" (change)="setCourseType($event)" id="test01" value="">
+                                        <input *ngIf="profileApprovalStatus!= 'Approved'" type="checkbox" [checked]="false" id="test01" value="0" disabled="disabled">
+
+                                        <span><small></small></span>
+                                        Public
+                                    </label>
+                                </div>
+
+                                <div class="row promoting-course">
+                                    <div class="col-sm-6">
+                                        <div class="d-flex private-course">
+                                            <div class="promoting-course-image"><img src="/lib/assets/images/private-course.svg" alt="" /></div>
+                                            <div class="promoting-course-detail">
+                                                <h3>Private Course</h3>
+                                                <p>These lessons are not visible on the 2utoring website and only available to students you invite</p>
+                                            </div>
+                                            <div class="checkbox switcher pTitleMain">
+                                                <label for="test01">
+                                                    <!--<input *ngIf="profileApprovalStatus== 'Approved' && classSessions.controls.length > 1" type="checkbox" [checked]="CompanyCourseForm.controls['courseType'].value==1" (change)="setCourseType($event)" id="test01" value="">
+                                                    <input *ngIf="profileApprovalStatus!= 'Approved' || classSessions.controls.length <= 1" type="checkbox" [checked]="false" id="test01" value="0" disabled="disabled">-->
+                                                    <input *ngIf="profileApprovalStatus == 'Approved'" type="checkbox" [checked]="CompanyCourseForm.controls['courseType'].value==1" (change)="setCourseType($event)" id="test01" value="">
+                                                    <input *ngIf="profileApprovalStatus!= 'Approved'" type="checkbox" [checked]="false" id="test01" value="0" disabled="disabled">
+
+                                                    <span><small></small></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="d-flex flex-row-reverse public-course">
+                                            <div class="promoting-course-image"><img src="/lib/assets/images/public-course.svg" alt="" /></div>
+                                            <div class="promoting-course-detail">
+                                                <h3>Public Course <span>Recommended</span></h3>
+                                                <p>
+                                                    These lessons are visible publicly on the 2utoring website for students to purchase
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(10)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=10">
+                            <div class="step-col-head">
+                                <h3>Student invitations</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>
+                                    Slide the cursor to Invite students to purchase this lesson or course
+                                </p>
+                                <div class="checkbox switcher">
+                                    <label for="test">
+                                        <small>Invite students to your course</small>
+                                        <input type="checkbox" (change)="getInviteStudentsWindow($event)" id="test" value="">
+                                        <span><small></small></span>
+                                    </label>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(11)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=11">
+                            <div class="step-col-head">
+                                <h3>Summary</h3>
+                            </div>
+                            <div class="step-col-body">
+
+                                <div class="summary-box">
+                                    <h4>YOUR NEW COURSE</h4>
+                                    <div class="row">
+                                        <div class="summary-col"><p><span>COURSE NAME</span>  {{CompanyCourseForm.controls['name'].value}}</p></div>
+                                        <div class="summary-col col-sm-12 col-md-6">
+                                            <p>
+                                                <span>TUTOR</span>
+                                                <span class="tutor-icon">
+                                                <img *ngIf="selectedTutorsData?.storeProfileImageDownload != ''" src="{{selectedTutorsData?.storeProfileImageDownload}}" alt="{{selectedTutorsData?.userFullName}}" />
+                                                </span> {{ selectedTutorsData?.userTitle }}  {{ selectedTutorsData?.userFullName }}
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="summary-col">
+                                            <p><span>SUBJECT</span> {{selectedSubjectText}}</p>
+                                        </div>
+                                        <div class="summary-col">
+                                            <p><span>LEVEL</span> {{selectedLevelText}}</p>
+                                        </div>
+                                        <div class="summary-col">
+                                            <p><span>NO. OF LESSONS</span> {{classSessions.length}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="summary-col">
+                                            <p><span>CLASS SIZE</span> {{selectedClassSizeValue}}</p>
+                                        </div>
+                                        <div class="summary-col">
+                                            <p>
+                                                <span>PRIVATE/PUBLIC </span>
+                                                {{CompanyCourseForm.controls['courseType'].value==1?'Public':'Private'}}
+                                            </p>
+                                        </div>
+                                        <div class="summary-col">
+                                            <p><span>GOOGLE FEATURES</span> {{CompanyCourseForm.controls['requiresGoogleAccount'].value?'Yes':'No'}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="summary-col summary-col-md col-md-6">
+                                            <p><span>LESSON DATES</span></p>
+                                            <ng-container *ngFor="let ev of selectedEvent; let i = index;">
+                                                <p> <i><img src="/lib/assets/images/celander-icon.svg" alt="" /></i>{{ev.start|date:'EEE d MMM y'}} <i><img src="/lib/assets/images/watch-icon.svg" alt="" /></i>{{ev.start|date:'h:mm a'}}</p>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between summary-total">
+                                    <div class="summary-total-left">
+                                        <p><span>TOTAL COURSE PRICE</span> £{{getTotleLessonPrice()}}</p>
+                                    </div>
+                                    <button type="button" class="sub-next" (click)="setCurrentStep(12)">Finish: Create Course</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</main>

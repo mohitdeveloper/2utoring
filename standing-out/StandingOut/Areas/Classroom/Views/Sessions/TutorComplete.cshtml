@@ -1,0 +1,76 @@
+﻿@model StandingOut.Data.DTO.ClassSessionComplete
+
+@{
+    ViewData["Title"] = ViewBag.SessionName + " has finished";
+}
+
+@section styles  {
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #F4F6FA;
+            min-height: 100vh;
+        }
+    </style>
+}
+
+
+<div class="grid-container grid-container--narrow">
+    <div class="grid-x margin-bottom-loose margin-top-extra-loose">
+        <div class="large-2 cell text-align-right display--flex flex--spaceBetween flex--alignCenter">
+            <a asp-route="areaRoute" asp-route-area="My" asp-route-controller="Home" asp-route-action="Index" class="button button--secondary button--hasIcon"><i class="fal fa-arrow-left"></i> Back</a>
+        </div>
+        <div class="large-8 cell text-align-center">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="large-2"></div>
+    </div>
+    <div class="grid-x grid-margin-y">
+        <div class="large-12 cell">
+            <div class="card">
+                <h4 class="margin-bottom-base">@ViewBag.SessionAttendees.Count students attended</h4>
+                <ol style="list-style: none">
+                    @foreach (var sessionAttendee in ViewBag.SessionAttendees)
+                    {
+                        <li class="margin-bottom-extra-tight">@(sessionAttendee.FirstName + " " + sessionAttendee.LastName)</li>
+                    }
+                </ol>
+                <hr class="margin-y-base" />
+                <form class="form margin-top" asp-antiforgery="true" asp-action="Complete" method="post" enctype="multipart/form-data">
+                    <div class="panel">
+                        <div class="form-row">
+                            <label for="file" class="display--block margin-bottom-base">Send a message to all course participants.</label>
+                            <textarea asp-for="EmailContents" rows="10" class="form-control"></textarea>
+                            <span asp-validation-for="EmailContents" class="text-danger"></span>
+                        </div>
+                        <div class="form-row">
+                            <label for="file" class="display--block margin-bottom-base button button--success" id="fileLabel">Choose a file</label>
+                            <input type="file" name="file" id="file" class="inputfile" />
+                            <span asp-validation-for="File" class="text-danger"></span>
+                        </div>
+                        <div class="form-row">
+                            <button type="submit" class="button button--primary" value="Send">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+
+    $('.inputfile').change(function() {
+        let fileName = $('.inputfile').val().split( '\\' ).pop();
+        $('#fileLabel').html('File: ' + fileName);
+    });
+    </script>
+}

@@ -1,0 +1,31 @@
+<h2 style="text-align:center" mat-dialog-title>Add Event</h2>
+
+<ngb-alert *ngIf="showAlert" [type]="alert.type" (close)="showAlert=false">{{ alert.message }}</ngb-alert>
+
+<mat-dialog-content class="mat-typography">
+    <div class="form-group">
+        <label for="inputsm">Selected {{weekDayLabel}}</label>
+        <input class="form-control input-sm" name="selectedWeekDay" [readOnly]="true" [value]="selectedWeekDay" type="text">
+    </div>
+    <div class="form-group">
+        <label for="inputdefault">From Time</label>
+        <!-- <input class="form-control" value="" name="fromTime" type="text" #fromTime > -->
+        <ngb-timepicker [(ngModel)]="fromTime" size="small"></ngb-timepicker>
+    </div>
+    <div class="form-group">
+        <label for="inputlg">To Time</label>
+        <ngb-timepicker [(ngModel)]="toTime" size="small"></ngb-timepicker>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button type="button" class="btn btn-danger mr-1" mat-dialog-close>Close</button>
+    <button type="button" [disabled]="isSubmit" (click)="submit()" class="btn btn-success mr-1">{{submitBtnText}}</button>
+    <button mat-dialog-close *ngIf="isDeleteVisible" type="button" (click)="submit(true)" class="btn btn-danger btn-success">Delete</button>
+
+</mat-dialog-actions>
+
+
+
+<!-- Copyright 2020 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

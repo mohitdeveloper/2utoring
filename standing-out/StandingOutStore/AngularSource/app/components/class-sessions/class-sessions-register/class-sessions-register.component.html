@@ -1,0 +1,130 @@
+<!-- specific header container for styling -->
+<h4 class="step-col-head col-md-12" *ngIf="!goBack"><b>Attendees Details</b><span (click)="closeLessonDialog()" style="cursor: pointer; float: right;color: red;font-size: 25px;"><i class="fa fa-window-close" aria-hidden="true" title="close"></i></span> </h4>
+<div style="padding:2%">
+    <div class="row">
+        <div class="col-12 Page-header-container__Title d-flex align-items-center justify-content-between">
+            <h4 style="font-weight:bold;" *ngIf="classSession != null && classSession != undefined">{{classSession.name}}</h4>
+            <div *ngIf="!isCompany && sessionAttendeesCount>1">
+                <!--<button class="btn btn-success" *ngIf="canAddGroup() " (click)="addGroup()">Add group</button>-->
+                <!--<button class="btn btn-success disabled" *ngIf="!canAddGroup()" (click)="addGroupNotAllowed()">Add group</button>-->
+
+                <button style="margin-bottom: 9%;" class="btn btn-success" (click)="addGroup()">Add group</button>
+                
+            </div>
+            
+        </div>
+        <div class="col-12 mb-21">
+            <a href="javascript:void(0)" (click)="isCollapsed = !isCollapsed" class="cl-dark accordianTitle">
+                <div class="title-label">All Attendees</div>
+                <i class="far" [ngClass]="{'fa-chevron-up' : isCollapsed, 'fa-chevron-down' : !isCollapsed }"></i>
+            </a>
+            <div id="collapseExample" [ngbCollapse]="isCollapsed" class="accordianContent">
+                <div class="table-overflow">
+                    <table class="styled">
+
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Student Name
+                                </th>
+                                <th scope="col">
+                                    Date joined
+                                </th>
+                                <th scope="col">
+                                    Status
+                                </th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of tutorCommand.allSessionAttendees">
+                                <td *ngIf="item.removed"><u>{{item.firstName}} {{item.lastName}}</u></td>
+                                <td *ngIf="!item.removed">{{item.firstName}} {{item.lastName}}</td>
+                                <td>{{item.createdDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{item.status}}</td>
+                                <td>
+                                    <div>
+                                        <a *ngIf="!item.refunded" (click)="refund(item)" class="text-danger">Refund</a>
+                                        <span class="badge badge-danger" *ngIf="isTutorRefunded(item)">Refunded</span>
+                                        <span class="badge badge-danger" *ngIf="isCancelled(item)">Cancelled</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div>
+                                        <a *ngIf="canRemove(item)" (click)="remove(item)" class="text-danger Cursor--pointer">Remove</a>
+                                        <a *ngIf="canUndoRemove(item)" (click)="undoRemove(item)" class="text-Info  Cursor--pointer">Undo</a>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div *ngIf="!isCompany">
+                                        <a (click)="selectUser(item.userId)" class="Cursor--pointer" [ngClass]="{'text-info' : userSelected(item.userId) == false, 'text-danger' : userSelected(item.userId) == true }">{{userSelected(item.userId) == false ? 'Select' : 'Deselect'}}</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-21" *ngFor="let group of tutorCommand.groups">
+            <a href="javascript:void(0)" (click)="group.accordianCollapsed = !group.accordianCollapsed" class="cl-dark accordianTitle">
+                <div class="title-label">{{group.name}} ({{group.sessionAttendees.length}})</div>
+                <i class="fas" [ngClass]="{'fa-chevron-up' : group.accordianCollapsed, 'fa-chevron-down' : !group.accordianCollapsed }"></i>
+            </a>
+            <div id="collapseExample" [ngbCollapse]="group.accordianCollapsed" class="accordianContent">
+                <div class="d-flex align-items-center justify-content-between mb-14">
+                    <button type="button" class="btn btn-success" (click)="addSelected(group)" [disabled]="selectedUsers.length == 0">Add Selected</button>
+                    <button type="button" class="btn btn-danger ml-14" (click)="removeGroup(group)">Delete group</button>
+                </div>
+                <div class="table-overflow">
+                    <table class="styled">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    Student Name
+                                </th>
+                                <th scope="col">
+                                    Date joined
+                                </th>
+                                <th scope="col">
+                                    Status
+                                </th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of group.sessionAttendees">
+                                <td *ngIf="item.removed"><u>{{item.firstName}} {{item.lastName}}</u></td>
+                                <td *ngIf="!item.removed">{{item.firstName}} {{item.lastName}}</td>
+                                <td>{{item.createdDate | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{item.status}}</td>
+                                <td class="text-right">
+                                    <div>
+                                        <a (click)="removeFromGroup(group, item)" class="text-danger Cursor--pointer">Remove From Group</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="Alert Alert--type:Warning" *ngIf="tutor != null && tutor != undefined && tutor.profileApprovalStatus == 'Pending'">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M9 6C9 5.448 9.448 5 10 5C10.552 5 11 5.448 11 6V11C11 11.552 10.552 12 10 12C9.448 12 9 11.552 9 11V6ZM9 14C9 13.448 9.448 13 10 13C10.552 13 11 13.448 11 14C11 14.552 10.552 15 10 15C9.448 15 9 14.552 9 14ZM10 18C5.589 18 2 14.411 2 10C2 5.589 5.589 2 10 2C14.411 2 18 5.589 18 10C18 14.411 14.411 18 10 18ZM10 0C4.477 0 0 4.477 0 10C0 15.523 4.477 20 10 20C15.523 20 20 15.523 20 10C20 4.477 15.523 0 10 0Z" fill="#222B45" />
+            </svg>
+
+            <div class="Alert__text">
+                <h5 class="cl-dark fw-700">Your profile is currently being reviewed</h5>
+                <p class="cl-dark fw-500 mb-0">When it is approved, your lessons will be available for students to sign-up to publicly on the marketplace or privately via a shared link. </p>
+            </div>
+        </div>
+        <div *ngIf="goBack" class="d-flex align-items-center justify-content-between mt-35">
+            <a href="/Tutor/ClassSessions/Index" class="link-grey">Go back</a>
+        </div>
+    </div>
+</div>

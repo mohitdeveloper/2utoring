@@ -1,0 +1,37 @@
+@model StandingOut.Data.Models.Company
+
+@{ 
+    ViewData["Title"] = "Delete Company";
+}
+
+<div class="grid-container grid-container--wide">
+    <div class="grid-x margin-bottom-expansive">
+        <div class="large-4 cell">
+            <a class="button button--primary button--hasIcon" asp-action="Index"><i class="fal fa-arrow-left"></i> Back</a>
+        </div>
+        <div class="large-4 cell text-align-center">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+        <div class="large-4 cell">
+        </div>
+    </div>
+</div>
+
+<div class="grid-container grid-container--narrow">
+    <div class="grid-x">
+        <div class="large-12 columns">
+            <section class="form text-align-center">
+                <div class="card card--small margin-left-auto margin-right-auto">
+                    <form asp-antiforgery="true">
+                        <input type="hidden" name="CompanyId" asp-for="CompanyId" />
+                        <p class="margin-top-extra-tight">Are you sure you want to delete the company <strong>@Model.Name?</strong></p>
+                        <div class="display--flex margin-left-auto margin-right-auto margin-top-base width--max-content">
+                            <button type="submit" class="button button--distructive margin-right-tight" value="Yes">Yes</button>
+                            <a asp-action="Index" asp-controller="Companys" class="button button--primary">No</a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

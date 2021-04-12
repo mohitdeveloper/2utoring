@@ -1,0 +1,54 @@
+@model IEnumerable<StandingOut.Data.Models.SafeguardReport>
+
+@{
+    ViewData["Title"] = "Safeguard Management";
+}
+
+    <div class="grid-container grid-container--wide">
+        <div class="grid-x margin-bottom-loose margin-top-extra-loose">
+            <div class="large-6 cell">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+            <div class="large-6 cell text-align-right display--flex flex--spaceBetween flex--alignCenter">
+                <a class="button button--primary button margin-left-auto" asp-action="AlertEmails">Alert email address</a>
+            </div>
+        </div>
+
+        <div class="grid-x">
+            <div class="large-12 cell">
+                <section class="table margin-top alignFilters">
+                    <table class="datatable" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Session</th>
+                                <th>Tutor</th>
+                                <th>Student</th>
+                                <th>Date</th>
+                                <th>Type of Issue</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.ClassSession.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ClassSession.Owner.FullName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.User.FullName)</td>
+                                    <td>@item.LogDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>
+                                        <div class="display--flex flex--spaceBetween">
+                                            <a asp-action="View" asp-route-id="@item.SafeguardReportId" class="button button--primary margin-left-auto">View</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>

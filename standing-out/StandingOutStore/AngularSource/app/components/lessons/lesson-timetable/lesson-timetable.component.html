@@ -1,0 +1,165 @@
+﻿
+<div class="Page__Container--size:content mb-56 Page--process:Timetable">
+    <div class="Form__Block">
+        <div class="row">
+            <div class="col-12 col-lg-3 mb-14">
+                <div class="card bxs-0 w-100">
+                    <div class="card-header py-21 d-flex align-items-center justify-content-between">
+                        <i class="fal fa-chevron-left p-7 Cursor--pointer" (click)="backWeek()"></i>
+                        <span class="fw-700" *ngIf="lessonDays != null">{{lessonDays[0].date | date : 'd MMMM'}} ~ {{lessonDays[lessonDays.length - 1].date | date : 'd MMMM'}}</span>
+                        <i class="fal fa-chevron-right p-7 Cursor--pointer" (click)="forwardWeek()"></i>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="py-14">
+                            <li class="py-14 px-21" *ngFor="let lessonDay of lessonDays; index as dayIndex">
+                                <span (click)="selectDay(dayIndex)" class="Days" [ngClass]="{'Days--hasClasses' : lessonDay.lessons.length > 0, 'Days--Today' : selectedDay == dayIndex && searchText == ''}">
+                                    {{isToday(lessonDay.date) ? 'Today' : (lessonDay.date | date : 'EEEE, d MMMM, y')}}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-9">
+                <div class="form-group mb-14">
+                    <div class="input-group mb-2">
+                        <button type="button" (click)="backToday()" class="btn" style="background: rgba(0, 0, 0, 0.03);">
+                            Today
+                        </button>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fal fa-search fs-18" style="color: #A0A0A0"></i></div>
+                        </div>
+                        <input type="text" maxlength="250" class="form-control" placeholder="Search..." [(ngModel)]="searchText" />
+                    </div>
+                </div>
+                <ng-container *ngFor="let lessonDay of lessonDays; index as dayIndex">
+                    <ng-container *ngIf="dayIndex == selectedDay || searchText != ''">
+                        <ng-container *ngIf="lessonDay.lessons.length > 0; else noLessons">
+                            <ng-container *ngFor="let lesson of lessonDay.lessons;index as lessonIndex">
+                                <div class="card bxs-0 mb-14" *ngIf="searchText == '' || lesson.name.toLowerCase().includes(searchText.toLowerCase())">
+                                    <div class="card-body p-14 p-lg-28">
+                                        <div class="w-100 d-lg-flex align-items-center justify-content-between">
+                                            <div class="w-100 w-lg-25 mb-14 mb-lg-0">
+                                                <div class="fs-16 fw-800">{{lesson.name}}</div>
+                                                <div *ngIf="lesson.type == 'Private'" class="fs-13">Private lesson</div>
+                                            </div>
+                                            <div class="d-lg-flex align-items-center w-100 w-lg-mc mb-14 mb-lg-0">
+                                                <div class="d-block d-lg-flex align-items-center mr-lg-35">
+                                                    <!--<button *ngIf="!lesson.ended && !isTutor && userHasGoogleAccountLinked == false" type="button" class="btn btn-info" (click)="enterLesson(lesson)">Link your Google account</button>-->
+                                                    <!--<a *ngIf="!lesson.ended && !isTutor && userHasGoogleAccountLinked == false"  class="btn btn-info" href="https://accounts.google.com/signup/v2/webcreateaccount?hl=en&flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank" >Create a Google account</a>-->
+                                                    <!--<a *ngIf="lesson.requiresGoogleAccount && !lesson.ended && !isTutor && userHasGoogleAccountLinked == false" class="btn btn-Google btn-lg fs-15 d-block w-100" href="/Account/LinkAccount?returnUrl={{currentUrl}}?cameFromLinkAccount=true">-->
+                                                    <a *ngIf="lesson.requiresGoogleAccount && !lesson.ended && !isTutor && userHasGoogleAccountLinked == false" class="btn btn-Google btn-md fs-13 d-block w-100" href="/Account/LinkAccount?returnUrl={{currentUrl}}">
+                                                        <svg width="15" height="15" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-7">
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.64 9.20439C17.64 8.56629 17.5827 7.95259 17.4764 7.36349H9V10.8449H13.8436C13.635 11.9699 13.0009 12.9231 12.0477 13.5613V15.8194H14.9564C16.6582 14.2526 17.64 11.9453 17.64 9.20439Z" fill="#4285F4" />
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 8.99998 14.4204C6.65588 14.4204 4.67178 12.8372 3.96408 10.71H0.957275V13.0418C2.43818 15.9831 5.48178 18 8.99998 18Z" fill="#34A853" />
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.9641 10.7101C3.7841 10.1701 3.6818 9.5933 3.6818 9.0001C3.6818 8.4069 3.7841 7.8301 3.9641 7.2901V4.9583H0.9573C0.3477 6.1733 0 7.5478 0 9.0001C0 10.4523 0.3477 11.8269 0.9573 13.0419L3.9641 10.7101Z" fill="#FBBC05" />
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 3.5795C10.3214 3.5795 11.5077 4.0336 12.4405 4.9255L15.0218 2.3441C13.4632 0.8918 11.4259 0 8.99998 0C5.48178 0 2.43818 2.0168 0.957275 4.9582L3.96408 7.29C4.67178 5.1627 6.65588 3.5795 8.99998 3.5795Z" fill="#EA4335" />
+                                                        </svg>
+                                                        <span>Link</span>
+                                                    </a>
+                                                    <a *ngIf="lesson.requiresGoogleAccount && !lesson.ended && !isTutor && userHasGoogleAccountLinked == false" class="btn btn-GoogleCreate btn-md fs-13 d-block w-100 cg" href="https://accounts.google.com/signup/v2/webcreateaccount?hl=en&flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">
+                                                        <svg width="15" height="15" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-7">
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.64 9.20439C17.64 8.56629 17.5827 7.95259 17.4764 7.36349H9V10.8449H13.8436C13.635 11.9699 13.0009 12.9231 12.0477 13.5613V15.8194H14.9564C16.6582 14.2526 17.64 11.9453 17.64 9.20439Z" fill="#4285F4" />
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 8.99998 14.4204C6.65588 14.4204 4.67178 12.8372 3.96408 10.71H0.957275V13.0418C2.43818 15.9831 5.48178 18 8.99998 18Z" fill="#34A853" />
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M3.9641 10.7101C3.7841 10.1701 3.6818 9.5933 3.6818 9.0001C3.6818 8.4069 3.7841 7.8301 3.9641 7.2901V4.9583H0.9573C0.3477 6.1733 0 7.5478 0 9.0001C0 10.4523 0.3477 11.8269 0.9573 13.0419L3.9641 10.7101Z" fill="#FBBC05" />
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 3.5795C10.3214 3.5795 11.5077 4.0336 12.4405 4.9255L15.0218 2.3441C13.4632 0.8918 11.4259 0 8.99998 0C5.48178 0 2.43818 2.0168 0.957275 4.9582L3.96408 7.29C4.67178 5.1627 6.65588 3.5795 8.99998 3.5795Z" fill="#EA4335" />
+                                                        </svg>
+                                                        <span>Create</span>
+                                                    </a>
+                                                    <div *ngIf="lesson.requiresGoogleAccount" class="mr-7" data-toggle="tooltip" data-placement="top" title="This class requires a linked Google Account">
+                                                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M9.90959 8.6226H14.739C14.7665 8.73267 14.7894 8.86567 14.8078 9.02161C14.8261 9.17754 14.8353 9.33348 14.8353 9.48941C14.8353 10.1223 14.739 10.7185 14.5463 11.2781C14.3537 11.8376 14.051 12.3375 13.6383 12.7778C13.198 13.2456 12.6705 13.6079 12.056 13.8647C11.4414 14.1216 10.7397 14.25 9.95087 14.25C9.23541 14.25 8.56122 14.1216 7.92831 13.8647C7.2954 13.6079 6.74504 13.2502 6.27724 12.7916C5.80944 12.3329 5.43795 11.7917 5.16277 11.168C4.88759 10.5351 4.75 9.84714 4.75 9.10416C4.75 8.36118 4.88759 7.67782 5.16277 7.05408C5.43795 6.42117 5.80944 5.8754 6.27724 5.41677C6.74504 4.95814 7.2954 4.60041 7.92831 4.34358C8.56122 4.08674 9.23541 3.95833 9.95087 3.95833C10.7489 3.95833 11.4598 4.09592 12.0835 4.3711C12.7164 4.64627 13.2576 5.02694 13.7071 5.51309L12.4275 6.76515C12.1064 6.42576 11.7487 6.16893 11.3543 5.99465C10.9599 5.8112 10.4875 5.71947 9.93711 5.71947C9.48765 5.71947 9.06113 5.80202 8.65753 5.96713C8.25394 6.12306 7.90079 6.34779 7.5981 6.64132C7.2954 6.93484 7.05232 7.29257 6.86887 7.71451C6.69459 8.12728 6.60745 8.5905 6.60745 9.10416C6.60745 9.61783 6.69459 10.0856 6.86887 10.5076C7.05232 10.9203 7.2954 11.2735 7.5981 11.567C7.90996 11.8605 8.2677 12.0898 8.67129 12.255C9.07489 12.4109 9.506 12.4889 9.96463 12.4889C10.4875 12.4889 10.9278 12.4155 11.2855 12.2687C11.6524 12.1128 11.9643 11.9156 12.2211 11.6771C12.4045 11.512 12.5605 11.3056 12.6889 11.0579C12.8265 10.8011 12.932 10.5167 13.0053 10.2049H9.90959V8.6226Z" fill="black" />
+                                                        </svg>
+                                                    </div>
+                                                    <span class="d-block d-inline-block w-100 w-lg-auto mb-14 mb-lg-0 mr-lg-21">{{lesson.started ? (lesson.complete ? 'Completed' : 'Running') : 'Scheduled'}}</span>
+                                                    <ng-container *ngIf="isTutor">
+                                                        <span class="d-block d-inline-block w-100 w-lg-auto mb-14 mb-lg-0 mr-lg-21"><i class="fal fa-calendar mr-7"></i> {{lesson.startDate | date : 'dd/MM/yyyy':getOffset(lesson.startDate)}}</span>
+                                                        <span class="d-block d-inline-block w-100 w-lg-auto mb-14 mb-lg-0 mr-lg-21"><i class="fal fa-clock mr-7"></i> {{lesson.startDate | date : 'hh:mma'}}</span>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="!isTutor">
+                                                        <span class="d-block d-inline-block w-100 w-lg-auto mb-14 mb-lg-0 mr-lg-21"><i class="fal fa-calendar mr-7"></i> {{lesson.startDate | date : 'dd/MM/yyyy':getOffset(lesson.startDate)}}</span>
+                                                        <span class="d-block d-inline-block w-100 w-lg-auto mb-14 mb-lg-0 mr-lg-21"><i class="fal fa-clock mr-7"></i> {{lesson.startDate | date : 'hh:mma'}}</span>
+                                                    </ng-container>
+                                                    <span class="d-block d-inline-block w-100 w-lg-auto mb-14 mb-lg-0"><i class="fal fa-stopwatch mr-7"></i>{{lesson.duration}}(mins)</span>
+                                                </div>
+
+                                                <!--<div class="mb-14 mb-lg-0" *ngIf="isTutor">-->
+                                                <!--<button *ngIf="lesson.started" type="button" class="btn btn-outline-info" (click)="enterLesson(lesson)">View Lesson</button>-->
+                                                <!--<button *ngIf="lesson.started && (lesson.complete || checkEndDate(lesson.endDate))" type="button" class="btn btn-outline-info" (click)="enterLesson(lesson)">View Lesson</button>
+                                                <button *ngIf="(!lesson.started && !lesson.ended) && checkEndDate(lesson.endDate)" type="button" class="btn btn-outline-info" disabled="disabled">Cancelled</button>
+                                                <ng-container *ngIf="lesson.canStart">-->
+                                                <!--<button *ngIf="lesson.complete" type="button" class="btn btn-outline-info" (click)="enterLesson(lesson)">View Lesson</button>-->
+                                                <!--<button *ngIf="(!lesson.started &&  checkEndDate(lesson.endDate,'start'))|| (checkEndDate(lesson.endDate,'start') && !lesson.complete)" type="button" class="btn btn-info" (click)="enterLesson(lesson,dayIndex,lessonIndex)">Start Lesson</button>
+                                                    </ng-container>
+                                                    <button *ngIf="!lesson.canStart" type="button" class="btn btn-outline-dark" (click)="enterSetup(lesson)">Lesson Resources</button>
+                                                </div>-->
+                                                <div class="mb-14 mb-lg-0" *ngIf="isTutor">
+                                                    <!--<button *ngIf="lesson.started" type="button" class="btn btn-outline-info" (click)="enterLesson(lesson)">View Lesson</button>-->
+                                                    <button *ngIf="lesson.started || lesson.complete" type="button" class="btn btn-outline-info" (click)="viewLesson(lesson,dayIndex,lessonIndex)">View Lesson</button>
+                                                    <button *ngIf="lesson.cancel" type="button" class="btn btn-outline-info" disabled="disabled">Cancelled</button>
+                                                    <ng-container *ngIf="lesson.canStart">
+                                                        <!--<button *ngIf="lesson.complete" type="button" class="btn btn-outline-info" (click)="enterLesson(lesson)">View Lesson</button>-->
+                                                        <button *ngIf="!lesson.started && !lesson.complete && !lesson.cancel" type="button" class="btn btn-info" (click)="enterLesson(lesson,dayIndex,lessonIndex)">Start Lesson</button>
+                                                    </ng-container>
+                                                    <button *ngIf="!lesson.canStart" type="button" class="btn btn-outline-dark" (click)="enterSetup(lesson)">Lesson Resources</button>
+                                                </div>
+                                                <div class="mb-14 mb-lg-0" *ngIf="!isTutor">
+                                                    <ng-container *ngIf="lesson.canStart">
+                                                        <button *ngIf="lesson.isBasicTutor && lesson.started && lesson.complete" disabled="disabled" type="button" class="btn btn-outline-info">View Lesson</button>
+                                                        <button *ngIf="lesson.isBasicTutor && lesson.started && !lesson.complete" type="button" class="btn btn-outline-info" (click)="viewLesson(lesson,dayIndex,lessonIndex)">View Lesson</button>
+                                                        <button *ngIf="!lesson.isBasicTutor && (lesson.started || lesson.complete)" type="button" class="btn btn-outline-info" (click)="viewLesson(lesson,dayIndex,lessonIndex)">View Lesson</button>
+
+                                                        <!--<button *ngIf="lesson.started || lesson.complete" type="button" class="btn btn-outline-info" (click)="viewLesson(lesson,dayIndex,lessonIndex)">View Lesson</button>-->
+
+
+                                                        <button *ngIf="lesson.cancel" type="button" class="btn btn-outline-info" disabled="disabled">Cancelled</button>
+                                                        <button *ngIf="!lesson.started && !lesson.ended && !lesson.cancel" type="button" class="btn btn-info" (click)="enterLesson(lesson,dayIndex,lessonIndex)">Enter Lesson</button>
+                                                        <!--<button *ngIf="!lesson.ended" type="button" class="btn btn-info" (click)="enterLesson(lesson)"><span *ngIf="userLocalLogin == false">Enter Lesson</span><span *ngIf="userLocalLogin == true && userHasGoogleAccountLinked == true">Sign in with Google and Enter Lesson</span><span *ngIf="userLocalLogin == true && userHasGoogleAccountLinked == false">Link Google Account And Enter Lesson</span></button>-->
+                                                    </ng-container>
+                                                    <button *ngIf="!lesson.canStart" type="button" class="btn" disabled>Enter Lesson</button>
+                                                </div>
+                                                <!--<div class="mb-14 mb-lg-0" *ngIf="!isTutor">
+                                                <ng-container *ngIf="lesson.canStart">
+                                                    <button *ngIf="lesson.ended || (!lesson.ended && checkEndDate(lesson.endDate))" type="button" class="btn btn-outline-info" (click)="enterLesson(lesson)">View Lesson</button>
+
+                                                    <button *ngIf="!lesson.ended && checkEndDate(lesson.endDate,'start')" type="button" class="btn btn-info" (click)="enterLesson(lesson)">Enter Lesson</button>-->
+                                                <!--<button *ngIf="!lesson.ended" type="button" class="btn btn-info" (click)="enterLesson(lesson)"><span *ngIf="userLocalLogin == false">Enter Lesson</span><span *ngIf="userLocalLogin == true && userHasGoogleAccountLinked == true">Sign in with Google and Enter Lesson</span><span *ngIf="userLocalLogin == true && userHasGoogleAccountLinked == false">Link Google Account And Enter Lesson</span></button>-->
+                                                <!--</ng-container>
+                                                    <button *ngIf="!lesson.canStart" type="button" class="btn" disabled>Enter Lesson</button>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Started={{lesson.started}} Ended={{lesson.ended}} Completed={{lesson.complete}} canStart={{lesson.canStart}} StartDate={{lesson.startDate}} EndDate={{lesson.endDate}}-->
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noLessons>
+                            <ng-container *ngIf="searchText == ''">
+                                <div class="card bxs-0 mb-14">
+                                    <div class="card-body p-14 p-lg-28">
+                                        <span class="fs-15 fw-700">You have no lessons scheduled for this day</span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </ng-template>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="searchText != '' && noLessonsForSearch(searchText)">
+                    <div class="card bxs-0 mb-14">
+                        <div class="card-body p-14 p-lg-28">
+                            <span class="fs-15 fw-700">You have no lessons matching this search in the week</span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <div _ngcontent-hhm-c395="" class="col-12 col-lg-9" *ngIf="(!['Student','Parent'].includes(userType))">
+                <button (click)="redirectPage('createCourse')" style="margin-bottom:2%;" type="button" class="btn btn-outline-dark">Create a course</button><br>
+                <button (click)="redirectPage('addSlots')" style="margin-bottom:2%;" type="button" class="btn btn-outline-dark">Add availability slots</button><br>
+                <button (click)="redirectPage('addSubject')" style="margin-bottom:2%;" type="button" class="btn btn-outline-dark">Add subjects & prices</button><br>
+            </div>
+
+        </div>
+    </div>
+</div>
+

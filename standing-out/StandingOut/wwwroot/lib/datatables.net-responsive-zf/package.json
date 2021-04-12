@@ -1,0 +1,62 @@
+{
+  "_from": "datatables.net-responsive-zf@2.2.6",
+  "_id": "datatables.net-responsive-zf@2.2.6",
+  "_inBundle": false,
+  "_integrity": "sha512-M0nRN9Gpcs5JUVblMF+1/BG/w5+cbizJ/Qjimy0T6q3FYPSPyx8W5To6FyYQHTG+5vDIaLwDrL39LrEoflCLMw==",
+  "_location": "/datatables.net-responsive-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "datatables.net-responsive-zf@2.2.6",
+    "name": "datatables.net-responsive-zf",
+    "escapedName": "datatables.net-responsive-zf",
+    "rawSpec": "2.2.6",
+    "saveSpec": null,
+    "fetchSpec": "2.2.6"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-responsive-zf/-/datatables.net-responsive-zf-2.2.6.tgz",
+  "_shasum": "f087f2560c423877622dac4f46b5b619561c0c58",
+  "_spec": "datatables.net-responsive-zf@2.2.6",
+  "_where": "C:\\DevSO\\standing-out",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net-responsive": "2.2.6",
+    "datatables.net-zf": "^1.10.15",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "Responsive for DataTables with styling for [Zurb Foundation](http://foundation.zurb.com/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "responsive",
+    "DataTables",
+    "jQuery",
+    "table",
+    "Foundation"
+  ],
+  "license": "MIT",
+  "main": "js/responsive.foundation.js",
+  "name": "datatables.net-responsive-zf",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-Responsive-Foundation.git"
+  },
+  "style": "css/responsive.foundation.css",
+  "version": "2.2.6"
+}

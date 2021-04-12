@@ -1,0 +1,55 @@
+<div class="row">
+     
+    <div class="col-lg-8 col-md-12 col-sm-12" style="margin:0 auto;">
+        <div class="card p-35" *ngIf="userHasGoogleAccountLinked == false">
+            <div class="d-lg-flex justify-content-lg-between align-items-lg-center">
+                <div class="row">
+                    <div class="col-12" style="width:100%; text-align:center">
+                        <h4 class="fw-700">Link your Google account</h4>
+                        <p>If you have not linked a Google account with 2utoring.com, you will not be able to host lessons with Google features enabled.</p>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12">
+                        <a class="btn btn-GoogleCreate btn-Googles btn-lg fs-15 d-block d-inline-block" href="/Account/LinkAccount?returnUrl={{currentUrl}}">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-7">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.64 9.20439C17.64 8.56629 17.5827 7.95259 17.4764 7.36349H9V10.8449H13.8436C13.635 11.9699 13.0009 12.9231 12.0477 13.5613V15.8194H14.9564C16.6582 14.2526 17.64 11.9453 17.64 9.20439Z" fill="#4285F4" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 8.99998 14.4204C6.65588 14.4204 4.67178 12.8372 3.96408 10.71H0.957275V13.0418C2.43818 15.9831 5.48178 18 8.99998 18Z" fill="#34A853" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.9641 10.7101C3.7841 10.1701 3.6818 9.5933 3.6818 9.0001C3.6818 8.4069 3.7841 7.8301 3.9641 7.2901V4.9583H0.9573C0.3477 6.1733 0 7.5478 0 9.0001C0 10.4523 0.3477 11.8269 0.9573 13.0419L3.9641 10.7101Z" fill="#FBBC05" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 3.5795C10.3214 3.5795 11.5077 4.0336 12.4405 4.9255L15.0218 2.3441C13.4632 0.8918 11.4259 0 8.99998 0C5.48178 0 2.43818 2.0168 0.957275 4.9582L3.96408 7.29C4.67178 5.1627 6.65588 3.5795 8.99998 3.5795Z" fill="#EA4335" />
+                            </svg>
+                            <span>Link your Google account</span>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 createGaccount">
+                        <!--<a class="btn btn-Googles btn-lg fs-15 d-block w-100 mt-3" href="https://accounts.google.com/signup/v2/webcreateaccount?hl=en&flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">-->
+                        <a class="btn btn-GoogleCreate btn-Googles btn-lg fs-15 d-block d-inline-block" href="https://accounts.google.com/signup/v2/webcreateaccount?hl=en&flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-7">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.64 9.20439C17.64 8.56629 17.5827 7.95259 17.4764 7.36349H9V10.8449H13.8436C13.635 11.9699 13.0009 12.9231 12.0477 13.5613V15.8194H14.9564C16.6582 14.2526 17.64 11.9453 17.64 9.20439Z" fill="#4285F4" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 8.99998 14.4204C6.65588 14.4204 4.67178 12.8372 3.96408 10.71H0.957275V13.0418C2.43818 15.9831 5.48178 18 8.99998 18Z" fill="#34A853" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.9641 10.7101C3.7841 10.1701 3.6818 9.5933 3.6818 9.0001C3.6818 8.4069 3.7841 7.8301 3.9641 7.2901V4.9583H0.9573C0.3477 6.1733 0 7.5478 0 9.0001C0 10.4523 0.3477 11.8269 0.9573 13.0419L3.9641 10.7101Z" fill="#FBBC05" />
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 3.5795C10.3214 3.5795 11.5077 4.0336 12.4405 4.9255L15.0218 2.3441C13.4632 0.8918 11.4259 0 8.99998 0C5.48178 0 2.43818 2.0168 0.957275 4.9582L3.96408 7.29C4.67178 5.1627 6.65588 3.5795 8.99998 3.5795Z" fill="#EA4335" />
+                            </svg>
+                            <span>Create a Google Account</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="row">
+    <div class="col-lg-8 col-md-12 col-sm-12">
+        <div class="card p-35 d-flex flex-row align-items-center" *ngIf="userHasGoogleAccountLinked == true">
+            <div class="Status__Icon Status__Icon--small mr-21">
+                <i class="fas fa-check success"></i>
+            </div>
+            <h4 class="fw-700">Your Google account is linked</h4>
+        </div>
+    </div>
+   
+</div>
+
+
+
+

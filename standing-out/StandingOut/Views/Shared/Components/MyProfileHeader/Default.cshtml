@@ -1,0 +1,43 @@
+
+@if (ViewBag.UserProfileLoggedIn == true)
+{
+    <div class="so-user-details-container so-dropdown-parent">
+        <img class="so-classrooom-user-img" src="@ViewBag.UserProfileImageUrl" />
+        <div>User</div>
+        <div class="so-user-dropdown-wrapper">
+            <div class="so-user-dropdown-container">
+                <ul>
+                    <li><a href="/termsandconditions" target="_blank">Terms of Use</a></li>
+                    <li><a href="/privacypolicy" target="_blank">Privacy</a></li>
+                    <li><a href="#" onclick="logout()" class="so-bold">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        logout = function () {
+            Intercom('shutdown');
+            window.location.href = '/Account/logout';
+        };
+    </script>
+}
+else
+{
+    <div class="navigation__item">
+        <a href="/identity/account/login">
+            <div class="item__icon">
+                <div>Sign-Up</div>
+            </div>
+        </a>
+    </div>
+    <div class="navigation__item">
+
+        <a href="/identity/account/login">
+            <div class="item__icon">
+                <div>Login</div>
+            </div>
+        </a>
+    </div>
+}

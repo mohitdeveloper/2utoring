@@ -1,0 +1,46 @@
+﻿<div ng-include="'/app/classroom/webcamv2.html?v=1'"></div>
+<div ng-controller="ClassroomMainController as ctrl" ng-cloak class="view view--headerVisible">
+    <!-- CurrentPages -->
+    <section id="pane-controls" ng-repeat="pane in currentPages | filter:pane.show" ng-show="pane.show" class="view__panel view__panel--{{selectedPane}}" ng-class="{fullScreen: pane.fullScreen == true}">
+        <div class="loading-bg loading" style="display: none" id="{{'loader_' + pane.id}}">
+            <div class="Roller-Loader">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="Pane__Controls">
+            <!-- <button class="button--icon" type="button" ng-if="pane.type != 'none' && pane.type != 'webcam'" ng-click="toggleToolbar($index, pane.id)">
+                <i class="fal fa-chevron-up" ng-show="pane.toolBar" title="Show toolbar"></i>
+                <i class="fal fa-chevron-down" ng-show="!pane.toolBar" title="Hide toolbar"></i>
+            </button> -->
+            <button class="button--icon" type="button"
+                    ng-click="setFullscreen($index)" ng-if="!(fullScreenForced || selectedPane == 'full' || (!pane.fullScreen && fullScreenOn))">
+                <i class="fal fa-expand" ng-show="!pane.fullScreen" title="Expand"></i>
+                <i class="fal fa-compress" ng-show="pane.fullScreen" title="Collapse"></i>
+            </button>
+            <button class="button--icon" type="button" title="Close" ng-if="!(fullScreenForced || (selectedPane == 'full' && pane.type == 'none') || pane.fullScreen)"
+                    ng-click="deselectTool($index, pane.type)">
+                <i class="fal fa-times"></i>
+            </button>
+        </div>
+        <div class="application" ng-show="pane.type == 'none'">
+            <div class="sectionLabel">Select an application</div>
+            <div class="application__group">
+                <div class="application__block" id="tool_{{$parent.$index}}_{{tool.name}}" ng-repeat="tool in tools"
+                     ng-click="selectTool($parent.$index, tool)" ng-class="inUse(tool) ? 'disabled' : ''" title="{{inUse(tool) ? ('Sorry. The ' + tool.name + ' tool can only be opened in one pane at a time!') : tool.name}}">
+                    <img src="/images/panel-icons/{{tool.name}}.svg" alt="{{tool.name}}" />
+                    <div class="label">{{tool.name}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="tool-pane" ng-if="pane.ngInclude != ''">
+            <ng-include src="pane.ngInclude" ng-init="paneId = pane.id"></ng-include>
+        </div>
+    </section>
+</div>

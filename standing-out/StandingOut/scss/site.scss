@@ -1,0 +1,172 @@
+﻿@import 'foundation';
+@include foundation-accordion;
+@include foundation-breadcrumbs;
+@include foundation-callout;
+@include foundation-drilldown-menu;
+@include foundation-dropdown;
+@include foundation-float-classes;
+@include foundation-flex-classes;
+@include foundation-pagination;
+@include foundation-tooltip;
+@include foundation-table;
+@include foundation-xy-grid-classes;
+@include foundation-visibility-classes;
+/*@include foundation-forms;*/
+@include foundation-tabs;
+
+// Layout components
+@include foundation-reveal;
+@include foundation-sticky;
+@include foundation-title-bar;
+@include foundation-top-bar;
+
+@import '_variables.scss';
+@import '_utils.scss';
+
+@import 'partials/generic/_base.scss';
+
+@import 'partials/generic/_accordion.scss';
+@import 'partials/classroom/_header.scss';
+@import 'partials/generic/_buttons.scss';
+@import 'partials/generic/_input.scss';
+@import 'partials/generic/_modal.scss';
+@import 'partials/generic/_pagination.scss';
+@import 'partials/generic/_table.scss';
+@import 'partials/generic/_typography.scss';
+@import 'partials/generic/_pagination.scss';
+@import 'partials/generic/_card.scss';
+@import 'partials/generic/tabs.scss';
+
+@import '_website-new.scss';
+
+div, span, section {
+    $scrollbarSize: 10px!default;
+
+    &::-webkit-scrollbar {
+        border: 1px solid $borderColorAccent;
+        border-radius: $scrollbarSize / 2;
+
+        &:horizontal {
+            height: $scrollbarSize;
+        }
+
+        &:vertical {
+            width: $scrollbarSize;
+        }
+    }
+
+    &::-webkit-scrollbar-track {
+        border: 1px solid $borderAccentColor;
+        border-radius: $scrollbarSize / 2;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $orange;
+        border-radius: $scrollbarSize / 2;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: $green;
+    }
+}
+
+.grid-container {
+    max-width: 95rem !important;
+
+    &--wide {
+        max-width: 90vw !important;
+    }
+
+    &--narrow {
+        max-width: 60rem !important;
+    }
+}
+
+.tabs {
+    border: 0;
+
+    .tabs-panel {
+        padding: 0;
+    }
+
+    .tabs-title {
+
+        &:not(.is-active) {
+            a {
+                color: lighten($bodyTextColor, 50%);
+            }
+        }
+
+        a {
+            color: $bodyTextColor;
+            font-size: 18px;
+            outline: none;
+            text-decoration: none;
+
+            &:focus,
+            &[aria-selected='true'] {
+                background-color: transparent;
+                position: relative;
+
+                &:after {
+                    background-color: #0B99F2;
+                    bottom: -1px;
+                    content: '';
+                    height: 3px;
+                    left: 0;
+                    position: absolute;
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.upload-widget {
+    border: 1px dashed $borderAccentColor;
+    height: 400px;
+    margin-bottom: 56px;
+    position: relative;
+
+    .upload-ui {
+        color: #aaa;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+
+        .upload-label {
+            font-size: 22px;
+            font-weight: lighter;
+        }
+    }
+}
+
+.File__Link {
+    color: #0B99F2;
+    cursor: pointer;
+}
+
+
+.alignFilters {
+    .dataTables_wrapper {
+
+    .row.grid-x {
+        &:first-of-type {
+            align-items: center;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
+            margin-bottom: 21px;
+
+            .small-6 {
+                width: auto;
+
+                &:first-child {
+                    margin-right: 21px;
+                }
+            }
+        }
+    }
+}
+    }

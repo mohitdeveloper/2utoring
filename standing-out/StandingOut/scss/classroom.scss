@@ -1,0 +1,453 @@
+﻿// Foundation Imports
+@import "foundation";
+@include foundation-tabs;
+@include foundation-xy-grid-classes;
+
+// Utilities
+@import "variables.scss";
+@import "utils.scss";
+
+// Base
+@import "partials/classroom/base.scss";
+
+//Classroom Partials
+@import "partials/classroom/_spinner.scss";
+@import "partials/classroom/_header.scss";
+@import "partials/classroom/_navigation-rails.scss";
+@import "partials/classroom/_blink.scss";
+@import "partials/classroom/_chatbox.scss";
+@import "partials/classroom/_calculator.scss";
+@import "partials/classroom/_callModal.scss";
+@import "partials/classroom/_whiteboard.scss";
+@import "partials/classroom/_iotabs.scss";
+@import "partials/classroom/_webcam.scss";
+@import "partials/classroom/_input.scss";
+
+
+//Generic Global Styles.
+@import "partials/generic/status.scss";
+@import "partials/generic/modal.scss";
+@import "partials/generic/buttons.scss";
+@import "partials/generic/pagination.scss";
+@import "partials/generic/typography.scss";
+@import "partials/generic/card.scss";
+@import "partials/generic/_input.scss";
+
+div,
+span,
+section {
+  $scrollbarSize: 10px !default;
+  $scrollbarThumb: 240px;
+
+  &::-webkit-scrollbar {
+    border: 1px solid $borderColorAccent;
+    border-radius: $scrollbarSize / 2;
+
+    &:horizontal {
+      height: $scrollbarSize; 
+
+      &::-webkit-scrollbar-thumb {
+        height: $scrollbarThumb;
+      }
+    }
+
+    &:vertical {
+      width: $scrollbarSize;
+
+      &::-webkit-scrollbar-thumb {
+        width: $scrollbarThumb;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    border: 1px solid $borderAccentColor;
+    border-radius: $scrollbarSize / 2;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $orange;
+    border-radius: $scrollbarSize / 2;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $green;
+  }
+}
+
+.grid-container {
+  max-width: 95rem;
+  width: 100%;
+
+  &--wide {
+    max-width: 90vw !important;
+  }
+
+  &--narrow {
+    max-width: 60rem !important;
+  }
+}
+// Video Ratio 16:9
+$ratio: 0.5225% !default;
+
+.Browser {
+  display: flex;
+  flex-wrap: wrap;
+
+  .Control__Bar {
+    width: 100%;
+    padding: $offset;
+  }
+
+  .iframe__container,
+  .embed__container {
+    position: relative;
+    padding-bottom: strip-unit(100vh) * $ratio;
+    height: 0;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+@mixin VideoPanelSize($size) {
+  @if ($size == "full") {
+    width: 100%;
+
+    .iframe__container,
+    .embed__container {
+      position: relative;
+      padding-bottom: strip-unit(65vh) * $ratio;
+      height: 0;
+      overflow: hidden;
+      margin-left: auto;
+      margin-right: auto;
+      width: strip-unit(100vw) * $ratio;
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  } @else if ($size == "half") {
+    width: 100%;
+    padding-left: 14px;
+    padding-right: 14px;
+
+    .iframe__container,
+    .embed__container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  } @else if ($size == "quater") {
+    width: 100%;
+    padding-left: 14px;
+    padding-right: 14px;
+
+    .iframe__container,
+    .embed__container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.view__panel {
+  $gap: 10px !default;
+
+  &--full {
+    .Browser {
+      & > .Media__Block {
+        margin-bottom: 14px;
+        margin-top: 14px;
+        position: relative;
+        width: calc((100% / 3) - #{$gap});
+
+        &:nth-child(3n + 2) {
+          margin-left: 14px;
+          margin-right: 14px;
+        }
+      }
+
+      .fullScreen {
+        @include VideoPanelSize("full");
+      }
+    }
+
+    ul.io-tabs {
+      width: 100%;
+      padding-right: 76px;
+    }
+  }
+
+  &--half {
+    .Browser {
+      & > .Media__Block {
+        margin-bottom: 14px;
+        margin-top: 14px;
+        position: relative;
+        width: calc((100% / 2) - #{$gap});
+      }
+
+      .fullScreen {
+        @include VideoPanelSize("full");
+      }
+    }
+
+    ul.io-tabs {
+      width: calc(100% - 144px);
+    }
+  }
+
+  &--thirds,
+  &--quad {
+    .Browser {
+      & > .Media__Block {
+        margin-bottom: 14px;
+        margin-top: 14px;
+        position: relative;
+        width: calc((100% / 2) - #{$gap});
+      }
+
+      .fullScreen {
+        @include VideoPanelSize("full");
+      }
+    }
+
+    ul.io-tabs {
+      width: calc(100% - 144px);
+    }
+  }
+}
+
+.Files {
+  background-color: $white;
+  border-radius: 3px;
+  box-shadow: $boxShadowDeep;
+  font-family: $fontFamily;
+
+  &__Controls {
+    align-items: center;
+    border-bottom: 1px solid $borderColor;
+    display: flex;
+    justify-content: space-between;
+    padding: 21px;
+
+    button {
+      align-items: center;
+      display: flex;
+      height: 36px;
+      padding: 0 14px;
+
+      &.button {
+        &--upload {
+          background-color: $green;
+          color: #fff;
+        }
+
+        &--action {
+          background-color: #969696;
+          color: #fff;
+        }
+
+        i {
+          margin: 0;
+        }
+
+        i + span {
+          margin-left: 7px;
+        }
+      }
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0;
+    }
+
+    .Dropdown {
+      background-color: #fff;
+      border-radius: 3px;
+      border: 1px solid #aaa;
+      position: relative;
+      width: 180px;
+
+      &__Label {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        padding: 7px 10px;
+        text-decoration: none;
+      }
+
+      &__Menu {
+        height: 0;
+        overflow: hidden;
+        position: absolute;
+        right: 0;
+        transition: max-height 500ms ease-in-out;
+        width: 100%;
+
+        ul {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+
+          li {
+            &:not(:last-child) {
+              border-bottom: 1px solid $grey;
+            }
+
+            a {
+              cursor: pointer;
+              display: block;
+              font-size: 0.85rem;
+              padding: 10px;
+
+              i {
+                margin-right: 7px;
+              }
+            }
+          }
+        }
+      }
+      &:hover {
+        border-radius: 3px 3px 0 0;
+        border-bottom: 1px solid transparent;
+
+        .Dropdown__Menu {
+          background-color: #fff;
+          border-radius: 0 0 3px 3px;
+          border: 1px solid #aaa;
+          border-top: 1px solid transparent;
+          height: auto;
+          left: -1px;
+          max-height: 999px;
+          overflow: visible;
+          top: 36px;
+          width: calc(100% + 2px);
+        }
+      }
+    }
+  }
+
+  &__Breadcrumbs {
+    border-bottom: 1px solid $borderColor;
+    padding: 21px;
+
+    span {
+      position: relative;
+
+      &:first-child {
+        font-weight: 700;
+        margin-right: 7px;
+        padding-right: 7px;
+      }
+
+      &:not(:last-child) {
+        margin-right: 7px;
+        padding-right: 7px;
+
+        &::after {
+          content: "/";
+          position: absolute;
+          right: 0;
+          opacity: 0.4;
+        }
+      }
+    }
+  }
+
+  &__Name {
+    align-items: center;
+    display: flex;
+
+    span {
+      display: inline-block;
+      min-width: 33px;
+
+      i {
+        color: lightgray;
+        font-size: 21px;
+      }
+    }
+  }
+
+  &__Row {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 21px;
+    transition: background-color 500ms ease-in-out;
+
+    &:hover {
+      background-color: $cool-grey;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $borderColorAccent;
+    }
+
+    a {
+      color: #444;
+      cursor: pointer;
+      display: inline-block;
+      text-decoration: underline;
+
+      &:not(:first-child) {
+        margin-left: 21px;
+      }
+
+      i {
+        margin-right: 5px;
+      }
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &.button {
+        border-radius: 3px;
+        background-color: $blue;
+        color: $white;
+        padding: 7px 14px;
+        text-decoration: none;
+      }
+    }
+  }
+}

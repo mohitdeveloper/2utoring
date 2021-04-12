@@ -1,0 +1,192 @@
+// ----------------------------------------------------
+// Typograph
+// ----------------------------------------------------
+
+.Form__Block {
+    margin-top: rem(35px);
+}
+
+
+.Form_Block-Controls {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-top: rem(35px);
+    width: 100%;
+}
+
+.input-group-text {
+    background-color: white;
+    border-right: 0;
+    z-index: 400;
+}
+
+.Page--process {
+    &\:SignUp,
+    &\:Setting {
+        h1 {
+            font-size: rem(32px);
+            font-weight: 800;
+
+            & + h2 {
+                margin-top: rem(21px);
+            }
+        }
+
+        h2 {
+
+            font-weight: 600;
+            line-height: rem(24px);
+
+            @media screen and (max-width: 1199px) {
+                font-size: rem(14px);
+            }
+
+            @media screen and (min-width: 1200px) {
+                font-size: rem(16px);
+            }
+            
+            & + h3 {
+                margin-top: rem(42px);
+            }
+        }
+
+        h3 {
+            font-size: rem(21px);
+            font-weight: 800;
+            line-height: rem(28px);
+
+            & + p {
+                margin-top: rem(7px);
+            }
+
+            & + form {
+                margin-top: rem(28px);
+            }
+        }
+
+        h4 {
+            font-size: rem(16px);
+            font-weight: 700;
+            margin-bottom: rem(14px);
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+
+        form {
+            h3 {
+                margin-bottom: rem(14px);
+            }
+        }
+    }
+
+    &\:LessonCreate,
+    &\:SettingPage {
+        @include media-breakpoint-down(lg) {
+            margin-top: rem(35px);
+        }
+
+        @include media-breakpoint-up(lg) {
+            margin-top: rem(63px);
+        }
+
+        h1 {
+            font-size: rem(32px);
+            font-weight: 800;
+            margin-bottom: rem(42px);
+        }
+
+        h2 {
+            font-size: rem(21px);
+            font-weight: 800;
+            margin-bottom: rem(21px);
+        }
+
+        h3 {
+            font-size: rem(21px);
+            font-weight: 800;
+        }
+
+        hr {
+            margin-bottom: rem(28px);
+            margin-top: rem(28px);
+        }
+    }
+    &\:Timetable {
+        @include media-breakpoint-down(lg) {
+            margin-top: rem(35px);
+        }
+
+        @include media-breakpoint-up(lg) {
+            margin-top: rem(63px);
+        }
+
+        h1 {
+            font-size: rem(32px);
+            font-weight: 800;
+            margin-bottom: 0;
+        }
+    }
+}
+
+// ----------------------------------------------------
+// Text Styling
+// ----------------------------------------------------
+.text-underline,
+.text-decoration-underline {
+    text-decoration: underline!important;
+}
+
+// ----------------------------------------------------
+// Link Styling
+// ----------------------------------------------------
+a {
+
+    &.btn {
+        text-decoration: none;
+    }
+
+
+    &.link-grey {
+        color: $gray-600;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline
+        }
+    }
+
+    &.footer-link-normal {
+        color: #485465;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline
+        }
+    }
+
+    &.footer-link-light {
+        color: #999FA9;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline
+        }
+    }
+}
+
+.value--positive {
+    color: #27AE60!important;
+    font-weight: 700;
+}
+
+.value--negative {
+    color: #EB5757!important;
+    font-weight: 700;
+}

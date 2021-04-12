@@ -1,0 +1,89 @@
+﻿<div class="modal-body py-35 px-21 px-lg-35">
+  <div class="d-flex align-items-start justify-content-between mb-35">
+      <div>
+          <!--<div class="fs-28 fw-700 mb-7 cl-dark">File Permissions</div>-->
+          <h3>Collaborative Group file</h3>
+          <p>Select which students will receive a copy of this file in your lesson.</p>
+          
+      </div>
+    <button type="button" class="close" (click)="closeModal()">
+      <i class="fal fa-times"></i>
+    </button>
+  </div>
+  <div>
+    <div class="row align-items-center mb-14">
+      <div class="col-8">Select All Student</div>
+      <!--<div class="col-2 form-check">
+        <label for="readToggle" class="form-check-label">
+          <input type="checkbox" name="readToggle" id="readToggle" [(ngModel)]="readToggle" (change)="readBulkToggle()" formcontrolname="isUnder16" class="form-check-input"/>
+          <span class="label">Read</span>
+        </label>
+      </div>-->
+      <!--<div class="col-2 form-check">-->
+          <div class="form-check">
+              <label for="writeToggle" class="form-check-label">
+                  <input type="checkbox" name="writeToggle" id="writeToggle" [(ngModel)]="writeToggle" (change)="writeBulkToggle()" formcontrolname="isUnder16" class="form-check-input" />
+                  <span class="label">Share With</span>
+                  <!--<span class="label">Write</span>-->
+
+              </label>
+          </div>
+      </div>
+    <div class="row file-row align-items-center" *ngFor="let item of sessionAttendees; let itemIndex = index">
+        <div class="col-4">
+            <label>{{ item.name }}</label>
+        </div>
+        <div class="col-4">
+            <a *ngIf="!item.email" title="Google account not linked" href="javascript:void(0);" style="text-decoration:none;" (click)="sendRequestToConnectGoogleAccount(item.sessionAttendeeId)">Send request to link google account</a>
+        </div>
+        <!--<div class="col-2 form-check">
+        <label for="read_{{ itemIndex }}" class="form-check-label">
+            <input type="checkbox"
+                   *ngIf="item.email"
+                   name="read_{{ itemIndex }}"
+                   id="read_{{ itemIndex }}"
+                   [disabled]="item.email?null:true"
+                   [(ngModel)]="item.isReadable"
+                   class="form-check-input" />
+
+
+            <input type="checkbox"
+                   *ngIf="!item.email"
+                   name="read_{{ itemIndex }}"
+                   id="read_{{ itemIndex }}"
+                   [disabled]="item.email?null:true"
+                   class="form-check-input" />
+
+            <span class="label">Read</span>
+        </label>
+    </div>-->
+        <!--<div class="col-2 form-check">-->
+        <div class="form-check">
+            <label for="write_{{ itemIndex }}" class="form-check-label">
+                <input type="checkbox"
+                       *ngIf="item.email"
+                       name="write_{{ itemIndex }}"
+                       id="write_{{ itemIndex }}"
+                       [attr.disabled]="item.email?null:true"
+                       [(ngModel)]="item.isWriteable"
+                       class="form-check-input" />
+
+                <input type="checkbox"
+                       *ngIf="!item.email"
+                       name="write_{{ itemIndex }}"
+                       id="write_{{ itemIndex }}"
+                       [attr.disabled]="item.email?null:true"
+                       class="form-check-input" />
+
+                <span class="label"><!--Write--></span>
+            </label>
+        </div>
+    </div>
+  </div>
+  <div class="d-flex align-items-center justify-content-between mt-35">
+    <a (click)="closeModal()" class="link-grey">Cancel</a>
+    <button type="button" (click)="submit()" class="btn btn-success">
+      Update
+    </button>
+  </div>
+</div>

@@ -1,0 +1,135 @@
+@using StandingOut.Data.Models
+@model StandingOut.Data.DTO.EditTutor
+@{
+    ViewData["Title"] = "Edit Tutor";
+}
+
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="large-3 cell"></div>
+        <div class="large-6 cell">
+            <div class="card card--hasGrid margin-left-auto margin-right-auto margin-bottom-base margin-top-extra-loose">
+                <div class="grid-x">
+                    <div class="large-4 cell">
+
+                    </div>
+                    <div class="large-4 cell text-align-center">
+                        <h2>@ViewData["Title"]</h2>
+                    </div>
+                    <div class="large-4 cell">
+                    </div>
+                </div>
+                <hr class="margin-top-base margin-bottom-base" />
+                <section class="form">
+                    <form asp-antiforgery="true" method="post" enctype="multipart/form-data">
+                        <input type="hidden" asp-for="UserId" />
+                        <input type="hidden" asp-for="TutorId" />
+                        <input type="hidden" asp-for="Email" />
+                        <div class="grid-x grid-margin-x">
+                            <div class="large-6 cell">
+                                <label asp-for="UserId"></label>
+                                <select asp-for="UserId" asp-items="(SelectList)ViewBag.UserId"></select>
+                                <span asp-validation-for="UserId" class="text-danger"></span>
+                            </div>
+                            <div class="large-6 cell">
+                                <label asp-for="CalendarId"></label>
+                                <select asp-for="CalendarId" asp-items="(SelectList)ViewBag.CalendarId"></select>
+                                <span asp-validation-for="CalendarId" class="text-danger"></span>
+                            </div>
+                            <div class="large-6 cell">
+                                <label asp-for="Header"></label>
+                                <input asp-for="Header" />
+                                <span asp-validation-for="Header" class="text-danger"></span>
+                            </div>
+                            <div class="large-6 cell">
+                                <label asp-for="SubHeader"></label>
+                                <input asp-for="SubHeader" />
+                                <span asp-validation-for="SubHeader" class="text-danger"></span>
+                            </div>
+                            <div class="large-12 cell">
+                                <label asp-for="Biography"></label>
+                                <textarea asp-for="Biography" rows="7"></textarea>
+                                <span asp-validation-for="Biography" class="text-danger"></span>
+                            </div>
+                            <div class="large-4 cell">
+                                <label for="file" class="file-upload">
+                                    <i class="fa fa-cloud-upload"></i> Upload profile picture
+                                </label>
+                                <input type="file" class="file-upload-button" onchange="setFile(event)" name="file" id="file" />
+                            </div>
+                            <div class="large-8 cell">
+                                <input asp-for="ImageName" disabled />
+                            </div>
+                            @if (Model.ImageName != null)
+                            {
+                                <div class="large-12 cell" id="imageHolder">
+                                    <img src="@Model.ImageDownloadUrl" />
+                                </div>
+                            }
+                        </div>
+                        <hr class="margin-bottom-loose margin-top-tight" />
+                        <div class="grid-x grid-margin-x">
+                            <div class="large-6 cell">
+                                <a class="button button--tertiary" asp-action="Index">Cancel</a>
+                            </div>
+                            <div class="large-6 cell text-align-right">
+                                <input type="submit" value="Save" class="button button--primary" />
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+        <div class="large-3 cell"></div>
+    </div>
+</div>
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="large-3 cell"></div>
+        <div class="large-6 cell">
+            <div class="card margin-left-auto margin-right-auto margin-bottom-extra-loose">
+                <div class="grid-x grid-margin-y">
+                    <div class="large-12 cell">
+                        <section class="table">
+                            <h4 class="margin-bottom-tight">Tutor sessions</h4>
+                            <table class="datatable" cellpadding="0" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Session</th>
+                                        <th>Status</th>
+                                        <th>Total Attendees</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.TutorSessions)
+                                    {
+                                        <tr>
+                                            <td><a asp-controller="ClassSessions" asp-action="Rooms" asp-route-id="@item.ClassSessionId">@Html.DisplayFor(modelItem => item.Name)</a></td>
+                                            <td>@Html.DisplayFor(modelItem => item.CurrentStatus)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.SessionAttendeesCount)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="large-3 cell"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    setFile = function (event) {
+        document.getElementById("ImageName").value = event.target.files[0].name;
+        @if (Model.ImageName != null)
+        {
+            @Html.Raw("document.getElementById('imageHolder').hidden = true");
+        }
+    };
+</script>

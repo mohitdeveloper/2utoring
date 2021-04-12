@@ -1,0 +1,265 @@
+<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <h1>Manage Your Subscription</h1>
+    <div class="row">
+        <div class="col-12">
+            <div class="card bxs-0">
+                <div class="card-body">
+                    <h2>Subscription</h2>
+                    <div class="row" *ngIf="subscription != undefined && subscription != null">
+                        <div class="col">
+
+                            <p class="fw-500 text-capitalize"><strong>Name:</strong> {{subscription.name}}</p>
+                            <p class="fw-500 text-capitalize"><strong>Amount:</strong> {{subscription.amount | currency:'GBP':'symbol':'1.2-2'}}</p>
+                            <p class="fw-500 text-capitalize"><strong>Status:</strong> {{subscription.status}}</p>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="subscription == undefined || subscription == null">
+                        <div class="col" style="font-weight:bold">
+                            Basic free
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="card-deck mb-3" *ngIf="stripePlans">
+            <div class="card mb-4 box-shadow myBorders" style="border-top: 10px solid black;">
+                <div class="card-header">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="fs-28 fw-700" style="color: black">Basic</div>
+                        <!--<span class="fs-12 fw-800">1 month free trial *</span>-->
+                    </div>
+                    <div class="mt-14" *ngIf="stripePlans[0].subscription.subscriptionPrice > 0">
+                        <span class="fs-28 fw-800" style="color: black">{{stripePlans[0].subscription.subscriptionPrice | currency:'GBP':'symbol':'1.2-2'}}</span>
+                        <span class="cl-light fs-24 fw-500 ml-7">/mo</span>
+                    </div>
+                    <div class="mt-14" *ngIf="stripePlans[0].subscription.subscriptionPrice <= 0">
+                        <span class="fs-28 fw-800" style="color: black">Free</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="p-0 m-0" style="list-style: none;">
+                        <li class="mb-14"><span class="fw-800">1</span> X Concurrent classrooms</li>
+                        <li class="mb-14"><span class="fw-800">Unlimited</span> live classes</li>
+                        <li class="mb-14"><span class="fw-800">Unlimited</span> students</li>
+                        <li class="mb-14"><span class="fw-800">1-2</span> Collaborative class size</li>
+                        <li class="mb-14"><span class="fw-800">Unlimited</span> private lessons</li>
+                        <li class="mb-14"><span class="fw-800">{{4.00 | currency:'GBP':'symbol':'1.2-2'}}</span> Commission per student</li>
+                        <li class="mb-14"><span class="fw-800">&nbsp;</span></li>
+                    </ul>
+                    <button disabled="disabled" *ngIf="stripePlans[0].stripePlanId == currentStripePlanId" type="button" class="btn btn-lg btn-block btn-primary" style="background: black; border-radius: 30px; border-color: black; color:#fff;">This is your current plan</button>
+                    <button *ngIf="stripePlans[0].stripePlanId != currentStripePlanId" (click)="selectedPlan(stripePlans[0].stripePlanId, stripePlans[0].subscription.subscriptionId)" type="button" class="btn btn-lg btn-block btn-primary" style="background: black; border-radius: 30px; border-color: black">Select</button>
+                    <button class="btn btn-primary btn-lg fs-16 cl-white w-100 my-21" type="button" data-toggle="collapse" data-target="#P1" aria-expanded="false" aria-controls="P1">
+                        Show what's included
+                    </button>
+                    <div class="collapse" id="P1">
+                        <div class="card card-body">
+                            <ul>
+                                <li>Tutor can create courses</li>
+                                <li>1 lesson per course</li>
+                                <li>Tutor can enter a classroom 5 minutes before lessons starts</li>
+                                <li>Single and dual classroom panes</li>
+                                <li>Availability calendar</li>
+                                <li>All under 18's lessons are recorded</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-14">
+                        <em class="fs-13 fw-500 cl-light">
+                            * You can cancel your subscription at any time.
+                        </em>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow myBorders" style="border-top: 10px solid #ff1a8c;">
+                <div class="card-header">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="fs-28 fw-700" style="color:#ff1a8c">Starter</div>
+                    </div>
+                    <div class="mt-14">
+                        <span class="fs-28 fw-800" style="color:#ff1a8c">{{stripePlans[2].subscription.subscriptionPrice | currency:'GBP':'symbol':'1.2-2'}}</span>
+                        <span class="cl-light fs-24 fw-500 ml-7">/mo</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="p-0 m-0" style="list-style: none;">
+                        <li class="mb-14"><span class="fw-800">1</span> X Profile pages</li>
+                        <li class="mb-14"><span class="fw-800">1</span> X Concurrent classrooms</li>
+                        <li class="mb-14"><span class="fw-800">Unlimited</span> live classes</li>
+                        <li class="mb-14"><span class="fw-800">Unlimited</span> students</li>
+                        <li class="mb-14"><span class="fw-800">1-5</span> Collaborative class size</li>
+                        <li class="mb-14"><span class="fw-800">Unlimited</span> public and private lessons</li>
+                        <li class="mb-14"><span class="fw-800">{{3.75 | currency:'GBP':'symbol':'1.2-2'}}  -  {{3.00 | currency:'GBP':'symbol':'1.2-2'}}</span> Commission per student</li>
+                    </ul>
+                    <button *ngIf="stripePlans[2].stripePlanId == currentStripePlanId" disabled="disabled" type="button" class="btn btn-lg btn-block btn-primary" style="background: #ff1a8c; color:#fff; border-radius: 30px; border-color: #ff1a8c">This is your current plan</button>
+                    <button *ngIf="stripePlans[2].stripePlanId != currentStripePlanId" (click)="selectedPlan(stripePlans[2].stripePlanId, stripePlans[2].subscription.subscriptionId)" type="button" class="btn btn-lg btn-block btn-primary" style="background: #ff1a8c; border-radius: 30px; border-color: #ff1a8c">Select</button>
+                    <button class="btn btn-primary btn-lg fs-16 cl-white w-100 my-21" type="button" data-toggle="collapse" data-target="#P2" aria-expanded="false" aria-controls="P2">
+                        Show what's included
+                    </button>
+
+                    <div class="collapse" id="P2">
+                        <ul>
+                            <li>Tutor can create courses</li>
+                            <!--<li>Parents can create courses using availability calendar</li>
+                            <li>Students can create courses using availability calendar</li>-->
+                            <li>Create up to 5 lessons per course</li>
+                            <li>Tutor can enter a classroom 15 minutes before lessons starts</li>
+                            <li>Single, dual and tri classroom panes</li>
+                            <li>Availability calendar</li>
+                            <li>Create up to 2 groups in a class</li>
+                            <li>Profile approval</li>
+                            <li>DBS checks and approval</li>
+                            <li>View previously completed lessons</li>
+                            <li>All under 18's lessons are recorded</li>
+                        </ul>
+                    </div>
+
+
+                    <div class="mb-14">
+                        <em class="fs-13 fw-500 cl-light">
+                            * Monthly payment will start after
+                            the 1st month, you can cancel your subscription at any time.
+                        </em>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4 box-shadow myBorders" style="border-top: 10px solid orange;">
+                <div class="card-header">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="fs-28 fw-700" style="color: orange">Professional</div>
+                    </div>
+                    <div class="mt-14">
+                        <span class="fs-28 fw-800" style="color: orange">{{stripePlans[3].subscription.subscriptionPrice | currency:'GBP':'symbol':'1.2-2'}}</span>
+                        <span class="cl-light fs-24 fw-500 ml-7">/mo</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="p-0 m-0" style="list-style: none;">
+                        <li class="mb-14"><span class="fw-800">1</span> X Profile pages</li>
+                        <li class="mb-14"><span class="fw-800">1</span> X Concurrent classrooms</li>
+                        <li class="mb-14"><span class="fw-800">Unlimited</span> live classes</li>
+                        <li class="mb-14"><span class="fw-800">Unlimited</span> students</li>
+                        <li class="mb-14"><span class="fw-800">1-10</span> Collaborative class size</li>
+                        <li class="mb-14"><span class="fw-800">Unlimited</span> public and private lessons</li>
+                        <li class="mb-14"><span class="fw-800">{{3.50 | currency:'GBP':'symbol':'1.2-2'}}  -  {{2.75 | currency:'GBP':'symbol':'1.2-2'}}</span> Commission per student</li>
+                    </ul>
+                    <button *ngIf="stripePlans[3].stripePlanId == currentStripePlanId" disabled="disabled" type="button" class="btn btn-lg btn-block btn-primary" style="color:black; background: orange; border-radius:30px;border-color:orange; color:#fff;">This is your current plan</button>
+                    <button *ngIf="stripePlans[3].stripePlanId != currentStripePlanId" (click)="selectedPlan(stripePlans[3].stripePlanId, stripePlans[3].subscription.subscriptionId)" type="button" class="btn btn-lg btn-block btn-primary" style="background: orange; border-radius:30px;border-color:orange">Select</button>
+                    <button class="btn btn-primary btn-lg fs-16 cl-white w-100 my-21" type="button" data-toggle="collapse" data-target="#P3" aria-expanded="false" aria-controls="P3">
+                        Show what's included
+                    </button>
+                    <div class="collapse" id="P3">
+                        <ul>
+                            <li>Tutor can create courses</li>
+                            <!--<li>Parent's can create courses using availability calendar</li>
+                            <li>Student's can create courses using availability calendar</li>-->
+                            <li>Create up to 25 lessons per course</li>
+                            <li>Tutor can enter a classroom 30 minutes before lessons starts</li>
+                            <li>Single, dual, tri and quad classroom panes</li>
+                            <li>Availability calendar</li>
+                            <li>Create up to 5 groups in a class</li>
+                            <li>Profile approval</li>
+                            <li>DBS checks and approval</li>
+                            <li>View previously completed lessons</li>
+                            <li>All under 18's lessons are recorded</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-14">
+                        <em class="fs-13 fw-500 cl-light">
+                            * Monthly payment will start after
+                            the 1st month, you can cancel your subscription at any time.
+                        </em>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <hr class="my-35">
+    <div class="row">
+        <div class="col-12">
+            <h2>Saved Card</h2>
+            <div class="card bxs-0 card--toRespond:small" *ngIf="paymentCard != undefined && paymentCard != null">
+                <div class="card-body d-flex justify-content-between">
+                    <span class="fs-16 fw-600">**** **** **** {{paymentCard.last4}}, {{paymentCard.address}}</span>
+                </div>
+            </div>
+            <div *ngIf="paymentCard == undefined || paymentCard == null">
+                <p>no cards on file</p>
+            </div>
+        </div>
+    </div>
+    <hr class="my-35">
+    <div class="row">
+        <div class="col-12">
+            <h2>Update Card</h2>
+            <form (ngSubmit)="submitPaymentForm()" [formGroup]="paymentForm" *ngIf="paymentForm != undefined">
+                <div class="form-row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Card Details</label>
+                            <div class="card bxs-0" style="padding: 16px 14px">
+                                <div id="card-info" class="padding-vertical-tight"></div>
+                            </div>
+                            <div id="card-errors" class="Error Error--alert margin-top-extra-tight" role="alert"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Cardholder Name</label>
+                            <input type="text" id="cardName" name="cardName" formControlName="cardName" class="form-control" placeholder="Enter the cardholders name as it appears on the card" />
+                            <div *ngIf="paymentFormControls.cardName.errors && (paymentFormControls.cardName.dirty || paymentFormControls.cardName.touched || paymentFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="paymentFormControls.cardName.errors.maxlength">Card Name has a character limit of 250</div>
+                                <div *ngIf="paymentFormControls.cardName.errors.required">Please enter the name on your payment card to continue.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>First line of your billing address</label>
+                            <input type="text" id="addressLine1" name="addressLine1" formControlName="addressLine1" class="form-control" placeholder="Enter the first line of the address your card is registered to" />
+                            <div *ngIf="paymentFormControls.addressLine1.errors && (paymentFormControls.addressLine1.dirty || paymentFormControls.addressLine1.touched || paymentFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="paymentFormControls.addressLine1.errors.maxlength">First line address has a character limit of 250</div>
+                                <div *ngIf="paymentFormControls.addressLine1.errors.required">Please enter the first line of your billing address to continue.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Country</label>
+                            <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" placeholder="Enter a promo code">
+                                <option [ngValue]="null">Select your country</option>
+                                <option *ngFor="let stripeCountry of stripeCountrys" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
+                            </select>
+                            <div *ngIf="paymentFormControls.stripeCountryId.errors && (paymentFormControls.stripeCountryId.dirty || paymentFormControls.stripeCountryId.touched || paymentFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="paymentFormControls.stripeCountryId.errors.maxlength">Country has a character limit of 250</div>
+                                <div *ngIf="paymentFormControls.stripeCountryId.errors.required">Please enter your country to continue.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" *ngIf="showStripeError">
+                    <div class="col">
+                        <p class="error">{{stripeError}}</p>
+                    </div>
+                </div>
+                <div class="Form_Block-Controls">
+                    <button type="submit" class="btn btn-primary btn-lg ml-auto">{{ buttonText }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

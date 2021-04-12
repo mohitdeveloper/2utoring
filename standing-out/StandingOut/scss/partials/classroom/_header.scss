@@ -1,0 +1,287 @@
+﻿.header {
+    align-items: center;
+    background-color: white;
+    box-sizing: border-box;
+    display: grid;
+    font-family: $fontFamily;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    min-height: $header;
+    max-height: $header;
+    padding-left: $offset;
+    padding-right: $offset;
+    width: 100%;
+
+    &__info {
+        align-items: center;
+        display: flex;
+    }
+
+    &__logo {
+        background-image: url('../../images/2utoringClassroom.svg');
+        background-size: cover;
+        font-size: 0;
+        height: 34px;
+        margin: $spacingExtraTight;
+        width: 34px;
+    }
+
+    &__timeRemaining {
+        align-items: center;
+        display: flex;
+        margin-left: $spacingLoose;
+
+        i {
+            font-size: $headerIconSize;
+        }
+
+        div {
+            margin-left: $spacingExtraTight;
+
+            & > div {
+                &:nth-child(1) {
+                    font-size: 20px;
+                    font-weight: $fontWeightBase;
+                    line-height: 20px;
+                }
+
+                &:nth-child(2) {
+                    color: $bodyTextAccentColor;
+                    font-size: $fontSizeSmall;
+                    font-weight: $fontWeightBase;
+                }
+
+                &:nth-child(3) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    &__viewingOptions {
+        flex: 1;
+
+        nav {
+            padding: 0;
+
+            .navigation__item {
+                &:not(:first-child), &:not(:last-child) {
+                    margin-left: 7px;
+                    margin-right: 7px;
+                }
+            }
+        }
+    }
+
+    &__controls {
+        display: flex;
+        justify-content: flex-end;
+
+        .separator {
+            color: lighten($bodyTextColor, 25%);
+        }
+
+        a.styled-link {
+            border-bottom: 1px solid transparent;
+            color: #0B99F2;
+            text-decoration: none;
+
+            &:hover {
+                border-color: #0B99F2;
+            }
+        }
+
+        & > div {
+            &:not(:first-child) {
+                margin-left: 14px;
+            }
+
+            &:empty {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+.controls {
+    &__userLoggedIn {
+        align-items: center;
+        box-sizing: border-box;
+        display: flex;
+        position: relative;
+
+        &:not(:empty) {
+            align-items: center;
+            display: flex;
+            justify-content: flex-end;
+
+            & > * {
+                &:not(:last-child) {
+                    margin-right: 14px;
+                }
+            }
+
+            img {
+                border-radius: 17.5px;
+                width: 35px;
+            }
+        }
+    }
+}
+
+.navigation {
+    align-items: center;
+    display: flex;
+    font-family: $fontFamily;
+    justify-content: center;
+    padding: 0;
+
+    &__item {
+        display: flex;
+        font-size: $fontSizeSmall;
+        text-align: center;
+
+        &--block {
+            align-items: center;
+            background-color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            height: 150px;
+            box-shadow: $boxShadowSolid;
+            width: 150px;
+
+            &:not(:first-child), &:not(:last-child) {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            .item__icon {
+                margin-left: auto;
+                margin-right: auto;
+                width: 100%;
+
+                svg {
+
+                    &.active {
+                        opacity: 1;
+                        cursor: pointer;
+                    }
+
+                    &.inactive {
+                        opacity: 0.5;
+                        cursor: not-allowed;
+                    }
+                    
+                }
+
+                i {
+                    font-size: 35px;
+                    margin-bottom: 21px;
+                }
+
+                div:first-of-type {
+                    color: #212121;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        a {
+            color: $bodyTextAccentColor;
+            text-decoration: none;
+        }
+    }
+}
+
+.item {
+    &__icon {
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+
+        i {
+            font-size: $classroomHeaderIconSize;
+        }
+
+        img {
+            height: 31px;
+            width: 31px;
+        }
+
+        div {
+            color: $bodyTextColor;
+            font-size: 10px;
+            font-weight: $fontWeightMedium;
+        }
+    }
+}
+
+
+/* Sukh User Dropdown styles */
+.so-classrooom-user-img {
+    border-radius: 50%;
+}
+
+.so-classrooom-user-initials {
+    border-radius: 50%;
+    height: 35px !important;
+    width: 31px !important;
+    font-size: 20px !important;
+}
+
+.so-dropdown-parent {
+    position: relative;
+}
+
+.so-user-dropdown-wrapper {
+    display: none;
+    position: absolute;
+    width: 150px;
+    right: 0;
+    bottom: -120px;
+    z-index: 100;
+    border: 1px solid rgba(0,0,0,0.09);
+    background-color: #fff;
+}
+
+.so-user-dropdown-wrapper:hover {
+    display: block;
+}
+
+.so-dropdown-parent:hover > .so-user-dropdown-wrapper {
+    display: block;
+}
+
+.so-user-dropdown-container {
+    background-color: #F4F6FA;
+    padding: 10px;
+    margin: 10px;
+}
+
+.so-user-dropdown-container ul {
+    list-style-type: none;
+    color: #8798AD;
+}
+
+.so-user-dropdown-container ul li {
+    margin-bottom: 0.5rem;
+}
+
+.so-user-dropdown-container ul li:last-of-type {
+    margin-bottom: 0;
+}
+
+.so-user-dropdown-container ul li a {
+    text-decoration: none;
+    color: #000;
+}
+
+.so-user-dropdown-container ul li a.so-bold {
+    font-weight: 700;
+}
+
+.so-user-dropdown-container ul li a:hover {
+    text-decoration: underline;
+}

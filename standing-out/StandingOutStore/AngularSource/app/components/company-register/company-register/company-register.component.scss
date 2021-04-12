@@ -1,0 +1,58 @@
+.my-drop-zone {
+    border: dotted 3px lightgray;
+    height: 150px;
+    margin-bottom: 50px
+}
+
+.nv-file-over {
+    border: dotted 3px red;
+}
+/* Default class applied to drop zones on over */
+.another-file-over-class {
+    border: dotted 3px green;
+}
+
+html, body {
+    height: 100%;
+}
+
+
+.Level__Selection {
+    display: grid!important;
+    grid-template-columns: repeat(1, 1fr);
+
+    @media (min-width: 768px){
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 1080px){
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+
+.File-Uploader{
+    height: 190px !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd){
+    background-color: white !important;
+}
+.table{
+    text-align: center;
+}
+.table tr td{
+    border: none !important;
+}
+
+#addTeamMembers{
+    display:none;
+}
+
+.termsCondition {
+    color: darkblue !important;
+}
+.cropper{
+    height:300px !important;
+}
+

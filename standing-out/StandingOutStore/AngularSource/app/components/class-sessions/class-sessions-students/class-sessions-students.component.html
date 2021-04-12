@@ -1,0 +1,176 @@
+<!--<div class="Page__Container--size:content mb-56 Page--process:LessonCreate">
+    <div class="form-row">
+<div class="form-row" *ngIf="!classSessionIdDialog">
+    <div class="col-12">
+        <h1 *ngIf="classSessionId == undefined">Create a lesson</h1>
+    </div>
+
+    <div class="col-12" *ngIf="classSessionId != undefined">
+        <ul class="Section__Nav mb-28">
+            <li><h1 class="mb-0">Edit a lesson</h1></li>
+            <li><a class="btn btn-success" href="/Tutor/ClassSessions/Edit/{{classSessionId}}">Lesson Setup <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 8H12.865L9.232 12.36C8.878 12.784 8.936 13.415 9.36 13.768C9.785 14.122 10.415 14.064 10.769 13.64L15.769 7.64C15.808 7.593 15.827 7.538 15.856 7.486C15.88 7.444 15.909 7.408 15.927 7.362C15.972 7.247 15.999 7.126 15.999 7.004C15.999 7.003 16 7.001 16 7C16 6.999 15.999 6.997 15.999 6.996C15.999 6.874 15.972 6.753 15.927 6.638C15.909 6.592 15.88 6.556 15.856 6.514C15.827 6.462 15.808 6.407 15.769 6.36L10.769 0.36C10.57 0.123 10.286 0 10 0C9.774 0 9.547 0.076 9.36 0.232C8.936 0.585 8.878 1.216 9.232 1.64L12.865 6H1C0.448 6 0 6.448 0 7C0 7.552 0.448 8 1 8Z" fill="#222B45" /></svg></a></li>
+            <li><a class="btn btn-success" href="/Tutor/ClassSessions/SetupMaterial/{{classSessionId}}">Files & Media <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 8H12.865L9.232 12.36C8.878 12.784 8.936 13.415 9.36 13.768C9.785 14.122 10.415 14.064 10.769 13.64L15.769 7.64C15.808 7.593 15.827 7.538 15.856 7.486C15.88 7.444 15.909 7.408 15.927 7.362C15.972 7.247 15.999 7.126 15.999 7.004C15.999 7.003 16 7.001 16 7C16 6.999 15.999 6.997 15.999 6.996C15.999 6.874 15.972 6.753 15.927 6.638C15.909 6.592 15.88 6.556 15.856 6.514C15.827 6.462 15.808 6.407 15.769 6.36L10.769 0.36C10.57 0.123 10.286 0 10 0C9.774 0 9.547 0.076 9.36 0.232C8.936 0.585 8.878 1.216 9.232 1.64L12.865 6H1C0.448 6 0 6.448 0 7C0 7.552 0.448 8 1 8Z" fill="#222B45" /></svg></a></li>
+            <li><a class="btn btn-light active" href="/Tutor/ClassSessions/SetupStudents/{{classSessionId}}">Invitation List <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 8H12.865L9.232 12.36C8.878 12.784 8.936 13.415 9.36 13.768C9.785 14.122 10.415 14.064 10.769 13.64L15.769 7.64C15.808 7.593 15.827 7.538 15.856 7.486C15.88 7.444 15.909 7.408 15.927 7.362C15.972 7.247 15.999 7.126 15.999 7.004C15.999 7.003 16 7.001 16 7C16 6.999 15.999 6.997 15.999 6.996C15.999 6.874 15.972 6.753 15.927 6.638C15.909 6.592 15.88 6.556 15.856 6.514C15.827 6.462 15.808 6.407 15.769 6.36L10.769 0.36C10.57 0.123 10.286 0 10 0C9.774 0 9.547 0.076 9.36 0.232C8.936 0.585 8.878 1.216 9.232 1.64L12.865 6H1C0.448 6 0 6.448 0 7C0 7.552 0.448 8 1 8Z" fill="#222B45" /></svg></a></li>
+        </ul>
+        <hr />
+    </div>
+</div>
+<div class="form-row" *ngIf="classSessionIdDialog">
+    <div class="col-12">
+        <h1>Invite Students</h1>
+    </div>
+</div>
+
+<div class="col-12" *ngIf="tutor.profileApprovalStatus != 'Approved' && tutor.profileApprovalStatus != 'NotRequired'">
+    <p>We're still approving your profile. You will be able to send invites to this lesson, once it has been approved!</p>
+</div>
+
+<div class="col-12" *ngIf="tutor.profileApprovalStatus == 'Approved' || tutor.profileApprovalStatus == 'NotRequired'">
+    <h3 class="mb-7">Invite a New Student</h3>
+    <p class="fw-500 mb-21">You can invite new students to your lessons by entering their email address and sending an invitation, or you can invite a previous student by selecting their name from the drop down below. After you have created the lesson an email will be sent to the students on your invitation list containing a link to book.</p>
+    <button type="button" (click)="popSessionInviteModal()" class="btn py-7 px-21 btn-info">Invite a New Student</button>
+    <hr />
+</div>
+<div class="col-12 d-flex" *ngIf="tutor.profileApprovalStatus == 'Approved' || tutor.profileApprovalStatus == 'NotRequired'">
+    <ng-select id="userId" name="userId" [items]="uniqueSessionAttendees"
+               bindLabel="fullName"
+               bindValue="userId"
+               [(ngModel)]="selectedUserId"
+               class="flw-100 mr-14"
+               placeholder="Search for a Previous Student">
+    </ng-select>
+    <button type="button" (click)="addToInvites()" class="btn btn-outline-dark btn-lg ml-auto fs-15">Add</button>
+</div>
+<div class="col-12 mb-35" *ngIf="sessionInvites.length > 0">
+    <h3 class="mt-28 mb-14">Lesson Invites</h3>
+    <div class="d-flex my-14 fw-600 fs-15 card bxs-0 mb-7" *ngFor="let sessionInvite of sessionInvites">
+        <div class="card-body p-14">
+            <div class="w-40">
+                <i class="fas fa-trash p-3" *ngIf="!sessionInvite.inviteSent" (click)="removeAddedUser(sessionInvite)"></i>
+                {{getInviteeDisplay(sessionInvite)}}
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="col-12">-->
+<!-- As we're not concerning with migrating old data, we will work with existing profile approval status -->
+<!--<div class="Alert Alert--type:Warning" *ngIf="tutor != null && tutor != undefined && tutor.profileApprovalStatus == 'Pending'">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 6C9 5.448 9.448 5 10 5C10.552 5 11 5.448 11 6V11C11 11.552 10.552 12 10 12C9.448 12 9 11.552 9 11V6ZM9 14C9 13.448 9.448 13 10 13C10.552 13 11 13.448 11 14C11 14.552 10.552 15 10 15C9.448 15 9 14.552 9 14ZM10 18C5.589 18 2 14.411 2 10C2 5.589 5.589 2 10 2C14.411 2 18 5.589 18 10C18 14.411 14.411 18 10 18ZM10 0C4.477 0 0 4.477 0 10C0 15.523 4.477 20 10 20C15.523 20 20 15.523 20 10C20 4.477 15.523 0 10 0Z" fill="#222B45" />
+    </svg>
+    <div class="Alert__text">
+        <h5 class="cl-dark fw-700">Your profile is currently being reviewed</h5>
+        <p class="cl-dark fw-500 mb-0">When it is approved, your lessons will be available for students to sign-up to publicly on the marketplace or privately via a shared link. </p>
+    </div>
+</div>
+<div class="Form_Block-Controls" *ngIf="!classSessionIdDialog">
+    <a href="/Tutor/ClassSessions/SetupMaterial/{{classSessionId}}" class="link-grey">Go back</a>
+    <a href="/Tutor/ClassSessions/Delete/{{classSessionId}}" class="ml-14 text-danger" *ngIf="classSessionId != undefined">Delete Lesson</a>
+    <a href="javascript:void(0)" class="btn btn-primary btn-lg ml-auto" *ngIf="classSessionId != undefined" (click)="submit()">Save changes</a>
+    <a href="/Tutor/ClassSessions/Index" class="btn btn-primary btn-lg ml-auto" *ngIf="classSessionId == undefined">Create Lesson</a>
+</div>
+<div class="Form_Block-Controls" *ngIf="classSessionIdDialog">
+    <a href="javascript:void(0)" class="btn btn-primary btn-lg ml-auto" *ngIf="classSessionId != undefined" (click)="submit()">Save changes</a>
+</div>
+</div>
+    </div>
+</div>-->
+
+
+<!--<div class="col-12" *ngIf="tutor.profileApprovalStatus != 'Approved' && tutor.profileApprovalStatus != 'NotRequired'">
+    <p>We're still approving your profile. You will be able to send invites to this lesson, once it has been approved!</p>
+</div>-->
+<div class="step-col">
+    <div class="step-col-head">
+        <h3>Send invitations to your students</h3>
+    </div>
+    <div class="step-col-body">
+
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>From your existing register</h4>
+                <!--{{ selectedAttendeesTmp | json }}-->
+
+                <div class="email-invitations">
+                    <input type="text" placeholder="search..." [(ngModel)]="searchValue" (keyup)="searchAttendees($event)">
+                    <ul style="margin-top:15px; overflow-y: auto; height: 200px;padding: 7px;">
+                        <!----| listfilter : searchValue -->
+                        <li class="d-flex justify-content-between" *ngFor="let item of selectedAttendeesTmp  let i = index">
+                            <span class="n-tit n-tit-{{i+1}}">{{item.fullName | shortName}}</span>
+                            <span class="s-name">{{item.fullName}}</span>
+                            <input type="checkbox" [checked]="tmpCheckedInvitesArr.indexOf(item.userId) != -1?'checked':''" (change)="addToInvites(item.userId)" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--{{sessionInvites | json}}-->
+            <!--<div class="col-sm-6">
+                <h4>Send email invitations</h4>
+                <div class="email-invitations">
+                    <ul [formGroup]="userForm">
+                        <div formGroupName="type">
+                            <div formArrayName="options">
+                                <div *ngFor="let child of userForm.get('type.options').controls; let i = index">
+                                    <div [formGroupName]="i">
+                                        <li><input type="text" formControlName="label" placeholder="Enter email address" /></li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>-->
+            <div class="col-sm-6">
+                <h4>Send email invitations</h4>
+                <div class="email-invitations" [formGroup]="emailForm">
+                    <ul formArrayName="emailArray" style=" height: 250px; overflow-y: auto;">
+                        <li *ngFor="let email of emailForm.get('emailArray')['controls']; let i = index" [formGroupName]="i">
+                            <input type="text" formControlName="emailAddress" placeholder="Enter email address" autocomplete="email" />
+                            <div *ngFor="let validation of validationMsgs.emailAddress">
+                                <div *ngIf="email.get('emailAddress').hasError(validation.type)" class="error" role="alert">
+                                    {{validation.message}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12" style="margin-top:2%;">
+                <h4>Invitation has sent</h4>
+
+                <div class="email-invitations">
+                    <ul style=" margin-top: 15px; height: 60px; overflow-y: auto;">
+                        <!----| listfilter : searchValue -->
+                        <li class="d-flex justify-content-between" *ngFor="let sessionInvite of sessionInvites let i = index">
+                            <!--<i class="fas fa-trash p-3" *ngIf="!sessionInvite.inviteSent" (click)="removeAddedUser(sessionInvite)"></i>-->
+                            <span class="n-tit n-tit-{{i+1}}">{{getInviteeDisplay(sessionInvite) | shortName}}</span>
+                            <span class="s-name"> {{getInviteeDisplay(sessionInvite)}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
+            <div class="Alert Alert--type:Warning" *ngIf="tutor != null && tutor != undefined && tutor.profileApprovalStatus == 'Pending'">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 6C9 5.448 9.448 5 10 5C10.552 5 11 5.448 11 6V11C11 11.552 10.552 12 10 12C9.448 12 9 11.552 9 11V6ZM9 14C9 13.448 9.448 13 10 13C10.552 13 11 13.448 11 14C11 14.552 10.552 15 10 15C9.448 15 9 14.552 9 14ZM10 18C5.589 18 2 14.411 2 10C2 5.589 5.589 2 10 2C14.411 2 18 5.589 18 10C18 14.411 14.411 18 10 18ZM10 0C4.477 0 0 4.477 0 10C0 15.523 4.477 20 10 20C15.523 20 20 15.523 20 10C20 4.477 15.523 0 10 0Z" fill="#222B45" />
+                </svg>
+                <div class="Alert__text">
+                    <h5 class="cl-dark fw-700">Your profile is currently being reviewed</h5>
+                    <p class="cl-dark fw-500 mb-0">When it is approved, your lessons will be available for students to sign-up to publicly on the marketplace or privately via a shared link. </p>
+                </div>
+            </div>
+
+            <div class="mt-5" style="float: right;">
+                <button type="reset" style="float: left; padding: 12px 20px;" (click)="closeDialog()" class="close" aria-label="Close">Cancel</button>
+                <button type="button" class="sub-next" *ngIf="classSessionId != undefined && classSessionIdDialog" (click)="submit()">Send Invitations</button>
+            </div>
+        </div>
+    </div>
+</div>

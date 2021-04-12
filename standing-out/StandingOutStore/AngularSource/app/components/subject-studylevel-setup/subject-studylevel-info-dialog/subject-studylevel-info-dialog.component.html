@@ -1,0 +1,66 @@
+
+        <h3 mat-dialog-title style="text-align:center; margin-top: 15px;">Price Setupss</h3>
+        <hr>
+        <div mat-dialog-content>
+            <!-- 3 means at the time tutor registration jurney type is company tutor-->
+            <ng-container *ngIf="isFilterVisible == 3 || userType=='CompanyTutor'">
+                <div class="col-md-12">
+                    <p style="text-indent:-1em; padding:0 0 0 20px;">1. Click on the Add button below.</p>
+                    <p style="text-indent:-1em; padding:0 0 0 20px;">
+                        2. Select your taught subject & level, then type in your prices per student for both one to one lessons or one to many classes. Click Create.<br>
+                        <i style="font-size:13px;">(Group classes generally cost less than one-to-one, but allow you to amplify your hourly income whilst offering value for money to your students)</i>.
+                    </p>
+                    <p style="text-indent:-1em; padding:0 0 0 20px;">3. Repeat points 1 & 2 above until you have listed all the subjects & levels you wish to teach and their pricings. </p>
+                    <p style="text-indent:-1em; padding:0 0 0 20px;">4. All Tutor subject pricings will be superseded by the company's prices. If the prices are not specified by your company for that subject your pricings will stand.</p>
+                    <p style="text-indent:-1em; padding:0 0 0 20px;">5. If your chosen subjects are not listed then please contact 2utoring.com via the contact page with a request to add subjects and subcategories.</p>
+                </div>
+            </ng-container>
+            
+            <div class="col-md-10" style="margin-left:12px;"></div>
+
+                <!-- 2 means at the time tutor registration jurney type is normal tutor-->
+                <ng-container *ngIf="isFilterVisible == 2 || userType=='Tutor'">
+                    <div class="col-md-12">
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">1.  Click on the Add button below.</p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">
+                            2.  Select your taught subject & level, then type in your prices per student for both one to one lessons and one to many classes. Click Create.<br>
+                            <i style="font-size:13px;">(Group classes generally cost less than one-to-one, but allow you to amplify your hourly income whilst offering value for money to your students)</i>.
+                        </p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">3. Repeat points 1 & 2 above until you have listed all the subjects & levels you wish to teach and their pricings.</p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">4. If your chosen subjects are not listed then please contact 2utoring.com via the contact page with a request to add subjects and subcategories.</p>
+                    </div>
+                </ng-container>
+                <!-- 11 means at the time registration user type company -->
+                <ng-container *ngIf="isFilterVisible == 11">
+                    <div class="col-md-12">
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">1. Click on the Add button below. </p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">
+                            2. Select your taught subject & level, then type in your prices per student for both one to one lessons and one to many classes. Click Create.<br>
+                            <i style="font-size:13px;">(Group classes generally cost less than one-to-one, but allow you to amplify your hourly income whilst offering value for money to your students)</i>.
+                        </p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">3. Repeat points 1 & 2 above until you have listed all the subjects & levels you wish to teach and their pricings.</p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">4. All Tutor subject pricings will be superseded by the company's prices for that subject and level. If the company's prices are not specified for that subject and level your tutors pricings will stand.</p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">5. You can change any subject pricings created by a tutor.</p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">6. If your chosen subjects are not listed then please contact 2utoring.com via the contact page with a request to add subjects and subcategories.</p>
+                    </div>
+                    <div class="col-md-10" style="margin-left:12px;"></div>
+                </ng-container>
+
+                <!-- 1 means at the time company tutor registration-->
+                <ng-container *ngIf="isFilterVisible == 1 && userType=='Company'">
+                    <div class="col-md-12">
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">1. Click on the Add button below. </p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">
+                            2. Select your taught subject & level, then type in your prices per student for both one to one lessons and one to many classes. Click Create.<br>
+                            <i style="font-size:13px;">(Group classes generally cost less than one-to-one, but allow you to amplify your hourly income whilst offering value for money to your students)</i>.
+                        </p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">3. Repeat points 1 & 2 above until you have listed all the subjects & levels you wish to teach and their pricings.</p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">4. All Tutor subject pricings will be superseded by the company's prices for that subject and level. If the company's prices are not specified for that subject and level your tutors pricings will stand.</p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">5. You can change any subject pricings created by a tutor.</p>
+                        <p style="text-indent:-1em; padding:0 0 0 20px;">6. If your chosen subjects are not listed then please contact 2utoring.com via the contact page with a request to add subjects and subcategories.</p>
+                    </div> 
+                </ng-container>
+        </div>
+        <div style="margin-top:20px;margin-bottom:20px; text-align:center">
+            <button class="btn btn-primary btn-md" mat-raised-button mat-dialog-close tabindex="-1" (click)="onCancelClick()">Close</button>
+        </div>

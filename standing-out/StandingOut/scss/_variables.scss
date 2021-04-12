@@ -1,0 +1,135 @@
+﻿// Fonts
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap");
+
+// Pane Variables
+$offset: 15px;
+$header: 75px;
+$footer: 56px;
+
+// Pane Calculations
+
+// Panel Height with 'Header' and 'Footer'
+$PaneHeight: calc(100vh - (#{$header} + #{$footer} + #{$offset}));
+
+// Panel Height no 'Header' and 'Footer'
+$PaneHeight--WithoutHeaderFooter: calc(100vh - (#{$offset} * 2));
+
+// Panel Height with only 'Header'
+$PaneHeight--withHeader: calc(100vh - (#{$header} + (#{$offset} * 2) + #{$footer}));
+
+// Panel Height with only 'Footer'
+$PaneHeight--withFooter: calc(100vh - #{$footer});
+
+// Pane View Size - Calculations
+$h-PaneHeightFull: 100%;
+$w-PaneWidthFull: 100%;
+
+$h-PaneHeightHalf: 100%;
+$h-PaneHeightQuad: calc(50% - (#{$offset} / 2));
+
+$w-PaneWidthHalf: calc(50% - (#{$offset} / 2));
+$w-PaneWidthQuad: calc(50% - (#{$offset} / 2));
+
+// Webcam Panel
+$WebcamPanelHeader: 105px!default;
+$WebcamPanelCamSection: calc(100vh - (#{$header} + (#{$offset} * 2) + #{$WebcamPanelHeader} + #{$footer} - 2px));
+
+// Small Device Breakpoints
+$screenLargeW: 1280px!default;
+$screenLargeH: 870px!default;
+
+// Colours
+$bodyColour: #F4F6FA!default;
+$borderColor: rgba(0,0,0, 0.09)!default;
+$borderColorAccent: rgba(223, 223, 223, 1)!default;
+$bodyTextColor: #485465!default;
+$bodyTextAccentColor: #9F9F9F!default;
+$panelColor: #F4F6FA!default;
+$borderAccentColor: #DFDFDF!default;
+$black: $bodyTextColor!default;
+
+
+$blue: #2F80ED !default;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #dc3545 !default;
+$orange: #FF9900 !default;
+$yellow: #ffc107 !default;
+$green: #27AE60 !default;
+$teal: #20c997 !default;
+$cyan: #17a2b8 !default;
+$cool-grey: #f9f9f9!default;
+$grey: #e4e4e4!default;
+
+$controlPrimary: #E4F4FE!default;
+$controlSecondary: #EEEEEE!default;
+$controlDistructive: #FEE4E4!default;
+
+// Border styles
+$defaultBorder: 1px solid $borderColor!default;
+
+// Border Radius
+$borderRadiusSmall: 3px!default;
+$borderRadiusBase: 7px!default;
+
+// Box Shadows
+$boxShadowFaint: 0 1px 1px 0 rgba(22, 29, 37, 0.03)!default;
+$boxShadowBase: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 1px 3px 0 rgba(63, 63, 68, 0.15)!default;
+$boxShadowDeep: 0 0 0 1px rgba(63, 63, 68, 0.05), 0 2px 16px rgba(33, 43, 54, 0.08)!default;
+$boxShadowLayer: 0 31px 41px 0 rgba(32, 42, 53, 0.2), 0 2px 16px 0 rgba(32, 42, 54, 0.08)!default;
+$boxShadowTransparent: 0 0 0 0 transparent!default;
+$boxShadowSolid: 0 2px 1px rgba(33, 43, 54, 0.08);
+
+$boxShadowBaseInset: inset 0 0 0 1px rgba(63, 63, 68, 0.05), inset 0 1px 3px 0 rgba(63, 63, 68, 0.15)!default;
+
+//Font
+$fontFamily: Manrope, "Helvetica Neue",Helvetica,Arial,sans-serif!default;
+$fontWeightLight: 400;
+$fontWeightBase: 500;
+$fontWeightMedium: 600;
+$fontWeightBold: 700;
+$fontWeightBlack: 00;
+
+// Font size
+$fontSizeSmall: 12px;
+
+
+// Icons
+$headerIconSize: 30px!default;
+$classroomHeaderIconSize: 24px!default;
+$classroomFooterIconSize: 30px!default;
+$chevronSize: 12px!default;
+
+//Spacing
+$spacingExtraTight: 7px!default;
+$spacingTight: 14px!default;
+$spacingBase: 21px!default;
+$spacingLoose: 28px!default;
+$spacingExtraLoose: 35px!default;
+
+//z-index
+$zIndexContent: 100!default;
+$zIndexOverlay: 400!default;
+
+@mixin clearfix() {
+    &:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+}
+
+%toolbar-visible {
+    max-height: 100vh;
+    opacity: 1;
+    transition: max-height 500ms ease-in-out, visibility 500ms ease-in-out, opacity 500ms ease-in-out
+}
+
+%toolbar-hidden {
+    max-height: 0;
+    min-height: 0;
+    opacity: 0;
+    transition: max-height 500ms ease-in-out, visibility 500ms ease-in-out, opacity 500ms ease-in-out;
+    display: none;
+}

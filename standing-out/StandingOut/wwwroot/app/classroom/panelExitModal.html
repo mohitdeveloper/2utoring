@@ -1,0 +1,17 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--save" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()"><i class="fal fa-times-circle"></i></button>
+            <h3>Are you sure you want to close this?</h3>
+        </div>
+        <div class="Modal__Content">
+            <p>Please ensure you have saved your work before continuing.</p>
+        </div>
+        <div class="Modal__Footer">
+            <div class="Footer__Buttons">
+                <button class="button button--tertiary" type="button" ng-click="back()">Cancel</button>
+                <button class="button button--success" type="button" ng-click="continue()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+              
+﻿<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="align-items-start mb-0 mb-lg-14">
+                <h1 id="receiptsTitle">{{title}}</h1>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-start mb-3 mb-lg-14">
+                <h1 id="mainReceiptsTitle">{{title}}</h1>
+                <a href="/my/timetable" class="btn btn-info Button--largeVerticalPadding backToTimeTableReceiptsPage">Back to timetable</a>
+            </div>
+
+            <ng-container *ngIf="receiptResults.paged != null">
+                <ng-container *ngIf="receiptResults.data.length > 0; else noResults">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="styled">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">
+                                                Receipt Date
+                                            </th>
+                                            <th scope="col">
+                                                Lesson Start
+                                            </th>
+                                            <th scope="col">
+                                                Lesson
+                                            </th>
+                                            <th scope="col">
+                                                Amount
+                                            </th>
+                                            <th scope="col">
+                                                Status
+                                            </th>
+                                            <th scope="col">
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of receiptResults.data">
+                                            <td>{{item.created | date : 'dd/MM/yyyy hh:mm'}}</td>
+                                            <td>{{item.lessonStartDate | date : 'dd/MM/yyyy hh:mm'}}</td>
+                                            <td>{{item.classSessionName}}</td>
+                                            <td>{{(item.amount / 100) | currency : item.currency.toUpperCase()}}</td>
+                                            <td>{{friendlyStatus(item)}}</td>
+                                            <td>
+                                                <button type="button" (click)="initiateRefund(item)" class="btn btn-secondary" *ngIf="isRefundable(item)">Refund</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-between align-items-center Pagination mt-35" *ngIf="receiptResults.paged !== undefined && receiptResults.paged != null">
+                        <span class="pagination-info">Page {{receiptResults.paged.page}}</span> <!--No total as direct from stripe-->
+                        <ul class="pagination justify-content-end mb-0">
+                            <li [class]="receiptResults.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+                                <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">{{receiptResults.paged.page}}</a></li>
+                            <li [class]="receiptResults.paged.hasMore ? 'page-item' : 'page-item disabled'">
+                                <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
+                </ng-container>
+
+                <ng-template #noResults>
+                    No receipts to show
+                    <button type="button" (click)="toSearch()" class="btn btn-primary">Find a Lesson</button>
+                </ng-template>
+            </ng-container>
+        </div>
+    </div>
+</div>

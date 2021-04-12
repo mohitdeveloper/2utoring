@@ -1,0 +1,10 @@
+// ----------------------------------------------------
+// Buttons
+// ----------------------------------------------------
+[class *=btn-outline] {
+    box-shadow: inset 0 0 0 1px currentColor;
+
+    &:hover {
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,64 @@
+
+@model StandingOut.Data.DTO.UserProfileHeader
+
+@{
+    Uri url = new Uri(String.Format("{0}://{1}{2}{3}", "https", Context.Request.Host, Context.Request.Path, Context.Request.QueryString));
+}
+
+@*@if (User.Identity.IsAuthenticated)
+    {
+        <div class="d-none d-lg-flex align-items-center">
+            <div>
+                <div class="fw-600">@Html.Raw($"{Model.Title} {Model.FirstName} {Model.LastName}")</div>
+                <form method="post" asp-route-controller="Account" asp-route-action="Logout" asp-route="default">
+                    <button type="submit" class="SignOutBtn btn--removeApperance">Sign out</button>
+                </form>
+            </div>
+            <div class="Avatar Avatar--size:smallest ml-21">
+                <img src="@Model.GoogleProfilePicture" alt="" />
+            </div>
+        </div>
+    }*@
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    @*<a asp-route-controller="Home" asp-route-action="MyArea" class="_2u_nav-menu-link _2u_grey w-nav-link">Dashboard</a>*@
+    <div data-hover="1" data-delay="0" class="dropdown w-dropdown">
+        <div class="_2u_dropdown_sec w-dropdown-toggle">
+            <div class="_2u_icon-sec w-icon-dropdown-toggle"></div>
+            <div class="_2u_sec-header-initials">@Model.ShortName</div>
+        </div>
+        <nav class="_2u_dropdown-list-sec w-dropdown-list">
+            <div class="_2u_sec-header-dropdown-top">
+                <div class="_2u_sec-header-initials _2u_large">@Model.ShortName</div>
+                <div class="_2u_footer-nav-link _2u_bold--sec-header">@Html.Raw($"{Model.Title} {Model.FirstName} {Model.LastName}")</div>
+                <div class="_2u_sec-header-email">@Model.Email</div>
+            </div>
+            @if (Model.LayoutType == "Outer")
+            {
+                <a asp-route-controller="Home" asp-route-action="MyArea" class="_2u_nav-sec-menu-item w-dropdown-link">Go to Dashboard</a>
+                <a asp-route-controller="Account" asp-route-action="Logout" asp-route="default" class="_2u_nav-sec-menu-item sign-out w-dropdown-link text-center">Sign Out</a>
+            }
+            else if (Model.LayoutType == "Inner")
+            {
+                <a asp-route-controller="Account" asp-route-action="Logout" asp-route="default" class="_2u_nav-sec-menu-item sign-out w-dropdown-link text-center">Sign Out</a>
+            }
+        </nav>
+    </div>
+
+
+
+
+
+
+}
+@*else
+{
+    <a asp-route="SignIn" class="_2u_nav-menu-link w-nav-link">Sign In</a>
+    <a href="/pricing#prices" class="_2u_register-blob w-inline-block">
+        <div class="_2u_nav-menu-link _2u_white">Free Trial</div>
+    </a>
+
+}*@
+

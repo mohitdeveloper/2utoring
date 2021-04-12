@@ -1,0 +1,80 @@
+<h4 class="step-col-head col-md-12">
+    <b>Lessons</b>
+    <!--<span (click)="closeLessonDialog()" style="cursor: pointer; float: right;color: red;font-size: 25px;"><i class="fa fa-window-close" aria-hidden="true" title="close"></i></span>-->
+</h4>
+<div class="table-responsive step-col-body" style="overflow-y:auto; max-height:400px;">
+
+    <table class="styled" style="margin-top: 15px;">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <span>
+                        Sr.No
+                    </span>
+                </th>
+                <th scope="col">
+                    <span>
+                        Lesson Name
+                    </span>
+                </th>
+                <th scope="col">
+                    <span>
+                        Start date
+                    </span>
+                </th>
+                <th scope="col">
+                    <span>
+                        End date
+                    </span>
+                </th>
+                <th scope="col">
+                    <span>
+                        Participants
+                    </span>
+                </th>
+                <th scope="col">
+                    <span>
+                        Status
+                    </span>
+                </th>
+                <th style="text-align:center">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let items of classSessions; let i = index;">
+                <td style="text-align:center">{{i+1}}</td>
+                <td>{{items.name}}</td>
+                <td>{{items.startDate | date: 'dd/MM/yyyy hh:mma'}}</td>
+                <td>{{items.endDate | date: 'dd/MM/yyyy hh:mma'}}</td>
+                <td style="text-align:center">
+                    <a href="javascript:void(0)" style="color:#fff;text-decoration:none" (click)="openClassSessionDetail(items)">
+                        <span *ngIf="items.sessionAttendeesCount" class="badge badge-pill badge-info" style="padding: 7px 12px; font-weight:bold; font-size: 13px;background: #27AE60 ;">{{items.sessionAttendeesCount}} </span>
+                    </a>
+                    <span *ngIf="!items.sessionAttendeesCount" class="badge badge-pill badge-info" style="padding: 7px 12px; font-weight:bold; font-size: 13px;background: red;">
+                        {{items.sessionAttendeesCount}}
+                    </span>
+                </td>
+                <td>
+                    <!--<span class="badge badge-info" style="padding: 7px 14px; font-size: 13px;">-->
+                    <!--<span *ngIf="!items.started && !items.complete">Not Started</span>-->
+                    <!--<span *ngIf="items.started">Running</span>-->
+
+                    <!--<span>{{items.ended && items.started?'Completed': items.started ? 'Running' : 'Not Started'}}</span>-->
+                    <span>{{items.complete ?'Completed': items.started ? 'Running':items.cancel? 'Cancelled' : 'Not Started'}}</span>
+                    <!--<span *ngIf="items.ended">Ended</span>-->
+                    <!--</span>-->
+                </td>
+                <td>
+                    <a href="javascript:void(0)" (click)="getFileUploadWindow(items, items.classSessionId,i)" class="ml-14 text-dark" title="Upload course materials"><i class="fas fa-upload" style="vertical-align: middle;"></i></a>
+                    <a href="javascript:void(0)" (click)="viewLesson(items)" class="ml-14" title="View Lessons"><i class="fas fa-eye"></i></a>
+                    <a *ngIf="!isCompany" href="javascript:void(0)" (click)="openClassSessionAndAddGroup(items,true)" class="ml-14" title="Add Group"><i class="fas fa-users"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="mt-3 table-responsive step-col-body text-right">
+    <button type="button" data-dismiss="modal" aria-label="Close" class="sub-next" style="margin-top:10px;" (click)="closeLessonDialog()">Close</button>
+</div>
+

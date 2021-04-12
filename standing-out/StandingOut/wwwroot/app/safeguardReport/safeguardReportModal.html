@@ -1,0 +1,61 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--upload" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()">×</button>
+            <h2>Report User</h2>
+        </div>
+        <form name="safeguardReportForm" novalidate ng-submit="save()">
+            <div class="Modal__Content padding-bottom-none">
+                <section class="form">
+                    <div class="grid-x">
+                        <div class="large-12 cell">
+                            <div class="form-row"  ng-hide="classSessionDisabled">
+                                <label class="width--100">Which class is this regarding?</label>
+                                <select class="form-control" name="classSessionId" ng-model="safeguardReport.classSessionId" ng-options="item.classSessionId as (item.name + ' (' + formatDate(item.startDate) + ')') for item in classSessions">
+                                    <option value="">Please select one...</option>
+                                </select>
+                                <div ng-messages="safeguardReportForm.classSessionId.$error" ng-if="safeguardReportForm.classSessionId.$invalid && (safeguardReportForm.classSessionId.$touched || safeguardReportForm.submitted)">
+                                    <p ng-message="required" class="help-block">This field is required.</p>
+                                </div>
+                            </div>
+                            <div class="form-row" >
+                                <label class="width--100">What type of behaviour do you want to report? <sup class="required">*</sup></label>
+                                <select class="form-control" name="title" ng-model="safeguardReport.title" required>
+                                    <option value="">Please select one...</option>
+                                    <option value="Disruptive">Disruptive</option>
+                                    <option value="Offensive">Offensive</option>
+                                    <option value="Abusive">Abusive</option>
+                                    <option value="Harassing">Harassing</option>
+                                    <option value="Defamatory">Defamatory</option>
+                                    <option value="Threatening">Threatening</option>
+                                    <option value="Obscene">Obscene</option>
+                                    <option value="Sexually Oriented">Sexually Oriented</option>
+                                    <option value="Racially Offensive">Racially Offensive</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div ng-messages="safeguardReportForm.title.$error" ng-if="safeguardReportForm.title.$invalid && (safeguardReportForm.title.$touched || safeguardReportForm.submitted)">
+                                    <p ng-message="required" class="help-block">This field is required.</p>
+                                    <p ng-message="maxlength" class="help-block">This field can be no longer than 250 characters.</p>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="width--100">Tell us what happended <sup class="required">*</sup></label>
+                                <textarea rows="5" class="form-control" name="description" ng-model="safeguardReport.description" maxlength="2000" ng-maxlength="2000" required></textarea>
+                                <div ng-messages="safeguardReportForm.description.$error" ng-if="safeguardReportForm.description.$invalid && (safeguardReportForm.description.$touched || safeguardReportForm.submitted)">
+                                    <p ng-message="required" class="help-block">This field is required.</p>
+                                    <p ng-message="maxlength" class="help-block">This field can be no longer than 2000 characters.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="Modal__Footer">
+                <div class="Footer__Buttons">
+                    <button class="button button--tertiary" type="button" ng-click="cancel()">Cancel</button>
+                    <button class="button button--success" ng-disabled="saveDisabled" type="submit">Send report</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

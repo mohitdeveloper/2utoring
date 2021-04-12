@@ -1,0 +1,213 @@
+    <!--<div class="card-body">
+        <h1 class="card-title">Setup Price</h1>
+
+
+        <form (ngSubmit)="submitCreateSubjectPriceForm()" class="col-sm-12 col-md-12 row" [formGroup]="CreateSubjectPrice">
+
+            <div class="col-md-12 col-sm-12 row mb-5">
+                <label for="subjectId" class="col-sm-12 col-md-4 col-form-label col-form-label">Subject</label>
+                <select id="subjectId" class="form-control col-sm-12 col-md-8 col-form-label" name="subjectId" formControlName="subjectId">
+                    <option value="">Select subject</option>
+                    <option *ngFor="let subject of subjectData" [value]="subject.subjectId"> {{ subject.name }} </option>
+                </select>
+                <div *ngIf="CreateSubjectPriceControls.subjectId.errors && (CreateSubjectPriceControls.subjectId.dirty || CreateSubjectPriceControls.subjectId.touched || CreateSubjectPriceSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="CreateSubjectPriceControls.subjectId.errors.required">
+                        Please select subject
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="subjectStudyLevelSetupId" id="subjectStudyLevelSetupId" formControlName="subjectStudyLevelSetupId" [value]="CreateSubjectPriceControls.subjectStudyLevelSetupId">
+
+            <div class="col-md-12 col-sm-12 row mb-5">
+                <label for="studyLevelId" class="col-sm-12 col-md-4 col-form-label col-form-label">Level</label>
+                <select id="studyLevelId" class="form-control col-sm-12 col-md-8 col-form-label" name="studyLevelId" formControlName="studyLevelId">
+                    <option value="">Select level</option>
+                    <option *ngFor="let studyLevel of StudyLevels" [value]="studyLevel.studyLevelId">{{ studyLevel.name }}</option>
+                </select>
+                <div *ngIf="CreateSubjectPriceControls.studyLevelId.errors && (CreateSubjectPriceControls.studyLevelId.dirty || CreateSubjectPriceControls.studyLevelId.touched || CreateSubjectPriceSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="CreateSubjectPriceControls.studyLevelId.errors.required">
+                        Please select level
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 row mb-5">
+                <label for="pricePerPerson" class="col-sm-12 col-md-4 col-form-label col-form-label">Price Per student &nbsp;&nbsp;(<i class="fas fa-pound-sign"></i>)</label>
+                <input class='form-control col-sm-12 col-md-8 col-form-label' formControlName="pricePerPerson" type="number" min="5" id="pricePerPerson" name="pricePerPerson" placeholder="Please enter price per person" [value]="CreateSubjectPriceControls.pricePerPerson">
+                <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors && (CreateSubjectPriceControls.pricePerPerson.dirty || CreateSubjectPriceControls.pricePerPerson.touched || CreateSubjectPriceSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors.required">
+                        Please enter price per person
+                    </div>
+                    <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors.min">
+                        Price can't be less then {{5 | currency:'GBP':'symbol':'1.2-2'}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 row mb-5">
+                <label for="groupPricePerPerson" class="col-sm-12 col-md-4 col-form-label col-form-label">Group Price Per student &nbsp;&nbsp;(<i class="fas fa-pound-sign"></i>)</label>
+                <input class='form-control col-sm-12 col-md-8 col-form-label' formControlName="groupPricePerPerson" type="number" min="5" id="groupPricePerPerson" name="groupPricePerPerson" placeholder="Group Please enter price per person" [value]="CreateSubjectPriceControls.groupPricePerPerson">
+                <div *ngIf="CreateSubjectPriceControls.groupPricePerPerson.errors && (CreateSubjectPriceControls.groupPricePerPerson.dirty || CreateSubjectPriceControls.groupPricePerPerson.touched || CreateSubjectPriceSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="CreateSubjectPriceControls.groupPricePerPerson.errors.required">
+                        Please enter group price per person
+                    </div>
+                    <div *ngIf="CreateSubjectPriceControls.groupPricePerPerson.errors.min">
+                       Group price can't be less then {{5 | currency:'GBP':'symbol':'1.2-2'}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 row mb-5" style="margin-top:45px;">
+                <div class="col-sm-12 col-md-4 col-form-label col-form-label offset-2">
+                    <button type="submit" class="btn btn-success btn-block btn-lg">{{subjectIdOnUpdate?'Update':'Create'}}</button>
+                </div>
+                <div class="col-sm-12 col-md-4 col-form-label col-form-label offset-2">
+                    <button type="button" (click)="closeDialog()" class="btn btn-danger btn-lg btn-block">Cancel</button>
+                </div>
+            </div>
+        </form>
+
+
+    </div>-->
+
+    <div class="step-cols" style="line-height:2">
+        <form (ngSubmit)="submitCreateSubjectPriceForm()" class="" [formGroup]="CreateSubjectPrice">
+            <div class="step-col-head col-md-12">
+                <h3>Create a new subject or level</h3>
+                <!--<p>If your chosen subject is not listed please contact us at <a style="text-decoration:none; padding-top:3px; margin-bottom:0px;" href="mailto:admin@2utoring.com">admin@2utoring.com</a> with the subject title and any associated sub categories</p>-->
+                <p style="font-size:16px; margin-bottom:0px;">If your chosen subjects are not listed then please contact 2utoring.com via the contact page with a request to add subjects and subcategories.</p>
+            </div>
+            <div class="step-col-body">
+                <div class="row">
+                    <div class="col-sm-6" *ngIf="allowEdit && userType!='Company'">
+                        <div class="modal-form">
+                            <select class="sub-topic" id="subjectId" name="subjectId" formControlName="subjectId">
+                                <option value="">Select subject</option>
+                                <option *ngFor="let subject of subjectData" [value]="subject.subjectId"> {{ subject.name }} </option>
+                            </select>
+                            <i class="fa fa-caret-down"></i>
+                            <div *ngIf="CreateSubjectPriceControls.subjectId.errors && (CreateSubjectPriceControls.subjectId.dirty || CreateSubjectPriceControls.subjectId.touched || CreateSubjectPriceSubmitted)"
+                                 class="error" role="alert">
+                                <div *ngIf="CreateSubjectPriceControls.subjectId.errors.required">
+                                    Please select subject
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" *ngIf="!allowEdit && userType=='Company'">
+                        <div class="modal-form">
+                            <select class="sub-topic" id="subjectId" name="subjectId" formControlName="subjectId">
+                                <option value="">Select subject</option>
+                                <option *ngFor="let subject of subjectData" [value]="subject.subjectId"> {{ subject.name }} </option>
+                            </select>
+                            <i class="fa fa-caret-down"></i>
+                            <div *ngIf="CreateSubjectPriceControls.subjectId.errors && (CreateSubjectPriceControls.subjectId.dirty || CreateSubjectPriceControls.subjectId.touched || CreateSubjectPriceSubmitted)"
+                                 class="error" role="alert">
+                                <div *ngIf="CreateSubjectPriceControls.subjectId.errors.required">
+                                    Please select subject
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-sm-6" *ngIf="allowEdit && userType=='Company'">
+                        <div class="modal-form">
+                            <p style="border-bottom:1px solid #ccc;">{{ subjectPriceData?.subjectName }}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" *ngIf="allowEdit &&  userType=='Company'">
+                        <div class="modal-form">
+                            <p style="border-bottom:1px solid #ccc;">{{ subjectPriceData?.studyLevelName }}</p>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="subjectStudyLevelSetupId" id="subjectStudyLevelSetupId" formControlName="subjectStudyLevelSetupId" [value]="CreateSubjectPriceControls.subjectStudyLevelSetupId">
+
+                    <div class="col-sm-6" *ngIf="allowEdit && userType!='Company'">
+                        <div class="modal-form">
+                            <select class="sub-topic" id="studyLevelId" name="studyLevelId" formControlName="studyLevelId">
+                                <option value="">Select level</option>
+                                <option *ngFor="let studyLevel of StudyLevels" [value]="studyLevel.studyLevelId">{{ studyLevel.name }}</option>
+                            </select>
+                            <i class="fa fa-caret-down"></i>
+                            <div *ngIf="CreateSubjectPriceControls.studyLevelId.errors && (CreateSubjectPriceControls.studyLevelId.dirty || CreateSubjectPriceControls.studyLevelId.touched || CreateSubjectPriceSubmitted)"
+                                 class="error" role="alert">
+                                <div *ngIf="CreateSubjectPriceControls.studyLevelId.errors.required">
+                                    Please select level
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" *ngIf="!allowEdit && userType=='Company'">
+                        <div class="modal-form">
+                            <select class="sub-topic" id="studyLevelId" name="studyLevelId" formControlName="studyLevelId">
+                                <option value="">Select level</option>
+                                <option *ngFor="let studyLevel of StudyLevels" [value]="studyLevel.studyLevelId">{{ studyLevel.name }}</option>
+                            </select>
+                            <i class="fa fa-caret-down"></i>
+                            <div *ngIf="CreateSubjectPriceControls.studyLevelId.errors && (CreateSubjectPriceControls.studyLevelId.dirty || CreateSubjectPriceControls.studyLevelId.touched || CreateSubjectPriceSubmitted)"
+                                 class="error" role="alert">
+                                <div *ngIf="CreateSubjectPriceControls.studyLevelId.errors.required">
+                                    Please select level
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-sm-12" style="margin-top:1%;">
+                        <div class="modal-form">
+                            <label>Price per student</label>
+                            <div class="d-flexs subject-price">
+                                <span>One-to-one</span>
+                                <input class="col-sm-12 col-md-4 col-lg-4" style="border: none; border-bottom: 1px solid #ccc;" formControlName="pricePerPerson" type="number" min="5" id="pricePerPerson" name="pricePerPerson" placeholder="{{5 | currency:'GBP':'symbol':'1.2-2'}}" [value]="CreateSubjectPriceControls.pricePerPerson">
+                                <span class="onTone">One-to-many</span>
+                                <input class="col-sm-12 col-md-4 col-lg-4" style="border:none; border-bottom : 1px solid #ccc;" formControlName="groupPricePerPerson" type="number" min="5" id="groupPricePerPerson" name="groupPricePerPerson" placeholder="{{5 | currency:'GBP':'symbol':'1.2-2'}}" [value]="CreateSubjectPriceControls.groupPricePerPerson">
+                            </div>
+                            <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors && (CreateSubjectPriceControls.pricePerPerson.dirty || CreateSubjectPriceControls.pricePerPerson.touched || CreateSubjectPriceSubmitted)"
+                                 class="error" role="alert">
+                                <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors.required">
+                                    Please enter price per person
+                                </div>
+                                <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors.min">
+                                    Price can't be less then {{5 | currency:'GBP':'symbol':'1.2-2'}}
+                                </div>
+                                <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors.max">
+                                    Price can't be greater than {{999 | currency:'GBP':'symbol':'1.2-2'}}
+                                </div>
+                            </div>
+
+
+                            <div *ngIf="CreateSubjectPriceControls.groupPricePerPerson.errors && (CreateSubjectPriceControls.groupPricePerPerson.dirty || CreateSubjectPriceControls.groupPricePerPerson.touched || CreateSubjectPriceSubmitted)"
+                                 class="error" role="alert">
+                                <div *ngIf="CreateSubjectPriceControls.groupPricePerPerson.errors.required">
+                                    Please enter group price per person
+                                </div>
+                                <div *ngIf="CreateSubjectPriceControls.groupPricePerPerson.errors.min">
+                                    Group price can't be less then {{5 | currency:'GBP':'symbol':'1.2-2'}}
+                                </div>
+                                <div *ngIf="CreateSubjectPriceControls.groupPricePerPerson.errors.max">
+                                    Group Price can't be greater then {{999 | currency:'GBP':'symbol':'1.2-2'}}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 step-col-head" style="float: right;">
+                    <button type="submit" class="sub-next" data-dismiss="modal" aria-label="Submit">{{subjectIdOnUpdate?'Update':'Create'}}</button>
+                    <button type="button" style="float: left; border:1px solid; padding:17px;" (click)="closeDialog()" class="close" data-dismiss="modal" aria-label="Close">Cancel</button>
+
+                </div>
+            </div>
+            </form>
+    </div>

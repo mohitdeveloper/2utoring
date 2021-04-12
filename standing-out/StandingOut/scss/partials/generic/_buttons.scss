@@ -1,0 +1,87 @@
+﻿@mixin gradient-bg($color) {
+    background: $color linear-gradient(180deg, mix(#ffffff, $color, 15%), $color) repeat-x;
+}
+
+$button-data: (
+    primary: $orange,
+    success: $green,
+    secondary: $blue,
+    tertiary: $grey,
+    distructive: $red,
+    dark: #485465
+)!default;
+
+
+.button {
+    appearance: none;
+    align-items: center;
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+    color: white;
+    display: inline-flex;
+    font-family: $fontFamily;
+    font-size: 15px;
+    font-weight: $fontWeightBold;
+    justify-content: center;
+    margin: 0;
+    outline: none;
+    padding: 14px 21px;
+    text-decoration: none;
+    white-space: nowrap;
+    width: auto;
+
+    i {
+        margin-right: $spacingExtraTight
+    }
+
+    @each $key, $color in $button-data {
+        &--#{$key} {
+            
+            @include gradient-bg($color);
+            @if($key == 'tertiary') {
+                color: #485465;
+            }
+
+            &.selected:focus {
+                @include gradient-bg($color);
+            }
+
+            &:hover {
+                @include gradient-bg(darken($color, 5%));
+            }
+
+            &:focus {
+                @include gradient-bg(lighten($color, 10%));
+            }
+
+            &:active {
+                @include gradient-bg($color);
+            }
+            &:disabled {
+                @include gradient-bg(darken($cool-grey, 10%));
+                cursor: not-allowed;
+                color: lighten($bodyTextColor, 5%)
+            }
+        }
+    }
+}
+
+.button--group {
+    align-items: center;
+    display: flex;
+    
+    * {
+        cursor: pointer;
+    }
+
+    & > *:not(:first-child) {
+        margin-left: $spacingTight;
+    }
+    
+    *.ng-hide {
+        visibility: hidden;
+        width: 0;
+        margin: 0;
+    }
+}

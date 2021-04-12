@@ -1,0 +1,24 @@
+// ----------------------------------------------------
+// File Uploader
+// ----------------------------------------------------
+.File-Uploader {
+    align-items: center;
+    display: flex;
+    border-radius: 6px;
+    border: 1px dashed #9198A3;
+    font-size: 1.25rem;
+    font-weight: 500;
+    height: 255px;
+    justify-content: center;
+
+    i {
+        margin-right: 7px;
+    }
+
+    u {
+        color: #2F80ED;
+        margin-left: 5px;
+        margin-right: 5px;
+        text-decoration: underline;
+    }
+}

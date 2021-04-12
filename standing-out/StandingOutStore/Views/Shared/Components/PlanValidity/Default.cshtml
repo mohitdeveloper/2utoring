@@ -1,0 +1,8 @@
+﻿@model StandingOut.Data.DTO.PlanValidity
+
+@if (User.Identity.IsAuthenticated)
+{
+    <script>
+        var isPlanValid = @Html.Raw(Model.IsValidPlan == true ? "true" : "false");
+    </script>
+}

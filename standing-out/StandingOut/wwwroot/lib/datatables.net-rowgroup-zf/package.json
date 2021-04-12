@@ -1,0 +1,58 @@
+{
+  "_from": "datatables.net-rowgroup-zf@1.1.2",
+  "_id": "datatables.net-rowgroup-zf@1.1.2",
+  "_inBundle": false,
+  "_integrity": "sha512-uqt6peWhdgZEy6/fVAN9YyKvUJtdOYdyjc7eNI6W6MSTFl4Sz5CWEAWHXVSEb0XTN/yWs/UID3YC1/ZfPw89rw==",
+  "_location": "/datatables.net-rowgroup-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "datatables.net-rowgroup-zf@1.1.2",
+    "name": "datatables.net-rowgroup-zf",
+    "escapedName": "datatables.net-rowgroup-zf",
+    "rawSpec": "1.1.2",
+    "saveSpec": null,
+    "fetchSpec": "1.1.2"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-rowgroup-zf/-/datatables.net-rowgroup-zf-1.1.2.tgz",
+  "_shasum": "92699c179cb37de1039e19023f7b085a6cfbf36b",
+  "_spec": "datatables.net-rowgroup-zf@1.1.2",
+  "_where": "C:\\DevSO\\standing-out",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net-rowgroup": "1.1.2",
+    "datatables.net-zf": "^1.10.15",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "RowGroup for DataTables with styling for [Zurb Foundation](http://foundation.zurb.com/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "row grouping",
+    "DataTables",
+    "jQuery",
+    "table",
+    "Foundation"
+  ],
+  "license": "MIT",
+  "main": "js/rowGroup.foundation.js",
+  "name": "datatables.net-rowgroup-zf",
+  "style": "css/rowGroup.foundation.css",
+  "version": "1.1.2"
+}

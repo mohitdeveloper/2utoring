@@ -1,0 +1,14 @@
+@model RedirectViewModel
+
+@{
+    ViewData["Title"] = "Link Account";
+}
+
+<div class="col-14 col-lg-8 offset-lg-2">
+    <div class="Card Card--toRepsond:small">
+        <h1 class="mb-5 fw-800">Link Account Confirmation</h1>
+        <p>Your account has been linked.</p>
+        <p>Please <a asp-controller="Home" asp-action="Redirect" asp-route-returnUrl="@(ViewBag.MainSiteUrl + "/Account/Logout")">logout</a> and back in again to use your google account.</p>
+        <p>Or <a asp-controller="Home" asp-action="Redirect" asp-route-returnUrl="@Model.RedirectUrl">click here</a> to return</p>
+    </div>
+</div>

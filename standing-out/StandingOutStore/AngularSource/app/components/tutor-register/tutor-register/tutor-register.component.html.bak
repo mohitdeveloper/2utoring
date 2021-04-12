@@ -1,0 +1,711 @@
+<div class="my-35 my-md-28 my-lg-84 Page--process:SignUp">
+    <div class="Page__Container Page__Container--size:default">
+        <div class="row" *ngIf="step == registerStep.BasicInfo">
+            <div class="col-12 col-lg-8 offset-lg-2 mb-28 mb-lg-0">
+                <form (ngSubmit)="submitBasicInfoForm()" [formGroup]="basicInfoForm" *ngIf="basicInfoForm != undefined">
+                    <div *ngIf="company != null && journeyType == registrationJourneyType.TutorJoiningCompany">
+                        <h1>{{company.companyName}}</h1>
+                        <hr />
+                    </div>
+                    <h1>Welcome {{basicInfoFormControls.firstName.value}}</h1>
+                    <h2>Let's set up your account, it will take just a minute. Once registered you will be able to create your profile and create your first lesson.</h2>
+                    <h3>Your details</h3>
+                    <div class="Form__Block">
+                        <div class="form-row">
+                            <div class="form-group col-12 col-lg-4">
+                                <label>Title *</label>
+                                <select id="title" name="title" formControlName="title" class="form-control">
+                                    <option [ngValue]="null">Select a title</option>
+                                    <option *ngFor="let userTitle of userTitles" [ngValue]="userTitle.name">{{userTitle.name}}</option>
+                                </select>
+                                <div *ngIf="basicInfoFormControls.title.errors && (basicInfoFormControls.title.dirty || basicInfoFormControls.title.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="basicInfoFormControls.title.errors.maxlength">Title has a character limit of 250</div>
+                                    <div *ngIf="basicInfoFormControls.title.errors.required">Please select a title to continue. </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label>First Name *</label>
+                                <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control" placeholder="First name" />
+                                <div *ngIf="basicInfoFormControls.firstName.errors && (basicInfoFormControls.firstName.dirty || basicInfoFormControls.firstName.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="basicInfoFormControls.firstName.errors.maxlength">This field should only allow a first name of 20 characters (inc. spaces) to be added.</div>
+                                    <div *ngIf="basicInfoFormControls.firstName.errors.required">Please enter your first name to continue.</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="exampleInputEmail1">Surname *</label>
+                                <input type="text" id="lastName" name="lastName" formControlName="lastName" class="form-control" placeholder="Surname" />
+                                <div *ngIf="basicInfoFormControls.lastName.errors && (basicInfoFormControls.lastName.dirty || basicInfoFormControls.lastName.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="basicInfoFormControls.lastName.errors.maxlength">This field should only allow a first name of 20 characters (inc. spaces) to be added.</div>
+                                    <div *ngIf="basicInfoFormControls.lastName.errors.required">Please enter your surname to continue.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label>Email address</label>
+                                <input type="email" id="email" name="email" formControlName="email" class="form-control" placeholder="Email Address" readonly />
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Date of birth *</label>
+                                <div class="form-row">
+                                    <div class="col-4">
+                                        <input type="number" step="1" placeholder="DD" id="dateOfBirthDay" name="dateOfBirthDay" formControlName="dateOfBirthDay" class="form-control" />
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="number" step="1" placeholder="MM" id="dateOfBirthMonth" name="dateOfBirthMonth" formControlName="dateOfBirthMonth" class="form-control" />
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="number" step="1" placeholder="YYYY" id="dateOfBirthYear" name="dateOfBirthYear" formControlName="dateOfBirthYear" class="form-control" />
+                                    </div>
+                                </div>
+                                <div *ngIf="!checkDateValid() && (((basicInfoFormControls.dateOfBirthYear.dirty || basicInfoFormControls.dateOfBirthYear.touched) &&
+                                         (basicInfoFormControls.dateOfBirthMonth.dirty || userDetailFormControls.dateOfBirthMonth.touched) &&
+                                         (basicInfoFormControls.dateOfBirthDay.dirty || basicInfoFormControls.dateOfBirthDay.touched))
+                                         || basicInfoFormSubmitted)" class="error" role="alert">
+                                    <div>The Date of Birth you entered is invalid</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label>Telephone No. *</label>
+                                <input type="tel" id="telephoneNumber" name="telephoneNumber" formControlName="telephoneNumber" class="form-control" placeholder="Enter your telephone no." />
+                                <div *ngIf="basicInfoFormControls.telephoneNumber.errors && (basicInfoFormControls.telephoneNumber.dirty || basicInfoFormControls.telephoneNumber.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="basicInfoFormControls.telephoneNumber.errors.maxlength">This field should only allow a telephone no. of 12 characters (inc. spaces) to be added.</div>
+                                    <div *ngIf="basicInfoFormControls.telephoneNumber.errors.required">Please enter a valid telephone no. to continue. </div>
+                                    <div *ngIf="basicInfoFormControls.telephoneNumber.errors.pattern">Please enter a valid telephone no.</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Mobile No.</label>
+                                <input type="tel" id="mobileNumber" name="mobileNumber" formControlName="mobileNumber" class="form-control" placeholder="Enter your mobile no." />
+                                <div *ngIf="basicInfoFormControls.mobileNumber.errors && (basicInfoFormControls.mobileNumber.dirty || basicInfoFormControls.mobileNumber.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="basicInfoFormControls.mobileNumber.errors.maxlength">This field should only allow a mobile no. of 12 characters (inc. spaces) to be added.</div>
+                                    <div *ngIf="basicInfoFormControls.mobileNumber.errors.required">Please enter a valid mobile no. to continue</div>
+                                    <div *ngIf="basicInfoFormControls.mobileNumber.errors.pattern">Please enter a valid mobile no.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <label class="form-check" for="marketingAccepted">
+                                    <input type="checkbox" class="form-control" id="marketingAccepted" name="marketingAccepted" formControlName="marketingAccepted" />
+                                    <span class="label">I would like to receive relevant tips, tricks and offers from the 2utoring team.</span>
+                                </label>
+                                <div *ngIf="basicInfoFormControls.marketingAccepted.errors && (basicInfoFormControls.marketingAccepted.dirty || basicInfoFormControls.marketingAccepted.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="basicInfoFormControls.marketingAccepted.errors.required">You need to accept our terms and conditions to continue.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-12">
+                                <label class="form-check">
+                                    <input type="checkbox" id="termsAndConditionsAccepted" name="termsAndConditionsAccepted" formControlName="termsAndConditionsAccepted" class="form-check-input" required />
+                                    <span class="label">I have read and accepted the <a class="termsCondition" target="_blank" href="/terms-of-website-use">terms and conditions</a> and the <a target="_blank" class="termsCondition" href="/terms-of-use">Terms of use</a> for tutors</span>
+                                </label>
+                                <div *ngIf="basicInfoFormControls.termsAndConditionsAccepted.errors && (basicInfoFormControls.termsAndConditionsAccepted.dirty || basicInfoFormControls.termsAndConditionsAccepted.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="basicInfoFormControls.termsAndConditionsAccepted.errors.required">You need to accept our terms and conditions to continue.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Form_Block-Controls">
+                            <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Card Details, selected Subscription and Payment -->
+        <div class="row" *ngIf="step == registerStep.Payment && journeyType == registrationJourneyType.TutorRegistration">
+            <div class="col-12 col-lg-8 mb-28 mb-lg-0">
+                <form (ngSubmit)="submitPaymentForm()" [formGroup]="paymentForm" *ngIf="paymentForm != undefined">
+                    <h1>Payment &amp; Billings</h1>
+                    <!--<h2>Your monthly payment for your tutor subscription will start after the 3rd month, you can cancel your subscription at any time prior to that date without being charged.</h2>-->
+                    <div class="Form__Block">
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Card Details</label>
+                                    <div class="card bxs-0" style="padding: 16px 14px">
+                                        <div id="card-info" class="padding-vertical-tight"></div>
+                                    </div>
+                                    <div id="card-errors" class="Error Error--alert margin-top-extra-tight" role="alert"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Cardholder Name</label>
+                                    <input type="text" id="cardName" name="cardName" formControlName="cardName" class="form-control" placeholder="Enter the cardholders name as it appears on the card" />
+                                    <div *ngIf="paymentFormControls.cardName.errors && (paymentFormControls.cardName.dirty || paymentFormControls.cardName.touched || paymentFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="paymentFormControls.cardName.errors.maxlength">Card Name has a character limit of 250</div>
+                                        <div *ngIf="paymentFormControls.cardName.errors.required">Please enter the name on your payment card to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>First line of your billing address</label>
+                                    <input type="text" id="addressLine1" name="addressLine1" formControlName="addressLine1" class="form-control" placeholder="Enter the first line of the address your card is registered to" />
+                                    <div *ngIf="paymentFormControls.addressLine1.errors && (paymentFormControls.addressLine1.dirty || paymentFormControls.addressLine1.touched || paymentFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="paymentFormControls.addressLine1.errors.maxlength">First line address has a character limit of 250</div>
+                                        <div *ngIf="paymentFormControls.addressLine1.errors.required">Please enter the first line of your billing address to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" placeholder="Select a country">
+                                        <option [ngValue]="null">Select your country</option>
+                                        <option *ngFor="let stripeCountry of stripeCountrys" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
+                                    </select>
+                                    <div *ngIf="paymentFormControls.stripeCountryId.errors && (paymentFormControls.stripeCountryId.dirty || paymentFormControls.stripeCountryId.touched || paymentFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="paymentFormControls.stripeCountryId.errors.maxlength">Country has a character limit of 250</div>
+                                        <div *ngIf="paymentFormControls.stripeCountryId.errors.required">Please enter your country to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Do you have a voucher code?</label>
+                                    <div class="d-flex">
+                                        <input formControlName="promoCode" type="text" name="promoCode" class="form-control" placeholder="Enter your voucher code here" />
+                                        <button type="button" [disabled]="paymentFormControls.promoCode.value == null || paymentFormControls.promoCode.value == ''" (click)="checkPromoCode()" class="btn btn-outline-dark btn-lg fs-14 ml-7">Apply</button>
+                                    </div>
+                                    <div class="error" *ngIf="(paymentFormControls.promoCode.value != null && paymentFormControls.promoCode.value != '') && (paymentFormControls.promoCode.errors || promoCodeInvalid) && (paymentFormControls.promoCode.touched || paymentFormSubmitted)">
+                                        <p class="text-danger" *ngIf="paymentFormControls.promoCode.errors && paymentFormControls.promoCode.errors.maxlength">This field can be no longer than 250 characters.</p>
+                                        <p class="text-danger" *ngIf="promoCodeInvalid">The promo code you have enter has either expired or is invalid</p>
+                                    </div>
+                                </div>
+                                <div class="n-success" *ngIf="promoCodeChecked && !promoCodeInvalid && validatedPromoCode == paymentFormControls.promoCode.value && coupon != null">
+                                    Promo code accepted
+                                    <div *ngIf="coupon.amountOff != null">You have saved {{ coupon.amountOff}} {{ coupon.currency }} per month <div *ngIf="coupon.duration == 'repeating' && coupon.durationInMonths != null">for {{ coupon.durationInMonths}} months</div></div>
+                                    <div *ngIf="coupon.percentOff != null">You have saved {{ coupon.percentOff}}% per month <div *ngIf="coupon.duration == 'repeating' && coupon.durationInMonths != null">for {{ coupon.durationInMonths}} months</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" *ngIf="showStripeError">
+                        <div class="col">
+                            <p class="error">{{stripeError}}</p>
+                        </div>
+                    </div>
+                    <div class="Form_Block-Controls">
+                        <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-lg-4" *ngIf="stripePlan != null && stripePlan != undefined">
+                <subscription-plan stripePlanId="{{stripePlanId}}" subscriptionName="{{getSubscriptionName()}}"></subscription-plan>
+            </div>
+        </div>
+        <!-- Bank Details -->
+        <div class="row" *ngIf="step == registerStep.Payment && journeyType == registrationJourneyType.TutorJoiningCompany">
+			<div class="col-lg-8 col-md-12 col-sm-12 mb-10 mb-lg-0">
+                <form (ngSubmit)="submitBankDetailsForm()" [formGroup]="bankDetailsForm" *ngIf="bankDetailsForm != undefined">
+                    <h1>Payment &amp; Billings</h1>
+                    <h2>Enter you bank account details to receive payments.</h2>
+                    <div class="Form__Block">
+                        <div class="form-row">
+                            <div class="col-lg-8 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="bankAccountNumber">Account number *</label>
+                                    <input type="text" id="bankAccountNumber" name="bankAccountNumber" formControlName="bankAccountNumber" class="form-control" placeholder="Account number" />
+                                    <div *ngIf="bankDetailsFormControls.bankAccountNumber.errors && (bankDetailsFormControls.bankAccountNumber.dirty || bankDetailsFormControls.bankAccountNumber.touched || bankDetailsFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="bankDetailsFormControls.bankAccountNumber.errors.maxlength">This field only allows max 20 characters.</div>
+                                        <div *ngIf="bankDetailsFormControls.bankAccountNumber.errors.required">Please enter your bank account number to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="bankSortCode">Sort code *</label>
+                                    <input type="text" id="bankSortCode" name="bankSortCode" formControlName="bankSortCode" class="form-control" placeholder="Sort code" maxlength="8" />
+                                    <div *ngIf="bankDetailsFormControls.bankSortCode.errors && (bankDetailsFormControls.bankSortCode.dirty || bankDetailsFormControls.bankSortCode.touched || bankDetailsFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="bankDetailsFormControls.bankSortCode.errors.maxlength">This field only allows max 10 characters.</div>
+                                        <div *ngIf="bankDetailsFormControls.bankSortCode.errors.required">Please enter your bank sort code to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-lg-8 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>First line of your address *</label>
+                                    <input type="text" id="addressLine1" name="addressLine1" formControlName="addressLine1" class="form-control" placeholder="Enter the first line of your address" maxlength="250" />
+                                    <div *ngIf="bankDetailsFormControls.addressLine1.errors && (bankDetailsFormControls.addressLine1.dirty || bankDetailsFormControls.addressLine1.touched || bankDetailsFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="bankDetailsFormControls.addressLine1.errors.maxlength">First line address has a character limit of 250</div>
+                                        <div *ngIf="bankDetailsFormControls.addressLine1.errors.required">Please enter the first line of your address to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Postcode *</label>
+                                    <input type="text" id="postCode" name="postCode" formControlName="postCode" class="form-control" placeholder="Enter your postcode" maxlength="10" />
+                                    <div *ngIf="bankDetailsFormControls.postCode.errors && (bankDetailsFormControls.postCode.dirty || bankDetailsFormControls.postCode.touched || bankDetailsFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="bankDetailsFormControls.postCode.errors.maxlength">Postcode has a character limit of 10</div>
+                                        <div *ngIf="bankDetailsFormControls.postCode.errors.required">Please enter the post code of your address to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Form_Block-Controls">
+                        <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="Overlay" *ngIf="step == registerStep.PaymentProcessing">
+            <div class="d-flex flex-column justify-content-center mx-auto">
+                <div class="Status__Icon mx-auto mb-56">
+                    <i class="fas fa-ellipsis-h success"></i>
+                </div>
+                <div class="h1 fw-600 text-center mb-35">Checking your card details</div>
+            </div>
+        </div>
+
+        <div class="Overlay" *ngIf="step == registerStep.PaymentFailed">
+            <div class="d-flex flex-column justify-content-center mx-auto">
+                <div class="Status__Icon mx-auto mb-56">
+                    <i class="fas fa-times danger"></i>
+                </div>
+                <div class="h1 fw-600 text-center mb-35">Payment Failed</div>
+            </div>
+        </div>
+
+        <div class="Overlay" *ngIf="step == registerStep.PaymentApproved">
+            <div class="d-flex flex-column justify-content-center mx-auto">
+                <div class="Status__Icon mx-auto mb-56">
+                    <i class="fas fa-check success"></i>
+                </div>
+                <div class="h1 fw-600 text-center mb-35">Your card has been authorised</div>
+                <button type="button" class="btn btn-primary btn-lg" (click)="navigate(registerStep.DBSCheck)">Create your profile</button>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="step == registerStep.DBSCheck">
+            <ng-template [ngTemplateOutlet]="SideBar"></ng-template>
+            <div class="col-12 col-lg-9 mb-28 mb-lg-0">
+                <form (ngSubmit)="submitDbsCheckForm()" [formGroup]="dbsCheckForm" *ngIf="dbsCheckForm != undefined">
+                    <h1>Welcome {{dbsCheckFormControls.userFirstName.value}}</h1>
+                    <h2>Let's set up your account, it will take just a minute. Once registered you will be able to create your profile and create your first lesson.</h2>
+                    <h3>DBS Check</h3>
+                    <!--<p>To teach under 18s you must hold a valid Enhanced DBS and have subscribed to the DBS update service. 2utoring.com will conduct a status check on your certificate and once validated, you can start offering lessons to this age group. We will also place on your tutor profile a DBS background checked status badge.</p>
+    <p *ngIf="journeyType != 3">Should you require an enhanced DBS certificate, contact safeguarding@2utoring.com with your request.</p>
+    <p *ngIf="journeyType == 3">Should you require an enhanced DBS certificate, contact your company with your request.</p>
+    <p>To teach learners over the age of 18, a background check isn’t required</p>-->
+                    <p>Safeguarding students under the age of 18. Place an Enhanced DBS status badge on your profile by uploading your Enhanced DBS certificate and number this will give your customers added reassurance and security.</p>
+
+                    <div class="Form__Block">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <h4 class="mb-21">Do you have a Enhanced DBS certificate that is registered on the update service.</h4>
+                                    <div class="row">
+                                        <div class="col-12 mb-21">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="radio" *ngIf="dbsCheckAllowedInSubscriptoin" id="hasDbsCheck" name="hasDbsCheck" formControlName="hasDbsCheck" [value]="true" (change)="hasDbsCheckValueChange()" class="form-check-input" />
+                                                    <input type="radio" *ngIf="!dbsCheckAllowedInSubscriptoin" id="hasDbsCheck" name="hasDbsCheck" formControlName="hasDbsCheck" [value]="true" (change)="hasDbsCheckValueChange()" class="form-check-input" disabled="disabled" />
+                                                    <span class="label">Yes</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="radio" id="hasDbsCheck" name="hasDbsCheck" formControlName="hasDbsCheck" [value]="false" (change)="hasDbsCheckValueChange()" class="form-control" />
+                                                    <span class="label">No</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="dbsCheckFormControls.hasDbsCheck.errors && (dbsCheckFormControls.hasDbsCheck.dirty || dbsCheckFormControls.hasDbsCheck.touched || dbsCheckFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="dbsCheckFormControls.hasDbsCheck.errors.required">Without a Valid DBS for Children, you will only be able to teach adults over the age of 18 on the system.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group" *ngIf="dbsCheckFormControls.hasDbsCheck.value == true">
+                                    <label>DBS Certificate No. *</label>
+                                    <input type="text" id="dbsCertificateNumber" name="dbsCertificateNumber" formControlName="dbsCertificateNumber" class="form-control" placeholder="Enter your DBS certificate no." />
+                                    <div *ngIf="dbsCheckFormControls.dbsCertificateNumber.errors && (dbsCheckFormControls.dbsCertificateNumber.dirty || dbsCheckFormControls.dbsCertificateNumber.touched || dbsCheckFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="dbsCheckFormControls.dbsCertificateNumber.errors.required">DBS Certificate No. is required</div>
+                                        <div *ngIf="dbsCheckFormControls.dbsCertificateNumber.errors.maxlength">Please enter your valid DBS certificate no. to continue.</div>
+                                    </div>
+                                </div>
+                                <div class="w-100 alert alert-warning mb-42 py-14 fw-500" role="alert" *ngIf="dbsCheckFormControls.hasDbsCheck.value == false">
+                                    Should you require an Enhanced DBS certificate, please click on the DBS notification in your dashboard area.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Form_Block-Controls">
+                        <a (click)="navigate(registerStep.PaymentApproved)" class="link-grey">Go back</a>
+                        <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="step == registerStep.Profile">
+            <ng-template [ngTemplateOutlet]="SideBar"></ng-template>
+            <div class="col-12 col-lg-9 mb-28 mb-lg-0">
+                <div>
+                    <h1 class="mb-14 fw-800" *ngIf="profileOneForm != undefined">Welcome {{profileOneFormControls.userFirstName.value}}</h1>
+                    <h2 *ngIf="ProfileApprovalRequired">Let’s set up your profile. Your profile is your shop window on 2utoring.com tell prospective learners about yourself, your experience and your teaching style. You can edit your profile at any point and it will only show on the website once your application has been approved and your first lesson scheduled.</h2>
+                    <h2 *ngIf="!ProfileApprovalRequired">Let’s set up your tutor profile, you can edit and perfect your profile at any time from within your dashboard area. When you upgrade to starter or professional packages your profile is your shop window on 2utoring.com, it tells prospective learners all about yourself, your experiences and your teaching styles.</h2>
+                    <form (ngSubmit)="submitProfileOneForm()" class="Form__Block" [formGroup]="profileOneForm" *ngIf="profileOneForm != undefined && profileFormSubStep == 1">
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="header">Headline *</label>
+                                <input maxlength="100" type="text" id="header" name="header" formControlName="header" class="form-control" placeholder="Tell learners about you in a short snappy sentence to sell yourself (e.g. Award Winning Maths Tutor)" />
+                                <div *ngIf="profileOneFormControls.header.errors && (profileOneFormControls.header.dirty || profileOneFormControls.header.touched || profileOneFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="profileOneFormControls.header.errors.required">Headline is required</div>
+                                    <div *ngIf="profileOneFormControls.header.errors.maxlength">Headline text must not exceed 100 characters.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label>Bio *</label>
+                                <textarea rows="6" id="biography" name="biography" formControlName="biography" class="form-control" placeholder="Let people know why you would be the perfect tutor for them" maxlength="2000"></textarea>
+                                <div *ngIf="profileOneFormControls.biography.errors && (profileOneFormControls.biography.dirty || profileOneFormControls.biography.touched || profileOneFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="profileOneFormControls.biography.errors.required">Bio is required</div>
+                                    <div *ngIf="profileOneFormControls.biography.errors.maxlength"> Maximum of 2000 characters allowed.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="Form_Block-Controls">
+                            <a (click)="navigate(registerStep.DBSCheck)" class="link-grey">Go back</a>
+                            <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                        </div>
+                    </form>
+
+                    <form (ngSubmit)="submitProfileTwoForm()" class="Form__Block" [formGroup]="profileTwoForm" *ngIf="profileTwoForm != undefined && profileFormSubStep == 2">
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label>Your Teaching Experience</label>
+                                <textarea rows="6" id="profileTeachingExperiance" name="profileTeachingExperiance" formControlName="profileTeachingExperiance" class="form-control" placeholder="Describe your previous teaching experience, this could be past roles you’ve held, or previous tutoring experience" maxlength="2000"></textarea>
+                                <div *ngIf="profileTwoFormControls.profileTeachingExperiance.errors && (profileTwoFormControls.profileTeachingExperiance.dirty || profileTwoFormControls.profileTeachingExperiance.touched || profileTwoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="profileTwoFormControls.profileTeachingExperiance.errors.required">Teaching experience is required</div>
+                                    <div *ngIf="profileTwoFormControls.profileTeachingExperiance.errors.maxlength">Maximum of 2000 characters allowed.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label>How you teach</label>
+                                <textarea rows="6" id="profileHowITeach" name="profileHowITeach" formControlName="profileHowITeach" class="form-control" placeholder="Describe your teaching style, help students understand what their experience of learning with you might be like" maxlength="2000"></textarea>
+                                <div *ngIf="profileTwoFormControls.profileHowITeach.errors && (profileTwoFormControls.profileHowITeach.dirty || profileTwoFormControls.profileHowITeach.touched || profileTwoFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="profileTwoFormControls.profileHowITeach.errors.required">How I teach is required</div>
+                                    <div *ngIf="profileTwoFormControls.profileHowITeach.errors.maxlength">Maximum of 2000 characters allowed.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Form_Block-Controls">
+                            <a (click)="profileFormSubStep = 1" class="link-grey">Go back</a>
+                            <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                        </div>
+                    </form>
+
+                    <form (ngSubmit)="submitProfileThreeForm()" class="Form__Block" *ngIf="profileFormSubStep == 3 && profileThreeUploaderShow">
+                        <h3 class="mb-0">Add a picture of you to your profile</h3>
+                        <em class="d-inline-block cl-light mb-21 fs-14">
+                            Use a high resolution recent photo that looks like you. It’s your first chance to communicate that you are friendly, likable, and trustworthy
+                        </em>
+                        <div class="form-row">
+                            <div class="col-12">
+                                <div ng2FileDrop
+                                     [ngClass]="{'nv-file-over': profileThreeDropZoneOver}"
+                                     (fileOver)="fileOverProfileThreeUploader($event)"
+                                     [uploader]="profileThreeUploader"
+                                     (onFileDrop)="profileThreeUploaderFileDropped($event)"
+                                     (click)="fileInput.click()"
+                                     class="File-Uploader">
+                                    <i class="fal fa-arrow-to-bottom"></i>Drag and drop a photo into this space or <u>Click here</u> to select one from your computer
+                                </div>
+                                <input type="file" #fileInput ng2FileSelect [uploader]="profileThreeUploader" style="display:none;" (change)="profileThreeUploaderFileDropped($event)" />
+                                <image-cropper [imageChangedEvent]="imageChangedEvent"
+                                               [maintainAspectRatio]="true"
+                                               [roundCropper]="true"
+                                               [aspectRatio]="4 / 3"
+                                               [resizeToWidth] ="0"
+                                               [resizeToHeight] ="0"
+                                               [cropperStaticWidth] ="170"
+                                               [cropperStaticHeight] ="170"
+                                               format="png, jpeg, webp, bmp, ico"
+                                               (imageCropped)="imageCropped($event)"
+                                               (imageLoaded)="imageLoaded()"
+                                               (cropperReady)="cropperReady()"
+                                               (loadImageFailed)="loadImageFailed()"></image-cropper>
+                            </div>
+                            <div class="row mt-35" *ngIf="profileThreeUploader.queue.length > 0">
+                                <div class="col">
+                                    <div class="Avatar Avatar--size:large">
+                                        <img *ngIf="profileThreeUploader.queue.length > 0" [src]="profileThreeUploaderPreviewUrl" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-35" *ngIf="profileThreeUploader.queue.length == 0 && tutorStoreProfileImageDownload != null && tutorStoreProfileImageDownload.length > 0">
+                                <div class="col">
+                                    <div class="Avatar Avatar--size:large">
+                                        <img src="{{tutorStoreProfileImageDownload}}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Form_Block-Controls">
+                            <a (click)="profileFormSubStep = 2" class="link-grey">Go back</a>
+                            <button type="submit" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="step == registerStep.Qualifications">
+            <ng-template [ngTemplateOutlet]="SideBar"></ng-template>
+            <div class="col-12 col-lg-9 mb-28 mb-lg-0">
+                <h1>Welcome tutor {{tutorFirstName}}</h1>
+                <!--<h2>Add in your academic or professional qualifications. This can include teaching qualifications, professional accreditations, degrees, A Levels etc, you will be asked to upload copies of transcripts or certificates in the next step.</h2>-->
+                <div class="Form__Block">
+                    <form (ngSubmit)="submitQualificationForm()" [formGroup]="qualificationForm" *ngIf="qualificationForm != undefined && qualificationFormSubStep == 1">
+                        <h3>Your qualifications and experience</h3>
+                        <div class="form-row">
+                            <div class="form-group col-12 col-lg-10">
+                                <label>Enter the qualification name, and awarding institution, one at a time</label>
+                                <input type="text" id="name" name="name" formControlName="name" class="form-control" placeholder="e.g. Mathematics and Philosophy Degree – University of Liverpool" />
+                                <div *ngIf="qualificationFormControls.name.errors && (qualificationFormControls.name.dirty || qualificationFormControls.name.touched || qualificationFormSubmitted)" class="error" role="alert">
+                                    <div *ngIf="qualificationFormControls.name.errors.required">Please enter a qualification name</div>
+                                    <div *ngIf="qualificationFormControls.name.errors.maxlength">Please enter at least one qualification you possess.</div>
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-lg-2">
+                                <button type="submit" style="margin-top:24px;" class="btn btn-outline-dark btn-lg label-offset w-100 fs-14 fw-700">Add</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="Badge" *ngFor="let tutorQualification of tutorQualifications">
+                                    <div class="Label">{{tutorQualification.name}}</div>
+                                    <i class="fal fa-times Cursor--pointer" (click)="deleteTutorQualification(tutorQualification)"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Form_Block-Controls">
+                            <a (click)="navigate(registerStep.Profile)" class="link-grey">Go back</a>
+                            <button type="button" (click)="qualificationFormSubStep = 2" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                        </div>
+                    </form>
+                    <form (ngSubmit)="submitProfileThreeForm()" *ngIf="qualificationFormSubStep == 2">
+                        <h3>Upload your qualifications / certificates</h3>
+                        <!--<p class="mb-21">Please attach any evidence of your professional qualifications these will assist our team when reviewing your application. These will not be shown on your public profile.</p>-->
+                        <p class="mb-21">Please attach evidence of your professional qualifications and/or your enhanced DBS certificate and photo ID. These will assist our team when reviewing your application. These will not be shown on your public profile.</p>
+
+                            <div class="row" *ngIf="qualificationFormUploaderShow">
+                                <div class="col">
+                                    <div ng2FileDrop
+                                         [ngClass]="{'nv-file-over': qualificationFormDropZoneOver}"
+                                         (fileOver)="fileOverQualificationFormUploader($event)"
+                                         [uploader]="qualificationFormUploader"
+                                         (onFileDrop)="qualificationFormUploaderFileDropped($event)"
+                                         (click)="fileInput2.click()"
+                                         class="File-Uploader">
+                                        <i class="fal fa-arrow-to-bottom"></i>Drag and drop your evidence into this space or <u>Click here</u> to select a file from your computer
+                                    </div>
+                                    <input type="file" #fileInput2 ng2FileSelect [uploader]="qualificationFormUploader" style="display:none;" (change)="qualificationFormUploaderFileDropped($event)" />
+                                </div>
+                            </div>
+                            <div class="row mt-35">
+                                <div class="col-12">
+                                    <div class="card bxs-0 mb-14" *ngFor="let tutorCertificate of tutorCertificates">
+                                        <div class="card-body d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <svg class="mr-14" width="16" height="20" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.00001 12H5.00001C4.44801 12 4.00001 11.552 4.00001 11C4.00001 10.448 4.44801 10 5.00001 10H8.00001C8.552 10 9.00001 10.448 9.00001 11C9.00001 11.552 8.552 12 8.00001 12ZM5.00001 14H11C11.553 14 12 14.448 12 15C12 15.552 11.553 16 11 16H5.00001C4.44801 16 4.00001 15.552 4.00001 15C4.00001 14.448 4.44801 14 5.00001 14ZM13.4443 18H2.55531C2.24931 18 2.00031 17.776 2.00031 17.5V2.5C2.00031 2.224 2.24931 2 2.55531 2H8.00031V5.15C8.00031 6.722 9.21731 8 10.7143 8H14.0003V17.5C14.0003 17.776 13.7513 18 13.4443 18ZM10.0003 2.978L12.7423 6H10.7143C10.3203 6 10.0003 5.619 10.0003 5.15V2.978ZM15.7403 6.328L10.2963 0.328C10.1063 0.119 9.83831 0 9.55531 0H2.55531C1.14631 0 0.000305176 1.122 0.000305176 2.5V17.5C0.000305176 18.878 1.14631 20 2.55531 20H13.4443C14.8533 20 16.0003 18.878 16.0003 17.5V7C16.0003 6.751 15.9073 6.512 15.7403 6.328Z" fill="#222B45" />
+                                                </svg>
+                                                <span>{{tutorCertificate.certificateFileName}}</span>
+                                            </div>
+                                            <i (click)="deleteTutorCertificate(tutorCertificate)" class="fal fa-times-circle Cursor--pointer"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="Form_Block-Controls">
+                                <a (click)="qualificationFormSubStep = 1" class="link-grey">Go back</a>
+                                <a (click)="navigate(registerStep.Subjects)" class="link-grey ml-auto">Skip step</a>
+                                <button type="button" (click)="navigate(registerStep.Subjects)" class="btn btn-primary btn-lg ml-21">Continue</button>
+                            </div>
+</form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="step == registerStep.Subjects">
+            <ng-template [ngTemplateOutlet]="SideBar"></ng-template>
+            <div class="col-12 col-lg-9 mb-28 mb-lg-0">
+                <h1>Welcome {{tutorFirstName}}</h1>
+                <div class="Form__Block">
+                    <!--<h3>Subjects and the levels you teach</h3>
+                    <p class="fw-500 mb-21">List the subjects and level you teach at to your profile, you can enter a broad subjects such as Maths for KS3, GCSE and A Level or for specialist tutors you can select specific topics</p>-->
+                    <!--<form (ngSubmit)="submitSubjectForm()" [formGroup]="subjectForm" *ngIf="subjectForm != undefined">-->
+                    <!--<div class="card bxs-0 card--toRepsond:small">
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-12 col-md-6">
+                    <label>Subject <i class="fal fa-info-circle" data-toggle="tooltip" data-placement="top" title="Please contact us with any missing subjects (and subcategories) - we will then add these into the platform for you."></i></label>
+                    <select id="subjectId" name="subjectId" formControlName="subjectId" (change)="getSubjectCategorys()" class="form-control">
+                        <option [ngValue]="null">Select a subject</option>
+                        <option *ngFor="let subject of subjects" [ngValue]="subject.id">{{//subject.name}}</option>
+                    </select>
+                    <div *ngIf="subjectFormControls.subjectId.errors && (subjectFormControls.subjectId.dirty || subjectFormControls.subjectId.touched || subjectFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="subjectFormControls.subjectId.errors.required">Please enter at least one subject you teach to continue.</div>
+                    </div>
+                </div>
+                <div class="form-group col-12 col-md-6">
+                    <label>Topic</label>
+                    <select id="subjectCategoryId" name="subjectCategoryId" formControlName="subjectCategoryId" class="form-control">
+                        <option [ngValue]="null">Select a category</option>
+                        <option *ngFor="let subjectCategory of subjectCategorys" [ngValue]="subjectCategory.id">{{//subjectCategory.name}}</option>
+                    </select>
+                    <div *ngIf="subjectFormControls.subjectCategoryId.errors && (subjectFormControls.subjectCategoryId.dirty || subjectFormControls.subjectCategoryId.touched || subjectFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="subjectFormControls.subjectCategoryId.errors.required">Please enter a topic for this subject to continue.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col mb-0">
+                    <label class="mb-14 mv-lg-0">Levels</label>
+                    <div class="d-lg-flex align-items-center justify-content-between">
+                        <div class="Level__Selection">
+                            <div formArrayName="tutorSubjectStudyLevels" *ngFor="let studyLevel of subjectForm.get('tutorSubjectStudyLevels')['controls']; let i=index">
+                                <label class="form-check mb-14 mr-28" [formGroupName]="i">
+                                    <input type="checkbox" id="studyLevel_{{//i}}" name="studyLevel_{{//i}}" formControlName="checked" class="form-check-input">
+                                    <span class="label" for="defaultCheck1">{{//tutorSubjectStudyLevelsFormArrayControls.value[i].name}}</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="my-0" />
+        <div class="card-body text-right">
+            <button type="submit" class="btn btn-outline-dark btn-lg w-100 w-lg-auto fs-14 fw-700 ml-0 ml-lg-auto">Add</button>
+        </div>
+    </div>-->
+                    <!--<div class="card bxs-0 my-21 fw-600 fs-15 card--toRepsond:small" *ngFor="let tutorSubject of tutorSubjects">
+        <div class="card-body d-flex">
+            <div class="form-row w-100 flw-100">
+                <div class="col-6 d-flex align-items-center">
+                    <i class="fal fa-times-circle mr-14 Cursor--pointer" (click)="deleteTutorSubject(tutorSubject)"></i>
+                    <span class="fs-sm-21 fs-lg-14">{{//tutorSubject.subjectName}}<span *ngIf="tutorSubject.subjectCategoryName != null && tutorSubject.subjectCategoryName != ''">,</span> {{tutorSubject.subjectCategoryName}}</span>
+                </div>
+                <div class="col-6">{{//tutorSubject.tutorSubjectStudyLevelsString}}</div>
+            </div>
+        </div>
+    </div>-->
+                    <!--</form>-->
+                    <div class="col-12 col-lg-auto mb-14 mb-lg-0">
+                        <app-subject-studylevel-setup-index [isRegistrationDone]="isRegistrationDone" [isFilterVisible]="isFilterVisible" [ownerEntityId]="tutorId" [ownerEntityType]="ownerEntityType" [ownerRegisterTitle]="true"></app-subject-studylevel-setup-index>
+                    </div>
+
+                    <div class="Form_Block-Controls">
+                        <a (click)="navigate(registerStep.Qualifications)" class="link-grey">Go back</a>
+                        <button type="button" (click)="navigate(registerStep.Availability)" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="step == registerStep.Availability">
+            <ng-template [ngTemplateOutlet]="SideBar"></ng-template>
+            <div class="col-12 col-lg-9 mb-28 mb-lg-0">
+                <!--<app-calender #calendarRef [registerdEvents]="registerdEvents" [tutorId]="tutorId" [isWeekVisible]="true" [isDateEventEditable]="true">
+                </app-calender>-->
+
+                <div class="full-celander-box">
+                    <!--<mat-slide-toggle style="float:right;" [(ngModel)]="editSlot" [ngModelOptions]="{standalone: true}">Edit Availability Slots</mat-slide-toggle>-->
+                    <app-calender-scheduler #calendarRef [registerdEvents]="registerdEvents" [tutorId]="tutorId" [isDateEventEditable]="true" [isViewOnly]="false">
+                    </app-calender-scheduler>
+                </div>
+
+            </div>
+            <div class="Form_Block-Controls">
+                <a (click)="navigate(registerStep.Subjects)" class="link-grey">Go back</a>
+                <button type="button" (click)="submitCalendarData();"
+                    class="btn btn-primary btn-lg ml-auto">Continue</button>
+            </div>
+        </div>
+        <!--<div class="row" *ngIf="step == registerStep.Preview">
+            <ng-template [ngTemplateOutlet]="SideBar"></ng-template>
+            <div class="col-12 col-lg-9 mb-28 mb-lg-0">
+                <div class="Alert Alert--type:Info py-21 mb-28" role="alert">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 6C9 5.448 9.448 5 10 5C10.552 5 11 5.448 11 6C11 6.552 10.552 7 10 7C9.448 7 9 6.552 9 6ZM9 9C9 8.448 9.448 8 10 8C10.552 8 11 8.448 11 9V14C11 14.552 10.552 15 10 15C9.448 15 9 14.552 9 14V9ZM10 18C5.589 18 2 14.411 2 10C2 5.589 5.589 2 10 2C14.411 2 18 5.589 18 10C18 14.411 14.411 18 10 18ZM10 0C4.477 0 0 4.477 0 10C0 15.523 4.477 20 10 20C15.522 20 20 15.523 20 10C20 4.477 15.522 0 10 0Z" fill="#222B45"></path>
+                    </svg>
+                    <div class="Alert__text" *ngIf="ProfileApprovalRequired">
+                        <p class="cl-dark fw-500 m-0">
+                            This is a preview of how your profile will appear on 2utoring.com when your application has been approved. You can update your profile at any point from your dashboard area.
+                        </p>
+                    </div>
+                </div>
+                <app-tutor-profile-view *ngIf="tutorId !== undefined" [tutorId]="tutorId" [showEditButton]="false"></app-tutor-profile-view>
+                <div class="Form_Block-Controls">
+                    <a (click)="navigate(registerStep.Availability)" class="link-grey">Go back</a>
+                    <button type="button" (click)="navigate(registerStep.Finish)" class="btn btn-primary btn-lg ml-auto">Continue</button>
+                </div>
+            </div>
+        </div>-->
+
+        <div class="row" *ngIf="step == registerStep.Finish">
+            <div class="d-flex flex-column justify-content-center mx-auto">
+                <div class="Status__Icon mx-auto mb-56">
+                    <i class="fas fa-check success"></i>
+                </div>
+                <div class="h1 fw-600 text-center mb-35">Your profile is complete</div>
+                <a type="button" class="btn btn-primary btn-lg mb-14" href="/Tutor/Home/Middleware?redirect=0">Let's create your first course</a>
+                <a type="button" class="btn btn-secondary btn-lg" href="/Tutor/Home/Middleware?redirect=1">Go to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #SideBar>
+    <div class="col-12 col-lg-3 mb-28 mb-lg-0">
+        <div *ngIf="tutorInitialRegistrationStep>=registerStep.DBSCheck" class="Step__Progress Step__Progress--Completed"><a (click)="navigate(registerStep.DBSCheck)">DBS Check</a></div>
+        <div *ngIf="tutorInitialRegistrationStep<registerStep.DBSCheck" class="Step__Progress"><a href="#">DBS Check</a></div>
+
+        <div *ngIf="tutorInitialRegistrationStep>=registerStep.Profile" class="Step__Progress Step__Progress--Completed"><a (click)="navigate(registerStep.Profile)">About you</a></div>
+        <div *ngIf="tutorInitialRegistrationStep<registerStep.Profile" class="Step__Progress"><a href="#">About you</a></div>
+
+        <div *ngIf="tutorInitialRegistrationStep>=registerStep.Qualifications" class="Step__Progress Step__Progress--Completed"><a (click)="navigate(registerStep.Qualifications)">Qualifications</a></div>
+        <div *ngIf="tutorInitialRegistrationStep<registerStep.Qualifications" class="Step__Progress"><a href="#">Qualifications</a></div>
+
+        <div *ngIf="tutorInitialRegistrationStep>=registerStep.Subjects" class="Step__Progress Step__Progress--Completed"><a (click)="navigate(registerStep.Subjects)">Subjects</a></div>
+        <div *ngIf="tutorInitialRegistrationStep<registerStep.Subjects" class="Step__Progress"><a href="#">Subjects</a></div>
+
+        <div *ngIf="tutorInitialRegistrationStep>=registerStep.Availability" class="Step__Progress Step__Progress--Completed"><a
+                (click)="navigate(registerStep.Availability)">Availability</a></div>
+        <div *ngIf="tutorInitialRegistrationStep<registerStep.Availability" class="Step__Progress"><a href="#">Availability</a></div>
+
+        <!--<div *ngIf="tutorInitialRegistrationStep>=registerStep.Preview" class="Step__Progress Step__Progress--Completed"><a (click)="navigate(registerStep.Preview)">View profile</a></div>
+        <div *ngIf="tutorInitialRegistrationStep<registerStep.Preview" class="Step__Progress"><a href="#">View profile</a></div>-->
+
+        <div *ngIf="tutorInitialRegistrationStep>=registerStep.Finish" class="Step__Progress Step__Progress--Completed"><a (click)="navigate(registerStep.Finish)">Finish</a></div>
+        <div *ngIf="tutorInitialRegistrationStep<registerStep.Finish" class="Step__Progress"><a href="#">Finish</a></div>
+    </div>
+</ng-template>

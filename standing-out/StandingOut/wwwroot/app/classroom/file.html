@@ -1,0 +1,79 @@
+<div class="Files__Container" ng-controller="FileController as ctrl" ng-init="init(pane.id, pane.toolBar)">
+    <div class="grid-container">
+        <div class="grid-x grid-margin-y grid-margin-x" ng-if="selectedDocument === undefined || selectedDocument == null">
+            <div class="large-12 cell">
+                <div class="Files">
+                    <div class="Files__Controls">
+                        <h1>Files</h1>
+                        <div class="button--group">
+                            <button class="button button--action" ng-click="refresh()">
+                                <i class="fal fa-redo"></i>
+                            </button>
+                            <button class="button button--action" ng-if="parentFolder !== undefined && parentFolder != null" ng-click="navigateUp()">
+                                <i class="fal fa-arrow-up"></i>
+                            </button>
+                            <div  ng-hide="uploadDisabled()" class="button--group">
+                                <button ng-if="isTutor" class="button button--upload" ng-click="upload()"><i class="fal fa-upload"></i><span>Upload a file</span></button>
+                                
+                                <div class="Dropdown" ng-if="isTutor || myStudentFolderId == currentFolderId">
+                                    <div class="Dropdown__Label">
+                                        <span>Create</span> <i class="fal fa-chevron-down"></i>
+                                    </div>
+                                    <div class="Dropdown__Menu">
+                                        <ul>
+                                            <li><a class="Menu__Link" ng-click="newFile('presentation')"><i class="fal fa-plus"></i> New Presentation</a></li>
+                                            <li><a class="Menu__Link" ng-click="newFile('spreadsheet')"><i class="fal fa-plus"></i> New Spreadsheet</a></li>
+                                            <li><a class="Menu__Link" ng-click="newFile('document')"><i class="fal fa-plus"></i> New Document</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Files__Breadcrumbs">
+                        <span ng-repeat="depthName in depthNames">
+                            <a ng-click="navigateUpTo($index)" style="cursor: pointer;">{{depthName}}</a>
+                        </span>
+                    </div>
+                    <div ng-repeat="item in files" class="Files__Row">
+                        <div class="Files__Name">
+                            <span ng-if="isFolder(item.mimeType)"><i class="fas fa-folder"></i></span>
+                            <span ng-if="!isFolder(item.mimeType)"><i class="fas fa-file"></i></span>
+                            <div style="overflow-wrap: break-word;">{{item.name}}</div>
+                        </div>
+                        <div style="white-space: nowrap;">
+                            <a ng-show="isTutor && inMaster() && !isFolder(item.mimeType)" ng-click="permissionsSingleMaster(item)" title="Share file"><i class="fal fa-share"></i> Share</a>
+                            <a ng-show="isTutor && !inMaster() && !isFolder(item.mimeType)" ng-click="permissionsSingle(item)" title="File permissions"><i class="fal fa-share"></i> Permissions</a>
+                            <a ng-show="downloadAvailable(item.mimeType)" href="{{item.webContentLink}}" target="_blank" title="Download file"><i class="fal fa-download"></i> Download</a>
+                            <a ng-show="whiteboardAvailable(item.mimeType)" ng-click="openInWhiteboard(item)" title="Import into current whiteboard"><i class="fal fa-file-import"></i> Whiteboard</a>
+                            <a ng-show="openAvailable(item.mimeType) || isFolder(item.mimeType)" ng-click="open(item)">
+                                <span ng-if="isFolder(item.mimeType)"><i class="fal fa-folder-open"></i> Open</span>
+                                <span ng-if="!isFolder(item.mimeType)"><i class="fal fa-file"></i> View</span>
+                            </a>
+                            <!--<a ng-hide="item.appProperties != null && item.appProperties['protectedFile'] === 'True'" ng-click="deleteDocument(item)">Delete</a>-->
+                            <a ng-show="openAvailable(item.mimeType) && !isFolder(item.mimeType)" ng-click="openPopUp(item)" title="Open in a popup"><i class="fal fa-external-link"></i> Preview</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="Pagination">
+                    <div class="Pagination__Controls" ng-hide="files === undefined || files == null || files.length == 0">
+                        <button type="button" ng-show="previousPages !== undefined && previousPages.length > 0" ng-click="getPreviousPage()"><i class="fal fa-chevron-left"></i></button>
+                        <div>{{pageNumber}}</div>
+                        <button ng-show="nextPage !== undefined && nextPage != null" ng-click="getNextPage()"><i class="fal fa-chevron-right"></i></button>
+                    </div>
+                    <div class="Pagination__NoPages" ng-show="(files === undefined || files == null || files.length == 0) && !navigationRunning">
+                        No files to show
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="selectedDocument != null">
+        <div class="toolbar-back">
+        <a ng-click="close()"><i class="fal fa-arrow-left"></i><span>Back to folder</a>
+        </div>
+        <div class="iframe__Container iframe__Container--files">
+            <iframe ng-src="{{trust(selectedDocument)}}"></iframe>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+.wday {
+    list-style-type: none;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+    .wday li {
+        display: inline-block;
+        font-size: 16px;
+        padding: 15px;
+    }

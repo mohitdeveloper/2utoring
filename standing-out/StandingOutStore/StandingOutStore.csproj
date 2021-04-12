@@ -1,0 +1,357 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>c31a9468-4ee2-4117-8c0a-49e042732050</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AngularSource\app\components\admin\**" />
+    <Content Remove="AngularSource\app\components\admin\**" />
+    <EmbeddedResource Remove="AngularSource\app\components\admin\**" />
+    <None Remove="AngularSource\app\components\admin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\favicon.ico" />
+    <Content Remove="wwwroot\images\2utoring-logo.png" />
+    <Content Remove="wwwroot\images\2utoring-logo.svg" />
+    <Content Remove="wwwroot\images\chat.png" />
+    <Content Remove="wwwroot\images\classroom-controls.png" />
+    <Content Remove="wwwroot\images\classroom-ui.png" />
+    <Content Remove="wwwroot\images\cw.png" />
+    <Content Remove="wwwroot\images\docs-ui.png" />
+    <Content Remove="wwwroot\images\favicon\android-icon-144x144.png" />
+    <Content Remove="wwwroot\images\favicon\android-icon-192x192.png" />
+    <Content Remove="wwwroot\images\favicon\android-icon-36x36.png" />
+    <Content Remove="wwwroot\images\favicon\android-icon-48x48.png" />
+    <Content Remove="wwwroot\images\favicon\android-icon-72x72.png" />
+    <Content Remove="wwwroot\images\favicon\android-icon-96x96.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-114x114.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-120x120.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-144x144.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-152x152.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-180x180.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-57x57.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-60x60.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-72x72.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-76x76.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon-precomposed.png" />
+    <Content Remove="wwwroot\images\favicon\apple-icon.png" />
+    <Content Remove="wwwroot\images\favicon\browserconfig.xml" />
+    <Content Remove="wwwroot\images\favicon\favicon-16x16.png" />
+    <Content Remove="wwwroot\images\favicon\favicon-32x32.png" />
+    <Content Remove="wwwroot\images\favicon\favicon-96x96.png" />
+    <Content Remove="wwwroot\images\favicon\favicon.ico" />
+    <Content Remove="wwwroot\images\favicon\ms-icon-144x144.png" />
+    <Content Remove="wwwroot\images\favicon\ms-icon-150x150.png" />
+    <Content Remove="wwwroot\images\favicon\ms-icon-310x310.png" />
+    <Content Remove="wwwroot\images\favicon\ms-icon-70x70.png" />
+    <Content Remove="wwwroot\images\files-ui.png" />
+    <Content Remove="wwwroot\images\google-button.svg" />
+    <Content Remove="wwwroot\images\group-to-group.png" />
+    <Content Remove="wwwroot\images\icons\chevron-down.svg" />
+    <Content Remove="wwwroot\images\illustration-1.svg" />
+    <Content Remove="wwwroot\images\illustration-2.svg" />
+    <Content Remove="wwwroot\images\illustration-3.svg" />
+    <Content Remove="wwwroot\images\illustration-4.svg" />
+    <Content Remove="wwwroot\images\illustration-5.svg" />
+    <Content Remove="wwwroot\images\lcm.png" />
+    <Content Remove="wwwroot\images\logo.png" />
+    <Content Remove="wwwroot\images\one-to-group.png" />
+    <Content Remove="wwwroot\images\one-to-one.png" />
+    <Content Remove="wwwroot\images\oval-left.svg" />
+    <Content Remove="wwwroot\images\oval-right.svg" />
+    <Content Remove="wwwroot\images\pane-ui.png" />
+    <Content Remove="wwwroot\images\peer-to-peer.png" />
+    <Content Remove="wwwroot\images\recorded-sessons.png" />
+    <Content Remove="wwwroot\images\rtc.png" />
+    <Content Remove="wwwroot\images\safe-and-secure.png" />
+    <Content Remove="wwwroot\images\user-group.svg" />
+    <Content Remove="wwwroot\images\user.svg" />
+    <Content Remove="wwwroot\images\wac.png" />
+    <Content Remove="wwwroot\images\webcam-panel.png" />
+    <Content Remove="wwwroot\images\whiteboard-ui.png" />
+    <Content Remove="wwwroot\images\whole-classes.png" />
+    <Content Remove="wwwroot\js\site.js" />
+    <Content Remove="wwwroot\lib\angular\production\3rdpartylicenses.txt" />
+    <Content Remove="wwwroot\lib\angular\production\index.html" />
+    <Content Remove="wwwroot\lib\angular\production\main.js" />
+    <Content Remove="wwwroot\lib\angular\production\polyfills-es5.js" />
+    <Content Remove="wwwroot\lib\angular\production\polyfills.js" />
+    <Content Remove="wwwroot\lib\angular\production\runtime.js" />
+    <Content Remove="wwwroot\lib\angular\production\styles.js" />
+    <Content Remove="wwwroot\robots.txt" />
+    <Content Remove="wwwroot\webfonts\fa-brands-400.eot" />
+    <Content Remove="wwwroot\webfonts\fa-brands-400.svg" />
+    <Content Remove="wwwroot\webfonts\fa-brands-400.ttf" />
+    <Content Remove="wwwroot\webfonts\fa-brands-400.woff" />
+    <Content Remove="wwwroot\webfonts\fa-brands-400.woff2" />
+    <Content Remove="wwwroot\webfonts\fa-duotone-900.eot" />
+    <Content Remove="wwwroot\webfonts\fa-duotone-900.svg" />
+    <Content Remove="wwwroot\webfonts\fa-duotone-900.ttf" />
+    <Content Remove="wwwroot\webfonts\fa-duotone-900.woff" />
+    <Content Remove="wwwroot\webfonts\fa-duotone-900.woff2" />
+    <Content Remove="wwwroot\webfonts\fa-light-300.eot" />
+    <Content Remove="wwwroot\webfonts\fa-light-300.svg" />
+    <Content Remove="wwwroot\webfonts\fa-light-300.ttf" />
+    <Content Remove="wwwroot\webfonts\fa-light-300.woff" />
+    <Content Remove="wwwroot\webfonts\fa-light-300.woff2" />
+    <Content Remove="wwwroot\webfonts\fa-regular-400.eot" />
+    <Content Remove="wwwroot\webfonts\fa-regular-400.svg" />
+    <Content Remove="wwwroot\webfonts\fa-regular-400.ttf" />
+    <Content Remove="wwwroot\webfonts\fa-regular-400.woff" />
+    <Content Remove="wwwroot\webfonts\fa-regular-400.woff2" />
+    <Content Remove="wwwroot\webfonts\fa-solid-900.eot" />
+    <Content Remove="wwwroot\webfonts\fa-solid-900.svg" />
+    <Content Remove="wwwroot\webfonts\fa-solid-900.ttf" />
+    <Content Remove="wwwroot\webfonts\fa-solid-900.woff" />
+    <Content Remove="wwwroot\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="AngularSource\app\components\dashboard\dashboard-admin\dashboard-admin.component.ts" />
+    <None Remove="AngularSource\app\components\documents\document-permission-modal\document-permission-modal.component.ts" />
+    <None Remove="AngularSource\app\components\session-groups\session-groups-modal.component.ts" />
+    <None Remove="AngularSource\app\components\settings\settings-payout\settings-payout.component.ts" />
+    <None Remove="AngularSource\app\components\tutor\tutor-details\tutor-details.component.ts" />
+    <None Remove="AngularSource\app\models\class-session-features.ts" />
+    <None Remove="AngularSource\app\models\class-session-video-room-group.model.ts" />
+    <None Remove="AngularSource\app\models\class-session-video-room.ts" />
+    <None Remove="AngularSource\app\models\dashboard\class-session-index.model.ts" />
+    <None Remove="AngularSource\app\models\dashboard\management-info-dashboard.model.ts" />
+    <None Remove="AngularSource\app\models\paged-tutor.model.ts" />
+    <None Remove="AngularSource\app\models\safeguarding-form.model.ts" />
+    <None Remove="AngularSource\app\models\safeguarding-lesson-option.model.ts" />
+    <None Remove="AngularSource\app\models\search-option.model.ts" />
+    <None Remove="AngularSource\app\models\session-attendee-file-uploader.model.ts" />
+    <None Remove="AngularSource\app\models\store-group-management.model.ts" />
+    <None Remove="AngularSource\app\models\subject-study-level-filter.model.ts" />
+    <None Remove="AngularSource\app\models\tutor-command-group.model.ts" />
+    <None Remove="AngularSource\app\models\tutor-table-search.model.ts" />
+    <None Remove="AngularSource\app\partials\class-session-material-uploader\class-session-material-uploader.component.ts" />
+    <None Remove="AngularSource\app\pipe\custom-date-pipe.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Shared\Components\NotificationMessage\Default.cshtml" />
+    <None Include="wwwroot\favicon.ico" />
+    <None Include="wwwroot\images\2utoring-logo.png" />
+    <None Include="wwwroot\images\2utoring-logo.svg" />
+    <None Include="wwwroot\images\chat.png" />
+    <None Include="wwwroot\images\classroom-controls.png" />
+    <None Include="wwwroot\images\classroom-ui.png" />
+    <None Include="wwwroot\images\cw.png" />
+    <None Include="wwwroot\images\docs-ui.png" />
+    <None Include="wwwroot\images\favicon\android-icon-144x144.png" />
+    <None Include="wwwroot\images\favicon\android-icon-192x192.png" />
+    <None Include="wwwroot\images\favicon\android-icon-36x36.png" />
+    <None Include="wwwroot\images\favicon\android-icon-48x48.png" />
+    <None Include="wwwroot\images\favicon\android-icon-72x72.png" />
+    <None Include="wwwroot\images\favicon\android-icon-96x96.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-114x114.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-120x120.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-144x144.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-152x152.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-180x180.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-57x57.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-60x60.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-72x72.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-76x76.png" />
+    <None Include="wwwroot\images\favicon\apple-icon-precomposed.png" />
+    <None Include="wwwroot\images\favicon\apple-icon.png" />
+    <None Include="wwwroot\images\favicon\browserconfig.xml" />
+    <None Include="wwwroot\images\favicon\favicon-16x16.png" />
+    <None Include="wwwroot\images\favicon\favicon-32x32.png" />
+    <None Include="wwwroot\images\favicon\favicon-96x96.png" />
+    <None Include="wwwroot\images\favicon\favicon.ico" />
+    <None Include="wwwroot\images\favicon\ms-icon-144x144.png" />
+    <None Include="wwwroot\images\favicon\ms-icon-150x150.png" />
+    <None Include="wwwroot\images\favicon\ms-icon-310x310.png" />
+    <None Include="wwwroot\images\favicon\ms-icon-70x70.png" />
+    <None Include="wwwroot\images\files-ui.png" />
+    <None Include="wwwroot\images\google-button.svg" />
+    <None Include="wwwroot\images\group-to-group.png" />
+    <None Include="wwwroot\images\icons\chevron-down.svg" />
+    <None Include="wwwroot\images\illustration-1.svg" />
+    <None Include="wwwroot\images\illustration-2.svg" />
+    <None Include="wwwroot\images\illustration-3.svg" />
+    <None Include="wwwroot\images\illustration-4.svg" />
+    <None Include="wwwroot\images\illustration-5.svg" />
+    <None Include="wwwroot\images\lcm.png" />
+    <None Include="wwwroot\images\logo.png" />
+    <None Include="wwwroot\images\one-to-group.png" />
+    <None Include="wwwroot\images\one-to-one.png" />
+    <None Include="wwwroot\images\oval-left.svg" />
+    <None Include="wwwroot\images\oval-right.svg" />
+    <None Include="wwwroot\images\pane-ui.png" />
+    <None Include="wwwroot\images\peer-to-peer.png" />
+    <None Include="wwwroot\images\recorded-sessons.png" />
+    <None Include="wwwroot\images\rtc.png" />
+    <None Include="wwwroot\images\safe-and-secure.png" />
+    <None Include="wwwroot\images\user-group.svg" />
+    <None Include="wwwroot\images\user.svg" />
+    <None Include="wwwroot\images\wac.png" />
+    <None Include="wwwroot\images\webcam-panel.png" />
+    <None Include="wwwroot\images\whiteboard-ui.png" />
+    <None Include="wwwroot\images\whole-classes.png" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\lib\angular\production\3rdpartylicenses.txt" />
+    <None Include="wwwroot\lib\angular\production\index.html" />
+    <None Include="wwwroot\lib\angular\production\main.js" />
+    <None Include="wwwroot\lib\angular\production\polyfills-es5.js" />
+    <None Include="wwwroot\lib\angular\production\polyfills.js" />
+    <None Include="wwwroot\lib\angular\production\runtime.js" />
+    <None Include="wwwroot\lib\angular\production\styles.js" />
+    <None Include="wwwroot\robots.txt" />
+    <None Include="wwwroot\webfonts\fa-brands-400.eot" />
+    <None Include="wwwroot\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\webfonts\fa-brands-400.ttf" />
+    <None Include="wwwroot\webfonts\fa-brands-400.woff" />
+    <None Include="wwwroot\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\webfonts\fa-duotone-900.eot" />
+    <None Include="wwwroot\webfonts\fa-duotone-900.svg" />
+    <None Include="wwwroot\webfonts\fa-duotone-900.ttf" />
+    <None Include="wwwroot\webfonts\fa-duotone-900.woff" />
+    <None Include="wwwroot\webfonts\fa-duotone-900.woff2" />
+    <None Include="wwwroot\webfonts\fa-light-300.eot" />
+    <None Include="wwwroot\webfonts\fa-light-300.svg" />
+    <None Include="wwwroot\webfonts\fa-light-300.ttf" />
+    <None Include="wwwroot\webfonts\fa-light-300.woff" />
+    <None Include="wwwroot\webfonts\fa-light-300.woff2" />
+    <None Include="wwwroot\webfonts\fa-regular-400.eot" />
+    <None Include="wwwroot\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\webfonts\fa-regular-400.ttf" />
+    <None Include="wwwroot\webfonts\fa-regular-400.woff" />
+    <None Include="wwwroot\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\webfonts\fa-solid-900.eot" />
+    <None Include="wwwroot\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\webfonts\fa-solid-900.ttf" />
+    <None Include="wwwroot\webfonts\fa-solid-900.woff" />
+    <None Include="wwwroot\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.24" />
+    <PackageReference Include="Twilio" Version="5.27.2" />
+    <PackageReference Include="Utilities.AspNetCore" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StandingOut.Business\StandingOut.Business.csproj" />
+    <ProjectReference Include="..\StandingOut.Data\StandingOut.Data.csproj" />
+    <ProjectReference Include="..\StandingOut.Shared\StandingOut.Shared.csproj" />
+    <ProjectReference Include="..\StandingOutStore.Business\StandingOutStore.Business.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="AngularSource\app\components\dashboard\dashboard-admin\dashboard-admin.component.ts" />
+    <TypeScriptCompile Include="AngularSource\app\components\documents\document-permission-modal\document-permission-modal.component.ts" />
+    <TypeScriptCompile Include="AngularSource\app\components\session-groups\session-groups-modal.component.ts" />
+    <TypeScriptCompile Include="AngularSource\app\components\settings\settings-payout\settings-payout.component.ts" />
+    <TypeScriptCompile Include="AngularSource\app\components\tutor\tutor-details\tutor-details.component.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\class-session-features.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\class-session-video-room-group.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\class-session-video-room.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\dashboard\class-session-index.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\dashboard\management-info-dashboard.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\paged-tutor.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\safeguarding-lesson-option.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\safeguarding-form.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\search-option.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\session-attendee-file-uploader.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\store-group-management.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\tutor-command-group.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\subject-study-level-filter.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\models\tutor-table-search.model.ts" />
+    <TypeScriptCompile Include="AngularSource\app\partials\class-session-material-uploader\class-session-material-uploader.component.ts" />
+    <TypeScriptCompile Include="AngularSource\app\pipe\custom-date-pipe.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Tutor\Views\Students\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\images\favicon\manifest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\AdminContactUs.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\AdminNotifiedNewTutorProfile.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\AdminNotifiedTutorDBSAmend.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\AdminNotifiedTutorProfileAmend.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\CancelAccountConfirmation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\LessonCancelled.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\ReportConfirmation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\SafeguardingConfirmation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\SafeguardingConfirmationBasic.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\SessionAttendeeReinstated.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\SessionAttendeeRemoved.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\StudentCourseInvite.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\TutorInvite.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\SessionInvite.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\StudentParentReceipt.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\StudentParentSignUp.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\TutorDBSApproved.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\TutorProfileApproved.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\TutorProfileUnderReviewConfirmation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\TutorSignUpConfirmation.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Templates\TutorStudentSignedUpLesson.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\email\" />
+  </ItemGroup>
+
+</Project>

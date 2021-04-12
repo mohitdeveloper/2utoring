@@ -1,0 +1,126 @@
+.title{
+    color:#2F80ED;
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  .day-list{
+    padding: 7px;
+    border: 1px solid #efefef;
+    cursor: pointer;
+    border-radius: 7px;
+    margin-left: 4px;
+    font-size:12px !important;
+  }
+  .actives {
+    background: #2F80ED;
+    color: #fff;
+  }
+
+  .sarchButton{
+    text-align: center;
+    background-color: #EB8D05;
+    color: #fff;
+    width: 30%;
+    margin-top: 7px;
+    height: 34px;
+    padding: 5px;
+    border-radius: 13px;
+    margin-left: 15px;
+    cursor: pointer;
+  }
+
+  .sarchResult{
+    text-align: center;
+    background-color: #0C056C;
+    color: #fff;
+    margin-top: 7px;
+    width: 100%;
+    height: 34px;
+    padding: 5px;
+    border-radius: 13px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: normal;
+  }
+
+  .resultActive{
+      background-color: #d2fbd5;
+      color: #000;
+  }
+
+  .break {
+    flex-basis: 100%;
+    height: 10px;
+  }
+ .lessonCount{
+    width: 27px;
+    height: 27px;
+    background: #6DE567;
+    color: white;
+    padding: 2px 0 0 4px;
+    border: 1px solid #ccc;
+    margin-top: 7px;
+}
+
+.lessonCountText{
+    margin-left: 9px;
+    font-size: 17px;
+    font-weight: normal;
+}
+.saveButton {
+    text-align: center;
+    background-color: #2F80ED;
+    color: #fff;
+    margin-top: 7px;
+    height: 34px;
+    padding: 5px;
+    border-radius: 13px;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: normal;
+    width: 75%;
+    border: 1px solid #2F80ED;
+}
+
+  .lessonTitles{
+    padding: 13px;
+    border: 1px solid #efefef;
+    cursor: pointer;
+    border-radius: 7px;
+    margin-left: 4px;
+    text-align: center;
+    font-size: 12px !important;
+  }
+  .form-control:disabled, .form-control[readonly]{
+    background-color: #fff !important;
+  }
+
+  .uploadButton{
+    background-color: red;
+    color: #fff;
+  }
+  .saveDocs{
+    border: 1px solid;
+    background-color: red;
+    color: #fff;
+    border-radius: 5px;
+    width: 82%;
+    padding: 10px;
+  }
+
+
+
+.uploadButtonClass {
+    background-color: green;
+}
+
+.uploadButtonClassOut {
+    background-color: red;
+}

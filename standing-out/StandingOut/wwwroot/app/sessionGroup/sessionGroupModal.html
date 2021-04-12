@@ -1,0 +1,48 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="white-popup-block" ng-init>
+        <button type="button" class="mfp-close" ng-click="cancel()">×</button>
+
+        <div class="grid-container">
+            <div class="grid-x">
+                <div class="large-12 cell">
+                    <h2>Session Group</h2>
+                </div>
+            </div>
+            <form name="groupForm" novalidate ng-submit="save()">
+                <section class="form">
+                    <div class="grid-x grid-margin-x">
+                        <div class="large-12 cell">
+                            <div class="grid-x">
+                                <div class="large-12 cell">
+                                    <label>Name</label>
+                                </div>
+                            </div>
+                            <div class="grid-x">
+                                <div class="large-12 cell">
+                                    <input type="text" name="name" ng-model="group.name" maxlength="250" ng-maxlength="250" required />
+                                    <div ng-messages="groupForm.name.$error" ng-if="groupForm.name.$invalid && (groupForm.name.$touched || groupForm.submitted)">
+                                        <p ng-message="required" class="help-block">This field is required.</p>
+                                        <p ng-message="maxlength" class="help-block">This field can be no longer than 250 characters.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <div class="grid-x">
+                    <div class="large-8 cell">
+                    </div>
+                    <div class="large-4 cell">
+                        <div class="button--group">
+                            <button class="button button--secondary margin-left-auto" type="button" ng-click="cancel()">Cancel</button>
+                            <button class="button button--primary" type="submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

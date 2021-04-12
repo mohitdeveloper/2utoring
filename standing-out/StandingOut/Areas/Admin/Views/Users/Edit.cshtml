@@ -1,0 +1,52 @@
+@model StandingOut.Data.DTO.EditUser
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="large-3 cell"></div>
+        <div class="large-6 cell">
+            <div class="card card--hasGrid margin-left-auto margin-right-auto margin-bottom-base margin-top-extra-loose">
+                <div class="grid-x align-middle">
+                    <div class="large-12 cell text-align-center">
+                        <h2>@ViewData["Title"]</h2>
+                    </div>
+                </div>
+                <hr class="margin-top-base margin-bottom-base" />
+                <section class="form margin-top">
+                    <form asp-antiforgery="true">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="grid-x grid-margin-x">
+                            <div class="large-6 cell">
+                                <label asp-for="FirstName"></label>
+                                <input type="text" asp-for="FirstName" placeholder="First name" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="large-6 cell">
+                                <label asp-for="LastName"></label>
+                                <input type="text" asp-for="LastName" placeholder="Last name" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="large-12 cell">
+                                <label asp-for="Email"></label>
+                                <input type="text" asp-for="Email" placeholder="Email address" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <hr class="margin-bottom-loose margin-top-tight" />
+                        <div class="grid-x grid-margin-x">
+                            <div class="large-6 cell">
+                                <a class="button button--tertiary" asp-action="Index">Back</a>
+                            </div>
+                            <div class="large-6 cell text-align-right">
+                                <input type="submit" value="Update" class="button button--primary" />
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="large-3 cell"></div>
+</div>

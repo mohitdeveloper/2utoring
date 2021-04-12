@@ -1,0 +1,66 @@
+// These are the styles to make some of the templates look extra nice.
+// Feel free to remove these styles for production!
+
+// Body Styles 
+body,
+html, 
+.body {
+  background: #F4F6FA !important;
+}
+
+.container.header {
+  background: #F4F6FA;
+}
+
+.body-drip {
+  border-top: 8px solid #663399;
+}
+
+// Full Width Headers
+.header {
+  background: #F4F6FA;
+}
+
+.header .columns {
+  padding-bottom: 0;
+}
+
+.header p {
+  color: #fff;
+  padding-top: 15px;
+}
+
+.header .wrapper-inner {
+  padding: 20px;
+}
+
+.header .container {
+  background: transparent;
+}
+
+.wrapper.secondary {
+  background: #f3f3f3;
+}
+
+.m-0 {
+  margin-bottom: 0!important;
+}
+
+.body-border {
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.04), 0 2px 16px rgba(33, 43, 54, 0.06);
+ 
+  h4 {
+    font-weight: 600;
+    text-align: center;
+  }
+}
+
+.footer-border {
+  background-color: transparent!important;
+  p {
+    color: $dark-gray;
+    font-size: 14px;
+    text-align: center;
+  }
+
+}

@@ -1,0 +1,552 @@
+﻿$WebcamTileSize: 194px !default;
+$WebcamTileHeight: 218px !default;
+$donimate: #485465 !default;
+$spanColumns: 3 !default;
+
+.Scrollable {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: always;
+    padding-left: 10.5px;
+    padding-right: 10.5px;
+}
+
+.Webcam__Panel {
+    background-color: lighten($bodyColour, 1);
+    border-radius: 2px 0 0 2px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    display: inline-grid;
+    grid-template-rows: $WebcamPanelHeader $WebcamPanelCamSection;
+    height: calc(#{$PaneHeight--withHeader} - 2px);
+    left: $offset + 1;
+    max-width: 635px;
+    position: fixed;
+    top: $header + 1;
+    z-index: 400;
+}
+
+.Webcam__Header {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    box-sizing: border-box;
+
+    .Title__Block {
+        padding: 21px;
+
+        .Panel-Name {
+            color: #485465;
+            display: block;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .Panel-Intro {
+            color: #485465;
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+        }
+    }
+
+    .Filter__Block {
+        align-items: center;
+        display: flex;
+        color: #485465;
+        padding-right: 21px;
+
+        .form-control {
+            border-radius: 3px 0 0 3px;
+            display: block;
+            font-size: 14px;
+            max-height: 42px;
+            min-height: 42px;
+            padding: 0 14px 0 10px;
+        }
+
+        button {
+            border-radius: 0 3px 3px 0;
+            font-size: 13px;
+            max-height: 42px;
+            min-height: 42px;
+        }
+    }
+}
+
+.Webcam__Grid {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.Webcam__Tile {
+    border-radius: 4px;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 21px;
+
+    &--type\:Dominant {
+        background-color: $donimate;
+        color: white;
+        border-color: $donimate;
+    }
+
+    &--type\:LeftLesson {
+        background-color: rgba(0, 0, 0, 0.18);
+        color: $donimate;
+        border-color: #eaeaea;
+    }
+
+    &--type\:Listening {
+        background-color: white;
+        color: $donimate;
+        border-color: #eaeaea;
+    }
+
+    &--state\:Disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .Webcam__Panel & {
+        margin-left: 10.5px;
+        margin-right: 10.5px;
+        max-height: 169px;
+        max-width: 180px;
+        min-height: 169px;
+        min-width: 180px;
+        overflow: hidden;
+    }
+
+    .Webcam__Floater & {
+        margin-left: 10.5px;
+        margin-right: 10.5px;
+        max-height: 169px;
+        max-width: 180px;
+        min-height: 169px;
+        min-width: 180px;
+        overflow: hidden;
+    }
+
+    .Webcam__Panel &--type\:Expand {
+        order: -1;
+        width: 100%;
+        max-width: 100%;
+        min-height: 468px;
+        max-height: 468px;
+    }
+
+    .Webcam__Panel &--type\:WideScreen {
+        min-height: 169px;
+        max-height: 169px;
+        min-width: 240px;
+        max-width: 240px;
+    }
+
+    .Webcam__Panel &--type\:WideScreen__Pane {
+        min-height: 368px;
+        max-height: 368px;
+        min-width: 593px;
+        max-width: 593px;
+    }
+
+    .Webcam__Floater &--type\:WideScreen {
+        min-height: 169px;
+        max-height: 169px;
+        min-width: 240px;
+        max-width: 240px;
+    }
+
+    .Webcam__Floater &--type\:WideScreen__Pane {
+        min-height: 368px;
+        max-height: 368px;
+        min-width: 593px;
+        max-width: 593px;
+    }
+
+    .Webcam__Panel &--type\:Listening {
+        background-color: white;
+        color: $donimate;
+        border-color: #eaeaea;
+    }
+
+    .Webcam__Panel &--type\:LeftLesson {
+        background-color: rgba(0, 0, 0, 0.18);
+        color: $donimate;
+        border-color: #eaeaea;
+    }
+
+    .Webcam__Panel &--state\:Disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+}
+
+.Webcam__Video {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+
+    &:after {
+        content: "";
+        background-color: transparent;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition: 500ms background-color linear;
+        width: 100%;
+        z-index: 101;
+    }
+
+    &:hover {
+        &:after {
+            content: "";
+            background-color: rgba(0, 0, 0, 0.3);
+            transition: 500ms background-color linear;
+        }
+
+        .Webcam__Controls {
+            .Icon > i {
+                color: white;
+            }
+
+            .Icon.Signal {
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.6);
+                }
+
+                &--Good {
+                    i {
+                        color: #27ae60;
+                    }
+                }
+
+                &--Average {
+                    i {
+                        color: #ffff00;
+                    }
+                }
+
+                &--Poor {
+                    i {
+                        color: #db0000;
+                    }
+                }
+
+                &--Reconnecting {
+                    i {
+                        color: #db0000;
+                    }
+                }
+            }
+        }
+    }
+
+    video {
+        filter: blur(0px);
+        grid-column: 1 / 4;
+        grid-row: 1;
+        object-fit: contain;
+        transition: 500ms filter linear;
+        width: 100%;
+        z-index: 100;
+    }
+
+    .Webcam__Controls {
+        background-color: transparent;
+        border-radius: 2px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        padding: 7px;
+        transition: color 500ms linear 0s;
+        position: relative;
+
+        .Icon {
+            align-items: center;
+            background-color: transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            display: flex;
+            height: 28px;
+            justify-content: center;
+            margin-bottom: 7px;
+            transition: color 500ms linear 0s;
+            width: 28px;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.6);
+                color: #fff;
+            }
+        }
+
+        .Icon.Signal {
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.6);
+            }
+
+            &--Good {
+                color: #27ae60;
+
+                &:hover {
+                    i {
+                        color: #27ae60;
+                    }
+                }
+            }
+
+            &--Average {
+                color: #ffff00;
+
+                &:hover {
+                    i {
+                        color: #ffff00;
+                    }
+                }
+            }
+
+            &--Poor {
+                color: #db0000;
+
+                &:hover {
+                    i {
+                        color: #db0000;
+                    }
+                }
+            }
+
+            &--Reconnecting {
+                color: #db0000;
+
+                &:hover {
+                    i {
+                        color: #db0000;
+                    }
+                }
+            }
+        }
+
+        .Signal__Strenth {
+            position: absolute;
+            bottom: 0;
+            right: 7px;
+        }
+    }
+
+    .Webcam__Controls--position\:TopLeft {
+        grid-column: 1;
+        grid-row: 1;
+        text-align: center;
+        z-index: 800;
+    }
+
+    .Webcam__Controls--position\:TopRight {
+        align-content: space-between;
+        display: flex;
+        grid-column: 3;
+        grid-row: 1;
+        text-align: center;
+        z-index: 800;
+    }
+
+    .Webcam__Initials {
+        align-items: center;
+        display: flex;
+        grid-column: 1 / 4;
+        grid-row: 1;
+        justify-content: center;
+
+        span {
+            border-radius: 50%;
+            height: 72px;
+            width: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            font-weight: 700;
+            background-color: rgba(0,0,0,0.1);
+        }
+    }
+}
+
+.Webcam__Info {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 7px;
+
+    span {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 75%;
+    }
+}
+
+.Webcam__Floater {
+    position: absolute;
+    bottom: calc(#{$header} + (#{$offset} * 5));
+    left: calc(#{$offset} * 5);
+    z-index: 800;
+    width: 241px;
+    height: 218px;
+
+    .Webcam__Tile--type\:Expand {
+        max-height: 580px;
+        min-height: 580px;
+        max-width: 730px;
+        min-width: 730px;
+
+        .Webcam__Video {
+            max-height: 542px;
+            min-height: 542px;
+        }
+    }
+
+    .Webcam__Tile--type\:Expand__WideScreen {
+        max-height: 618px;
+        min-height: 445px;
+        max-width: 730px;
+        min-width: 730px;
+
+        .Webcam__Video {
+            max-height: 411px;
+            min-height: 411px;
+        }
+    }
+
+
+
+    .Webcam__Tile {
+        margin-bottom: 0;
+    }
+
+    .Webcam__Video {
+        //max-height: 180px;
+        min-height: 135px;
+    }
+}
+
+.FloatHide {
+    display: none;
+    height: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+}
+
+.Webcam__Control-Buttons {
+    align-items: center;
+    bottom: $offset;
+    display: flex;
+    left: $offset;
+    position: fixed;
+    z-index: 400;
+
+    .Button {
+        align-items: center;
+        border-radius: 5px;
+        color: #ffffff;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        height: 56px;
+        justify-content: center;
+        width: 56px;
+
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+
+        &__Icon {
+            height: 21px;
+            width: 21px;
+            position: relative;
+
+            &--disabled {
+                svg {
+                    opacity: 0.6;
+                }
+
+                &:after {
+                    content: "";
+                    background-color: #ffffff;
+                    height: 30px;
+                    left: 50%;
+                    position: absolute;
+                    transform: translate(-50%, -50%) rotate(45deg);
+                    top: 50%;
+                    width: 2px;
+                }
+            }
+
+            svg {
+                fill: #ffffff;
+                height: 100%;
+                transition: transform ease-in-out 100ms;
+                width: 100%;
+            }
+        }
+
+        &.Icon--show {
+            svg {
+                transform: rotate(180deg);
+            }
+        }
+
+        &--status\:Active {
+            background-color: #eb5757;
+        }
+
+        &--status\:InActive {
+            background-color: #27AE60;
+        }
+
+        &--status\:Grey {
+            background-color: #485465;
+        }
+
+        span {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+            text-align: center;
+        }
+    }
+}
+
+.cc-range {
+    -webkit-appearance: none;
+    border-radius: 12px;
+    width: 100%;
+    height: 24px;
+    background: #eee;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+}
+
+.cc-range:hover {
+    opacity: 1;
+}
+
+.cc-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    background: #ff9900;
+    cursor: pointer;
+}

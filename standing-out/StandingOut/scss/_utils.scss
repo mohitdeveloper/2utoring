@@ -1,0 +1,336 @@
+﻿// Device Breakpoints - Height and Width
+@mixin breakSmall {
+    @media screen and (max-heigh: $screenLargeH) {
+        @content;
+    }
+
+    @media screen and (max-width: $screenLargeW) and (max-height: $screenLargeH) {
+        @content;
+    }
+
+    @media screen and (min-width: $screenLargeW) and (max-height: $screenLargeH) {
+        @content;
+    }
+
+    @media screen and (max-width: $screenLargeW) and (min-height: $screenLargeH) {
+        @content;
+    }
+}
+
+@mixin breakLarge {
+    @media screen and (min-height: $screenLargeH) {
+        @content;
+    }
+
+    @media screen and (min-width: $screenLargeW) and (min-height: $screenLargeH) {
+        @content;
+    }
+}
+
+@mixin breakSmallX {
+    @media screen and (max-width: $screenLargeW) {
+        @content;
+    }
+}
+
+@mixin breakLargeX {
+    @media screen and (min-width: $screenLargeW + 1) {
+        @content;
+    }
+}
+
+// PX to REM
+$default-browser-font-size: 16px;
+$base-font-size: 16px;
+
+@function rem($value) {
+    $unit: unit($value);
+
+    @if $unit == 'rem' {
+        @return $value;
+    }
+    @else if $unit == 'px' {
+        @return $value / $base-font-size * 1rem;
+    }
+    @else if $unit == 'em' {
+        @return $unit / 1em * 1rem;
+    }
+    @else {
+        @error 'Value must be in px, em, or rem.';
+    }
+}
+
+
+// Strip Units
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+
+    @return $number;
+}
+
+$unit: 7px;
+$spacing-data: ( 
+    none: 0,
+    small: $unit - 3,
+    extra-tight: $unit,
+    tight: $unit * 2,
+    base: $unit * 3,
+    loose: $unit * 4,
+    extra-loose: $unit * 9,
+    expansive: $unit * 12,
+    auto: auto
+);
+
+// Usage - spacing([value]);
+@function spacing($variant: base) {
+    $fetched-value: map-get($spacing-data, $variant);
+
+    @if type-of($fetched-value) == number {
+        @return $fetched-value;
+    }
+}
+
+// Margins
+@each $name, $spacing in $spacing-data {
+    .margin-#{$name} {
+        margin: $spacing !important;
+    }
+
+    .margin-y-#{$name} {
+        margin-top: $spacing !important;
+        margin-bottom: $spacing !important;
+    }
+
+    .margin-x-#{$name} {
+        margin-left: $spacing !important;
+        margin-right: $spacing !important;
+    }
+
+    .margin-top-#{$name} {
+        margin-top: $spacing !important;
+    }
+
+    .margin-right-#{$name} {
+        margin-right: $spacing !important;
+    }
+
+    .margin-bottom-#{$name} {
+        margin-bottom: $spacing !important;
+    }
+
+    .margin-left-#{$name} {
+        margin-left: $spacing !important;
+    }
+}
+
+// Padding
+@each $name, $spacing in $spacing-data {
+    .padding-#{$name} {
+        padding: $spacing !important;
+    }
+
+    .padding-y-#{$name} {
+        padding-top: $spacing !important;
+        padding-bottom: $spacing !important;
+    }
+
+    .padding-x-#{$name} {
+        padding-left: $spacing !important;
+        padding-right: $spacing !important;
+    }
+
+    .padding-top-#{$name} {
+        padding-top: $spacing !important;
+    }
+
+    .padding-right-#{$name} {
+        padding-right: $spacing !important;
+    }
+
+    .padding-bottom-#{$name} {
+        padding-bottom: $spacing !important;
+    }
+
+    .padding-left-#{$name} {
+        padding-left: $spacing !important;
+    }
+}
+
+// Widths
+
+.width--max-content {
+    width: max-content;
+}
+
+// Text Alignment and Formating
+.text-bold {
+    font-weight: $fontWeightMedium;
+}
+
+.text-bolder {
+    font-weight: $fontWeightBold;
+}
+
+.text-light {
+    font-weight: $fontWeightLight;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+.text-align-justify {
+    text-align: justify;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.text-capitalize {
+    text-transform: capitalize
+}
+
+.text-small {
+    font-size: 14px;
+}
+
+
+// Height
+
+.height--100 {
+    height: 100% !important;
+}
+
+.width--100 {
+    width: 100% !important;
+}
+
+.width--75 {
+    width: 75% !important;
+}
+
+// Display
+$display-data: ( flex, block, inline, inline-block, none );
+
+@each $name in $display-data {
+    .display--#{$name} {
+        display: #{$name};
+    }
+}
+// Flex
+.flex--spaceBetween {
+    justify-content: space-between
+}
+
+.flex--justifyCenter {
+    justify-content: center
+
+}
+
+.flex--justifyEnd {
+    justify-content: flex-end
+}
+
+.flex--alignCenter {
+    align-items: center;
+}
+
+.flex--one {
+    flex: 1;
+}
+
+// Position
+.position {
+    &--relative {
+        position: relative;
+    }
+
+    &--absolute {
+        position: absolute;
+    }
+}
+
+.vertical--center {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+// Img Cover
+.img--cover {
+    height: 100%;
+    width: 100%;
+}
+
+.img--thumbnail {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+// Background
+.background--cover {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.background-position--top {
+    background-position: top;
+}
+
+.background-position--right {
+    background-position: right;
+}
+
+.background-position--bottom {
+    background-position: bottom;
+}
+
+.background-position--left {
+    background-position: left;
+}
+
+.background-position--center {
+    background-position: center;
+}
+
+
+// Border
+
+.border {
+    border: $defaultBorder;
+}
+
+.border-top {
+    border-top: $defaultBorder;
+}
+
+.border-right {
+    border-right: $defaultBorder;
+}
+
+.border-bottom {
+    border-bottom: $defaultBorder;
+}
+
+.border-left {
+    border-left: $defaultBorder;
+}
+
+
+@media screen and (max-width: 1024px)  {
+    .Hide--Medium {
+        display: none!important;
+        visibility: hidden!important;
+    }
+}

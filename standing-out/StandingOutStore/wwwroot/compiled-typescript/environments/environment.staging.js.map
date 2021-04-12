@@ -1,0 +1,1 @@
+{"version":3,"file":"environment.staging.js","sourceRoot":"","sources":["../../../AngularSource/environments/environment.staging.ts"],"names":[],"mappings":";;;AAAa,QAAA,WAAW,GAAG;IACvB,UAAU,EAAE,IAAI;IAChB,OAAO,EAAE,KAAK;IACd,OAAO,EAAE,2BAA2B;IACpC,YAAY,EAAE,oCAAoC;IAClD,UAAU,EAAE,2BAA2B;IACvC,yBAAyB,EAAE,IAAI;IAC/B,YAAY,EAAE,KAAK;IACnB,SAAS,EAAE,4CAA4C;CAC1D,CAAC"}

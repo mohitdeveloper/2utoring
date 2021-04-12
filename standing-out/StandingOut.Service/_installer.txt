@@ -1,0 +1,1 @@
+﻿sc.exe create StandingOut.Service binpath= "C:\Services\2utoring.com\StandingOut.Service.exe" start= auto DisplayName= "Standing Out Service"

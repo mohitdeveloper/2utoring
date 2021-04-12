@@ -1,0 +1,12 @@
+﻿<div ng-include="'/app/search/search.html'"></div>
+
+@section scripts{ 
+    <script>
+        var searchTerm = '@ViewBag.SearchTerm';
+        var filterTerm = '@ViewBag.Filter';
+    </script>
+}
+
+@{
+    ViewData["Title"] = "Search";
+}

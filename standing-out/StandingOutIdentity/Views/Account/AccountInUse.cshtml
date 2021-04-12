@@ -1,0 +1,13 @@
+@model RedirectViewModel
+
+@{
+    ViewData["Title"] = "Account In Use";
+}
+
+<div class="col-14 col-lg-8 offset-lg-2">
+    <div class="Card Card--toRepsond:small">
+        <h1 class="mb-5 fw-800">Link your google account</h1>
+        <p>This Google account is already linked to another 2utoring.com account. Please try again by clicking here.</p>
+        <a asp-controller="Account" asp-action="LinkAccount" asp-route-returnUrl="@Model.RedirectUrl" asp-route-linkAccountKeyOne="@ViewBag.LinkAccountKeyOne" asp-route-linkAccountKeyTwo="@ViewBag.LinkAccountKeyTwo">Link a different account</a>
+    </div>
+</div>

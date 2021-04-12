@@ -1,0 +1,94 @@
+@model List<IGrouping<string, StandingOut.Data.Models.ClassSessionVideoRoom>>
+
+@{
+    ViewData["Title"] = ViewBag.ClassSessionName + " Recordings";
+}
+
+<div class="grid-container grid-container--wide margin-top-extra-loose padding-bottom-extra-loose">
+    <div class="grid-x align-middle margin-bottom-extra-loose">
+        <div class="large-2 cell">
+            <a class="button button--tertiary button--hasIcon" onclick="window.history.back();"><i class="fal fa-arrow-left"></i><span>Back</span></a>
+        </div>
+        <div class="large-8 cell text-align-center">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+        <div class="large-2 cell">
+        </div>
+    </div>
+    <div class="grid-x">
+        <div class="large-12 cell">
+            <section class="table margin-top">
+                <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+                    @{ int counter = 1; }
+                    @foreach (var room in Model)
+                    {
+                        <li class="accordion-item" data-accordion-item>
+                            <a href="#" class="accordion-title">Room @counter</a>
+                            <div class="accordion-content" data-tab-content>
+                                <table cellpadding="0" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Date</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>User Type</th>
+                                            <th align="right">Download</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in room)
+                                        {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.User.FullName)</td>
+                                            <td>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.CreatedDate.Value.ToString("HH:mm:ss")</td>
+                                            <td>
+                                                @if (item.Duration.HasValue)
+                                                {
+                                                    @item.CreatedDate.Value.AddSeconds(item.Duration.Value).ToString("HH:mm:ss")
+                                                }
+                                                else
+                                                {
+                                                    <span>N/A</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.UserId == ViewBag.ClassSessionOwnerId)
+                                                {
+                                                    <span>Tutor</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Student</span>
+                                                }
+                                            </td>
+                                            <td align="right">
+                                                <div class="display--flex">
+                                                    @if (string.IsNullOrEmpty(item.CompositionSid))
+                                                    {
+                                                        <a href="/admin/classsessions/generatecomposition/@item.ClassSessionVideoRoomId" class="button button--primary margin-left-auto">View Recordings</a>
+                                                    }
+                                                    else if (item.CompositionDownloadReady)
+                                                    {
+                                                        <a href="https://video.twilio.com/v1/Compositions/@item.CompositionSid/Media" target="_blank" class="button button--primary margin-left-auto">Download Composition</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>Composition Processing...</span>
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+                        counter++;
+                    }
+                </ul>
+            </section>
+        </div>
+    </div>
+</div>

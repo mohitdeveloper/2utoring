@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Cancellation Form";
+}
+@section meta{
+    <meta name="title" content="@ViewData["Title"]" />
+    <meta name="description" content="@ViewData["Title"]" />
+}
+
+
+<h1>@ViewData["Title"]</h1>
+
+<p>(Complete and return this form only if you wish to withdraw from the contract)<br /><br /></p>
+<div id="section-to-print">
+    <p>To Standing Out Limited</p>
+    <p>I/We [*] hereby give notice that I/We [*] cancel my/our [*] contract of for the supply of the following service [*],<br /><br /></p>
+    <p>Ordered on [*]/received on [*],<br /><br /></p>
+    <p>Name of consumer(s),<br /><br /></p>
+    <p>Address of consumer(s),<br /><br /><br /><br /><br /><br /></p>
+    <p>Signature of consumer(s) (only if this form is notified on paper),<br /><br /></p>
+    <p>Date<br /><br /></p>
+    <p>[*] Delete as appropriate</p>
+    <p>© Crown copyright 2013.</p>
+</div>
+
+
+<style media="print">
+    body * {
+        visibility: hidden;
+    }
+
+    #section-to-print, #section-to-print * {
+        visibility: visible;
+    }
+
+    #section-to-print {
+        position: absolute;
+        left: 0;
+        top: 100px;
+    }
+</style>

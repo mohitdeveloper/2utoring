@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "Join as a company";
+}
+
+@section meta{
+    <meta name="title" content="@ViewData["Title"]" />
+    <meta name="description" content="Join as a company on 2utoring to sell your classes to students worldwide and teach your lessons through our online classroom." />
+}
+
+<div class="Page__Container Page__Container--size:content my-56 mt-lg-section mb-lg-section-small">
+    <div class="row">
+        <div class="col-lg-6 order-2 order-lg-1">
+            <h1 class="cl-primary fs-50 fw-800">Start Earning - Teach Online</h1>
+            <p class="fs-18 fw-500 mt-21">In lockdown? No problem - move your tuition business online. Register and setup lessons in minutes.</p>
+            <p class="fs-18 fw-500 mt-21">Teach students in our secure online classroom, it is full of easy to use tools that will help you deliver powerful one to one and group learning experiences.</p>
+            <p class="fs-18 fw-500 mt-21">Boost your earnings by increasing your class sizes.</p>
+            @if (ViewBag.ShowBecomeCompanyLinks)
+            {
+                <a asp-route="CompanyPlans" 
+                   class="btn btn-accent btn-lg fs-18 cl-white w-100 w-lg-auto px-49 mt-21">Get started</a>
+            }
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 mb-35 mb-lg-0 text-center text-lg-right">
+            <img src="~/images/illustration-3.svg" alt="Illustration of a tutor facing away, tapping an icon on a digital online classroom." class="w-100 w-sm-100 w-md-100 w-lg-100 w-xl-auto" />
+    </div>
+    </div>
+</div>
+<div class="Page__Container Page__Container--size:content my-56 mt-lg-section mb-lg-section-small">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card--toRepsond:smallFill mt-35 mt-lg-auto mx-lg-42">
+                <div class="card-body py-35 py-lg-56">
+                    <h2 class="text-left text-lg-center fs-35 fw-800 cl-primary text-lg-center mb-14">Calculate your earnings</h2>
+                    <p class="text-left text-lg-center fw-600 fs-16 w-100 w-lg-75 mx-auto">See how much you can earn. Build your business with our online learning marketplace, teach up to 10 students per lesson using our classroom and get paid instantly</p>
+                    <div class="form-row mt-42">
+                        <div class="form-group col-12 col-lg-3">
+                            <label class="text-left">Lesson price</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">£</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Lesson Price" id="price" onchange="calcEarnings()" oninput="calcEarnings()" />
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-lg-3">
+                            <label class="text-left">No. of participants</label>
+                            <input type="text" class="form-control" placeholder="No. of participants" id="users" onchange="calcEarnings()" oninput="calcEarnings()" />
+                        </div>
+                        <div class="form-group col-12 col-lg-3">
+                            <label class="text-left">Lessons per week</label>
+                            <input type="text" class="form-control" placeholder="Lessons per week" id="lessons" onchange="calcEarnings()" oninput="calcEarnings()" />
+                        </div>
+                        <div class="form-group col-12 col-lg-3 mr-lg-auto mb-0">
+                            <label class="text-left">Total Earnings</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" style="height: 51px; margin-bottom: -2px; border: 2px solid #485465; border-right: 0; border-radius: 5px 0 0 5px">
+                                    <span class="input-group-text" style="border: 0;">£</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="£0.00" style="border: 2px solid #485465; border-left: 0; font-weight: 700;" id="earnings" />
+                            </div>
+                            <em class="fw-500 fs-13 mt-7 d-inline-block">*Minus classroom fees</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="Page__Container Page__Container--size:content my-56 mt-lg-section mb-lg-section-small">
+    <div class="row">
+        <div class="col-12 col-lg-6 mt-35">
+            <h2 class="cl-primary fs-50 fw-800">Tools to Communicate, Collaborate & Control</h2>
+            <p class="fs-18 fw-500 mt-21">The online classroom has been purposefully designed by teachers to mirror the collaborative environment of a classroom.</p>
+            <p class="fs-18 fw-500 mt-21">Communicate using video, audio and live chat, collaborate with whiteboards, web content and integrated Google Drive, classroom controls allow you to enable safe and flexible student permissions.</p>
+            @if (ViewBag.ShowBecomeCompanyLinks) {
+                <div class="col-12 d-block d-lg-none mt-35">
+                    <a asp-route="CompanyPlans" 
+                       class="d-none d-lg-inline-block btn btn-accent btn-lg fs-18 cl-white w-100 w-lg-auto px-49 mt-21">Find a lesson</a>
+                </div>
+            } 
+        </div>
+        <div class="col-lg-6 mt-35 mt-lg-70 mx-0">
+            <div class="row mx-lg-35">
+                <div class="col-6 mb-21 mb-lg-35 text-center"><img src="/images/rtc.png" class="d-block mx-auto" alt="Illustration of four figures linked by a dotted line circle, with a speech bubble in the middle." /><span class="fs-18 fw-600 px-0 px-lg-56 d-block">Real-time Communication</span></div>
+                <div class="col-6 mb-21 mb-lg-35 text-center"><img src="/images/cw.png" class="d-block mx-auto" alt="Illustration of a whiteboard with a pie chart in the middle of it." /><span class="fs-18 fw-600 px-0 px-lg-56 d-block">Collaborative Whiteboard</span></div>
+                <div class="col-6 text-center"><img src="/images/wac.png" class="d-block mx-auto" alt="Illustration of a webcam." /><span class="fs-18 fw-600 px-0 px-lg-56 d-block">Video and Audio Communication</span></div>
+                <div class="col-6 text-center"><img src="/images/lcm.png" class="d-block mx-auto" alt="Illustration of a speech bubble with an ellipsis in it, overlayed by a speech bubble with written lines in it." /><span class="fs-18 fw-600 px-0 px-lg-56 d-block">Live Chat Messaging</span></div>
+                @if (ViewBag.ShowBecomeCompanyLinks)
+                {
+                    <div class="col-12 d-block d-lg-none mt-35">
+                        <a asp-route="CompanyPlans" 
+                           class="btn btn-accent btn-lg fs-18 cl-white w-100 w-lg-auto px-49 mt-21 mb-63">Find a lesson</a>
+                    </div>
+                } 
+            </div>
+        </div>
+    </div>
+</div>
+<div class="Page__Container Page__Container--size:content my-56 mt-lg-section mb-lg-section-small">
+    <div class="row">
+        <div class="col-lg-6 order-1 order-lg-2 mb-35 mb-lg-0">
+            <img src="~/images/illustration-4.svg" alt="Illustration of a student on a tablet, messaging fellow students, with speech bubbles with text in them above the tablet to connote this." class="w-100 w-sm-100 w-md-100 w-lg-100 w-xl-auto" />
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2">
+            <h2 class="cl-primary fs-50 fw-800">Integrate with your existing students</h2>
+            <p class="fs-18 fw-500 mt-21">Once you are registered you can invite your current students to use the platform. Setting up private lessons and inviting them to participate couldn’t be simpler.</p>
+            @if (ViewBag.ShowBecomeCompanyLinks)
+            {
+                <a asp-route="CompanyPlans" class="btn btn-accent btn-lg fs-18 cl-white w-100 w-lg-auto px-49 mt-21">Get started</a>
+            }
+        </div>
+    </div>
+    <div class="row my-77">
+        <div class="col-lg-6 order-2 order-lg-1">
+            <h2 class="cl-primary fs-50 fw-800">Add your classes to our online learning Marketplace</h2>
+            <p class="fs-18 fw-500 mt-21">Attract new students by promoting your lessons on our marketplace. Create lessons for mainstream or specialist subjects and set your own attendance fees.</p>
+            <p class="fs-18 fw-500 mt-21">By teaching up to ten learners in a lesson you can boost your earnings, reduce your costs and grow your business.</p>
+            @if (ViewBag.ShowBecomeCompanyLinks)
+            {
+                <a asp-route="CompanyPlans" class="btn btn-accent btn-lg fs-18 cl-white w-100 w-lg-auto px-49 mt-21">Get started</a>
+            }
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 mb-35 mb-lg-0">
+            <img src="~/images/illustration-2.svg" alt="Illustration of three students celebrating by jumping up with their arms in the air." class="w-100 w-sm-100 w-md-100 w-lg-100 w-xl-auto" />
+        </div>
+    </div>
+</div>
+
+@section scripts{ 
+<script>
+    var commission = '@ViewBag.BaseClassSessionCommision';
+
+    function calcEarnings() {
+        var price = document.getElementById('price').value;
+        var users = document.getElementById('users').value;
+        var lessons = document.getElementById('lessons').value;
+
+        var result = price * users * lessons;
+        result = result * (1 - (commission / 100));
+        document.getElementById('earnings').value = '£' + result.toFixed(2);
+        
+    }
+
+</script>
+}

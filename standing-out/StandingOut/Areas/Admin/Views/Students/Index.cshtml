@@ -1,0 +1,46 @@
+﻿@model IEnumerable<StandingOut.Data.Models.User>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<div class="grid-container grid-container--wide">
+    <div class="grid-x margin-bottom-loose margin-top-extra-loose">
+        <div class="large-6 cell">
+            <h2>@ViewData["Title"]</h2>
+        </div>
+        <div class="large-6 cell text-align-right display--flex flex--spaceBetween flex--alignCenter">
+        </div>
+    </div>
+    <div class="grid-x">
+        <div class="large-12 cell">
+            <section class="table margin-top">
+                <table class="datatable" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td>
+                                    <div class="display--flex flex--spaceBetween">
+                                        <a asp-action="View" asp-route-id="@item.Id" class="button button--primary margin-left-auto">View</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>

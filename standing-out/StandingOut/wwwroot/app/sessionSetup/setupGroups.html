@@ -1,0 +1,28 @@
+﻿<div ng-controller="SetupGroupsController as ctrl">
+
+    <div class="display--flex align-justify margin-bottom-loose">
+        <button type="button" class="button button--primary margin-left-auto button--hasIcon" ng-click="addGroup()"><i class="fal fa-plus"></i><span>Add</span></button>
+    </div>
+
+    <section class="form">
+        <div class="grid-x margin-bottom-base" ng-repeat="group in groups">
+            <div class="large-8 cell">
+                <h2>{{group.name}}</h2>
+            </div>
+            <div class="large-4 cell" ng-show="group.sessionGroupId !== undefined && group.sessionGroupId != null && group.sessionGroupId != ''">
+                <div class="display--flex button--group">
+                    <a href="#" ng-click="editGroup(group)" class="button button--primary margin-left-auto">Edit</a>
+                    <a href="#" ng-click="deleteGroup(group)" class="button button--distructive">Delete</a>
+                </div>
+            </div>
+
+            <div class="large-12 cell">
+                <div as-sortable="sortableAttendees" ng-model="group.sessionAttendees" data-session-group-id="{{group.sessionGroupId}}" style="min-height: 62px">
+                    <div ng-repeat="item in group.sessionAttendees" as-sortable-item class="display--flex padding-base">
+                        <i class="fas fa-bars" as-sortable-item-handle ng-show="!processing"></i><span class="margin-left-tight">{{item.firstName}} {{item.lastName}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

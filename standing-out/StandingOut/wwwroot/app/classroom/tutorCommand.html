@@ -1,0 +1,106 @@
+﻿<div ng-controller="TutorCommandController as ctrl" ng-if="sessionEnded == false">
+    <div class="Footer__Card" ng-show="isOpen">
+        <div class="container__head">
+            <div class="contatiner__title">Classroom controls</div>
+            <div class="container__headers">
+                <div class="cc-name">&nbsp;</div>
+                <div class="cc-permissions">Permissons</div>
+                <div class="cc-interaction">Interactions</div>
+            </div>
+        </div>
+        <ul class="accordion" data-accordion data-allow-all-closed="true" data-multi-expand="true">
+            <li class="accordion-item accordion-item--subdued cc-row" data-accordion-item> 
+                <a href="#" class="accordion-title cc-name">
+                    <div>All Users <i class="far fa-chevron-down"></i></div>
+                </a>
+                <div class="icon-group cc-permissions">
+                    <i ng-if="!sessionEnded" ng-click="wholeClassGenericToggle('videoEnabled')" title="Toggle video permissions" ng-class="(allAttendeesToggle.videoEnabled == true) ? 'far fa-video active' : 'far fa-video inactive'"></i>
+                    <i ng-if="!sessionEnded" ng-click="wholeClassGenericToggle('audioEnabled')" title="Toggle audio permissions" ng-class="(allAttendeesToggle.audioEnabled == true) ? 'far fa-microphone active' : 'far fa-microphone inactive'"></i>
+                    <i ng-if="!sessionEnded" ng-click="wholeClassGenericToggle('screenShareEnabled')" title="Toggle screen share permissions" ng-class="(allAttendeesToggle.screenShareEnabled == true) ? 'far fa-desktop active' : 'far fa-desktop inactive'"></i>
+                    <i ng-if="!sessionEnded" ng-click="wholeClassGenericToggle('callIndividualsEnabled')" title="Toggle make a call permission" ng-class="(allAttendeesToggle.callIndividualsEnabled == true) ? 'far fa-user-friends active' : 'far fa-user-friends inactive'"></i>
+                    <i ng-click="allToggleChat()" title="All chat permission" ng-class="(chatActive == true) ? 'far fa-comment active':'far fa-comment inactive'"></i>
+                </div>
+                <div class="icon-group cc-interaction">
+                    <a ng-click="openRootFolder()" ng-show="classSession != undefined && classSession.requiresGoogleAccount == true"><i title="Root folder" class="far fa-file grey"></i></a>
+                    <i ng-click="openAllChat()" title="Message whole class" class="far fa-comment-dots grey"></i>
+                    <i ng-if="!sessionEnded && sessionStarted" ng-click="broadcastAll()" title="Broadcast to whole class" ng-class="broadcastingTo == 'All' ? 'fal fa-megaphone grey active' : 'fal fa-megaphone grey inactive'"></i>
+                    <i ng-click="openAllWhiteboard()" title="Whole class whiteboard" class="far fa-chalkboard grey"></i>
+                    <a ng-click="openSharedFolder()"  ng-show="classSession != undefined && classSession.requiresGoogleAccount == true"><i title="Shared folder" class="far fa-folders grey"></i></a>
+                </div>
+                <div class="cc-delete"></div>
+                <div class="accordion-content" data-tab-content>
+                    <div  class="Command__List" ng-repeat="user in allAttendees" ng-class="user.helpRequested ? (user.selected == true ? 'Command__List--selected-notify' : 'Command__List--notify') : (user.selected == true ? 'Command__List--selected' : '')">
+                        <div class="cc-name">
+                            <div ng-click="selectUser(user.userId)" class="cursor-pointer"><span class="indicator indicator--small" ng-class="(user.online == true) ? 'indicator--green' : 'indicator--red'"></span></div>
+                            <div ng-click="selectUser(user.userId)" class="cursor-pointer"><p>{{user.firstName}} {{user.lastName}}</p></div>
+                        </div>
+                        <div class="icon-group cc-permissions">
+                            <a ng-if="!sessionEnded" ng-click="individualGenericToggle($index, 'videoEnabled')"><i title="Video permission" ng-class="(user.videoEnabled == true) ? 'far fa-video active' : 'far fa-video inactive'"></i></a>
+                            <a ng-if="!sessionEnded" ng-click="individualGenericToggle($index, 'audioEnabled')"><i title="Audio permission" ng-class="(user.audioEnabled == true) ? 'far fa-microphone active' : 'far fa-microphone inactive'"></i></a>
+                            <a ng-if="!sessionEnded" ng-click="individualGenericToggle($index, 'screenShareEnabled')"><i title="Screen share permission" ng-class="(user.screenShareEnabled == true) ? 'far fa-desktop active' : 'far fa-desktop inactive'"></i></a>
+                            <a ng-if="!sessionEnded" ng-click="individualGenericToggle($index, 'callIndividualsEnabled')"><i title="Make a call permission" ng-class="(user.callIndividualsEnabled == true) ? 'far fa-user-friends active' : 'far fa-user-friends inactive'"></i></a>
+                            <a ng-click="individualToggleChat($index)"><i title="Individual chat permission" ng-class="(user.chatActive == true) ? 'far fa-comment active' : 'far fa-comment inactive'"></i></a>
+                        </div>
+                        <div class="icon-group cc-interaction">
+                            <a ng-click="openStudentFolder(user.userId)" ng-show="classSession != undefined && classSession.requiresGoogleAccount == true"><i title="{{user.firstName}}'s folder" class="far fa-file grey"></i></a>
+                            <a ng-click="openSingleChat(user.userId)" ng-show="user.online"><i title="Message {{user.firstName}}" class="far fa-comment-dots grey"></i></a>
+                            <a ng-if="!sessionEnded && sessionStarted" ng-click="broadcastUser(user)" ng-show="user.online"><i title="Broadcast to {{user.firstName}}" ng-class="broadcastingTo == user.userId ? 'fal fa-megaphone grey active' : 'fal fa-megaphone grey inactive'"></i></a>
+                            <a ng-click="openSingleWhiteboard(user.userId)" ng-show="user.online"><i title="{{user.firstName}}'s whiteboard" class="far fa-chalkboard grey"></i></a>
+                        </div>
+                        <div class="cc-delete"></div>
+                    </div>
+                </div>
+            </li>
+            <li  class="accordion-item" ng-repeat="group in groups" data-accordion-item ng-if="group.hide == false" ng-init="groupIndex = $index">
+                <a href="#" class="accordion-title cc-name">
+                    <div>{{group.name}} <i class="far fa-chevron-down"></i></div>
+                </a>
+                <div class="icon-group cc-permissions">
+                    <i ng-if="!sessionEnded" ng-click="wholeGroupGenericToggle($index, 'groupVideoEnabled')" title="Toggle group video permissions" ng-class="(group.groupVideoEnabled == true) ? 'far fa-video active' : 'far fa-video inactive'"></i>
+                    <i ng-if="!sessionEnded" ng-click="wholeGroupGenericToggle($index, 'groupAudioEnabled')" title="Toggle group audio permissions" ng-class="(group.groupAudioEnabled == true) ? 'far fa-microphone active' : 'far fa-microphone inactive'"></i>
+                    <i ng-if="!sessionEnded" ng-click="wholeGroupGenericToggle($index, 'groupScreenShareEnabled')" title="Toggle group screen share permissions" ng-class="(group.groupScreenShareEnabled == true) ? 'far fa-desktop active' : 'far fa-desktop inactive'"></i>
+                    <i ng-click="groupToggleChat($index)" title="Group chat permission" ng-class="(group.chatActive == true) ? 'far fa-comment active' : 'far fa-comment inactive'"></i>
+                </div>
+                <div class="icon-group cc-interaction">
+                    <i></i>
+                    <i ng-click="openGroupChat(group.sessionGroupId)" title="Message {{group.name}}" class="far fa-comment-dots grey"></i>
+                    <i ng-if="!sessionEnded && sessionStarted" ng-click="broadcastGroup(group.sessionGroupId)" title="Broadcast to {{group.name}}" ng-class="broadcastingTo == group.sessionGroupId ? 'far fa-megaphone grey active' : 'far fa-megaphone grey inactive'"></i>
+                    <i ng-click="openGroupWhiteboard(group.sessionGroupId)" title="{{group.name}} whiteboard" class="far fa-chalkboard grey"></i>
+
+                </div>
+                <div class="cc-delete">
+                    <i ng-click="addToGroup($index)" ng-show="selectedCount > 0 && selectedCount > group.selectedCount" class="far fa-plus-square grey"></i>
+                    <i ng-click="removeFromGroup($index)" ng-show="group.selectedCount > 0 && group.selectedCount == selectedCount" class="far fa-minus-square grey"></i>
+                    <i ng-click="removeGroup($index)" title="Delete group" class="far fa-times-circle"></i>
+                </div>
+                <div class="accordion-content" data-tab-content>
+                    <div class="Command__List" ng-repeat="user in group.sessionAttendees" ng-class="user.helpRequested ? (user.selected == true ? 'Command__List--selected-notify' : 'Command__List--notify') : (user.selected == true ? 'Command__List--selected' : '')">
+                        <div class="cc-name">
+                            <div ng-click="selectUser(user.userId)" class="cursor-pointer"><span class="indicator indicator--small" ng-class="(user.online == true) ? 'indicator--green' : 'indicator--red'"></span></div>
+                            <div ng-click="selectUser(user.userId)" class="cursor-pointer"><p>{{user.firstName}} {{user.lastName}}</p></div>
+                        </div>
+                        <div class="icon-group cc-permissions">
+                            <a ng-if="!sessionEnded" ng-click="groupGenericToggle(groupIndex, $index, 'groupVideoEnabled')"><i title="Video permission" ng-class="(user.groupVideoEnabled == true) ? 'far fa-video active' : 'far fa-video inactive'"></i></a>
+                            <a ng-if="!sessionEnded" ng-click="groupGenericToggle(groupIndex, $index, 'groupAudioEnabled')"><i title="Audio permission" ng-class="(user.groupAudioEnabled == true) ? 'far fa-microphone active' : 'far fa-microphone inactive'"></i></a>
+                            <a ng-if="!sessionEnded" ng-click="groupGenericToggle(groupIndex, $index, 'groupScreenShareEnabled')"><i title="Screen share permission" ng-class="(user.groupScreenShareEnabled == true) ? 'far fa-desktop active' : 'far fa-desktop inactive'"></i></a>
+                        </div>
+                        <div class="icon-group cc-interaction"></div>
+                        <div class="cc-delete"></div>
+                    </div>
+                </div>
+            </li>
+            <li class="accordion-item">
+              <input type="text" ng-model="groupToAdd" ng-disabled="disableAddGroup" class="cc-group-input form-control" placeholder="Add a name to create a new group"/>
+              <button type="button" class="button button--success cc-group-button" title="Add a group name" ng-click="addGroup()" ng-disabled="groupToAdd == '' || disableAddGroup">Add group</button>
+            </li>
+        </ul>
+    </div>
+    <div class="Footer__Block" title="{{sessionEnded ? 'Tutor Command is not available out of class' : 'Tutor Command'}}" ng-click="toggle()" ng-class="helpRequested && !sessionEnded ? 'notificationLabel' : 'label'">
+        <span class="status status--fixed status--textNo status--blink" ng-if="totalHelpNeeded() > 0">{{totalHelpNeeded()}}</span>
+
+        
+        <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M9 4C8.448 4 8 3.552 8 3C8 2.448 8.448 2 9 2C9.552 2 10 2.448 10 3C10 3.552 9.552 4 9 4ZM12 3C12 1.346 10.654 0 9 0C7.346 0 6 1.346 6 3C6 4.302 6.839 5.401 8 5.815V19C8 19.553 8.447 20 9 20C9.553 20 10 19.553 10 19V5.815C11.161 5.401 12 4.302 12 3ZM3 16C2.448 16 2 15.552 2 15C2 14.448 2.448 14 3 14C3.552 14 4 14.448 4 15C4 15.552 3.552 16 3 16ZM4 12.185V1C4 0.447 3.553 0 3 0C2.447 0 2 0.447 2 1V12.185C0.839 12.599 0 13.698 0 15C0 16.302 0.839 17.401 2 17.815V19C2 19.553 2.447 20 3 20C3.553 20 4 19.553 4 19V17.815C5.161 17.401 6 16.302 6 15C6 13.698 5.161 12.599 4 12.185ZM15 12C14.448 12 14 11.552 14 11C14 10.448 14.448 10 15 10C15.552 10 16 10.448 16 11C16 11.552 15.552 12 15 12ZM18 11C18 9.698 17.161 8.599 16 8.185V1C16 0.447 15.553 0 15 0C14.447 0 14 0.447 14 1V8.185C12.839 8.599 12 9.698 12 11C12 12.302 12.839 13.401 14 13.815V19C14 19.553 14.447 20 15 20C15.553 20 16 19.553 16 19V13.815C17.161 13.401 18 12.302 18 11Z" fill="#222B45" />
+        </svg>
+    </div>
+</div>

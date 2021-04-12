@@ -1,0 +1,16 @@
+﻿<div class="popup-overlay">
+    <div id="alert-popup" class="white-popup-block grid-container">
+        <div class="grid-x">
+            <div class="large-12 cell">
+                <h2>{{title}}</h2>
+                <p ng-bind-html="message"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 cell">
+                <button type="button" ng-click="confirm(false)" class="black button">{{noText}}</button>
+                <button type="button" ng-click="confirm(true)" class="red button right">{{yesText}}</button>
+            </div>
+        </div>
+    </div>
+</div>

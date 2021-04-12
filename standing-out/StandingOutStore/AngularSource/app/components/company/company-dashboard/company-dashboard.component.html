@@ -1,0 +1,95 @@
+<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0"
+     style="padding:5%;">
+    <div class="item item-1 col-md-3">
+        <div class="d-lg-flex align-items-center">
+            <div class="Avatar Avatar--size:largest mr-lg-63">
+                <img *ngIf="company?.storeProfileImageDownload != ''" src="{{company?.storeProfileImageDownload}}" alt="{{company?.name}}" />
+                <img *ngIf="company?.storeProfileImageDownload == ''" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQu6buuk0ffXERQZ5mcqE-NeAAWTYJ1qWc-0g&usqp=CAU" alt="{{company?.name}}" />
+            </div>
+        </div>
+    </div>
+
+    <div class="item item-3 col-md-10" fxFlex>
+        <h1><b>{{company?.companyName}}</b></h1>
+        <div class="break"></div> <!-- break -->
+        <!--<h5 *ngIf="company?.companyRegistrationNumber"> <b>Reg. No: </b><span style="margin-left:100px;">{{company?.companyRegistrationNumber}}</span></h5>
+        <h5> <b>Name : </b> <span style="margin-left:115px;">{{company?.userTitle}}  {{company?.userFullName}}</span></h5>
+        <h5> <b> Email : </b> <span style="margin-left:119px;">{{company?.emailAddress}} </span></h5>
+        <h5> <b>Mobile : </b><span style="margin-left:107px;">{{company?.telephoneNumber}}</span></h5>-->
+        <!--<h5> <b>Description : </b>{{company?.companyDescription}}</h5>-->
+        <div class="break"></div> <!-- break -->
+        <h5> <b>Subjects taught : </b><span> {{company?.subjectNameList}}</span> </h5>
+    </div>
+</div>
+
+<!--<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+
+    <div class="item item-1 col-md-3" style="border:1px solid #ccc; border-radius: 5px;">
+        <p class="titles">Courses this Month</p>
+        <ngx-gauge [size]="gaugeSize" [thick]="thick" [foregroundColor]="gaugeColor" [type]="gaugeType"
+                   [value]="coursesThisMonth" [label]="gaugeLabel" [append]="gaugeAppendText">
+        </ngx-gauge>
+        <hr>
+        <p class="titles">Lession this Month</p>
+        <ngx-gauge [size]="gaugeSize" [thick]="thick" [foregroundColor]="gaugeColor" [type]="gaugeType"
+                   [value]="lessonThisMonth" [label]="gaugeLabel" [append]="gaugeAppendText">
+        </ngx-gauge>
+    </div>
+    <div class="item item-1 col-md-3" style="border:1px solid #ccc; border-radius: 5px;">
+        <p class="titles">Revenue this Month</p>
+        <p style="font-size:25px; text-align: center;">{{ revenueThisMonth }}</p>
+        <hr>
+        <p class="titles">Revenue percentage</p>
+        <p style="font-size:25px; text-align: center;">{{ revenuePercentage }}</p>
+    </div>
+    <div class="item item-1 col-md-3" style="border:1px solid #ccc; border-radius: 5px;">
+        <p class="titles">Most popular subject</p>
+        <ngx-gauge [size]="gaugeSize" [thick]="thick" [foregroundColor]="gaugeColor" [type]="gaugeType"
+                   [value]="mostPopularSubject" [label]="gaugeLabel" [append]="gaugeAppendText">
+        </ngx-gauge>
+        <span class="subjectTitle">{{mostPopularSubjectText}}</span>
+        <hr>
+        <p class="titles">Most popular level</p>
+        <span class="subjectTitle">{{mostPopularLevel}}</span>
+    </div>
+
+</div>
+<div class="break"></div>-->
+ <!-- break -->
+<!--<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+
+    <div class="item item-1 col-md-3" style="border:1px solid #ccc; border-radius: 5px;">
+        <p class="titles">Open Safeguarding issues</p>
+        <ngx-gauge [size]="gaugeSize" [thick]="thick" [foregroundColor]="gaugeColor" [type]="gaugeType"
+                   [value]="openSafeGaurdIsses" [label]="gaugeLabel" [append]="gaugeAppendText">
+        </ngx-gauge>
+        <hr>
+        <p class="titles">Closed Safeguarding issues</p>
+        <ngx-gauge [size]="gaugeSize" [thick]="thick" [foregroundColor]="gaugeColor" [type]="gaugeType"
+                   [value]="closedSafeGaurdIsses" [label]="gaugeLabel" [append]="gaugeAppendText">
+        </ngx-gauge>
+    </div>
+    <div class="item item-1 col-md-3" style="border:1px solid #ccc; border-radius: 5px;">
+        <p class="titles">Lesson today</p>
+        <p style="font-size:25px; text-align: center;">{{lessonsToday}}</p>
+        <hr>
+        <p class="titles">Number of students today</p>
+        <p style="font-size:25px; text-align: center;">{{numberOfStudentsToday}}</p>
+    </div>
+    <div class="item item-1 col-md-3" style="border:1px solid #ccc; border-radius: 5px;">
+        <p class="titles">Revenue today</p>
+        <p style="font-size:25px; text-align: center;">{{revenueToday}}</p>
+        <hr>
+        <p class="titles">Revenue percentage</p>
+        <p style="font-size:25px; text-align: center;">{{revenuePercentageToday}}</p>
+    </div>
+</div>
+<div class="break"></div>-->
+ <!-- break -->
+<!--<div class="break"></div>--> <!-- break -->
+<!--<div class="break"></div>--> <!-- break -->
+<!--<div class="break"></div>--> <!-- break -->
+<!--<div class="break"></div>--> <!-- break -->
+<!--<div class="break"></div>--> <!-- break -->
+<!--<div class="break"></div>--> <!-- break -->
+<!--<div class="break"></div>--> <!-- break -->

@@ -1,0 +1,92 @@
+﻿
+<main class="so-content-page" ng-controller="SearchController" class="grid-x">
+
+    <section class="so-section-generic-text">
+        <div class="grid-container">
+
+            <div>
+
+                <div class="large-12 cell">
+
+                    <div class="grid-x align-justify">
+                        <div class="small-10 cell">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search..." ng-model="globalSearch.search" class="input-group-field" />
+                                <div class="input-group-button">
+                                    <button type="button" ng-click="genericSearch('global')" class="form-button so-bkgd-orange-dark so-color-white">Search</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="small-shrink">
+                            <select ng-options="item.value as item.label for item in takeData" ng-model="globalSearch.take" ng-change="genericSearch('global')"></select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid-x so-search-item-container">
+                    <div class="large-12" ng-repeat="record in globalData.data" ng-class="{record.globalSearchTypeDisplay : true}" ng-click="goTo(record)">
+                        <div class="grid-x" >
+                            <div class="cell large-12">
+                                <div class="grid-x search-item-row">
+                                
+                                    <div class="cell medium-2">
+                                        <div ng-if="record.imageDownloadUrl !== undefined && record.imageDownloadUrl != null && record.imageDownloadUrl != ''">
+                                            <div class="search-item-row__profile">
+                                                <img src="{{record.imageDownloadUrl}}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="cell medium-10">                                    
+                                        <h2>{{record.name}}</h2>                            
+                                        <h2>{{record.header}}</h2>
+                                        <h3>{{record.subHeader}}</h3>
+                                        <p ng-bind-html="record.biography"></p>
+                                    
+                                        <button ng-if="record.globalSearchType === 'Tutor'" class="button" type="button" ng-click="goTo(record)">See my classes</button>
+                                        <button ng-if="record.globalSearchType !== 'Tutor'" class="button" type="button" ng-click="goTo(record)">View details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="large-12 cell">
+                    <div class="grid-x" ng-show="globalData.data.length == 0">
+                        <div class="cell large-12">
+                            <p >No records found</p>
+                        </div>
+                    </div>
+
+                    <div class="grid-x align-middle so-pagination-container" ng-show="globalData.data.length > 0">
+                        <div class="small-6 cell">
+                            <p>Page {{globalData.paged.page + 1}} of {{globalData.paged.totalPages + 1}}</p>
+                        </div>
+                        <div class="small-6 cell">
+                            <div class="grid-x align-right">
+                                <div class="medium-4 cell">
+                                    <div class="grid-x align-justify align-middle">
+                                        <div class="small-shrink">
+                                            <button ng-class="{disabled:globalData.paged.page <= 0}" ng-click="genericPage('back', 'global')" ng-disabled="globalData.paged.page <= 0">Previous</button>
+                                        </div>
+                                        <div class="small-auto">
+                                            <p class="text-center">{{globalData.paged.page + 1}}</p>
+                                        </div>
+                                        <div class="small-shrink">
+                                            <button ng-class="{disabled:globalData.paged.page >= globalData.paged.totalPages}" ng-click="genericPage('next', 'global')" ng-disabled="globalData.paged.page >= globalData.paged.totalPages">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>

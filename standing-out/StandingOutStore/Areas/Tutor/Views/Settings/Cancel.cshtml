@@ -1,0 +1,41 @@
+﻿@model StandingOut.Data.DTO.TutorCancel
+@{
+    ViewData["Title"] = "Tutor Cancel";
+}
+
+@section meta{
+    <meta name="title" content="@ViewData["Title"]" />
+    <meta name="robots" content="noindex">
+}
+
+<div class="Page__Container--size:medium mb-56">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="fw-800 fs-32 mb-56">@ViewData["Title"]</h1>
+            <form asp-antiforgery="true">
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label asp-for="TutorCancelAccountReason"></label>
+                        <select asp-for="TutorCancelAccountReason" asp-items="Html.GetEnumSelectList<StandingOut.Data.Enums.TutorCancelAccountReason>()" class="form-control"></select>
+                        <div class="invalid-feedback d-block">
+                            <span asp-validation-for="TutorCancelAccountReason"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label asp-for="TutorCancelAccountReasonDescription"></label>
+                        <textarea asp-for="TutorCancelAccountReasonDescription" class="form-control w-100" rows="7"></textarea>
+                        <div class="invalid-feedback d-block">
+                            <span asp-validation-for="TutorCancelAccountReasonDescription"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="Form_Block-Controls">
+                    <a asp-action="Index" class="link-grey">Go Back</a>
+                    <button type="submit" class="btn btn-lg btn-danger">Close account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

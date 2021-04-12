@@ -1,0 +1,129 @@
+﻿.io-tab-container {
+    height: 100%;
+
+    ::selection {
+        background-color: transparent;
+        color: inherit;
+    }
+
+    ul.io-tabs {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        &.tabs--visible {
+            @extend %toolbar-visible;
+        }
+
+        &.tabs--hidden {
+            @extend %toolbar-hidden;
+        }
+
+        li {
+            align-items: center;
+            background-color: $borderColor;
+
+            border-radius: 5px 5px 0 0;
+            height: 40px;
+            margin-top: 9px;
+
+            &:not(:last-child) {
+                margin-right: 1px;
+            }
+
+            box-sizing: border-box;
+            cursor: pointer;
+            display: flex;
+            padding: 7px 14px;
+            font-family: $fontFamily;
+            font-size: 15px;
+            font-weight: 400;
+            white-space: nowrap;
+
+            &:not(:first-child) {
+                flex: 1;
+            }
+
+
+            &.li--widthFixed {
+                background-color: $teal;
+                border-radius: 5px 5px 0 0;
+                color: #fff;
+                height: 40px;
+                flex: 0;
+                max-width: 150px;
+                margin-left: 2px;
+                margin-top: 9px;
+            }
+
+            &:not(.li--widthFixed) {
+                max-width: 175px;
+            }
+
+            &:first-child {
+                padding: 14px 21px;
+            }
+
+            input {
+                background-color: transparent !important;
+                border: 0 !important;
+                border-bottom: 1px solid transparent !important;
+                border-radius: 0 !important;
+                font-family: $fontFamily;
+                font-size: 15px;
+                font-weight: 400;
+                height: 18px;
+                outline: none;
+                text-align: center;
+                text-overflow: ellipsis;
+                width: 100%;
+
+                &:hover,
+                &:focus,
+                &:active {
+                    box-shadow: none;
+                }
+            }
+
+            input ~ i{
+                margin-left: -12px;
+            }
+
+            .tabName {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            &.active {
+                background-color: #222b45;
+                color: #FFF;
+
+                input {
+                    color: #fff;
+                    cursor: text;
+
+                    &:focus {
+                        border-bottom: 1px solid #fff !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .io-tab-content {
+        background-color: #fff;
+        display: none;
+        height: calc(100% - 48px);
+
+        &.active {
+            display: block;
+        }
+    }
+}
+
+.largeModalWrap {
+    width: 1000px !important;
+    max-width: 1000px !important;
+}

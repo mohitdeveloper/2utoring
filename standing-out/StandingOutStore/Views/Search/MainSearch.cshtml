@@ -1,0 +1,49 @@
+﻿@section meta{
+    <meta name="title" content="@ViewData["Title"] | 2utoring" />
+    <meta name="description" content="@ViewBag.Description" />
+    <meta name="keywords" content="search, @ViewBag.AdditionalKeywords" />
+
+}
+@section styles{
+    <link rel="stylesheet" href="~/lib/assets/css/global.css" />
+}
+
+<app-root id="app-angular" app-mode="main-search"></app-root>
+
+@section scripts{
+    <script type="text/javascript">
+        var isAuthenticated = '@User.Identity.IsAuthenticated';
+    </script>
+
+    @*<script type="text/javascript" src="~/lib/assets/js/jquery-ui.min.js"></script>*@
+    @* New JS Reference Start *@
+    <script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js"></script>
+    <script type="text/javascript" src="~/lib/assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="~/lib/assets/js/owl.carousel.js"></script>
+    <script type="text/javascript" src="~/lib/assets/js/moment-with-locales.js"></script>
+    <script type="text/javascript" src="~/lib/assets/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="~/lib/assets/js/main.js"></script>
+    @* New JS Reference End *@
+
+    <environment names="Development">
+        <!-- Development versions of Angular (easier to debug) -->
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/vendor.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/main.js"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <!-- Production versions of Angular (faster loading) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/main.js"></script>
+    </environment>
+
+
+
+
+}

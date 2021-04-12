@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "Link Account";
+}
+
+<div class="col-14 col-lg-8 offset-lg-2">
+    <div class="Card Card--toRepsond:small">
+        <h1 class="mb-5 fw-800">Link Account</h1>
+        @if (Model.VisibleExternalProviders.Any())
+        {
+            <ul class="list-inline">
+                @foreach (var provider in Model.VisibleExternalProviders)
+                {
+                    <li>
+                        <a class="btn btn-accent btn-lg fs-15 fw-700 py-7 cl-white d-inline-block"
+                            asp-controller="External"
+                            asp-action="Challenge"
+                            asp-route-provider="@provider.AuthenticationScheme"
+                            asp-route-returnUrl="@Model.ReturnUrl"
+                            asp-route-link="true">
+                            @provider.DisplayName
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+
+        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
+        {
+            <div class="alert alert-warning">
+                <strong class="d-block">Invalid login request</strong>
+                There are no login schemes configured for this client.
+            </div>
+        }
+
+        <a class="btn btn-default" asp-controller="Home" asp-action="Redirect" asp-route-returnUrl="@Model.ReturnUrl">Cancel</a>
+        
+    </div>
+</div>

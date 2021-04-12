@@ -1,0 +1,248 @@
+<!-- I believe this component is not used as we no longer create Lessons, instead we Create Courses -->
+<div class="Page__Container--size:content mb-56 Page--process:LessonCreate">
+    <form (ngSubmit)="save()" [formGroup]="classSessionForm" *ngIf="classSessionForm != undefined">
+        <div class="form-row">
+            <div class="col-12">
+                <h1 *ngIf="classSessionId == undefined">Create a lesson</h1>
+            </div>
+        </div>
+        <div class="form-row" *ngIf="classSessionId != undefined">
+            <div class="col-12">
+                <ul class="Section__Nav mb-28">
+                    <li><h1 class="mb-0">Edit a lesson</h1></li>
+                    <li><a href="/Tutor/ClassSessions/Delete/{{classSessionId}}" class="ml-14 text-danger">Delete Lesson</a></li>
+                    <li><a class="btn btn-light active " href="/Tutor/ClassSessions/Edit/{{classSessionId}}">Lesson Setup <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 8H12.865L9.232 12.36C8.878 12.784 8.936 13.415 9.36 13.768C9.785 14.122 10.415 14.064 10.769 13.64L15.769 7.64C15.808 7.593 15.827 7.538 15.856 7.486C15.88 7.444 15.909 7.408 15.927 7.362C15.972 7.247 15.999 7.126 15.999 7.004C15.999 7.003 16 7.001 16 7C16 6.999 15.999 6.997 15.999 6.996C15.999 6.874 15.972 6.753 15.927 6.638C15.909 6.592 15.88 6.556 15.856 6.514C15.827 6.462 15.808 6.407 15.769 6.36L10.769 0.36C10.57 0.123 10.286 0 10 0C9.774 0 9.547 0.076 9.36 0.232C8.936 0.585 8.878 1.216 9.232 1.64L12.865 6H1C0.448 6 0 6.448 0 7C0 7.552 0.448 8 1 8Z" fill="#222B45" /></svg></a></li>
+                    <li><a class="btn btn-success" href="/Tutor/ClassSessions/SetupMaterial/{{classSessionId}}">Files & Media <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 8H12.865L9.232 12.36C8.878 12.784 8.936 13.415 9.36 13.768C9.785 14.122 10.415 14.064 10.769 13.64L15.769 7.64C15.808 7.593 15.827 7.538 15.856 7.486C15.88 7.444 15.909 7.408 15.927 7.362C15.972 7.247 15.999 7.126 15.999 7.004C15.999 7.003 16 7.001 16 7C16 6.999 15.999 6.997 15.999 6.996C15.999 6.874 15.972 6.753 15.927 6.638C15.909 6.592 15.88 6.556 15.856 6.514C15.827 6.462 15.808 6.407 15.769 6.36L10.769 0.36C10.57 0.123 10.286 0 10 0C9.774 0 9.547 0.076 9.36 0.232C8.936 0.585 8.878 1.216 9.232 1.64L12.865 6H1C0.448 6 0 6.448 0 7C0 7.552 0.448 8 1 8Z" fill="#222B45" /></svg></a></li>
+                    <li><a class="btn btn-success" href="/Tutor/ClassSessions/SetupStudents/{{classSessionId}}">Invitation List <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 8H12.865L9.232 12.36C8.878 12.784 8.936 13.415 9.36 13.768C9.785 14.122 10.415 14.064 10.769 13.64L15.769 7.64C15.808 7.593 15.827 7.538 15.856 7.486C15.88 7.444 15.909 7.408 15.927 7.362C15.972 7.247 15.999 7.126 15.999 7.004C15.999 7.003 16 7.001 16 7C16 6.999 15.999 6.997 15.999 6.996C15.999 6.874 15.972 6.753 15.927 6.638C15.909 6.592 15.88 6.556 15.856 6.514C15.827 6.462 15.808 6.407 15.769 6.36L10.769 0.36C10.57 0.123 10.286 0 10 0C9.774 0 9.547 0.076 9.36 0.232C8.936 0.585 8.878 1.216 9.232 1.64L12.865 6H1C0.448 6 0 6.448 0 7C0 7.552 0.448 8 1 8Z" fill="#222B45" /></svg></a></li>
+                </ul>
+                <hr />
+            </div>
+        </div>
+        <hr />
+        <div class="form-group col-12 px-0">
+            <div class="d-lg-flex justify-content-lg-between align-items-lg-center">
+                <div>
+                    <label>Google features</label>
+                    <div class="d-flex align-items-center">
+                        <div class="form-check form-check-switch">
+                            <label class="form-check-label">
+                                <input type="checkbox" id="requiresGoogleAccount" name="requiresGoogleAccount" formControlName="requiresGoogleAccount" class="form-check-input" />
+                                <span></span>
+                            </label>
+                        </div>
+                        <span class="label ml-14">
+                            Enable features
+                            <i class="fal fa-info-circle ml-7" data-toggle="tooltip" data-placement="top" title="To enable these features, you'll need to link your Google account in the Settings area." *ngIf="tutor.localLogin == true && tutor.hasGoogleAccountLinked == false"></i>
+                            <i class="fal fa-info-circle ml-7" data-toggle="tooltip" data-placement="top" title="You have linked your Google Account. You need to Sign in with Google" *ngIf="tutor.localLogin == true && tutor.hasGoogleAccountLinked == true"></i>
+                        </span>
+                    </div>
+                </div>
+                <a class="btn btn-Google btn-lg fs-15 d-block d-inline-block" href="/Account/LoginAccount?returnUrl={{currentUrl}}" *ngIf="tutor.localLogin == true && tutor.hasGoogleAccountLinked == true">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-7">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17.64 9.20439C17.64 8.56629 17.5827 7.95259 17.4764 7.36349H9V10.8449H13.8436C13.635 11.9699 13.0009 12.9231 12.0477 13.5613V15.8194H14.9564C16.6582 14.2526 17.64 11.9453 17.64 9.20439Z" fill="#4285F4" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 8.99998 14.4204C6.65588 14.4204 4.67178 12.8372 3.96408 10.71H0.957275V13.0418C2.43818 15.9831 5.48178 18 8.99998 18Z" fill="#34A853" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M3.9641 10.7101C3.7841 10.1701 3.6818 9.5933 3.6818 9.0001C3.6818 8.4069 3.7841 7.8301 3.9641 7.2901V4.9583H0.9573C0.3477 6.1733 0 7.5478 0 9.0001C0 10.4523 0.3477 11.8269 0.9573 13.0419L3.9641 10.7101Z" fill="#FBBC05" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99998 3.5795C10.3214 3.5795 11.5077 4.0336 12.4405 4.9255L15.0218 2.3441C13.4632 0.8918 11.4259 0 8.99998 0C5.48178 0 2.43818 2.0168 0.957275 4.9582L3.96408 7.29C4.67178 5.1627 6.65588 3.5795 8.99998 3.5795Z" fill="#EA4335" />
+                    </svg>
+                    <span>Login to your Google account</span>
+                </a>
+            </div>
+        </div>
+        <hr />
+        <div class="form-row">
+            <div class="form-group col-12 col-lg-6">
+                <label>Lesson name</label>
+                <input type="text" id="name" name="name" formControlName="name" class="form-control" placeholder="Enter the lesson name e.g. Trigonometry – Law of Sines" />
+                <div *ngIf="classSessionFormControls.name.errors && (classSessionFormControls.name.dirty || classSessionFormControls.name.touched || classSessionFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="classSessionFormControls.name.errors.maxlength">Lesson name has a max of 40 characters inc. spaces</div>
+                    <div *ngIf="classSessionFormControls.name.errors.required">Please enter a lesson name (max. 40 characters inc. spaces) to continue.</div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-3">
+                <label>Subject <i class="fal fa-info-circle" data-toggle="tooltip" data-placement="top" title="Please contact us with any missing subjects (and subcategories) - we will then add these into the platform for you."></i></label>
+                <select id="subjectId" name="subjectId" formControlName="subjectId" (change)="getSubjectCategorys()" class="form-control">
+                    <option [ngValue]="null">Select a subject</option>
+                    <option *ngFor="let subject of subjects" [ngValue]="subject.id">{{subject.name}}</option>
+                </select>
+                <div *ngIf="classSessionFormControls.subjectId.errors && (classSessionFormControls.subjectId.dirty || classSessionFormControls.subjectId.touched || classSessionFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="classSessionFormControls.subjectId.errors.required">Please select the relevant subject for this lesson to continue.</div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-3">
+                <label>Category</label>
+                <select id="subjectCategoryId" name="subjectCategoryId" formControlName="subjectCategoryId" class="form-control">
+                    <option [ngValue]="null">Select a category</option>
+                    <option *ngFor="let subjectCategory of subjectCategorys" [ngValue]="subjectCategory.id">{{subjectCategory.name}}</option>
+                </select>
+                <div *ngIf="classSessionFormControls.subjectCategoryId.errors && (classSessionFormControls.subjectCategoryId.dirty || classSessionFormControls.subjectCategoryId.touched || classSessionFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="classSessionFormControls.subjectCategoryId.errors.required">Please select the relevant category to continue.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-12 col-lg-3">
+                <label>Study Level</label>
+                <select id="studyLevelId" name="studyLevelId" formControlName="studyLevelId" class="form-control">
+                    <option [ngValue]="null">Select a level</option>
+                    <option *ngFor="let studyLevel of studyLevels" [ngValue]="studyLevel.id">{{studyLevel.name}}</option>
+                </select>
+                <div *ngIf="classSessionFormControls.studyLevelId.errors && (classSessionFormControls.studyLevelId.dirty || classSessionFormControls.studyLevelId.touched || classSessionFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="classSessionFormControls.studyLevelId.errors.required">Please select the relevant study level to continue.</div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-3">
+
+                <label>
+                    No. of students
+                    <!-- DONE change max value here (hardcoded 10) -->
+                    <i class="fal fa-info-circle" data-toggle="tooltip" data-placement="top"
+                       title="This is the amount of students that can attend your online lesson. Currently 2utoring allows you to teach up-to {{classSizeLimit}} students in one class.."></i>
+                </label>
+                <input type="number" step="1" id="maxPersons" name="maxPersons" formControlName="maxPersons" class="form-control" placeholder="Enter no. of students"
+                       ng-change="maxPersonsChanged()" />
+                <div *ngIf="classSessionFormControls.maxPersons.errors && (classSessionFormControls.maxPersons.dirty || classSessionFormControls.maxPersons.touched || classSessionFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="classSessionFormControls.maxPersons.errors.max">No. of students has a max of {{classSizeLimit}}</div>
+                    <div *ngIf="classSessionFormControls.maxPersons.errors.min">No. of students has a min of 1</div>
+                    <div *ngIf="classSessionFormControls.maxPersons.errors.required">Please enter the no. of students (max. of {{classSizeLimit}}) who can attend this online lesson.</div>
+                    <div *ngIf="classSessionFormControls.maxPersons.errors.pattern">No. of students must be a whole number</div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-3">
+                <label>Age Restriction <i class="fal fa-info-circle" data-toggle="tooltip" data-placement="top" title="To teach students under the age of 18, you will need to have your profile and background check approved. Whereas to teach students over the age of 18 you will need to have your profile approved only."></i></label>
+                <div class="d-flex align-items-center" style="height: 51px;">
+                    <div class="form-check mr-21">
+                        <label class="form-check-label">
+                            <input type="radio" id="isUnder16" name="isUnder16" formControlName="isUnder16" [value]="true" class="form-check-input" />
+                            <span class="label">Under 18's</span>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" id="isUnder16" name="isUnder16" formControlName="isUnder16" [value]="false" class="form-check-input" />
+                            <span class="label">Over 18's</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-3">
+                <label>Lesson Type <i class="fal fa-info-circle" data-toggle="tooltip" data-placement="top" title="Public lessons will be promoted publicly on 2utoring.com/find-a-lesson. Whereas private lessons will be hidden from 2utoring.com and can be promoted by sharing a private link."></i></label>
+                <div class="d-flex align-items-center" style="height: 51px;">
+                    <!-- DONE change types here if private lesson not allowed-->
+                    <div class="form-check mr-21" *ngFor="let type of types">
+                        <label class="form-check-label">
+                            <input type="radio" id="type" name="type" formControlName="type" [value]="type.stringValue" class="form-check-input" />
+                            <span class="label">{{type.name}}</span>
+                        </label>
+                    </div>
+                </div>
+                <div *ngIf="classSessionFormControls.type.errors && (classSessionFormControls.type.dirty || classSessionFormControls.type.touched || classSessionFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="classSessionFormControls.type.errors.required">Please select whether this lesson should appear on the public marketplace or not.</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12">
+                <label>Description</label>
+                <textarea id="lessonDescriptionBody" name="lessonDescriptionBody" formControlName="lessonDescriptionBody" class="form-control" rows="5" placeholder="Description"></textarea>
+                <div *ngIf="classSessionFormControls.lessonDescriptionBody.errors && (classSessionFormControls.lessonDescriptionBody.dirty || classSessionFormControls.lessonDescriptionBody.touched || classSessionFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="classSessionFormControls.lessonDescriptionBody.errors.maxlength">Description has a max of 500 characters inc. spaces.</div>
+                    <div *ngIf="classSessionFormControls.lessonDescriptionBody.errors.required">Please enter a description (max 500 characters inc. spaces) for the lesson.</div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="form-row">
+            <div class="col-12 col-lg-6">
+                <h2>Date, Time and Duration</h2>
+                <div class="form-row">
+                    <div class="form-group col-12 col-lg-6">
+                        <label>Date &amp; Time <i class="fal fa-info-circle" data-toggle="tooltip" data-placement="top" title="You can only change your lesson's start date up to 30 minutes before it is due to begin."></i></label>
+                        <input class="form-control" placeholder="Select the lesson date and time" id="startDate" name="startDate" formControlName="startDate" [owlDateTimeTrigger]="xDate" [owlDateTime]="xDate" autocomplete="off" />
+                        <owl-date-time #xDate></owl-date-time>
+                        <div *ngIf="classSessionFormControls.startDate.errors && (classSessionFormControls.startDate.dirty || classSessionFormControls.startDate.touched || classSessionFormSubmitted)" class="error" role="alert">
+                            <div *ngIf="classSessionFormControls.startDate.errors.required">Please enter the lesson Date & Time to continue.</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 col-lg-6">
+                        <label>Duration</label>
+                        <select id="detailsDuration" name="detailsDuration" formControlName="detailsDuration" class="form-control">
+                            <option [ngValue]="null">Select the lesson duration</option>
+                            <option [ngValue]="15">15 mins</option>
+                            <option [ngValue]="30">30 mins</option>
+                            <option [ngValue]="45">45 mins</option>
+                            <option [ngValue]="60">60 mins</option>
+                        </select>
+                        <div *ngIf="classSessionFormControls.detailsDuration.errors && (classSessionFormControls.detailsDuration.dirty || classSessionFormControls.detailsDuration.touched || classSessionFormSubmitted)" class="error" role="alert">
+                            <div *ngIf="classSessionFormControls.detailsDuration.errors.required">Please select the duration of the lesson to continue.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <h2>Set recurring lessons</h2>
+                <div class="form-row">
+                    <div class="form-group col-12 col-lg-6">
+                        <label>Reoccur Every</label>
+                        <select id="scheduleType" name="scheduleType" formControlName="scheduleType" class="form-control">
+                            <option [ngValue]="null">Select recurring option</option>
+                            <option *ngFor="let scheduleType of scheduleTypes" [ngValue]="scheduleType.stringValue">{{scheduleType.name}}</option>
+                        </select>
+                        <div *ngIf="classSessionFormControls.scheduleType.errors && (classSessionFormControls.scheduleType.dirty || classSessionFormControls.scheduleType.touched || classSessionFormSubmitted)" class="error" role="alert">
+                            <div *ngIf="classSessionFormControls.scheduleType.errors.required">Recurring is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 col-lg-6">
+                        <label>End by</label>
+                        <input class="form-control" placeholder="Enter the date the recurrence will end" id="scheduleEndDate" name="scheduleEndDate" formControlName="scheduleEndDate" [owlDateTimeTrigger]="y" [owlDateTime]="y" autocomplete="off" />
+                        <owl-date-time #y [pickerType]="'calendar'"></owl-date-time>
+                        <div *ngIf="checkSheduleOver()" class="error" role="alert">
+                            <div>Lessons will only be scheduled for a maximun of 8 weeks</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="form-row">
+            <div class="col-12">
+                <h2>Pricing</h2>
+            </div>
+            <div class="form-group col-12 col-lg-4">
+                <label>Per each student <i class="fal fa-info-circle" data-toggle="tooltip" data-placement="top" title="This is the amount that a student will pay to sign-up to the lesson - priced entirely by you, the Tutor. You will receive 70% of this Total Lesson cost as 2utoring receive a fee of 30% to cover platform costs"></i></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text fw-700">£</span>
+                    </div>
+                    <input type="number" step="0.01" id="pricePerPerson" name="pricePerPerson" formControlName="pricePerPerson" class="form-control" placeholder="Enter the lesson price" />
+                </div>
+                <div *ngIf="classSessionFormControls.pricePerPerson.errors && (classSessionFormControls.pricePerPerson.dirty || classSessionFormControls.pricePerPerson.touched || classSessionFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="classSessionFormControls.pricePerPerson.errors.required">Please the price a student is required to continue.</div>
+                    <div *ngIf="classSessionFormControls.pricePerPerson.errors.min">Please the price a student will pay to attend this lesson – minimum £10.00.</div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-6 offset-lg-2" *ngIf="classSessionForm.valid && baseClassSessionCommision != undefined">
+                <span style="visibility: hidden; display: none">Trigger recalc: {{getBaseCommissionByContext()}}</span>
+                <label>Your maximum earnings</label>
+                <input type="text" class="form-control" readonly value="{{(classSessionFormControls.pricePerPerson.value * classSessionFormControls.maxPersons.value) * (1 - (baseClassSessionCommision / 100)) | currency:'GBP':'symbol':'1.2-2'}}" />
+                <div class="mt-7">({{classSessionFormControls.maxPersons.value}} students x {{classSessionFormControls.pricePerPerson.value | currency:'GBP':'symbol':'1.2-2'}}) - {{baseClassSessionCommision}}% commission fee</div>
+            </div>
+        </div>
+        <hr />
+        <!-- As we're not concerning with migrating old data, we will work with existing profile approval status -->
+        <div class="Alert Alert--type:Warning" *ngIf="tutor != null && tutor != undefined && tutor.profileApprovalStatus == 'Pending'">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M9 6C9 5.448 9.448 5 10 5C10.552 5 11 5.448 11 6V11C11 11.552 10.552 12 10 12C9.448 12 9 11.552 9 11V6ZM9 14C9 13.448 9.448 13 10 13C10.552 13 11 13.448 11 14C11 14.552 10.552 15 10 15C9.448 15 9 14.552 9 14ZM10 18C5.589 18 2 14.411 2 10C2 5.589 5.589 2 10 2C14.411 2 18 5.589 18 10C18 14.411 14.411 18 10 18ZM10 0C4.477 0 0 4.477 0 10C0 15.523 4.477 20 10 20C15.523 20 20 15.523 20 10C20 4.477 15.523 0 10 0Z" fill="#222B45" />
+            </svg>
+            <div class="Alert__text">
+                <h5 class="cl-dark fw-700">Your profile is currently being reviewed</h5>
+                <p class="cl-dark fw-500 mb-0">When it is approved, your lessons will be available for students to sign-up to publicly on the marketplace or privately via a shared link. </p>
+            </div>
+        </div>
+        <div class="Form_Block-Controls">
+            <a href="/Tutor/ClassSessions/Index" class="link-grey">Go back</a>
+            <button *ngIf="classSessionId == undefined" type="submit" class="btn btn-primary btn-lg ml-auto">Add course material <i class="ml-14 fal fa-long-arrow-right"></i></button>
+            <button [disabled]="classSessionComplete == true" *ngIf="classSessionId != undefined" type="submit" class="btn btn-primary btn-lg ml-auto">Save <i class="ml-14 fal fa-long-arrow-right"></i></button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,51 @@
+﻿
+<div class="card-body">
+    <div class="fs-35 fw-800 mb-14">Missing out on your studies?</div>
+    <h1 class="fs-24 fw-600">Learn online with 2utoring</h1>
+    <div class="form-group mt-28">
+        <label for="Subject">What subject would you like to learn?</label>
+        <ng-select (change)="changeSubject()" id="subject" name="subject" [items]="filteredSubjects"
+                    bindLabel="name"
+                    bindValue="url"
+                    [(ngModel)]="subject"
+                    placeholder="Choose a subject...">
+        </ng-select>
+    </div>
+    <div class="form-group">
+        <label for="SubjectCategory">What topic would you like to cover? <small>(optional)</small></label>
+        <ng-select id="subjectCategory" name="subjectCategory" [items]="filteredSubjectCategories"
+                    bindLabel="name"
+                    bindValue="id"
+                    [(ngModel)]="subjectCategory"
+                    (change)="changeSubjectCategory()"
+                    placeholder="Choose a category…">
+        </ng-select>
+    </div>
+    <div class="form-group">
+        <label for="StudyLevel">What is your level of study?</label>
+        <ng-select id="studyLevelUrl" name="studyLevelUrl" [items]="studyLevels"
+                    bindLabel="name"
+                    bindValue="url"
+                    [(ngModel)]="studyLevelUrl"
+                    placeholder="Choose a study level…">
+        </ng-select>
+    </div>
+    <div class="form-group">
+        <label>Show me lessons for students</label>
+        <div class="d-lg-flex align-items-center mb-21 mb-lg-0" style="height: 49px">
+            <div class="form-check mr-lg-21 mb-14 mb-lg-0">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="isUnder16" [(ngModel)]="isUnder16" [value]="true" />
+                    <span class="label fs-14 fw-500">Under 18</span>
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="isUnder16" [(ngModel)]="isUnder16" [value]="false" />
+                    <span class="label fs-14 fw-500">Over 18</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <button type="button" (click)="search()" class="btn btn-accent btn-lg fs-16 cl-white w-100 mt-21 mt-0">Find lessons</button>
+</div>

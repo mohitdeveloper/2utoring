@@ -1,0 +1,146 @@
+<style type="text/css">
+    .custom-modalbox {
+        border-radius:10px !important;
+    }
+    .mat-dialog-content {
+        margin: 0 !important;
+    }
+</style>
+<div *ngIf="type=='DBS'">
+    <h3 mat-dialog-title style="text-align:center; margin-top:20px;">Enhanced DBS checks</h3>
+    <hr>
+    <div mat-dialog-content>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">1. Inorder to enable Enhanced DBS Badge on a Tutors profile, it is your responsibility to confirm that you have conducted an enhanced DBS check and validated the tutors Enhanced DBS status.</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">2. Click on the View tab on the right to see tutors details and certificate uploads.</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">3. Follow the link below to perform an Enhanced DBS check</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;"><a style="color:blue;" href="https://secure.crbonline.gov.uk/crsc/check?execution=e1s1" target="_blank">https://secure.crbonline.gov.uk/crsc/check?execution=e1s1</a></p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">4. Enter Organisation name: Standing Out Ltd</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">5. Enter Forename: Dilbir</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">6. Enter Surname: Sahota</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">7. Enter tutors certificate number, surname and date of birth</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">8. Save DBS update verification received from secure.crbonline.gov.uk</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">9. Once validated select approve tutor and the Enhanced DBS status badge will appear on their profile</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">10. All Company DBS approvals will intern be validated by 2utoring.com safeguarding team</p>
+    </div>
+
+</div>
+
+<div *ngIf="type=='CAL'">
+    <h3 mat-dialog-title style="text-align:center; margin-top: 15px;">Availability Calendars</h3>
+    <hr>
+    <div mat-dialog-content>
+        <!--this is for during registration-->
+        <p *ngIf="!page" style="text-indent:-1em; padding:0 0 0 20px;">1. Select a day and add multiple teaching slots, these will populate the calendar.</p>
+        <p *ngIf="!page" style="text-indent:-1em; padding:0 0 0 20px;">2. To edit specific calendar dates, select the date within the calendar and add or remove time slots.</p>
+        <p *ngIf="!page" style="text-indent:-1em; padding:0 0 0 20px;">3. Within settings in your dashboard area you can add & modify your availability slots at any time.</p>
+
+        <!--this is for after login-->
+        <p *ngIf="page" style="text-indent:-1em; padding:0 0 0 20px;"> 1. Click on a day in the calendar below to add your availability slots.</p>
+        <p *ngIf="page" style="text-indent:-1em; padding:0 0 0 20px;"> 2. Select your start and finish time for that session. ( For example 16.00pm to 17.00pm ).</p>
+        <p *ngIf="page" style="text-indent:-1em; padding:0 0 0 20px;"> 3. To repeat this time slot, select the days this session time is available and the number of weeks you want it to appear on your calendar. Then click Update.</p>
+        <p *ngIf="page" style="text-indent:-1em; padding:0 0 0 20px;"> 4. Repeat points 1 - 3 until you have added all your availability slots.</p>
+        <p *ngIf="page" style="text-indent:-1em; padding:0 0 0 20px;"> 5. Once completed click on the Save button before exiting the page.</p>
+        <p *ngIf="page" style="text-indent:-1em; padding:0 0 0 20px;"> 6. To edit a session or a sequence simply click on the time slot in the calendar and then adjust the timings, click on Update and then press the Save button.</p>
+    </div>
+</div>
+
+
+
+
+<style>
+    .cirinfo p {
+        font-size: 15px;
+        font-weight: 600;
+        text-align: justify;
+    }
+
+    .cirinfo ul {
+        font-weight: 600;
+        font-size:15px;
+    }
+    .cirinfo ul li{
+        padding-left:1%;
+    }
+    .cirinfo table tr td {
+        border: 1px solid;
+        padding: 15px;
+        line-height: 2;
+    }
+</style>
+
+<div class="ng-star-inserted" *ngIf="type=='CRI'">
+    <h4 class="mat-dialog-title" style="text-align:center; padding:1%; padding-bottom:0;">Application for a new Enhanced DBS certificate and registration on the update service</h4>
+    <hr>
+    <div class="mat-dialog-content" style="margin-left:0;line-height:1.5">
+
+        <p style="text-indent:-1em; padding:0 0 0 20px;">2utoring is a corporate member of The Tutor Association (TTA) and conducts all DBS checks through them. At 2utoring our recommendation is that members would apply/have an Enhanced certificate if they work with children and / or vulnerable adults. Please be advised that you will need to pay {{51.89 | currency:'GBP':'symbol':'1.2-2'}} for your enhanced DBS certificate</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;">To access our DBS service, please follow the link and instructions shown below:</p>
+        <p style="text-indent:-1em; padding:0 0 0 20px;"> <a href="https://disclosure.capitarvs.co.uk/cheqs" target="_blank">https://disclosure.capitarvs.co.uk/cheqs</a></p>
+        <ul style="list-style-type:decimal">
+            <li>(click on the first, orange box to start the application).</li>
+            <li>
+                The login details are as follows (these are case sensitive)
+                <ul style="list-style-type:disc !important;">
+                    <li>Organisation Reference<em> - </em>TTA</li>
+                    <li>Organisation Code<em> - </em>tutor2014</li>
+                </ul>
+            </li>
+            <li>
+                When you get to the regulated activities change this to Yes, then the 'Enhanced' certificate option will come up.
+            </li>
+            <li>
+                Once this is done, The Tutor Association will then request certified identity documents and complete the process for you.
+            </li>
+            <li>
+                Inform TTA that you are part of Standing Out Ltd - 2utoring.com.
+            </li>
+            <li>
+                After receiving your certification, you will need to register with the DBS update service within 30 days. 2utoring will not accept certificates that are not on the update service
+            </li>
+            <li>
+                Once completed and you have received your Enhanced DBS and are on the update service, please go <a href="/" target="_blank">2utoring.com</a>, log in and go to your DBS section in settings and update your information, for us to validate.
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+    <div *ngIf="type=='RDBS'">
+        <h4 class="mat-dialog-title" style="text-align:center;padding:1%; padding-bottom:0;">Application for a new Enhanced DBS certificate and registration on the update service</h4>
+        <hr>
+        <div class="mat-dialog-content" style="margin-left:0;line-height:1.5">
+            <ul style="font-size:15px; text-align:left;line-height: 2;">
+                <li>2utoring is a corporate member of The Tutor Association (TTA) and conducts all DBS checks through them.</li>
+                <li>At 2utoring our recommendation is that members would apply/have an Enhanced certificate if they work with children and / or vulnerable adults.</li>
+                <li>Please be advised that you will need to pay {{51.89 | currency:'GBP':'symbol':'1.2-2'}} for your enhanced DBS certificate</li>
+                <li>To access our DBS service, please use the link shown below here:
+                    <a style="text-decoration:none;" href="https://disclosure.capitarvs.co.uk/cheqs/" target="_blank">https://disclosure.capitarvs.co.uk/cheqs</a>
+                </li>
+                <ul style="list-style-type: decimal;">
+                        <li>(click on the first, orange box to start the application).</li>
+                        <li>The login details are as follows (these are case sensitive)
+                            <ul style="list-style-type: disc;">
+                                <li> Organisation Reference <em>-</em> TTA</li>
+                                <li> Organisation Code      <em>-</em> tutor2014</li>
+                            </ul>
+                        </li>
+                        <li>When you get to the regulated activities change this to Yes, then the 'Enhanced' certificate option will come up.</li>
+                        <li>Once this is done, The Tutor Association will then request certified identity documents and complete the process for you.</li>
+                        <li>Inform TTA that you are part of Standing Out Ltd - 2utoring.com.</li>
+                        <li>After receiving your certification, you will need to register with the DBS update service within 30 days. 2utoring will not accept certificates that are not on the update service.</li>
+                        <li>Once completed and you have received your Enhanced DBS and are on the update service, please go 2utoring.com, log in and go to your DBS section in settings and update your information, for us to validate.</li>
+                    </ul>
+                    <!--<li> 2utoring.com will not accept certificates that are not on the update service</li>
+                    <li>Once completed and you have received your Enhanced DBS certificate and are on the update service, please go 2utoring.com, log in and go to your DBS section in settings and update your information, for us to validate.</li>
+                    <li>If you have any questions please contact us:  <a style="text-decoration:none;" href="safeguarding@2utoring.com">safeguarding@2utoring.com</a></li>
+                    <li>We at 2utoring look forward to you updating your information</li>-->
+                </ul>
+</div>
+    </div>
+
+
+
+
+    <div style="margin-top:12px;margin-bottom:75px; text-align:center">
+        <button class="btn btn-primary btn-md" mat-raised-button mat-dialog-close tabindex="-1" (click)="onCancelClick()">Close</button>
+    </div>

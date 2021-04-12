@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Price Setup";
+    ViewData["PageName"] = "Prices";
+    var companyId = ViewData["CompanyId"] as Guid?;
+    var tutorId = ViewData["tutorId"] as Guid?;
+    var setupType = "Company";
+    if (tutorId.HasValue && tutorId.Value != Guid.Empty)
+        setupType = "Tutor";
+
+    var owningEntityId = setupType == "Tutor" ? tutorId.Value : companyId.Value;
+    if (setupType == "Tutor" && !User.IsInRole("Super Admin"))
+        Layout = "../../../Tutor/Views/Shared/_Layout";
+}
+@section meta{
+    <meta name="title" content="@ViewData["Title"]" />
+    <meta name="robots" content="noindex">
+}
+
+<app-root id="app-angular" app-mode="subject-studylevel-setup-index"
+          owningEntityId="@owningEntityId" setupType="@setupType"></app-root>
+
+
+@section scripts{
+
+    <script type="text/javascript">
+        var title = '@ViewData["Title"]';
+    </script>
+
+    <environment names="Development">
+        <!-- Development versions of Angular (easier to debug) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/vendor.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/main.js"></script>
+    </environment>
+
+    <environment names="Staging">
+        <!-- Staging versions of Angular (faster loading, same as prod) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/staging/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/staging/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/staging/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/staging/main.js"></script>
+    </environment>
+
+    <environment names="Production">
+        <!-- Production versions of Angular (faster loading) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/main.js"></script>
+    </environment>
+
+}

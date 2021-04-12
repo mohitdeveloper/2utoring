@@ -1,0 +1,60 @@
+﻿.dt-foundation {
+    .dataTables_length {
+        label {
+            margin-left: 14px;
+        }
+    }
+}
+
+
+.table {
+    table {
+
+        &.dataTable {
+            margin-top: spacing(loose);
+        }
+
+        thead {
+            border: none;
+            background: none;
+
+            th {
+                border-bottom: $defaultBorder;
+                text-align: left;
+                padding: 14px;
+                color: $bodyTextColor;
+                font-size: 14px;
+                font-weight: $fontWeightMedium;
+            }
+        }
+
+        tbody {
+            border: none;
+
+            tr {
+                background: none;
+                border-bottom: $defaultBorder;
+
+                td {
+                    padding: 21px 14px;
+                    font-size: 14px;
+
+                    .button, button {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .dataTables_wrapper {
+        .dataTables_info {
+            font-size: 12px;
+            margin-top: spacing(tight);
+        }
+
+        .dataTables_paginate {
+            margin-top: spacing(extra-tight);
+        }
+    }
+}

@@ -1,0 +1,499 @@
+
+
+
+<main>
+    <!-- letest semron -->
+    <form [formGroup]="CompanyCourseForm">
+        <section class="sec bg-light light-image-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-lg-3 left-bar">
+
+                        <p>Create a course or lesson</p>
+                        <div class="cource-creation-left">
+                            <ul class="cource-creation-nav">
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(1,stepMove >= 1?'Y':'N',false)" [class]="currentStep == 1?'active-pros':(stepMove >= 1?'active-done':'')"><span *ngIf="(currentStep == 1 || stepMove < 1) else rightSymbol">1</span> AGE RANGE</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(2,stepMove >= 2?'Y':'N',false)" [class]="currentStep == 2?'active-pros':(stepMove >= 2?'active-done':'')"><span *ngIf="(currentStep == 2 || stepMove < 2) else rightSymbol">2</span> CLASS SIZE</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(3,stepMove >= 3?'Y':'N',false)" [class]="currentStep == 3?'active-pros':(stepMove >= 3?'active-done':'')"><span *ngIf="(currentStep == 3 || stepMove < 3) else rightSymbol">3</span> SUBJECT</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(4,stepMove >= 4?'Y':'N',false)" [class]="currentStep == 4?'active-pros':(stepMove >= 4?'active-done':'')"><span *ngIf="(currentStep == 4 || stepMove < 4) else rightSymbol">4</span> LEVEL</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(5,stepMove >= 5?'Y':'N',false)" [class]="currentStep == 5?'active-pros':(stepMove >= 5?'active-done':'')"><span *ngIf="(currentStep == 5 || stepMove < 5) else rightSymbol">5</span> SCHEDULE</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(6,stepMove >= 6?'Y':'N',false)" [class]="currentStep == 6?'active-pros':(stepMove >= 6?'active-done':'')"><span *ngIf="(currentStep == 6 || stepMove < 6) else rightSymbol">6</span> COURSE DETAILS</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(7,stepMove >= 7?'Y':'N',false)" [class]="currentStep == 7?'active-pros':(stepMove >= 7?'active-done':'')"><span *ngIf="(currentStep == 7 || stepMove < 7) else rightSymbol">7</span> INVITATIONS</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(8,stepMove >= 8?'Y':'N',false)" [class]="currentStep == 8?'active-pros':(stepMove >= 8?'active-done':'')"><span *ngIf="(currentStep == 8 || stepMove < 8) else rightSymbol">8</span> SUMMARY</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(9,stepMove >= 9?'Y':'N',false)" [class]="currentStep == 9?'active-pros':(stepMove >= 9?'active-done':'')"><span *ngIf="(currentStep == 9 || stepMove < 9) else rightSymbol">9</span> ACCOUNT</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(10,stepMove >= 10?'Y':'N',false)" [class]="currentStep == 10?'active-pros':(stepMove >= 10?'active-done':'')"><span *ngIf="(currentStep == 10 || stepMove < 10) else rightSymbol">10</span> COMPLETE PURCHASE</a></li>
+
+
+                                <!--<li><a href="javascript:void(0)" (click)="setCurrentStep(8,stepMove >= 8?'Y':'N',false)" [class]="currentStep == 8?'active-pros':(stepMove >= 8?'active-done':'')"><span *ngIf="(currentStep == 8 || stepMove < 8) else rightSymbol">8</span> LESSON DETAILS</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(9,stepMove >= 9?'Y':'N',false)" [class]="currentStep == 9?'active-pros':(stepMove >= 9?'active-done':'')"><span *ngIf="(currentStep == 9 || stepMove < 9) else rightSymbol">9</span> PROMOTION</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(10,stepMove >= 10?'Y':'N',false)" [class]="currentStep == 10?'active-pros':(stepMove >= 10?'active-done':'')"><span *ngIf="(currentStep == 10 || stepMove < 10) else rightSymbol">10</span> INVITATIONS</a></li>
+                                <li><a href="javascript:void(0)" (click)="setCurrentStep(11,stepMove >= 11?'Y':'N',false)" [class]="currentStep == 11?'active-pros':(isFinished=='Yes'?'active-done':'')"><span *ngIf="(currentStep == 11 || isFinished=='No') else rightSymbol">11</span> FINAL SUMMARY</a></li>-->
+                            </ul>
+                            <!--<ng-container *ngIf="isUpdateAndFinished">
+                                <button *ngIf="!isChangeDetected" disabled style="background: #8dcb9c; color: #fff;border-color:#8dcb9c; cursor: not-allowed;" type="button" class="sub-next">Update</button>
+                                <button *ngIf="isChangeDetected" type="button" class="sub-next btn-success" (click)="submitCompanyCourseForm(currentStep)">Update</button>&nbsp;&nbsp;
+                                <button type="button" class="sub-next" (click)="exitCourse()">Exit</button>
+                            </ng-container>-->
+                        </div>
+
+                        <ng-template #rightSymbol>
+                            <span><img src="/lib/assets/images/check-icon.svg" alt="" /></span>
+                        </ng-template>
+                    </div>
+                    <div class="col-md-8 col-lg-9 right-bar" id="scroolHere">
+                        <div class="step-col" *ngIf="currentStep==1">
+                            <div class="step-col-head">
+                                <h3>Age Range</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>Select whether the lesson or course is for under 18s or over 18’s</p>
+                                <div class="checkbox switcher">
+                                    <label for="isUnder18">
+                                        <small>Over 18s</small>
+                                        <!--<input *ngIf="dbsApprovalStatus!='Approved'" type="checkbox" [checked]="false" formControlName="isUnder18" id="isUnder18" disabled="disabled">
+    <input *ngIf="dbsApprovalStatus=='Approved'" type="checkbox" [checked]="CompanyCourseForm.controls['isUnder18'].value" formControlName="isUnder18" id="isUnder18" (change)="setAgeRange($event)">-->
+                                        <input type="checkbox" [checked]="CompanyCourseForm.controls['isUnder18'].value" formControlName="isUnder18" id="isUnder18" (change)="setAgeRange($event)">
+                                        <span><small></small></span>
+                                        <small>Under 18s</small>
+                                    </label>
+                                </div>
+                                <!--{{CompanyCourseForm.controls['isUnder18'].value}}-->
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(2)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=2">
+                            <div class="step-col-head">
+                                <h3>Class Size</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>Move the cursor to select the number of students you want to attend your lesson or course</p>
+                                <p style="margin-bottom:20px;"> {{noOfStudents.value}} Students </p>
+                                <div class="set-student" id="date-range">
+                                    <!--<mat-slider #noOfStudents [(ngModel)]="selectedClassSizeValue" (input)="onClassSizeChange(noOfStudents)" [ngModelOptions]="{standalone: true}" min="1" max="{{maxSizeOfClass}}" style="width:70%; height:15px"></mat-slider>-->
+                                    <!--<span style="margin-top:7px; margin-left:2%;"> {{noOfStudents.value}} Students </span>-->
+                                    
+                                    <mat-slider thumbLabel #noOfStudents
+                                                [displayWith]="formatLabel"
+                                                [(ngModel)]="selectedClassSizeValue"
+                                                (input)="onClassSizeChange(noOfStudents)"
+                                                [ngModelOptions]="{standalone: true}"
+                                                min="1"
+                                                max="{{maxSizeOfClass}}"
+                                                style="width:70%; height:15px">
+                                    </mat-slider>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(3)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=3">
+                            <div class="step-col-head">
+                                <h3>Subject</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>Select the subject you would like to learn</p>
+                                <div class="row create-sub-row">
+                                    <div class="col-sm-6">
+                                        <div class="select-sub-col">
+                                            <label>SELECT A SUBJECT</label>
+                                            <select class="sub-topic" id="subjectId" name="subjectId" formControlName="subjectId" (change)='onSubjectChange($event)'>
+                                                <option *ngIf="selectedSubjectId?false:true" value="">Select subject</option>
+                                                <option *ngFor="let subject of subjectData" value="{{subject.subjectId}}" [selected]="subject.subjectId==selectedSubjectId?'selected':''">
+                                                    {{ subject.name }}
+                                                </option>
+                                            </select>
+                                            <i class="fa fa-caret-down"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(4)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=4">
+                            <div class="step-col-head">
+                                <h3>Level</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>Select the study level</p>
+                                <div class="row align-self-baseline">
+                                    <div class="col-sm-6">
+                                        <div class="radio-group">
+                                            <div class="custom_radio" *ngFor="let studyLevel of StudyLevels">
+                                                <input type="radio" (change)="onLevelChange(studyLevel.name, studyLevel.studyLevelId)" id="{{studyLevel.studyLevelId}}" value="{{studyLevel.studyLevelId}}" formControlName="studyLevelId" name="studyLevelId" checked><label for="{{studyLevel.studyLevelId}}"> {{ studyLevel.name }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 align-self-end">
+                                        <div class="text-right mt-3">
+                                            <button type="button" (click)="setCurrentStep(5)" class="sub-next">Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=5">
+                            <div class="step-col-head">
+                                <h3>Schedule your course and lessons</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>
+                                    To add dates and times click on the time slots in the calendar below <br>
+                                    Repeat the above process to add multiple time slots
+                                </p>
+                                <ul class="schedule-course-lessons">
+                                    <li class="celander-date-time">
+
+                                        <ng-container *ngFor="let ev of selectedEvent; let i = index;">
+                                            <span>{{i+1}}</span>
+                                            <div class="form-group">
+                                                <div class="lesson-date">
+                                                    <span class="cel-date-icon"><img src="/lib/assets/images/celander-icon.svg" alt="" /></span>
+                                                    <input type="text" value="{{ev.start|date:'EEE d MMM y'}}" disabled="disabled" />
+                                                </div>
+                                                <div class="lesson-time">
+                                                    <span class="cel-date-icon"><img src="/lib/assets/images/watch-icon.svg" alt="" /></span>
+                                                    <input type="text" value="{{ev.start|date:'h:mm a'}}" disabled="disabled" />
+                                                </div>
+                                                <span (click)="deletSelectedEvent(ev, i)">
+                                                    <i class="fas fa-times" style="float:right; margin-top:12px; cursor: pointer; margin-right:15px;" title="delete"></i>
+                                                </span>
+                                            </div>
+                                        </ng-container>
+                                    </li>
+                                    <!--<li class="add-lesson">
+            <a style="text-decoration:none;" href="javascript:void(0)"><span>+</span> Add a lesson by selecting a date/time on calendar</a>
+        </li>-->
+                                </ul>
+                                <div id="myOtherLessonView" style="display:none;">
+                                    <div class="add-lesson" style="margin-bottom: 2%;"><a href="javascript:void(0)" style="text-decoration: none;"> <span> +</span> Add a lesson by selecting a date/time on calendar </a></div>
+                                </div>
+                                <div class="full-celander-box">
+                                    <!--<mat-slide-toggle style="float:right;" [(ngModel)]="editSlot" [ngModelOptions]="{standalone: true}">Edit Availability Slots</mat-slide-toggle>-->
+                                    <app-calender-scheduler (renderComplete)="arrangeSerialNumberOnEvent()" #calendarRef [showAvailabilityPopup]="showAvailabilityPopup" [courseId]="courseId" [tutorId]="selectedTutorsData['tutorId']" [bookedSlot]="selectedTutorsData['bookedSlot']" [registerdEvents]="selectedTutorsData['tutorAvailabilities']" [isWeekVisible]="false"
+                                                            [isDateEventEditable]="editSlot" (getEventsOnSidebar)="getEventsOnSidebar($event)" [ownerId]="this.selectedTutorsData['userId']"></app-calender-scheduler>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" class="sub-reset" (click)="resetCalendar()">Reset</button>
+                                    <button type="button" (click)="setCurrentStep(6)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=6">
+                            <div class="step-col-head">
+                                <h3>Course details</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>
+                                    Give your lesson or course a name and write a description of what you wish to learn and achieve <br>
+                                    <i style="font-size:13px;">(Other students will see this information before purchasing this lesson or course)</i>
+                                </p>
+                                <div class="cource-detail">
+                                    <input type="text" class="form-control" id="name" placeholder="Course Name" formControlName="name" (blur)="checkCourseNameOnBlur()" maxlength="61">
+                                    <div *ngIf="CompanyCourseFormCompanyControls.name.errors && (CompanyCourseFormCompanyControls.name.dirty || CompanyCourseFormCompanyControls.name.touched || CompanycompanyCourseFormSubmitted)"
+                                         class="error" role="alert">
+                                        <div *ngIf="CompanyCourseFormCompanyControls.name.errors.required">
+                                            Name is required
+                                        </div>
+                                        <div *ngIf="CompanyCourseFormCompanyControls.name.errors?.maxlength">
+                                            Maximum of 60 characters allowed.
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <textarea placeholder="Course description" formControlName="description" maxlength="1000"></textarea>
+                                    <div *ngIf="CompanyCourseFormCompanyControls.description.errors?.maxlength && (CompanyCourseFormCompanyControls.description.dirty || CompanyCourseFormCompanyControls.description.touched)"
+                                         class="error" role="alert">
+                                        Maximum of 1000 characters allowed.
+                                    </div>
+                                </div>
+                                <!--<div class="lesson-detail-col-sm course-rate">
+                                    <div class="lesson-rate">
+                                        <span class="rate-sign">£</span>
+                                        <span class="rate-stud">{{getTotleLessonPrice()}}<small>Per Student</small></span>
+                                    </div>
+                                </div>-->
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(7)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=7">
+                            <div class="step-col-head">
+                                <h3>Send invitations</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <p>Send an email invitation to your family, friends or acquaintances who you would like to attend your course</p>
+                                <h5>Who would you like to invite to your lesson or course?</h5>
+                                <div class="email-invitations send-inv">
+                                    <ul formArrayName="emailForm">
+                                        <li *ngFor="let email of emailForm.controls; let i = index" [formGroupName]="i">
+                                            <input type="text" formControlName="emailAddress" placeholder="Enter email address" autocomplete="email" />
+                                            <div *ngFor="let validation of validationMsgs.emailAddress">
+                                                <div *ngIf="email.get('emailAddress').hasError(validation.type)" class="error" role="alert">
+                                                    {{validation.message}}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(8)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=8">
+                            <div class="step-col-head">
+                                <h3>Summary</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <div class="summary-box">
+                                    <!--<div class="row">
+    <div class="col-sm-6"><p><span>COURSE NAME</span>  {{CompanyCourseForm.controls['name'].value}}</p></div>
+    <div class="col-sm-6">-->
+                                    <!--<p>
+        <span>TUTOR</span>
+        <span class="tutor-icon"><img src="/lib/assets/images/search-box-image1.png" alt="" /></span>
+        Gemma Jones
+    </p>-->
+                                    <!--<p>
+                <span>TUTOR</span>
+                <span class="tutor-icon">
+                    <img *ngIf="selectedTutorsData?.storeProfileImageDownload != ''" src="{{selectedTutorsData?.storeProfileImageDownload}}" alt="{{selectedTutorsData?.userFullName}}" />
+                </span> {{ selectedTutorsData?.userTitle }}  {{ selectedTutorsData?.userFullName }}
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 summary-col-6">
+            <div class="summary-col">
+                <p><span>SUBJECT</span> {{selectedSubjectText}}</p>
+            </div>
+            <div class="summary-col">
+                <p><span>LEVEL</span> {{selectedLevelText}}</p>
+            </div>
+            <div class="summary-col">
+                <p><span>NO. OF LESSONS</span> {{classSessions.length}}</p>
+            </div>
+
+            <div class="summary-col">
+                <p><span>CLASS SIZE</span> {{selectedClassSizeValue}}</p>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6 summary-col-6">
+            <div class="summary-col summary-col-md">
+                <p><span>LESSON DATES</span></p>
+                <ng-container *ngFor="let ev of selectedEvent; let i = index;">
+                    <p> <i><img src="/lib/assets/images/celander-icon.svg" alt="" /></i>{{ev.start|date:'EEE d MMM y'}} <i><img src="/lib/assets/images/watch-icon.svg" alt="" /></i>{{ev.start|date:'h:mm a'}}</p>
+                </ng-container>
+            </div>
+        </div>
+
+    </div>-->
+
+
+                                    <div class="row">
+                                        <div class="col-sm-6"><p><span>COURSE NAME</span>  {{CompanyCourseForm.controls['name'].value}}</p></div>
+                                        <div class="summary-col col-sm-12 col-md-6 col-lg-6">
+                                            <p>
+                                                <span>TUTOR</span>
+                                                <span class="tutor-icon">
+                                                    <img *ngIf="selectedTutorsData?.storeProfileImageDownload != ''" src="{{selectedTutorsData?.storeProfileImageDownload}}" alt="{{selectedTutorsData?.userFullName}}" />
+                                                </span> {{ selectedTutorsData?.userTitle }}  {{ selectedTutorsData?.userFullName }}
+
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="summary-col">
+                                            <p><span>SUBJECT</span> {{selectedSubjectText}}</p>
+                                        </div>
+                                        <div class="summary-col">
+                                            <p><span>LEVEL</span> {{selectedLevelText}}</p>
+                                        </div>
+                                        <div class="summary-col">
+                                            <p><span>NO. OF LESSONS</span> {{classSessions.length}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="summary-col">
+                                            <p><span>CLASS SIZE</span> {{selectedClassSizeValue}}</p>
+                                        </div>
+                                        <div class="summary-col">
+                                            <p>
+                                                <span>PRIVATE/PUBLIC </span>
+                                                {{CompanyCourseForm.controls['courseType'].value==1?'Public':'Private'}}
+                                            </p>
+                                        </div>
+                                        <div class="summary-col">
+                                            <p><span>GOOGLE FEATURES</span> {{CompanyCourseForm.controls['requiresGoogleAccount'].value?'Yes':'No'}}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="summary-col summary-col-md col-md-6">
+                                            <p><span>LESSON DATES</span></p>
+                                            <ng-container *ngFor="let ev of selectedEvent; let i = index;">
+                                                <p> <i><img src="/lib/assets/images/celander-icon.svg" alt="" /></i>{{ev.start|date:'EEE d MMM y'}} <i><img src="/lib/assets/images/watch-icon.svg" alt="" /></i>{{ev.start|date:'h:mm a'}}</p>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="d-flex justify-content-between summary-total">
+                                    <div class="summary-total-left">
+                                        <p>£ {{getTotleLessonPrice()}} <span>PRICE PER STUDENT</span></p>
+                                    </div>
+                                    <button type="button" (click)="setCurrentStep(9)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" [hidden]="currentStep!=9">
+                            <div class="step-col-head">
+                                <h3>Sign in or register</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <div class="sign-register">
+                                    <div class="create-sub-col exi-user">
+                                        <label>EXISTING USERS</label>
+                                        <a href="#" class="btn btn-fill" (click)="alreadyUser()">Sign in to 2utoring <i class="fa fa-angle-right"></i></a>
+                                    </div>
+                                    <div class="create-sub-col new-user">
+                                        <label>NEW USERS</label>
+                                        <a href="#" (click)="createUser()" class="btn">Create a new account <i class="fa fa-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-col" id="aboutYouPage" style="display:none;" [hidden]="currentStep!=9">
+                            <div class="step-col-head">
+                                <h3>About you</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <div class="row promoting-course">
+
+                                    <div class="col-lg-6">
+                                        <div class="d-flex align-items-center about-you">
+                                            <div class="promoting-course-image"><img src="/lib/assets/images/about-left.svg" alt=""></div>
+                                            <div class="promoting-course-detail">
+                                                <div class="custom_radio">
+                                                    <input type="radio" (change)="onAboutCourseSelection('child')" value="parent" id="parent" name="courseBuyFor" checked>
+                                                    <label for="parent"></label>
+                                                </div>
+                                                <h3>You’re buying for yourself</h3>
+                                                <p>If you are under the age of 18, please get your parent/guardian to purchase this for you</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="d-flex flex-row-reverse align-items-center about-you">
+                                            <div class="promoting-course-image"><img src="/lib/assets/images/about-right.svg" alt=""></div>
+                                            <div class="promoting-course-detail">
+                                                <div class="custom_radio">
+                                                    <input type="radio" (change)="onAboutCourseSelection('parent')" value="child" id="child" name="courseBuyFor">
+                                                    <label for="child"></label>
+                                                </div>
+                                                <h3>You’re buying for your child</h3>
+                                                <p>If you a parent/guardian purchasing this lesson for your child</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="button" (click)="setCurrentStep(10)" class="sub-next">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="step-col" *ngIf="(currentStep==10) && (isAuthenticated == 'True')">
+                            <div class="step-col-head">
+                                <h3>Payment</h3>
+                            </div>
+                            <div class="step-col-body">
+                                <div class="row">
+                                    <div class="col-lg-6 payment-col">
+                                        <app-purchase-journey *ngIf="user != null && user.isSetupComplete" [currentStep]="currentStep" [courseId]="courseId != null ? courseId : null" [under18]="editedCourse != null ? editedCourse.isUnder18 : null" [dateOfBirth]="user.dateOfBirth" [sessionDate]="editedCourse != null ? editedCourse.startDate: null"></app-purchase-journey>
+                                    </div>
+                                    <div class="col-lg-6 payment-col">
+                                        <div class="summary-box">
+                                            <div class="row">
+                                                <div class="col-sm-12"><p><span>COURSE NAME</span>  {{CompanyCourseForm.controls['name'].value}}</p></div>
+                                                <div class="col-sm-12">
+                                                    <!--<p>
+                                                        <span>TUTOR</span>
+                                                        <span class="tutor-icon">
+                                                            <img src="/lib/assets/images/search-box-image1.png" alt="" />
+                                                        </span> Gemma Jones
+                                                    </p>-->
+
+                                                    <p>
+                                                        <span>TUTOR</span>
+                                                        <span class="tutor-icon">
+                                                            <img *ngIf="selectedTutorsData?.storeProfileImageDownload != ''" src="{{selectedTutorsData?.storeProfileImageDownload}}" alt="{{selectedTutorsData?.userFullName}}" />
+                                                        </span> {{ selectedTutorsData?.userTitle }}  {{ selectedTutorsData?.userFullName }}
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 summary-col-6">
+                                                    <div class="summary-col">
+                                                        <p><span>SUBJECT</span> {{selectedSubjectText}}</p>
+                                                    </div>
+                                                    <div class="summary-col">
+                                                        <p><span>LEVEL</span> {{selectedLevelText}}</p>
+                                                    </div>
+                                                    <div class="summary-col">
+                                                        <p><span>NO. OF LESSONS</span> {{classSessions.length}}</p>
+                                                    </div>
+
+                                                    <div class="summary-col">
+                                                        <p><span>CLASS SIZE</span> {{selectedClassSizeValue}}</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="summary-total">
+                                                <div class="summary-total-left">
+                                                    <p>£ {{getTotleLessonPrice()}} <span>PRICE PER STUDENT</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="text-right mt-3">
+                                    <button type="button" class="finish-btn">Finish: Pay Now</button>
+                                </div>-->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</main>

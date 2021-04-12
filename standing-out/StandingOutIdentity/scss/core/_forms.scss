@@ -1,0 +1,47 @@
+// ----------------------------------------------------
+// Form Styling
+// ----------------------------------------------------
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -$form-grid-gutter-width;
+    margin-left: -$form-grid-gutter-width;
+
+    > .col,
+    > [class*="col-"] {
+        padding-right: $form-grid-gutter-width;
+        padding-left: $form-grid-gutter-width;
+    }
+}
+
+// ----------------------------------------------------
+// Label
+// ----------------------------------------------------
+
+label {
+    font-size: 1.15rem;
+    font-weight: $font-weight-bolder;
+}
+
+.label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.label-offset {
+    @include media-breakpoint-up(lg) {
+        margin-top: 38px
+    }
+}
+
+// ----------------------------------------------------
+// Form Check
+// ----------------------------------------------------
+
+.form-check > label {
+    font-weight: $font-weight-normal;
+    font-size: 13px;
+}
+

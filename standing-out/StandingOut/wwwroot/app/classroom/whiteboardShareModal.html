@@ -1,0 +1,33 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--shareWhiteboard" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()"><i class="fal fa-times-circle"></i></button>
+            <h2>Share Whiteboard</h2>
+        </div>
+        <form name="mediaForm" novalidate ng-submit="save()">
+            <div class="Modal__Content">
+                <div class="grid-x grid-margin-y">
+                    <div class="large-8 cell"></div>
+                    <div class="large-2 cell text-align-center">Read</div>
+                    <div class="large-2 cell text-align-center">Write</div>
+                </div>
+                <div ng-repeat="user in users" class="grid-x grid-margin-y">
+                    <div class="large-8 cell">
+                        <span>{{user.name}}</span>
+                    </div>
+                    <div class="large-2 cell text-align-center">
+                        <input type="checkbox" ng-disabled="user.userId == whiteBoardUserId || !showRead" ng-change="readChanged($index)" ng-model="user.read" />
+                    </div>
+                    <div class="large-2 cell text-align-center">
+                        <input type="checkbox" ng-change="writeChanged($index)" ng-model="user.write" />
+                    </div>
+                </div>
+            </div>
+            <div class="Modal__Footer">
+                <div class="Footer__Buttons">
+                    <button class="button button--success" ng-click="share()">Update</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

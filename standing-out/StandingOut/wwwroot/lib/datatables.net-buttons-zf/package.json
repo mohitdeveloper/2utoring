@@ -1,0 +1,67 @@
+{
+  "_from": "datatables.net-buttons-zf@1.6.5",
+  "_id": "datatables.net-buttons-zf@1.6.5",
+  "_inBundle": false,
+  "_integrity": "sha512-Gj/mAWviI2zS7xLxz7i58hvMo7V2MM+g5cIvjFeZyIR5tIyFr0yLKKDnf+ecYMFTTV9DBJFn42fWdBsYyCwkzQ==",
+  "_location": "/datatables.net-buttons-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "datatables.net-buttons-zf@1.6.5",
+    "name": "datatables.net-buttons-zf",
+    "escapedName": "datatables.net-buttons-zf",
+    "rawSpec": "1.6.5",
+    "saveSpec": null,
+    "fetchSpec": "1.6.5"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-buttons-zf/-/datatables.net-buttons-zf-1.6.5.tgz",
+  "_shasum": "55471614677fc8740db336613c2958c714e96aab",
+  "_spec": "datatables.net-buttons-zf@1.6.5",
+  "_where": "C:\\DevSO\\standing-out",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net-buttons": "1.6.5",
+    "datatables.net-zf": "^1.10.15",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "Buttons for DataTables with styling for [Zurb Foundation](http://foundation.zurb.com/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "buttons",
+    "excel",
+    "pdf",
+    "csv",
+    "column visibility",
+    "print",
+    "DataTables",
+    "jQuery",
+    "table",
+    "Foundation"
+  ],
+  "license": "MIT",
+  "main": "js/buttons.foundation.js",
+  "name": "datatables.net-buttons-zf",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-Buttons-Foundation.git"
+  },
+  "style": "css/buttons.foundation.css",
+  "version": "1.6.5"
+}

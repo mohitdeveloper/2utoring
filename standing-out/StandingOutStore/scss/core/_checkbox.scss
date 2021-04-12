@@ -1,0 +1,193 @@
+// ----------------------------------------------------
+// Checkboxes
+// ----------------------------------------------------
+.form-check {
+
+    $size: 24px !default;
+    $selectedColor: $green !default;
+    $defaultColor: #d9d9d9;
+
+    // Remove Bootstrap default Radio / Checkbox padding - MC
+    padding-left: 0;
+    
+    .label {
+        white-space: initial;
+    }
+
+    input[type="checkbox"] {
+        cursor: pointer;
+        position: absolute;
+        margin: 0;
+        opacity: 0;
+        z-index: 1;
+        height: $size * 1.5;
+        width: $size * 1.5;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+
+        @include media-breakpoint-up(lg) {
+            height: $size;
+            width: $size;
+        }
+
+        &:focus + .label::before {
+            -webkit-box-shadow: 0 0 0 1px $selectedColor;
+            box-shadow: 0 0 0 1px $selectedColor;
+            border-width: 1px;
+        }
+
+        &:checked + .label {
+            &::before {
+                border: 1px solid $selectedColor;
+            }
+
+            &::after {
+                opacity: 1
+            }
+        }
+        &:disabled:checked + .label {
+            cursor: not-allowed;
+            &::before {
+                border: 1px solid $defaultColor;
+                opacity: .5;
+            }
+
+            &::after {
+                opacity: .5
+            }
+        }
+        &:disabled:not(:checked) + .label {
+            cursor: not-allowed;
+            &::before {
+                border: 1px solid $defaultColor;
+                opacity: .5;
+            }
+
+            &::after {
+                opacity: 0
+            }
+        }
+    }
+
+    input[type="checkbox"] + .label {
+        display: inline-block;
+        margin-bottom: 0;
+        cursor: pointer;
+        position: relative;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        height: $size * 1.5;
+        line-height: $size * 1.5;
+        padding-left: ($size * 1.5) + (($size * 1.5) / 2);
+
+        @include media-breakpoint-up(lg) {
+            height: $size;
+            line-height: $size;
+            padding-left: $size + ($size / 2);
+        }
+
+        &::before {
+            content: "";
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid #EAEAEA;
+            border-radius: 3px;
+            background: #fff;
+            height: $size * 1.5;
+            width: $size * 1.5;
+
+            @include media-breakpoint-up(lg) {
+                height: $size;
+                width: $size;
+            }
+        }
+
+        &::after {
+            content: "\f00c";
+            color: $green;
+            font-family: 'Font Awesome 5 Pro';
+            font-size: $size - 10;
+            font-weight: 400;
+            left: 0;
+            height: $size * 1.5;
+            opacity: 0;
+            position: absolute;
+            width: $size * 1.5;
+            text-align: center;
+            top: 0;
+
+            @include media-breakpoint-up(lg) {
+                font-size: 10px;
+                height: $size;
+                width: $size;
+            }
+        }
+    }
+}
+
+
+.form-check-switch {
+
+    $size: 30px !default;
+    $selectedColor: $green !default;
+    $defaultColor: #d9d9d9;
+
+    height: $size;
+    width: $size * 2;
+
+    & > label {
+        background-color: white;
+        border: 1px solid #EAEAEA;
+        border-radius: 15px;
+        cursor: pointer;
+        height: $size;
+        position: relative;
+        transition: border linear 250ms;
+        width: $size * 2;
+        white-space: initial;
+
+        &:hover {
+            border: 1px solid $selectedColor;
+        }
+
+    }
+
+    input[type="checkbox"] {
+        cursor: pointer;
+        position: absolute;
+        margin: 0;
+        opacity: 0;
+        z-index: 1;
+        height: $size;
+        width: $size * 2;
+
+        & + span {
+            align-items: center;
+            border-radius: 50%;
+            display: flex;
+            height: 20px;
+            justify-content: center;
+            position: absolute;
+            top: 3px;
+            width: 20px;
+            transition: color linear 100ms, background-color linear 100ms, transform linear 250ms;
+        }
+
+        &:not(:checked) + span,
+        &:disabled + span {
+            background-color: $defaultColor;
+            transform: translate(5px, 1px);
+        }
+
+        &:checked + span {
+            background-color: $selectedColor;
+            color: white;
+            transform: translate(33px, 1px);
+        }
+    }
+}

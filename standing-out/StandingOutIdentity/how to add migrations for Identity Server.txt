@@ -1,0 +1,10 @@
+add-migration -name init -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb  
+add-migration -name init -c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb
+
+
+--Generating a Self Signed Cert
+http://amilspage.com/signing-certificates-idsv4/
+
+
+
+

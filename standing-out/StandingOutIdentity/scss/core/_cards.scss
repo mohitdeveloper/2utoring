@@ -1,0 +1,76 @@
+// ----------------------------------------------------
+// Card
+// ----------------------------------------------------
+.card, .Card {
+    box-shadow: $box-shadow;
+    background-color: #ffffff;
+    padding: rem(35px);
+}
+
+.card--toRepsond\:small,
+.Card--toRepsond\:small {
+    $offset: $spacer * 3;
+    $width: $offset * 2 !default;
+
+    @include media-breakpoint-down(lg) {
+        margin-left: -#{$offset};
+        width: calc(100% + #{$width});
+        padding: rem(21px);
+    }
+}
+
+
+// ----------------------------------------------------
+// Shadow
+// ----------------------------------------------------
+
+.bxs-0 {
+    box-shadow: none!important;
+}
+
+
+.Button {
+    align-items: center;
+    border-radius: rem(3px);
+    display: flex;
+    height: rem(56px);
+    justify-content: center;
+
+    & + & {
+        margin-top: rem(14px);
+    }
+
+    &--Google {
+        background-color: #4285F4;
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+        margin-top: rem(21px);
+
+        &:hover {
+            color: #fff;
+            background-color: darken(#4285F4, 10%);
+        }
+
+        svg {
+            path, g {
+                fill : white;
+            }
+        }
+    }
+
+    &--Email {
+        background-color: #FCFCFC;
+        border: 1px solid #485465;
+        color: #485465;
+        font-weight: 600;
+        text-decoration: none;
+
+        &:hover {
+            color: #485465;
+            background-color: darken(#FCFCFC, 8%);
+        }
+
+    }
+    
+}

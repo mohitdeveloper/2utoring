@@ -1,0 +1,103 @@
+<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <div class="form-row mb-4">
+        <div class="col-12">
+            <div class="align-items-start mb-0 mb-lg-14">
+                <h3 class="titleSessions">Sessions</h3>
+            </div>
+            <div class="form-row mb-4">
+                <div class="col-12 col-lg-auto mb-14 mb-lg-0">
+                    <select class="custom-select Textbox--largeVerticalPadding" [(ngModel)]="searchModel.take" (ngModelChange)="reloadData()">
+                        <option selected>Filter by</option>
+                        <option *ngFor="let option of takeValues" [ngValue]="option.take">{{option.name}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-auto mb-lg-0 mb-4">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control Textbox--iconPrepend Textbox--largeVerticalPadding" [(ngModel)]="searchModel.search" placeholder="Search" aria-label="Search" aria-describedby="button-search" (keydown)="onType($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-success Button--largeVerticalPadding" type="button" id="button-search" (click)="reloadData()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="styled">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <span (click)="alterOrder('Name')">
+                                    Class Session Name
+                                    <span [hidden]="!(searchModel.sortType == 'Name' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'Name' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('StartDate')">
+                                    Start Date
+                                    <span [hidden]="!(searchModel.sortType == 'StartDate' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'StartDate' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('Owner.Email')">
+                                    Tutor Email
+                                    <span [hidden]="!(searchModel.sortType == 'Owner.Email' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'Owner.Email' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('Owner.Name')">
+                                    Tutor Name
+                                    <span [hidden]="!(searchModel.sortType == 'Owner.Name' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'Owner.Name' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('SessionAttendeesCount')">
+                                    No of participants
+                                    <span [hidden]="!(searchModel.sortType == 'SessionAttendeesCount' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'SessionAttendeesCount' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of results.data; let i = index;">
+                            <td>{{item.name}}</td>
+                            <td>{{item.startDate | date: 'dd/MM/yyyy hh:mma'}}</td>
+                            <td>{{item.owner.email}}</td>
+                            <td>{{item.owner.firstName}} {{item.owner.lastName}}</td>
+                            <td>{{item.sessionAttendeesCount}}</td>
+                            <td class="text-right">
+                                <a href="/admin/classsessions/details/{{item.classSessionId}}" class="ml-14 text-success">View</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center Pagination mt-28" *ngIf="results.paged !== undefined && results.paged != null">
+                <span class="pagination-info">Page {{results.paged.page}} of {{results.paged.totalPages}}</span>
+                <ul class="pagination justify-content-end mb-0">
+                    <li [class]="results.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+                        <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">{{results.paged.page}}</a></li>
+                    <li [class]="results.paged.page >= results.paged.totalPages+1 ? 'page-item disabled' : 'page-item'">
+                        <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

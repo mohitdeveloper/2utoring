@@ -1,0 +1,30 @@
+<div class="step-cols">
+    <div class="step-col-head">
+        <h3>Link your Google account</h3>
+    </div>
+    <div class="step-col-body body-pd">
+        <p>If you have not linked a Google account with 2utoring.com, you will not be able to host lessons with Google features enabled. <strong>Please ensure your Google account is linked using the link below</strong> or create a new Google account.</p>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="create-sub-col link-google-acc">
+                    <label>LINK YOUR GOOGLE ACCOUNT</label>
+                    <a class="add-subject" href="/Account/LinkAccount?returnUrl={{currentUrl}}">
+                        <span class="google-icon"><img src="/lib/assets/images/google-icon.svg" alt=""></span>Authenticate your Google account
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="create-sub-col not-google-user">
+                    <label>NOT ALREADY A GOOGLE USER?</label>
+                    <a class="add-subject" href="https://accounts.google.com/signup/v2/webcreateaccount?hl=en&flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">
+                        <span>+</span>Create a new Google account
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="text-right mt-3 step-col-head" style="border:none;">
+            <button type="reset" class="close" (click)="closeDialog()" data-dismiss="modal" aria-label="Close">Cancel</button>
+        </div>
+    </div>
+</div>

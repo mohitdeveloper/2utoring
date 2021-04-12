@@ -1,0 +1,132 @@
+<!-- specific header container for styling -->
+<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+
+    <!--<div class="row">
+        <div class="col-12">-->
+    <!-- Payout -->
+    <!--<div class="Alert alert-warning" role="alert" *ngIf="company?.stripeConnectAccountId == '' || company?.stripeConnectAccountId == null || company?.stripeConnectBankAccountId == '' || company?.stripeConnectBankAccountId == null">-->
+    <!--<div class="Alert alert-warning" role="alert" *ngIf="!alertMessage?.hasStripeConnectAccount">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M9 6C9 5.448 9.448 5 10 5C10.552 5 11 5.448 11 6V11C11 11.552 10.552 12 10 12C9.448 12 9 11.552 9 11V6ZM9 14C9 13.448 9.448 13 10 13C10.552 13 11 13.448 11 14C11 14.552 10.552 15 10 15C9.448 15 9 14.552 9 14ZM10 18C5.589 18 2 14.411 2 10C2 5.589 5.589 2 10 2C14.411 2 18 5.589 18 10C18 14.411 14.411 18 10 18ZM10 0C4.477 0 0 4.477 0 10C0 15.523 4.477 20 10 20C15.523 20 20 15.523 20 10C20 4.477 15.523 0 10 0Z" fill="#222B45" />
+        </svg>
+        <div class="Alert__text">
+            <h5 class="cl-dark fw-700">Set up your payouts</h5>-->
+    <!--<p class="cl-dark fw-500 mb-0">Please complete our <a href="/admin/settings/payout">pay-out setup</a> in your settings area to confirm the details of the bank account you would like your earnings to be paid into. Until this is completed your lessons will not be available for students to sign-up to publicly or privately.</p>-->
+    <!--<p class="cl-dark fw-500 mb-0">Get started & Set up your payouts, please complete our <a href="/admin/settings/payout">pay-out setup</a> in your settings area. Confirm the bank account you would like your earnings to be paid into. Until this is completed your lessons will not be available for students to sign-up to.</p>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <div class="form-row mt-14">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-start mb-14 mb-lg-28">
+                <h3 id="subjectPageTitle">{{title}} <i class="fa fa-info-circle Cursor--pointer" (click)="showSubjectStudyLevelInfoBox()"></i></h3>
+            </div>
+            <div class="d-flex justify-content-between align-items-start mb-14 mb-lg-28">
+                <h3 id="mainListTitleSubjectPage">{{title}} <i class="fa fa-info-circle Cursor--pointer" (click)="showSubjectStudyLevelInfoBox()"></i></h3>
+                <button class="col-sm-12 col-md-3 col-lg-2 btn-lg btn-success" type="button" (click)="addPriceForSubjects()">Add</button>
+            </div>
+        </div>
+
+
+
+        <!--<div class="col-12">
+            <div class="col-12 col-lg-auto mb-14 mb-lg-0 d-flex align-items-center">
+                <label class="mb-0">Filter by ...</label>
+            </div>
+            <div class="col-6 col-lg-{{colMdLg}} mb-14 mb-lg-12">
+                <input type="text" class="form-control Textbox--iconPrepend Textbox--largeVerticalPadding" [(ngModel)]="searchModel.search" placeholder="Search" aria-label="Search" aria-describedby="button-search" (keydown)="onType($event)">
+            </div>
+
+            <div class="col-6 col-lg-auto mb-14 mb-lg-0">
+                <select class="custom-select Textbox--largeVerticalPadding" [(ngModel)]="searchModel.take" (ngModelChange)="reloadData()">
+                    <option *ngFor="let option of takeValues" [ngValue]="option.take">{{option.name}}</option>
+                </select>
+            </div>
+
+            <div class="col-6 col-lg-auto mb-14 mb-lg-0">
+                <button class="btn btn-lg btn-success d-flex align-items-center justify-content-center w-100 w-lg-auto" type="button" id="button-search" (click)="reloadData()" style="height: calc(1.5em + 2rem + -3px)"><span class="w-100" style="margin-top: -3px">Search</span></button>
+            </div>
+        </div>-->
+        <!--<div class="table-overflow col-md-12">-->
+        <div class="table-responsive">
+            <table class="styled">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <span (click)="alterOrder('Subject.Name')">
+                                Subject
+                                <span [hidden]="!(searchModel.sortType == 'Subject.Name' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                <span [hidden]="!(searchModel.sortType == 'Subject.Name' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                            </span>
+                        </th>
+                        <th scope="col">
+                            <span (click)="alterOrder('StudyLevel.Name')">
+                                Subject Level
+                                <span [hidden]="!(searchModel.sortType == 'StudyLevel.Name' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                <span [hidden]="!(searchModel.sortType == 'StudyLevel.Name' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                            </span>
+                        </th>
+                        <th scope="col">
+                            <span (click)="alterOrder('PricePerPerson')">
+                                Price Per Person
+                                <span [hidden]="!(searchModel.sortType == 'PricePerPerson' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                <span [hidden]="!(searchModel.sortType == 'PricePerPerson' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                            </span>
+                        </th>
+
+                        <th scope="col">
+                            <span (click)="alterOrder('GroupPricePerPerson')">
+                                Group Price Per Person
+                                <span [hidden]="!(searchModel.sortType == 'GroupPricePerPerson' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                <span [hidden]="!(searchModel.sortType == 'GroupPricePerPerson' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                            </span>
+                        </th>
+                        <th scope="col" *ngIf="userType=='Company'">
+                            <span>
+                                Updated By
+                            </span>
+                        </th>
+
+                        <th scope="col">
+                            <span>Action</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of results.data">
+                        <td>{{item.subjectName}}</td>
+                        <td>{{item.studyLevelName}}</td>
+                        <td> {{item.pricePerPerson | currency:'GBP':'symbol':'1.2-2'}}</td>
+                        <td>{{item.groupPricePerPerson | currency:'GBP':'symbol':'1.2-2'}}</td>
+                        <td *ngIf="userType=='Company'">{{item.updateByName}}</td>
+                        <td>
+                            <div>
+                                <a *ngIf="alertMessage.userType !='Company'" href="javascript:void(0)" (click)="deleteSubjectPrice(item.subjectStudyLevelSetupId)" class="btn btn-sm btn-textonly-danger" title="Delete"><i class="fas fa-trash ng-star-inserted" style="color:red;"></i></a>
+                                <a href="javascript:void(0)" (click)="updateSubjectPrice(item.subjectStudyLevelSetupId, item.allowEdit)" class="btn btn-sm btn-textonly-success" title="Edit"><i class="fas fa-pencil ng-star-inserted"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="d-flex justify-content-between align-items-center Pagination mt-28" *ngIf="results.paged !== undefined && results.paged != null">
+        <span class="pagination-info">Page {{results.paged.page}} of {{results.paged.totalPages}}</span>
+        <ul class="pagination justify-content-end mb-0">
+            <li [class]="results.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+                <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">{{results.paged.page}}</a></li>
+            <!--<li [class]="results.paged.page >= results.paged.totalPages ? 'page-item disabled' : 'page-item'">-->
+            <li [class]="results.paged.page >= results.paged.totalPages+1 ? 'page-item disabled' : 'page-item'">
+                <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+   

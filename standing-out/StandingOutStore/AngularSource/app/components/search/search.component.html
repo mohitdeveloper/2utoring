@@ -1,0 +1,102 @@
+﻿<div class="my-35 my-md-28 my-lg-84">
+    <div class="Page__Container Page__Container--size:content">
+
+    <h1 class="fw-800 mb-21 mb-84 text-center">Find the right lessons for you</h1>
+
+    <div class="card card--toRepsond:smallFill">
+        <div class="card-body">
+            <form (ngSubmit)="reloadData()">
+                <div class="form-row">
+                    <div class="form-group col-12 col-lg-6 col-xl-3">
+                        <label>Show me lessons for students</label>
+                        <div class="d-lg-flex align-items-center mb-21 mb-lg-0" style="height: 49px">
+                            <div class="form-check mr-lg-21 mb-14 mb-lg-0">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="searchModel.isUnder16" [(ngModel)]="searchModel.isUnder16" [value]="true" />
+                                    <span class="label fs-14 fw-500">Under 18</span>
+                                </label>
+                            </div>
+                            <div class="form-check mr-lg-21 mb-14 mb-lg-0">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="searchModel.isUnder16" [(ngModel)]="searchModel.isUnder16" [value]="false" />
+                                    <span class="label fs-14 fw-500">Over 18</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12 col-lg-6 col-xl-9">
+                        <label for="searchModel.search">Search</label>
+                        <input type="text" class="form-control" maxlength="250" id="searchModel.search" name="searchModel.search" [(ngModel)]="searchModel.search" placeholder="Search..." (keyDown)="onType($event)" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-12 col-lg-3">
+                        <label for="searchModel.subjectId">Your subject</label>
+                        <ng-select (change)="changeSubject()" id="searchModel.subject" name="searchModel.subject" [items]="filteredSubjects"
+                                bindLabel="name"
+                                bindValue="url"
+                                [(ngModel)]="searchModel.subject"
+                                placeholder="Choose a subject...">
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-12 col-lg-3">
+                        <label for="searchModel.subjectCategory">Your category</label>
+                        <ng-select id="searchModel.subjectCategory" name="searchModel.subjectCategory" [items]="filteredSubjectCategories"
+                                bindLabel="name"
+                                bindValue="id"
+                                [(ngModel)]="subjectCategoryId"
+                                (change)="changeSubjectCategory()"
+                                placeholder="Choose a category...">
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-12 col-lg-3">
+                        <label for="searchModel.studyLevelUrl">Your study level</label>
+                        <ng-select id="searchModel.studyLevelUrl" name="searchModel.studyLevelUrl"  [items]="studyLevels"
+                                bindLabel="name"
+                                bindValue="url"
+                                [(ngModel)]="searchModel.studyLevelUrl"
+                                placeholder="Choose a study level...">
+                        </ng-select>
+                    </div>
+                    <div class="form-group col-12 col-lg-3 mb-0">
+                        <button type="submit" class="btn btn-accent btn-lg fs-16 cl-white w-100 label-offset py-14 lh-normal">Find lessons</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <ng-container *ngIf="searchModelSubmitted">
+        <h2 class="fw-800 mb-21 mb-lg-35 mt-35 mt-lg-84"> Search results for {{lastIsUnder16 ? 'Child (under 18)' : 'Adult (18 or over)'}}</h2>
+
+        <ng-container *ngIf="results.data != null && results.data.length > 0; else noResults">    
+            <div class="row Card__Group">
+                <div class="col-12 col-md-6 col-lg-4 mb-0 mb-md-21" *ngFor="let item of results.data">
+                    <app-lesson-card [lesson]="item" [selected]="false" [moreInfoNavOn]="true" [canUserBuy]="canUserBuy" [isLoggedIn]="isLoggedIn" [isGuardian]="isGuardian"></app-lesson-card>
+                </div>
+            </div>
+            <div class="row mt-35 lt-lg-0">
+                <div class="col-12 d-flex justify-content-between align-items-center" *ngIf="results.paged !== undefined && results.paged != null">
+                    <span class="pagination-info">Page {{results.paged.page}} of {{results.paged.totalPages}}</span>
+                    <ul class="pagination justify-content-end mb-0">
+                        <li [class]="results.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+                            <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">{{results.paged.page}}</a></li>
+                        <li [class]="results.paged.page >= results.paged.totalPages ? 'page-item disabled' : 'page-item'">
+                            <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #noResults>
+            <div class="row">
+                <div class="col-sm-12">
+                    <span class="fs-18 cl-light">No results to show</span>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+    </div>
+</div>

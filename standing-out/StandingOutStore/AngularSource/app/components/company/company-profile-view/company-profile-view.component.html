@@ -1,0 +1,545 @@
+<main>
+    <section class="sec bg-light light-image-bg mt-14">
+        <div class="container breakMe">
+            <div class="tab-row agency-profile-top">
+                <div class="d-flex search-teacher-row">
+                    <div class="left-image home-logo-left">
+                        <div class="left-image">
+                            <a href="javascript:void(0);">
+                                <img *ngIf="company?.storeProfileImageDownload != ''" src="{{company?.storeProfileImageDownload  }}" alt="{{company?.name}}" />
+                                <img *ngIf="company?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{company?.name}}" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="detail-center">
+                        <div class="detail-center-top">
+                            <div class="clearfix">
+                                <a *ngIf="isAuthenticated == 'False'" href="javascript:void(0);" (click)="backToSearch('search')" class="back-to"><i class="fa fa-search"></i> Return to search</a>
+
+                                <a *ngIf="isAuthenticated == 'True' && (alertMessage?.userType == 'Student' || alertMessage?.userType == 'Parent' || alertMessage?.userType == 'CompanyTutor' || alertMessage?.userType == 'Tutor')" href="javascript:void(0);" (click)="backToSearch('search')" class="back-to"><i class="fa fa-search"></i> Return to search</a>
+                                <a *ngIf="isAuthenticated == 'True' && alertMessage?.userType == 'Company'" href="javascript:void(0);" (click)="backToSearch('edit')" class="back-to"><i class="fa fa-pencil"></i> Edit Profile</a>
+
+                                <!--<a *ngIf="isAuthenticated == 'True'" href="javascript:void(0);" (click)="backToSearch('edit')" class="back-to"><i class="fa fa-pencil"></i> Edit Profile</a>-->
+                            </div>
+                            <div class="clearfix">
+                                <span *ngIf="hasDbsApproved" class="head-tag">Enhanced DBS<span class="search-date">Staff</span></span>
+                            </div>
+                            <h3>{{ company?.name }}</h3>
+                            <!--<span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 12 REVIEWS</span>-->
+                            <div class="clearfix"></div>
+
+                        </div>
+                        <p class="uni-link text-justifys" style="word-break:break-word !important;"><a href="javascript:void(0);">{{ company?.description }}</a> </p>
+                        <div class="row agency-profile-bottom">
+                            <div class="col-lg-6 agency-profile-bottom-col">
+                                <div class=" d-flex align-items-center age-course-ava">
+                                    <p class="age-course-ava-row" *ngIf="company?.tutors.length > 0">
+                                        <ng-container *ngFor="let t of company?.tutors.slice(0, 3); let i = index;">
+                                            <span class="age-course-ava-img">
+                                                <img title="{{t?.userFullName}}" *ngIf="t?.storeProfileImageDownload != ''" src="{{t?.storeProfileImageDownload}}" alt="{{t?.userFullName}}" />
+                                                <img title="{{t?.userFullName}}" *ngIf="t?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{t?.userFullName}}" />
+                                            </span>
+                                        </ng-container>
+                                    </p>
+
+                                    <p class="age-course-ava-row" *ngIf="company?.tutors.length == 0">
+                                        <span class="age-course-ava-img"></span>
+                                    </p>
+
+                                    <span class="age-course-ava-tit">
+                                        <strong>{{ company?.companyTutorCount }} TUTORS</strong> REGISTERED
+                                    </span>
+                                    <a href="javascript:void(0);" (click)="setProfileTabActive('tab3')"  [ngClass]="{'active': profileTabActive ==='tab3'}" class="sm-btn">See Tutors</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 agency-profile-bottom-col">
+                                <div class=" d-flex align-items-center age-course-ava">
+                                    <p class="age-course-ava-row" *ngIf="companyCourses.length > 0">
+                                        <ng-container *ngFor="let t of companyCourses.slice(0, 3); let i = index;">
+                                            <span class="age-course-ava-img">
+                                                <!--<img src="/lib/assets/images/2utoringDefault.png" title="{{t?.name}}" alt="{{t?.name}}" />-->
+                                                <img [src]="i | randomimage:subjectsImages[t?.subjectName]:t?.subjectName" title="{{t?.name}}" alt="{{t?.name}}">
+
+                                            </span>
+                                        </ng-container>
+                                    </p>
+
+                                    <p class="age-course-ava-row" *ngIf="companyCourses?.length == 0">
+                                        <span class="age-course-ava-img"></span>
+                                    </p>
+
+                                    <span class="age-course-ava-tit">
+                                        <strong>{{ company?.companyCourseCount }} COURSES</strong> AVAILABLE
+                                    </span>
+                                    <a href="javascript:void(0);" (click)="setProfileTabActive('tab2')" [ngClass]="{'active': profileTabActive ==='tab2'}" class="sm-btn" style="padding:4px 14px;">Browse Courses</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-lg-9 agency-profile-tab">
+                    <div class="tabs-containers breakMe">
+                        <ul class="d-flex tabs teacher-tab">
+                            <li (click)="setProfileTabActive('tab1')" [ngClass]="{'active': profileTabActive ==='tab1'}" rel="tab1"><span>About <i class="fa fa-angle-down"></i></span></li>
+                            <li (click)="setProfileTabActive('tab2')" [ngClass]="{'active': profileTabActive ==='tab2'}" rel="tab2"><span>Courses <i class="fa fa-angle-down"></i></span></li>
+                            <li (click)="setProfileTabActive('tab3')" [ngClass]="{'active': profileTabActive ==='tab3'}" rel="tab3"><span>Tutors <i class="fa fa-angle-down"></i></span></li>
+                            <!--<li (click)="setProfileTabActive('tab4'" [ngClass]="{'active': profileTabActive ==='tab4'}" rel="tab4"><span>Reviews <i class="fa fa-angle-down"></i></span></li>-->
+                            <li (click)="setProfileTabActive('tab5')" [ngClass]="{'active': profileTabActive ==='tab5'}" rel="tab5"><span>Contact <i class="fa fa-angle-down"></i></span></li>
+                        </ul>
+                        <div class="tab_container teacher-profile-tab">
+                            <h3 (click)="setProfileTabActive('tab1')" [ngClass]="{'d_active': profileTabActive ==='tab1'}" class="d_active tab_drawer_heading" rel="tab1">About</h3>
+                            <div [style.display]="profileTabActive =='tab1' ? 'block' : 'none'" id="tab1" class="tab_content">
+                                <div class="tab-row about-team">
+                                    <div class="professional-profile">
+
+                                        <h5><span>WHO WE ARE</span></h5>
+                                        <p>{{ company?.whoWeAre }}</p>
+
+                                        <h5><span>WHAT WE DO</span></h5>
+                                        <p>{{ company?.whatWeDo }}</p>
+
+                                        <h5><span>WHY WE DO IT</span></h5>
+                                        <p>{{ company?.whyWeDoIt }}</p>
+
+                                        <h5><span>WHY CHOOSE US</span></h5>
+                                        <p>{{ company?.whyChooseUs }}</p>
+
+                                        <h5><span>SUBJECTS & PRICING</span></h5>
+                                        <div class="tutor-table table-overflow">
+                                            <table class="styled">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            <span>
+                                                                SUBJECT
+                                                            </span>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <span> LEVEL </span>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <span> ONE-TO-ONE TUTORING </span>
+                                                        </th>
+
+                                                        <th scope="col">
+                                                            <span> GROUP TUTORING </span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let subLevelDetails of company?.subjectStudyLevelSetups">
+                                                        <td>{{ subLevelDetails.subjectName }}</td>
+                                                        <td>{{ subLevelDetails.studyLevelName }}</td>
+                                                        <td>{{ subLevelDetails.pricePerPerson | currency:'GBP':'symbol':'1.2-2' }}/hr</td>
+                                                        <td>{{ subLevelDetails.groupPricePerPerson | currency:'GBP':'symbol':'1.2-2'}}/hr</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+
+
+                                            <!--<div class="d-flex tutor-table-head">
+                                                <div class="col-3">SUBJECT</div>
+                                                <div class="col-2">LEVEL</div>
+                                                <div class="col-4">ONE-TO-ONE TUTORING</div>
+                                                <div class="col-3">GROUP TUTORING</div>
+                                            </div>-->
+                                            <!--<div id="mySubjects">
+                                                <div class="d-flex" *ngFor="let subLevelDetails of company?.subjectStudyLevelSetups">
+                                                    <div class="col-3">{{ subLevelDetails.subjectName }}</div>
+                                                    <div class="col-2">{{ subLevelDetails.studyLevelName }}</div>
+                                                    <div class="col-4">{{ subLevelDetails.pricePerPerson | currency:'GBP':'symbol':'1.2-2' }}/hr</div>
+                                                    <div class="col-3">{{ subLevelDetails.groupPricePerPerson | currency:'GBP':'symbol':'1.2-2'}}/hr</div>
+                                                </div>
+                                            </div>-->
+                                        </div>
+
+
+                                        <div class="team-table">
+                                            <h5><span>MEET THE TEAM</span></h5>
+                                            <div class="row">
+                                                <div class="d-flex" *ngIf="company?.companyTeam && company?.companyTeam.length==0">
+                                                    <p>No Team Data Found!</p>
+                                                </div>
+                                                <ng-container *ngFor="let team of company?.companyTeam; let i = index;">
+                                                    <div class="col-sm-6">
+                                                        <div class="d-flex team-row">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="team-img">
+                                                                    <img *ngIf="company?.storeProfileImageDownload != ''" src="{{company?.storeProfileImageDownload  }}" alt="{{company?.name}}" />
+                                                                    <img *ngIf="company?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{company?.name}}" />
+                                                                    <!--<img src="/lib/assets/images/2utoringDefault.png" alt="" />-->
+                                                                </div>
+                                                                <div class="team-name">
+                                                                    <h4>{{ team.teamName }}</h4>
+                                                                    <span class="deg">{{ team.teamRole }}</span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #tab1 -->
+                            <h3 (click)="setProfileTabActive('tab2')" [ngClass]="{'d_active': profileTabActive ==='tab2'}" class="tab_drawer_heading" rel="tab2">Courses</h3>
+                            <div [style.display]="profileTabActive =='tab2' ? 'block' : 'none'" id="tab2" class="tab_content">
+                                <div class="tab-row">
+                                    <p class="sub-head">LESSONS & COURSES</p>
+                                    <ng-template [ngTemplateOutlet]="createYourOwnCourseOrLesson"></ng-template>
+                                    <div class="lessons-courses">
+                                        <ng-container *ngFor="let t of companyCourses|slice:0:currentLimit; let i = index;">
+                                            <div class="d-flex align-items-start tab-row agency-card">
+                                                <div class="left-image"><a href="javascript:void(0)">
+    <!--<img src="/lib/assets/images/2utoringDefault.png" alt="">-->
+    <img [src]="i | randomimage:subjectsImages[t?.subjectName]:t?.subjectName" title="{{t?.name}}" alt="{{t?.name}}">
+
+</a></div>
+                                                <div class="detail-center">
+                                                    <div class="lessons-courses-head">
+                                                        <h2>{{ t.name }}</h2>
+                                                        <span class="s-ses">{{t.classSessionsCount}} Sessions</span>
+                                                        <p class="lessons-date-time">
+                                                            <span><i><img src="/lib/assets/images/celander-icon.svg" alt=""></i>Starts  {{t.classSessions[0].startDate | date:'EEEE d MMMM' }} </span>
+                                                            <span><i><img src="/lib/assets/images/watch-icon.svg" alt=""></i> {{t.classSessions[0].startDate  | date:'h a' }} - {{t.classSessions[0].endDate | date:'h a'}}</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="left-image">
+                                                            <a href="javascript:void(0);">
+                                                                <img *ngIf="tutorObj[t.tutorId].storeProfileImageDownload != ''" src="{{tutorObj[t.tutorId].storeProfileImageDownload  }}" alt="{{t?.tutorName}}" />
+                                                                <img *ngIf="tutorObj[t.tutorId].storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{t?.tutorName}}" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="detail-center">
+
+                                                            <div class="detail-center-top">
+                                                                <h3>{{t.tutorName}}</h3>
+                                                                <span class="head-tag" *ngIf="tutorObj[t.tutorId].dbsApprovalStatus == 'Approved'">Enhanced DBS</span>
+                                                            </div>
+                                                            <p class="uni-link" style="word-wrap: break-word;"><a href="javascript:void(0);" *ngFor="let qualification of tutorObj[t.tutorId].tutorQualification">{{ qualification }}</a></p>
+                                                            <!--<p class="uni-tag"><a href="javascript:void(0);" *ngFor="let tsl of tutorObj[t.tutorId].tutorSubjectNameList">{{ tsl }}</a></p>-->
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex btn-group-right">
+
+
+                                                        <!--<a href="javascript:void(0);" *ngIf="isAuthenticated == 'False'" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" disabled="disabled" class="custom-btn btn-green">Book Tutor</a>-->
+                                                        <a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <!--<a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" disabled="disabled" class="custom-btn btn-green">Book Tutor</a>-->
+                                                        <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>
+
+                                                        <!--<a href="javascript:void(0);" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>-->
+                                                        <a href="javascript:void(0);" (click)="redirectMe('viewTutor',t?.tutorId)" class="custom-btn btn-blue">View Tutor</a>
+                                                        <a href="javascript:void(0);" (click)="redirectMe('courseDetails',t?.courseId)" class="custom-btn btn-fill">Course Details</a>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex detail-center-bottom">
+                                                    <div class="d-flex detail-center-bottom">
+                                                        <div class="detail-center-bottom-col course-col-single">
+                                                            <a href="javascript:void(0);" class="d-flex">
+                                                                <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
+                                                                <span class="bottom-col-text">
+                                                                    <small>Group Course</small>
+                                                                    {{t.classSessionsTotalAmount | currency:'GBP':'symbol':'1.2-2'}}
+                                                                </span>
+                                                            </a>
+                                                            <p class="text-down">{{ t.maxClassSize - t.courseAttendeesCount }} PLACES  <span>LEFT TO BOOK</span></p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <a *ngIf="(i==(currentLimit-1) && (companyCourses.length>currentLimit) )" href="javascript:void(0);" (click)="showMoreData()" class="button-full mt-4">Show more results</a>
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- #tab2 -->
+                            <h3 (click)="setProfileTabActive('tab3')" [ngClass]="{'d_active': profileTabActive ==='tab3'}" class="tab_drawer_heading" rel="tab3">Tutors</h3>
+                            <div [style.display]="profileTabActive =='tab3' ? 'block' : 'none'" id="tab3" class="tab_content">
+                                <div class="tab-row">
+                                    <p class="sub-head">REGISTERED TUTORS</p>
+                                    <div class="lessons-courses">
+                                        <!--<ng-template *ngIf="companyCourses && companyCourses.length==0" [ngTemplateOutlet]="noRecordFoundTutor"></ng-template>-->
+                                        <ng-template *ngIf="company?.tutors && company?.tutors.length==0" [ngTemplateOutlet]="noRecordFoundTutor"></ng-template>
+                                        <ng-container *ngFor="let t of company?.tutors|slice:0:currentLimit; let i = index;">
+                                            <div class="d-flex align-items-start tab-row tutors-card">
+                                                <div class="left-image">
+                                                    <a href="javascript:void(0);">
+                                                        <img *ngIf="t?.storeProfileImageDownload != ''" src="{{t?.storeProfileImageDownload}}" alt="{{t?.userFullName}}" />
+                                                        <img *ngIf="t?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{t?.userFullName}}" />
+                                                    </a>
+                                                </div>
+                                                <div class="detail-center">
+                                                    <div class="detail-center-top">
+                                                        <h3>{{ t.userFullName }}</h3>
+                                                        <span class="head-tag" *ngIf="t.dbsApprovalStatus == 'Approved'">Enhanced DBS</span>
+                                                    </div>
+                                                    <div class="course-with-agency">
+                                                        <div class="course-with-agency-left">
+                                                            <p class="uni-link"> <a *ngFor="let tq of t.tutorQualification" href="javascript:void(0);">{{ tq }}</a> </p>
+                                                            <p class="uni-tag"><a *ngFor="let tsl of t.tutorSubjectNameList" href="javascript:void(0);">{{ tsl }}</a></p>
+                                                        </div>
+                                                        <div class="course-with-agency-right" *ngIf="t.currentCompany">
+                                                            <a href="javascript:void(0);">
+                                                                <img *ngIf="t.currentCompany?.storeProfileImageDownload != ''" src="{{t.currentCompany.storeProfileImageDownload}}" alt="{{t.userFullName}}" />
+                                                                <img *ngIf="t.currentCompany?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{t.userFullName}}" />
+
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex btn-group-right">
+                                                        <!--<a href="javascript:void(0);" *ngIf="isAuthenticated == 'False'" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" disabled="disabled" class="custom-btn btn-green">Book Tutor</a>-->
+
+                                                        <a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <!--<a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" disabled="disabled" class="custom-btn btn-green">Book Tutor</a>-->
+                                                        <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>
+
+                                                        <!--<a href="javascript:void(0);" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>-->
+                                                        <a href="javascript:void(0);" (click)="redirectMe('tutorCourses',t?.tutorId)" class="custom-btn btn-blue">Explore Courses</a>
+                                                        <a href="javascript:void(0);" (click)="redirectMe('viewTutor',t?.tutorId)" class="custom-btn btn-fill">View Tutor</a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex detail-center-bottom">
+                                                    <div class="detail-center-bottom-col">
+                                                        <a href="javascript:void(0);" class="d-flex">
+                                                            <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-icon.svg" alt=""></span>
+                                                            <span class="bottom-col-text">
+                                                                <small>One-to-one</small>
+                                                                {{ t.tutorPriceLesson.oneToOneMinPrice | currency:'GBP':'symbol':'1.2-2' }}- {{ t.tutorPriceLesson.oneToOneMaxPrice }}/ hr
+                                                            </span>
+                                                        </a>
+                                                        <p class="text-down">{{ t.tutorPriceLesson.oneToOneLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                                                    </div>
+                                                    <div class="detail-center-bottom-col">
+                                                        <a href="javascript:void(0);" class="d-flex">
+                                                            <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
+                                                            <span class="bottom-col-text">
+                                                                <small>Group Lessons</small>
+                                                                {{ t.tutorPriceLesson.groupMinPrice | currency:'GBP':'symbol':'1.2-2'  }}-{{ t.tutorPriceLesson.groupMaxPrice }}/ hr
+                                                            </span>
+                                                        </a>
+                                                        <p class="text-down">{{ t.tutorPriceLesson.groupLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a *ngIf="(i==(currentLimit-1) && (company?.tutors.length>currentLimit) )" href="javascript:void(0);" (click)="showMoreData()" class="button-full">Show more results</a>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 (click)="setProfileTabActive('tab5')" [ngClass]="{'d_active': profileTabActive ==='tab5'}" class="tab_drawer_heading" rel="tab5">Contact</h3>
+                            <div [style.display]="profileTabActive =='tab5' ? 'block' : 'none'" id="tab5" class="tab_content">
+                                <div class="tab-row">
+                                    <p class="sub-head">CONTACT AGENCY</p>
+                                    <div class="professional-profile">
+                                        <!--<h6><span>Registration Number</span></h6>
+                                        <p>{{ company?.registrationNo }}</p>-->
+                                        <h6><span>Administrator</span></h6>
+                                        <p>{{ company?.name }}</p>
+                                        <h6><span>Contact number</span></h6>
+                                        <p>{{ company?.telephoneNumber }}</p>
+                                        <!--<h6><span>Email</span></h6>
+                                        <p>{{ company?.emailAddress}}</p>-->
+                                    </div>
+
+                                    <h3>Send a message</h3>
+                                    <form [formGroup]="contactAgency">
+                                        <div class="contact-tutor">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-6 col-lg-3 contact-tutor-feild">
+                                                    <input type="text" class="form-control" placeholder="First Name" formControlName="firstName" />
+                                                    <div *ngIf="contactAgencyFormCompanyControls.firstName.errors && (contactAgencyFormCompanyControls.firstName.dirty || contactAgencyFormCompanyControls.firstName.touched || contactAgencyFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="contactAgencyFormCompanyControls.firstName.errors.maxlength">Title has a character limit of 20</div>
+                                                        <div *ngIf="contactAgencyFormCompanyControls.firstName.errors.required">Please enter first name. </div>
+
+
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-lg-3 contact-tutor-feild">
+                                                    <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName" />
+                                                    <div *ngIf="contactAgencyFormCompanyControls.lastName.errors && (contactAgencyFormCompanyControls.lastName.dirty || contactAgencyFormCompanyControls.lastName.touched || contactAgencyFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="contactAgencyFormCompanyControls.lastName.errors.maxlength">Title has a character limit of 20</div>
+                                                        <div *ngIf="contactAgencyFormCompanyControls.lastName.errors.required">Please enter last name. </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-12 col-lg-6 contact-tutor-feild">
+                                                    <input type="email" class="form-control" placeholder="Email Address" formControlName="email" />
+                                                    <div *ngIf="contactAgencyFormCompanyControls.email.errors && (contactAgencyFormCompanyControls.email.dirty || contactAgencyFormCompanyControls.email.touched || contactAgencyFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="contactAgencyFormCompanyControls.email.errors.required">Please enter email address. </div>
+                                                        <div *ngIf="contactAgencyFormCompanyControls.email.errors.pattern">Please enter valid email address. </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-12 col-lg-12 contact-tutor-feild">
+                                                    <textarea class="form-control" placeholder="Message" formControlName="message"></textarea>
+                                                    <div *ngIf="contactAgencyFormCompanyControls.message.errors && (contactAgencyFormCompanyControls.message.dirty || contactAgencyFormCompanyControls.message.touched || contactAgencyFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="contactAgencyFormCompanyControls.message.errors.required">Please enter message. </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <button type="button" (click)="sendMessageForAgency()" class="custom-btn btn-fill">Send Message</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                            <!-- #tab5 -->
+                        </div>
+                        <!-- .tab_container -->
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="tab-right-bar">
+                        <p class="sub-head">PRICING GUIDE</p>
+                        <div class="detail-center-bottom-col">
+                            <a href="javascript:void(0);" class="d-flex">
+                                <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-icon.svg" alt=""></span>
+                                <span class="bottom-col-text">
+                                    <small>One-to-one</small>
+                                    {{(company?.oneToOneMinPrice ? company?.oneToOneMinPrice : 0.0) | currency:'GBP':'symbol':'1.2-2' }}-{{ company?.oneToOneMaxPrice }} / hr
+                                </span>
+                            </a>
+                            <p class="text-down">{{ company?.oneToOneLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                        </div>
+                        <div class="detail-center-bottom-col">
+                            <a href="javascript:void(0);" class="d-flex">
+                                <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
+                                <span class="bottom-col-text">
+                                    <small>Group Lessons</small>
+                                    {{ (company?.groupMinPrice ? company?.groupMinPrice : 0.0) | currency:'GBP':'symbol':'1.2-2'}}-{{ company?.groupMaxPrice }} / hr
+                                </span>
+                            </a>
+                            <p class="text-down">{{ company?.groupLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                        </div>
+                    </div>
+                    <!--<div class="tab-right-bar">
+                        <p class="sub-head">REVIEWS</p>
+                        <div class="review-text no-border pt-1">
+                            <div class="review-head">
+
+                                <span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 5 Stars</span>
+                                <h3>Gemma Jones</h3>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet,
+                                consectetuer adipiscing elit,
+                                sed diam nonummy nibh
+                                euismod tincidunt ut laoreet
+                                dolore magna aliquam erat
+                                volutpat. Ut wisi enim ad
+                                minim veniam, quis nostrud
+                            </p>
+                            <a href="javascript:void(0);" class="link-color">READ MORE</a>
+                        </div>
+                        <div class="review-text mt-2">
+                            <div class="review-head">
+
+                                <span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 5 Stars</span>
+                                <h3>Samatha Davies</h3>
+                            </div>
+                            <p>
+                                Lorem ipsum dolor sit amet,
+                                consectetuer adipiscing elit,
+                                sed diam nonummy nibh
+                                euismod tincidunt ut laoreet
+                                dolore magna aliquam erat
+                                volutpat. Ut wisi enim ad
+                                minim veniam, quis nostrud
+                            </p>
+                            <a href="javascript:void(0);" class="link-color">READ MORE</a>
+                        </div>
+
+                        <a href="javascript:void(0);" class="full-btn btn-fill">See all reviews</a>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<ng-template #createYourOwnCourseOrLesson>
+    <div class="lessons-courses">
+        <div class="d-flex align-items-start tab-row agency-card mt-4">
+            <div class="left-image no-radius height-auto"><a href="javascript:void(0);"><img src="/lib/assets/images/search-box-image5.svg" class="height-auto" alt=""></a></div>
+            <div class="detail-center">
+                <div class="lessons-courses-head">
+                    <h2>Create your own course or lesson</h2>
+                    <p class="lessons-date-time">
+                        <span>Book your own course - you choose the curruculum, tutor and times </span>
+                    </p>
+                </div>
+                <div class="d-flex align-items-start">
+                    <div class="left-image width-70 no-radius">
+                            <a href="javascript:void(0);">
+                                <img *ngIf="company?.storeProfileImageDownload != ''" src="{{company?.storeProfileImageDownload}}" alt="{{company?.name}}" />
+                                <img *ngIf="company?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{company?.name}}" />
+                            </a>
+                    </div>
+                    <div class="detail-center">
+                        <div class="detail-center-top">
+                            <h3>{{company?.name}}</h3>
+                            <!--<span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 12 REVIEWS</span>-->
+                        </div>
+                        <p class="uni-link"><a href="javascript:void(0);" *ngFor="let qualification of tutorObj[t?.tutorId]?.tutorQualification">{{ qualification }}</a></p>
+
+                    </div>
+                </div>
+                <div class="btn-group-right">
+                    <p>If you can't find the exact course that you're looking for, you can create your own lessons or courses with your chosen tutor, all in a few clicks and taps! </p>
+                </div>
+            </div>
+            <div class="detail-center-bottom text-center text-full" style="width:200px;flex-wrap:wrap;">
+                <p>Simply register or sign in to your account, invite your friends, find your tutor, create your course and start learning together.</p>
+                <div class="btn-group-right">
+                    <a href="javascript:void(0);" (click)="goToTutorSearch();" class="custom-btn btn-fill">Create Now</a>
+                </div>
+            </div>
+        </div>
+     </div>
+</ng-template>
+
+<ng-template #noRecordFoundTutor>
+    <div class="d-flex tab-row">
+        <div class="left-image no-radius"><a href="javascript:void(0);"><img src="/lib/assets/images/search-box-image5.svg" alt="" /></a></div>
+        <div class="detail-centers" style="margin-left:5%;">
+            <a href="javascript:void(0);" class="tutor-icon"><img src="/lib/assets/images/2utoringDefault.png" alt="" /></a>
+            <div class="detail-center-top">
+                <h3>No tutors found</h3>
+            </div>
+            <p class="link-color mb-0">If you can't find a tutor try widening your search.</p>
+            <p style="color:#999;" class="link-color mb-0">
+                Once you have found your ideal tutor, simply purchase an existing course or create your own by clicking on the book tutor button.
+                <br>
+                <span style="font-weight:bold">Creating group classes are greater value for money!</span>
+            </p>
+        </div>
+
+        <!--<div class="btn-group-right">
+            <a href="javascript:void(0);" class="custom-btn btn-fill">Create Now</a>
+        </div>-->
+    </div>
+</ng-template>

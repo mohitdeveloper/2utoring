@@ -1,0 +1,56 @@
+﻿$status-colours: (  
+    success: #bbe5b3,
+    info: #b4e1fa,
+    warning: #ffc58b,
+    critical: #fead9a,
+    textNo: #EB5757
+)!default;
+
+.status {
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+    &--fixed {
+        border-radius: 14px;
+        border-width: 2px;
+        position: absolute;
+        top: -7px;
+        right: -7px;
+        color: white;
+        font-weight: 600;
+        font-size: 14px;
+        height: 28px;
+        width: 28px;
+    }
+
+    &--small {
+        border-radius: 6px;
+        height: 12px;
+        width: 12px;
+    }
+
+    &--large {
+        border-radius: 14px;
+        font-size: 13px;
+        height: 28px;
+        margin-left: 14px;
+        width: 28px;
+    }
+
+    &--blink {
+        border-color: red;
+        background-color: lighten(red, 20%);
+        animation: pulseNotificationDark 3s cubic-bezier(.18, .67, .6, 1.22) infinite normal;
+    }
+
+    @each $status, $color in $status-colours {
+        &--#{$status} {
+            background-color: $color;
+            border-color: darken($color, 10%);
+        }
+    }
+}

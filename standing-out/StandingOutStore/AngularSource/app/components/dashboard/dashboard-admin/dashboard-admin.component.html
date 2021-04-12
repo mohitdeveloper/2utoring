@@ -1,0 +1,102 @@
+﻿<div class="row">
+    <div class="col-lg-6">
+        <h2 class="margin-top-tight margin-bottom-none">{{title}}</h2>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label>Start Date</label>
+            <input [owlDateTimeTrigger]="startDatePicker" [owlDateTime]="startDatePicker" [(ngModel)]="startDate" class="form-control">
+            <owl-date-time #startDatePicker [pickerType]="'calendar'"></owl-date-time>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group">
+            <label>End Date</label>
+            <input [owlDateTimeTrigger]="endDatePicker" [owlDateTime]="endDatePicker" [(ngModel)]="endDate" class="form-control">
+            <owl-date-time #endDatePicker [pickerType]="'calendar'"></owl-date-time>
+        </div>
+    </div>
+    <div class="col-lg-1">
+        <button (click)="search()" class="btn btn-primary">Search</button>
+    </div>
+
+    <div class="col-lg-1">
+        <form action="/Admin/Home/ExportClassSessions" method="post" id="classSessionsForm" name="classSessionsForm" (ngSubmit)="submitSessionForm($event)">
+            <input type="hidden" id="StartDate" name="StartDate" value="{{startDate | date: 'dd/MM/yyyy'}}" />
+            <input type="hidden" id="EndDate" name="EndDate" value="{{endDate | date: 'dd/MM/yyyy'}}" />
+            <button type="submit" class="btn btn-info">Export</button>
+        </form>
+    </div>
+</div>
+
+<hr class="margin-y-loose" />
+
+<div class="row">
+    <div class="col-lg-2">
+        <div class="card card--infoCard">
+            <div>{{dashboardInfo.tutorCount}}</div>
+            <div>Tutors</div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="card card--infoCard">
+            <div>{{dashboardInfo.studentCount}}</div>
+            <div>Students</div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="card card--infoCard">
+            <div>{{dashboardInfo.sessionCount}}</div>
+            <div>Sessions</div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="card card--infoCard">
+            <div>{{dashboardInfo.averageStudentsPerSession !== undefined ? dashboardInfo.averageStudentsPerSession.toFixed(2) : 0}}</div>
+            <div>Average Students Per Session</div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="card card--infoCard">
+            <div>{{dashboardInfo.paymentsMadeCount}} - {{dashboardInfo.paymentsMadeAmount | currency: '£'}}</div>
+            <div>Payments Made</div>
+        </div>
+    </div>
+</div>
+<hr class="margin-y-loose" />
+
+
+<div class="card card--hasGrid">
+    <div class="row">
+        <div class="col-lg-12">
+            
+            <section class="table-responsive margin-top" *ngIf="(sessions.data && sessions.data.length > 0)">
+                <table class="styled" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Length</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">Start Time</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of sessions.data">
+                            <td class="padding-left-none">{{item.name}}</td>
+                            <td>{{item.duration}} mins</td>
+                            <td>{{item.startDate | date : 'dd/MM/yyyy'}}</td>
+                            <td>{{item.startDate | date : 'HH:mm'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" [disabled]="sessions.paged.page == 1" (click)="prevSessions()">Prev Page</button>
+                <span>{{sessions.paged.page}}</span>
+                <button type="button" [disabled]="sessions.paged.page > sessions.paged.totalPages" (click)="nextSessions()">Next Page</button>
+            </section>
+            <div *ngIf="(sessions.data && sessions.data.length == 0)">
+                No Sessions to show...
+            </div>
+        </div>
+    </div>
+</div>

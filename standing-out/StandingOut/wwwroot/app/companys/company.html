@@ -1,0 +1,139 @@
+<div ng-controller="CompanyController">
+
+
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="large-3 cell"></div>
+            <div class="large-6 cell">
+                <div class="card card--hasGrid margin-x-auto margin-y-extra-loose">
+                    <div class="grid-x align-middle">
+                        <div class="large-12 cell text-align-center">
+                            <h2 ng-show="companyId === undefined">Create Company</h2>
+                            <h2 ng-show="companyId !== undefined">Edit Company</h2>
+                        </div>
+                    </div>
+                    <hr class="margin-top-base margin-bottom-none" />
+                    <div class="grid-x margin-x-none">
+                        <div class="large-12 cell margin-bottom-base" style="border-bottom: 1px solid #DFDFDF">
+                            <ul class="tabs tabs-primary margin-bottom-none" data-tabs id="company-tabs" style="padding: 0 36px;">
+                                <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Basic Info</a></li>
+                                <li class="tabs-title" ng-show="companyId !== undefined"><a data-tabs-target="panel2" href="#panel2">Tutors</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="large-12 cell">
+                            <div class="tabs tabs-content" data-tabs-content="company-tabs">
+                                <div class="tabs-panel is-active" id="panel1">
+                                    <section class="form margin-top">
+                                        <form name="companyForm" id="companyForm" enctype="multipart/form-data" ng-submit="save()">
+                                            <div class="grid-x gird-margin-y grid-margin-x">
+                                                <div class="large-6 cell">
+                                                    <label>Name</label>
+                                                    <input type="text" name="name" id="name" ng-model="company.name" maxlength="250" required />
+                                                    <span ng-messages="companyForm.name.$error" ng-show="companyForm.name.$invalid && (companyForm.name.$touched || companyForm.submitted)" class="text-danger field-validation-error">
+                                                        <span ng-message="required">This field is required.</span>
+                                                        <span ng-message="maxlength">This field has a max length of 250.</span>
+                                                    </span>
+                                                </div>
+                                                <div class="large-6 cell">
+                                                    <label>Header</label>
+                                                    <input type="text" name="header" id="header" ng-model="company.header" maxlength="250" required />
+                                                    <span ng-messages="companyForm.header.$error" ng-show="companyForm.header.$invalid && (companyForm.header.$touched || companyForm.submitted)" class="text-danger field-validation-error">
+                                                        <span ng-message="required">This field is required.</span>
+                                                        <span ng-message="maxlength">This field has a max length of 250.</span>
+                                                    </span>
+                                                </div>
+                                                <div class="large-6 cell">
+                                                    <label>Sub Header</label>
+                                                    <input type="text" name="subHeader" id="subHeader" ng-model="company.subHeader" maxlength="250" required />
+                                                    <span ng-messages="companyForm.subHeader.$error" ng-show="companyForm.subHeader.$invalid && (companyForm.subHeader.$touched || companyForm.submitted)" class="text-danger field-validation-error">
+                                                        <span ng-message="required">This field is required.</span>
+                                                        <span ng-message="maxlength">This field has a max length of 250.</span>
+                                                    </span>
+                                                </div>
+                                                <div class="large-12 cell">
+                                                    <label>Biography</label>
+                                                    <textarea type="text" name="biography" rows="7" id="biography" ng-model="company.biography" maxlength="2000"></textarea>
+                                                    <span ng-messages="companyForm.biography.$error" ng-show="companyForm.biography.$invalid && (companyForm.biography.$touched || companyForm.submitted)" class="text-danger field-validation-error">
+                                                        <span ng-message="required">This field is required.</span>
+                                                        <span ng-message="maxlength">This field has a max length of 2000.</span>
+                                                    </span>
+                                                </div>
+                                                <div class="large-4 cell">
+                                                    <label for="file" class="file-upload">
+                                                        <i class="fa fa-cloud-upload"></i> Upload company image
+                                                    </label>
+                                                    <input type="file" ngf-select="setFile($files)" id="file" name="file" />
+                                                </div>
+                                                <div class="large-8 cell">
+                                                    <input type="text" value="{{company.imageName != null ? company.imageName : 'No image uploaded...'}}" disabled />
+                                                </div>
+                                                <div class="large-12 cell" ng-if="companyId !== undefined && company.file == undefined && company.imageName != null">
+                                                    <img ng-src="{{company.imageDownloadUrl}}" />
+                                                </div>
+                                            </div>
+                                            <hr class="margin-bottom-loose margin-top-tight" />
+                                            <div class="grid-x grid-margin-x">
+                                                <div class="large-6 cell">
+                                                    <a class="button button--tertiary" href="/admin/companys">Cancel</a>
+                                                </div>
+                                                <div class="large-6 cell text-align-right">
+                                                    <button type="submit" value="Save" class="button button--primary">Save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </section>
+                                </div>
+                                <div class="tabs-panel" id="panel2">
+                                    <div class="grid-x grid-margin-x">
+                                        <div class="large-12 cell">
+                                            <label>Select a tutor</label>
+                                        </div>
+                                        <div class="large-9 cell text-align-right display--flex flex--spaceBetween flex--alignCenter">
+                                            <select name="tutorId" id="tutorId" ng-model="tutorId" ng-options="item.tutorId as item.userFullName for item in tutors">
+                                                <option value="">Please select...</option>
+                                            </select>
+                                        </div>
+                                        <div class="large-3 cell">
+                                            <a class="button button--primary button--hasIcon margin-left-auto" ng-click="addTutor()"><i class="fal fa-plus"></i><span>Add Tutor</span></a>
+                                        </div>
+                                    </div>
+                                    <div class="grid-x grid-margin-x">
+                                        <div class="large-12 cell">
+                                            <section class="table margin-top">
+                                                <table class="datatable" cellpadding="0" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="padding-left-none">Name</th>
+                                                            <th class="padding-left-none">Email</th>
+                                                            <th class="padding-left-none"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="companyTutor in companyTutors">
+                                                            <td class="padding-left-none">{{companyTutor.tutor.userFullName}}</td>
+                                                            <td class="padding-left-none">{{companyTutor.tutor.userEmail}}</td>
+                                                            <td class="padding-left-none">
+                                                                <div class="display--flex flex--spaceBetween">
+                                                                    <a class="button button--distructive margin-left-auto" ng-click="removeTutor(companyTutor)">Delete</a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

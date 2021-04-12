@@ -1,0 +1,59 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--sharedWhiteboard" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()"><i class="fal fa-times-circle"></i></button>
+            <h2>{{title}}</h2>
+        </div>
+        <div class="Modal__Content padding-y-none">
+            <div class="grid-x" ng-if="showShares && type == 'Whiteboard'">
+                <div class="large-12 cell">
+                    <h3>Open Shared Whiteboard</h3>
+                </div>
+                <div class="large-12 cell" ng-if="sharedWhiteboards.length > 0">
+                    <div ng-repeat="sharedWhiteboard in sharedWhiteboards" class="large-12 cell">
+                        <div class="grid-x flex--alignCenter">
+                            <div class="large-9 cell">
+                                <span>{{sharedWhiteboard.name}}</span>
+                            </div>
+                            <div class="large-3 cell text-align-right">
+                                <button type="button" class="button button--success" ng-click="loadShare($index)">Open</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="large-12 cell" ng-if="sharedWhiteboards.length == 0">
+                    No shared whiteboards available
+                </div>
+            </div>
+            <hr class="margin-y-tight" />
+
+            <div ng-if="type == 'Screenshot'">
+                <div ng-repeat="savedWhiteboard in savedWhiteboards">
+                    <div class="grid-x flex--alignCenter">
+                        <div class="large-9 cell">
+                            <span>{{savedWhiteboard.name}}</span>
+                        </div>
+                        <div class="large-3 cell text-align-right">
+                            <button type="button" class="button button--distructive" ng-click="delete($index)">Delete</button>
+                            <button type="button" class="button button--success" ng-click="load($index)">Open</button>
+                        </div>
+                        <div class="large-12 cell padding-y-tight"><hr /></div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="type == 'Whiteboard'" style="max-height:300px; overflow-y: auto;">
+                <div ng-repeat="savedWhiteboard in inactiveWhiteboards">
+                    <div class="grid-x flex--alignCenter">
+                        <div class="large-9 cell">
+                            <span>{{savedWhiteboard.name}}</span>
+                        </div>
+                        <div class="large-3 cell text-align-right">
+                            <button type="button" class="button button--success" ng-click="loadWhiteboard($index)">Open</button>
+                        </div>
+                        <div class="large-12 cell padding-y-tight"><hr /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

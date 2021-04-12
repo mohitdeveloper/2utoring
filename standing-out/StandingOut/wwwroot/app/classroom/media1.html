@@ -1,0 +1,21 @@
+﻿<div class="Browser" ng-controller="MediaController as ctrl" ng-init="init(pane.id, pane.toolBar)">
+    <div class="Control__Bar">
+        <button class="button button--success" ng-show="isTutor" ng-click="addMedia()"><i class="fal fa-external-link-alt"></i><span>Add media</span></button>
+    </div>
+
+    <div class="Media__Block" ng-repeat="item in mediaItems" ng-if="item.display == true" ng-class="{fullScreen: item.fullScreen == true}" class="Browser__Item">
+        <div class="button--group margin-bottom-base BrowserToolbar--visible">
+            <i ng-click="fullPaneView($index, item.$$hashKey.split(':')[1])" ng-hide="item.fullScreen" class="fal fa-external-link-alt" title="Expand"></i>
+            <i ng-click="standardView(item.$$hashKey.split(':')[1])" ng-show="item.fullScreen" class="fal fa-compress" title="Collapse"></i>
+            <i ng-click="pop(item)" class="fal fa-expand" title="Full Screen"></i>
+            <i ng-click="editMedia(item, $index)" ng-show="isTutor" class="fal fa-edit" title="Edit"></i>
+            <i ng-click="deleteMedia(item, $index)" ng-show="isTutor" class="fal fa-trash" title="Delete"></i>
+        </div>
+        <div ng-if="item.type == 'Embed' || item.type == 0" class="embed__container embed__{{ item.$$hashKey.split(':')[1] }}">
+            <iframe ng-src="{{trust(item)}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div ng-if="item.type == 'Iframe' || item.type == 1" class="iframe__container iframe__{{ item.$$hashKey.split(':')[1] }}">
+            <iframe ng-src="{{trust(item)}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>

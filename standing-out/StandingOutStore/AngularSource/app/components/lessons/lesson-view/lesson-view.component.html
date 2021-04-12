@@ -1,0 +1,14 @@
+﻿
+<div class="my-35 my-md-28 my-lg-56">
+    <div class="Page__Container Page__Container--size:content">
+        <a class="d-inline-block mb-21 cl-dark fw-600" (click)="back()" href="#"><i class="fal fa-arrow-left mr-14"></i>Back to search</a>
+        <div class="row Card__Group">
+            <div class="col-12 col-lg-8">
+                <app-lesson-card *ngIf="result != undefined" [lesson]="result.lesson" [selected]="false" [displayTutor]="false" [displayLarge]="true" [canUserBuy]="canUserBuy" [isLoggedIn]="isLoggedIn" [isGuardian]="isGuardian"></app-lesson-card>
+            </div>
+            <div class="col-12 col-lg-4 mt-14 mt-md-0">
+                <app-tutor-card *ngIf="result != undefined" [tutor]="result.tutor"></app-tutor-card>
+            </div>
+        </div>
+    </div>
+</div>

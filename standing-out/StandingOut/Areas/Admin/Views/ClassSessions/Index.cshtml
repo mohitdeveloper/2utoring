@@ -1,0 +1,54 @@
+@model IEnumerable<StandingOut.Data.Models.ClassSession>
+
+@{
+    ViewData["Title"] = "Sessions";
+}
+    <div class="grid-container grid-container--wide">
+        <div class="grid-x margin-bottom-loose margin-top-extra-loose">
+            <div class="large-6 cell">
+                <h2>@ViewData["Title"]</h2>
+            </div>
+            <div class="large-6 cell text-align-right display--flex flex--spaceBetween flex--alignCenter"></div>
+        </div>
+        <div class="grid-x">
+            <div class="large-12 cell">
+                <section class="table margin-top">
+                    <table class="datatable" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Session Name</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Tutor Email</th>
+                                <th>Tutor Name</th>
+                                <th>Acuity ID</th>
+                                <th>Attending</th>
+                                <th>Attended</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                    <td>@item.StartDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@item.EndDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@Html.Raw(item.Owner != null ? item.Owner.Email : "N/A")</td>
+                                    <td>@Html.Raw(item.Owner != null ? item.Owner.FirstName + " " + item.Owner.LastName : "N/A")</td>
+                                    <td>@Html.DisplayFor(modelItem => item.AppointmentId)</td>
+                                    <td>@item.SessionAttendees.Count(o => o.IsDeleted == false)</td>
+                                    <td>@item.SessionAttendees.Count(o => o.IsDeleted == false && o.Attended == true)</td>
+                                    <td>
+                                        <div class="display--flex flex--spaceBetween">
+                                            <a asp-action="Rooms" asp-route-id="@item.ClassSessionId" class="button button--primary margin-left-auto">Recordings</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>

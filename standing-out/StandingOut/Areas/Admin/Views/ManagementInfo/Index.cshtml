@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "Management Info";
+}
+
+<div class="grid-container grid-container--wide margin-bottom-extra-loose" ng-controller="ManagementInfoController">
+    <div class="grid-x margin-top-extra-loose">
+        <div class="large-6 cell">
+            <h2 class="margin-top-tight margin-bottom-none">@ViewData["Title"]</h2>
+        </div>
+        <div class="large-6 cell">
+            <div class="display--flex align-right">
+                <div class="margin-right-tight">
+                    <label>Start Date</label>
+                    <div date-picker-dynamic class="datePicker margin-bottom-none" name="startDate" id="startDate" date="startDate" data-requiredparam="false" data-disabledparam="false" data-timepickerparam="false"></div>
+                </div>
+                <div class="margin-right-tight">
+                    <label>End Date</label>
+                    <div date-picker-dynamic class="datePicker margin-bottom-none" name="endDate" id="endDate" date="endDate" data-requiredparam="false" data-disabledparam="false" data-timepickerparam="false"></div>
+                </div>
+                <div class="display--flex align-bottom">
+                    <button ng-click="search()" class="button button--primary  margin-bottom-none" style="height: 41px; line-height: 5px;">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="margin-y-loose" />
+    <div class="grid-x grid-margin-x">
+        <div class="large-2 cell">
+            <div class="card card--infoCard">
+                <div>{{dashboard.tutorCount}}</div>
+                <div>Tutors</div>
+            </div>
+        </div>
+        <div class="large-2 cell">
+            <div class="card card--infoCard">
+                <div>{{dashboard.studentCount}}</div>
+                <div>Students</div>
+            </div>
+        </div>
+        <div class="large-2 cell">
+            <div class="card card--infoCard">
+                <div>{{dashboard.courseCount}}</div>
+                <div>Courses</div>
+            </div>
+        </div>
+        <div class="large-2 cell">
+            <div class="card card--infoCard">
+                <div>{{dashboard.sessionCount}}</div>
+                <div>Sessions</div>
+            </div>
+        </div>
+        <div class="large-2 cell">
+            <div class="card card--infoCard">
+                <div>{{dashboard.averageStudentsPerSession | number: 2}}</div>
+                <div>Average Students Per Session</div>
+            </div>
+        </div>
+        <div class="large-2 cell">
+            <div class="card card--infoCard">
+                <div>{{dashboard.paymentsMadeCount}} - {{dashboard.paymentsMadeAmount | currency: '£' : 2}}</div>
+                <div>Payments Made</div>
+            </div>
+        </div>
+    </div>
+    <hr class="margin-y-loose" />
+
+    <div class="card card--hasGrid">
+        <div class="grid-x grid-margin-x">
+            <div class="large-6 cell">
+                <form action="/Admin/ManagementInfo/ExportCourses" method="post" id="coursesForm" name="coursesForm">
+                    <input type="hidden" id="StartDate" name="StartDate" value="{{startDate}}" />
+                    <input type="hidden" id="EndDate" name="EndDate" value="{{endDate}}" />
+                    <button type="submit" class="button button--secondary">Export</button>
+                </form>
+                <section class="table margin-top" ng-show="courses.data.length > 0">
+                    <table class="margin-top-base border-top" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th class="text-align-left padding-left-none">Name</th>
+                                <th class="text-align-left padding-left-none">Length</th>
+                                <th class="text-align-left padding-left-none">Price</th>
+                            </tr>
+                            <tr ng-repeat="item in courses.data">
+                                <td class="padding-left-none">{{item.name}}</td>
+                                <td>{{item.duration}} mins</td>
+                                <td>{{item.price | currency: '£' : 2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" ng-disabled="courses.paged.page == 1" ng-click="prevCourses()">Prev Page</button>
+                    <span>{{courses.paged.page}}</span>
+                    <button type="button" ng-disabled="courses.paged.page > courses.paged.totalPages" ng-click="nextCourses()">Next Page</button>
+                </section>
+                <div ng-if="courses.data.length == 0">
+                    No Courses to show...
+                </div>
+            </div>
+            <div class="large-6 cell">
+                <form action="/Admin/ManagementInfo/ExportClassSessions" method="post" id="classSessionsForm" name="classSessionsForm">
+                    <input type="hidden" id="StartDate" name="StartDate" value="{{startDate}}" />
+                    <input type="hidden" id="EndDate" name="EndDate" value="{{endDate}}" />
+                    <button type="submit" class="button button--secondary">Export</button>
+                </form>
+                <section class="table margin-top" ng-show="sessions.data.length > 0">
+                    <table class="margin-top-base border-top" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Length</th>
+                                <th>Start Date</th>
+                                <th>Start Time</th>
+                            </tr>
+                            <tr ng-repeat="item in sessions.data">
+                                <td class="padding-left-none">{{item.name}}</td>
+                                <td>{{item.duration}} mins</td>
+                                <td>{{item.startDate | date : 'dd/MM/yyyy'}}</td>
+                                <td>{{item.startDate | date : 'HH:mm'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" ng-disabled="sessions.paged.page == 1" ng-click="prevSessions()">Prev Page</button>
+                    <span>{{sessions.paged.page}}</span>
+                    <button type="button" ng-disabled="sessions.paged.page > sessions.paged.totalPages" ng-click="nextSessions()">Next Page</button>
+                </section>
+                <div ng-if="sessions.data.length == 0">
+                    No Sessions to show...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

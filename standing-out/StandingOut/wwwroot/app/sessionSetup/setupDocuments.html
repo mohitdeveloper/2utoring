@@ -1,0 +1,60 @@
+﻿<div ng-controller="SetupDocumentsController as ctrl">
+    <div class="upload-widget" ngf-multiple="true" ngf-allow-dir="false" ngf-drop="setFiles($files)" ngf-select="setFiles($files)" ngf-drag-over-class="dragover" ng-hide="uploadDisabled()">
+        <div class="upload-ui">
+            <i class="fal fa-upload fa-3x"></i>
+            <div class="upload-label margin-top-loose">Drag &amp; drop or browse for a file here</div>
+        </div>
+    </div>
+
+    <div class="grid-x grid-margin-y grid-margin-x" ng-if="selectedDocument === undefined || selectedDocument == null">
+        <div class="large-12 cell">
+            <div class="button--group margin-bottom-loose">
+                <button class="button button--primary button--hasIcon" ng-if="parentFolder !== undefined && parentFolder != null" ng-click="navigateUp()">
+                    <i class="fal fa-arrow-left"></i>
+                </button>
+                <button class="button button--primary button--hasIcon" ng-click="refresh()">
+                    <i class="fal fa-redo"></i>
+                </button>
+                <span ng-repeat="depthName in depthNames">{{depthName}} ></span>
+            </div>
+        </div>
+    </div>
+
+    <section class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="document in documents">
+                    <td ng-show="inMaster() == true"><input type="checkbox" ng-model="document.includeInShare" /></td>
+                    <td><b ng-if="document.showBold">{{document.name}}</b><span ng-if="!document.showBold">{{document.name}}</span></td>
+                    <td>
+                        <div class="button--group float-right">
+                            <a class="File__Link" ng-show="getDownloadUrl(document) != ''" href="{{getDownloadUrl(document)}}" target="_blank">Open</a>
+                            <a class="File__Link" ng-show="inMaster()" href="#" ng-click="permissionsSingle(document)">Sharing</a>
+                            <a class="File__Link" ng-show="getDownloadUrl(document) == ''" ng-click="open(document)">Open</a>
+                            <a class="File__Link" ng-show="canDelete(document)" ng-click="delete(document)">Delete</a>
+                            <!--<a href="#" ng-hide="document.appProperties != null && document.appProperties['protectedFile'] === 'True'" ng-click="deleteDocument(document)" class="red button">Delete</a>-->
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <div class="Pagination">
+        <div class="Pagination__Controls" ng-hide="documents === undefined || documents == null || documents.length == 0">
+            <button type="button" ng-show="previousPages !== undefined && previousPages.length > 0" ng-click="getPreviousPage()"><i class="fal fa-chevron-left"></i></button>
+            <div>{{pageNumber}}</div>
+            <button ng-show="nextPage !== undefined && nextPage != null" ng-click="getNextPage()"><i class="fal fa-chevron-right"></i></button>
+        </div>
+        <div class="Pagination__NoPages" ng-show="(documents === undefined || documents == null || documents.length == 0) && !navigationRunning">
+            No files to show
+        </div>
+    </div>
+
+</div>
+

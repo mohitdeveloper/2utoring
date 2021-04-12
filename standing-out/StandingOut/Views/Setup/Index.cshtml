@@ -1,0 +1,53 @@
+﻿@model StandingOut.Data.Models.ClassSession
+@{
+    //ViewData["Title"] = $"Setup Session: {Model.Name} ({Model.StartDate.ToString("dd/MM/yyyy HH:mm")})";
+}
+<div class="border-bottom">
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="large-12 cell padding-y-tight">
+                <a asp-route="areaRoute" asp-route-area="My" asp-route-controller="Home" asp-route-action="Index" class="button orange">Back</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="border-bottom">
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="large-12 cell padding-top-tight">
+                <ul class="tabs" data-tabs id="setup-tabs">
+                    <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Groups</a></li>
+                    <li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Media</a></li>
+                    <li class="tabs-title"><a data-tabs-target="panel3" href="#panel3">Documents</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="grid-container margin-y-extra-loose">
+    <div class="grid-x">
+        <div class="large-12 cell">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+</div>
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="large-12 cell">
+            <div class="tabs tabs-content" data-tabs-content="setup-tabs">
+                <div class="tabs-panel is-active" id="panel1" ng-include="'/app/sessionSetup/setupGroups.html'"></div>
+                <div class="tabs-panel" id="panel2" ng-include="'/app/sessionSetup/setupMedia.html'"></div>
+                <div class="tabs-panel" id="panel3" ng-include="'/app/sessionSetup/setupDocuments.html'"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var accessToken = '@ViewBag.AccessToken';
+        var classSessionId = '@Model.ClassSessionId';
+    </script>
+}

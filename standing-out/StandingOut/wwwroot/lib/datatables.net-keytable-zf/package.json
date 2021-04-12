@@ -1,0 +1,64 @@
+{
+  "_from": "datatables.net-keytable-zf@2.5.3",
+  "_id": "datatables.net-keytable-zf@2.5.3",
+  "_inBundle": false,
+  "_integrity": "sha512-LAhZ0BUKcnuu3Vwyf2uyKe9PEt04DGxjSH0Mg+VXZi4mbGACqnKbPn6JAAeJ/2Q48esEmNuh4FehVPc4nH0w0g==",
+  "_location": "/datatables.net-keytable-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "datatables.net-keytable-zf@2.5.3",
+    "name": "datatables.net-keytable-zf",
+    "escapedName": "datatables.net-keytable-zf",
+    "rawSpec": "2.5.3",
+    "saveSpec": null,
+    "fetchSpec": "2.5.3"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-keytable-zf/-/datatables.net-keytable-zf-2.5.3.tgz",
+  "_shasum": "22bd4fcbe5011eadc6aaf1b3f2f40dc758011207",
+  "_spec": "datatables.net-keytable-zf@2.5.3",
+  "_where": "C:\\DevSO\\standing-out",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net-keytable": "2.5.3",
+    "datatables.net-zf": "^1.10.15",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "KeyTable for DataTables with styling for [Zurb Foundation](http://foundation.zurb.com/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "spreadsheet",
+    "excel",
+    "keyboard",
+    "DataTables",
+    "jQuery",
+    "table",
+    "Foundation"
+  ],
+  "license": "MIT",
+  "main": "js/keyTable.foundation.js",
+  "name": "datatables.net-keytable-zf",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-KeyTable-Foundation.git"
+  },
+  "style": "css/keyTable.foundation.css",
+  "version": "2.5.3"
+}

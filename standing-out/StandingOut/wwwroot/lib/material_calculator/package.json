@@ -1,0 +1,69 @@
+{
+  "_args": [
+    [
+      "material_calculator@1.3.3",
+      "C:\\Workspace\\Projects\\standing-out"
+    ]
+  ],
+  "_from": "material_calculator@1.3.3",
+  "_id": "material_calculator@1.3.3",
+  "_inBundle": false,
+  "_integrity": "sha512-DRTJMIXnDNtOaorcWyuk1aMgUPjo0ADoPaMSxAoWEYt3TTTjkQsVS6Qhn+0d3t3FehRfAONZqS7Bks+uuzdY5A==",
+  "_location": "/material_calculator",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "material_calculator@1.3.3",
+    "name": "material_calculator",
+    "escapedName": "material_calculator",
+    "rawSpec": "1.3.3",
+    "saveSpec": null,
+    "fetchSpec": "1.3.3"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/material_calculator/-/material_calculator-1.3.3.tgz",
+  "_spec": "1.3.3",
+  "_where": "C:\\Workspace\\Projects\\standing-out",
+  "author": {
+    "name": "Anthony Kepinski",
+    "email": "hello@akepinski.me",
+    "url": "https://akepinski.me"
+  },
+  "bugs": {
+    "url": "https://github.com/xxczaki/calculator.js/issues"
+  },
+  "description": "Simple Web Calculator made with Google Material Design",
+  "devDependencies": {
+    "standard": "^10.0.3"
+  },
+  "homepage": "https://github.com/xxczaki/calculator.js",
+  "keywords": [
+    "calculator.js",
+    "material-design",
+    "calculator",
+    "material",
+    "beautiful",
+    "math"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "material_calculator",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xxczaki/calculator.js.git"
+  },
+  "scripts": {
+    "test": "standard --fix"
+  },
+  "standard": {
+    "globals": [
+      "$",
+      "eval",
+      "function trimIfNecessary"
+    ]
+  },
+  "version": "1.3.3"
+}

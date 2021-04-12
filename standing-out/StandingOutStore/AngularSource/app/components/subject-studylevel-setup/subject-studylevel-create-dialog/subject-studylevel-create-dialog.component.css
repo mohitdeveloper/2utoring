@@ -1,0 +1,57 @@
+.my-dialog {
+    font-size: 12px !important;
+    overflow: scroll !important;
+}
+.cdk-overlay-pane.my-dialog {
+    position: relative !important;
+}
+
+.close.mat-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    line-height: 14px;
+    min-width: auto;
+}
+.closes {
+    background-color: red !important;
+    color: white !important;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+}
+
+button.close {
+    font-size: 16px;
+    color: #ffab4b;
+    font-weight: 400;
+    opacity: 1;
+    margin-right: 10px;
+    background: #fff;
+    box-shadow: none;
+    text-shadow: none;
+    padding: 19px 31px;
+    border-radius: 6px;
+}
+
+button.close:hover {
+    color: #fff;
+    background: #ffab4b;
+}
+
+.File-Uploader {
+    font-size: 13px !important;
+    height: 70px !important;
+}
+
+/*.mat-dialog-container {
+    padding: 0 !important;
+}*/
+.step-col {
+    margin-bottom: 0px !important ;
+}
+
+.myClass {
+    border-radius: 10px !important;
+}

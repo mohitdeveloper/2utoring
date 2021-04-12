@@ -1,0 +1,38 @@
+
+@if (ViewBag.UserProfileLoggedIn == true)
+{
+    <div class="so-user-details-container">
+        @if (!string.IsNullOrEmpty(ViewBag.UserProfileImageUrl))
+        {
+            <img src="@ViewBag.UserProfileImageUrl" />
+        }
+        <p>@ViewBag.UserProfileFullName</p>
+        <a href="/my">My Area</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </div>
+
+    <script>
+        logout = function () {
+            Intercom('shutdown');
+            window.location.href = '/Account/logout';
+        };
+    </script>
+}
+else
+{
+@*<div class="navigation__item">
+    <a href="/identity/account/login">
+        <div class="item__icon">
+            <div>Sign-Up</div>
+        </div>
+    </a>
+</div>*@
+<div class="navigation__item">
+
+    <a href="/my">
+        <div class="item__icon">
+            <div>Login</div>
+        </div>
+    </a>
+</div>
+}

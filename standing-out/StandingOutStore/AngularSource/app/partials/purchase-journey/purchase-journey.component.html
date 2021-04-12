@@ -1,0 +1,123 @@
+﻿
+<h1 class="mb-14 fw-800">Purchase</h1>
+<div class="mt-42">
+    <ng-container *ngIf="paymentCard != null; else showPaymentForm">
+        <div class="form-row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Saved Card</label>
+                    <div class="card bxs-0 card--toRespond:small">
+                        <div class="card-body d-flex justify-content-between">
+                            <span class="fs-16 fw-600">**** **** **** {{paymentCard.last4}}, {{paymentCard.address}}</span>
+                            <div (click)="removeCard()" class="Cursor--pointer fs-18"><i class="fal fa-times-circle"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #showPaymentForm>
+        <form [formGroup]="paymentForm" *ngIf="paymentForm != undefined && paymentForm != null">
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Card Details *</label>
+                        <div class="card bxs-0" style="padding: 16px 14px;">
+                            <div id="card-info" class="padding-vertical-tight"></div>
+                        </div>
+                        <div id="card-errors" class="Error Error--alert margin-top-extra-tight" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Name on the card *</label>
+                        <input type="text" id="cardName" name="cardName" formControlName="cardName" class="form-control" placeholder="Enter the name on the card" />
+                        <div *ngIf="paymentFormControls.cardName.errors && (paymentFormControls.cardName.dirty || paymentFormControls.cardName.touched || paymentFormSubmitted)" class="error" role="alert">
+                            <div *ngIf="paymentFormControls.cardName.errors.maxlength">Card Name has a character limit of 250</div>
+                            <div *ngIf="paymentFormControls.cardName.errors.required">Please enter the name on your payment card to continue.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>First line address *</label>
+                        <input type="text" id="addressLine1" name="addressLine1" formControlName="addressLine1" class="form-control" placeholder="Enter the first line of the address your card is registered to" />
+                        <div *ngIf="paymentFormControls.addressLine1.errors && (paymentFormControls.addressLine1.dirty || paymentFormControls.addressLine1.touched || paymentFormSubmitted)" class="error" role="alert">
+                            <div *ngIf="paymentFormControls.addressLine1.errors.maxlength">First line address has a character limit of 250</div>
+                            <div *ngIf="paymentFormControls.addressLine1.errors.required">Please enter the first line of your billing address to continue.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Country *</label>
+                        <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control">
+                            <option [ngValue]="null">Select your country</option>
+                            <option *ngFor="let stripeCountry of stripeCountrys" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
+                        </select>
+                        <div *ngIf="paymentFormControls.stripeCountryId.errors && (paymentFormControls.stripeCountryId.dirty || paymentFormControls.stripeCountryId.touched || paymentFormSubmitted)" class="error" role="alert">
+                            <div *ngIf="paymentFormControls.stripeCountryId.errors.maxlength">Country has a character limit of 250</div>
+                            <div *ngIf="paymentFormControls.stripeCountryId.errors.required">Please enter your country to continue.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+
+    <div class="form-row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="promoCode">Add promo code</label>
+                <div class="d-flex">
+                    <input type="text" [(ngModel)]="promoCode" class="form-control" maxlength="250" placeholder="Enter a promo code" />
+                    <button (click)="validatePromoCode()" class="btn btn-outline-dark btn-lg fs-14 ml-7">Apply</button>
+                </div>
+
+                <ng-container *ngIf="promoCodeSubmitted && promoCode != ''">
+                    <div *ngIf="promoCodeDetails == null; else promoCodeSuccess" class="error" role="alert">
+                        <div>Please enter a valid Promo Code to continue</div>
+                    </div>
+                    <ng-template #promoCodeSuccess>
+                        <div class="n-success" role="alert">
+                            <div *ngIf="promoCodeDetails.type == 'AmountOff' && promoCodeDetails.amountOff != null">You'll recieve a &pound;{{promoCodeDetails.amountOff}} discount on checkout</div>
+                            <div *ngIf="promoCodeDetails.type == 'PercentageOff' && promoCodeDetails.percentOff != null">You'll recieve a {{promoCodeDetails.percentOff}}% discount on checkout</div>
+                        </div>
+                    </ng-template>
+                </ng-container>
+
+                <div *ngIf="showStripeError" class="error" role="alert">
+                    <div>{{stripeError}}</div>
+                </div>
+
+                <div class="error" role="alert" *ngIf="dateOfBirthInvalid()">
+                    <!--Sorry, the course you have selected is for {{ under18 ? 'under' : 'over' }} 18's only.
+    Please choose an {{ under18 ? 'over' : 'under' }} 18 course from the <a [href]="'/course-search' + (under18 ? '' : '?under=false')">Marketplace</a>.-->
+
+                    <ng-container *ngIf="under18">
+                        Sorry, the course you have selected is for under 18’s only. Please choose an over 18’s course from the <a href="/course-search">Course Marketplace</a>.
+                    </ng-container>
+
+                    <ng-container *ngIf="!under18">
+                        Sorry, the course you have selected is for over 18’s only. Please choose an under 18’s course from the <a href="/course-search">Course Marketplace</a>.
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="d-flex align-items-center justify-content-between">
+                <a href="#" (click)="back()" class="link-grey">Go back</a>
+                <button type="button" (click)="submitPayment()" [disabled]="dateOfBirthInvalid()" class="btn btn-primary btn-lg ml-auto">Continue</button>
+            </div>
+        </div>
+    </div>
+    </div>

@@ -1,0 +1,110 @@
+<div class="Page__Container--size:content mb-56 Page--process:LessonCreate" style="margin-bottom: 0px !important;">
+    <div class="form-row" *ngIf="!classSessionIdDialog">
+        <div class="col-12">
+            <h1 *ngIf="classSessionId == undefined">Create a lesson</h1>
+        </div>
+        <div class="col-12" *ngIf="classSessionId != undefined">
+            <ul class="Section__Nav mb-28">
+                <li><h1 class="mb-0">Edit a lesson</h1></li>
+                <li><a class="btn btn-success" href="/Tutor/ClassSessions/Edit/{{classSessionId}}">Lesson Setup <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 8H12.865L9.232 12.36C8.878 12.784 8.936 13.415 9.36 13.768C9.785 14.122 10.415 14.064 10.769 13.64L15.769 7.64C15.808 7.593 15.827 7.538 15.856 7.486C15.88 7.444 15.909 7.408 15.927 7.362C15.972 7.247 15.999 7.126 15.999 7.004C15.999 7.003 16 7.001 16 7C16 6.999 15.999 6.997 15.999 6.996C15.999 6.874 15.972 6.753 15.927 6.638C15.909 6.592 15.88 6.556 15.856 6.514C15.827 6.462 15.808 6.407 15.769 6.36L10.769 0.36C10.57 0.123 10.286 0 10 0C9.774 0 9.547 0.076 9.36 0.232C8.936 0.585 8.878 1.216 9.232 1.64L12.865 6H1C0.448 6 0 6.448 0 7C0 7.552 0.448 8 1 8Z" fill="#222B45" /></svg></a></li>
+                <li><a class="btn btn-light active" href="/Tutor/ClassSessions/SetupMaterial/{{classSessionId}}">Files & Media <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 8H12.865L9.232 12.36C8.878 12.784 8.936 13.415 9.36 13.768C9.785 14.122 10.415 14.064 10.769 13.64L15.769 7.64C15.808 7.593 15.827 7.538 15.856 7.486C15.88 7.444 15.909 7.408 15.927 7.362C15.972 7.247 15.999 7.126 15.999 7.004C15.999 7.003 16 7.001 16 7C16 6.999 15.999 6.997 15.999 6.996C15.999 6.874 15.972 6.753 15.927 6.638C15.909 6.592 15.88 6.556 15.856 6.514C15.827 6.462 15.808 6.407 15.769 6.36L10.769 0.36C10.57 0.123 10.286 0 10 0C9.774 0 9.547 0.076 9.36 0.232C8.936 0.585 8.878 1.216 9.232 1.64L12.865 6H1C0.448 6 0 6.448 0 7C0 7.552 0.448 8 1 8Z" fill="#222B45" /></svg></a></li>
+                <li><a class="btn btn-success" href="/Tutor/ClassSessions/SetupStudents/{{classSessionId}}">Invitation List <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1 8H12.865L9.232 12.36C8.878 12.784 8.936 13.415 9.36 13.768C9.785 14.122 10.415 14.064 10.769 13.64L15.769 7.64C15.808 7.593 15.827 7.538 15.856 7.486C15.88 7.444 15.909 7.408 15.927 7.362C15.972 7.247 15.999 7.126 15.999 7.004C15.999 7.003 16 7.001 16 7C16 6.999 15.999 6.997 15.999 6.996C15.999 6.874 15.972 6.753 15.927 6.638C15.909 6.592 15.88 6.556 15.856 6.514C15.827 6.462 15.808 6.407 15.769 6.36L10.769 0.36C10.57 0.123 10.286 0 10 0C9.774 0 9.547 0.076 9.36 0.232C8.936 0.585 8.878 1.216 9.232 1.64L12.865 6H1C0.448 6 0 6.448 0 7C0 7.552 0.448 8 1 8Z" fill="#222B45" /></svg></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="form-row" *ngIf="classSessionIdDialog">
+        <div class="col-12">
+            <h1>Upload course material</h1>
+        </div>
+    </div>
+    <div class="form-row" *ngIf="classSession != undefined && classSession.requiresGoogleAccount == true">
+        <div class="col-12 col-lg-4">
+            <app-class-session-material-uploader [type]="'Shared'" [classSessionId]="classSessionId" (emitLoaded)="incrementLoad()" [titleInput]="'Group Collaboration Folder (Shared)'" [subtitleInput]="'Add files here for collaboration group work. Once uploaded all students will be able to collaborate on this document. <br> To adjust who can and can`t collaborate on this document, when you enter the classroom, open your shared folder, select the file and click on permissions.'"></app-class-session-material-uploader>
+        </div>
+        <div class="col-12 col-lg-4">
+            <app-class-session-material-uploader [type]="'Master'" [classSessionId]="classSessionId" (emitLoaded)="incrementLoad()" [titleInput]="'Individual Collaboration Folder (Master)'" [subtitleInput]="'Add files here for individual students. Once uploaded click on the icon next to the file to give access permissions. Students selected will receive their own copy and can collaborate with you in your lesson. Any file not shared will appear in your Master folder for you to distribute during your lesson.'"></app-class-session-material-uploader>
+        </div>
+        <div class="col-12 col-lg-4">
+            <app-class-session-material-uploader [type]="'Tutor'" [classSessionId]="classSessionId" (emitLoaded)="incrementLoad()" [titleInput]="'Tutor Folder'" [subtitleInput]="'Items uploaded to this folder will only be visible by you during the lesson.'"></app-class-session-material-uploader>
+        </div>
+    </div>
+    <hr />
+    <div class="form-row">
+        <div class="col-12">
+            <h3 class="mb-7">Add to the Media Library</h3>
+            <p class="fw-500 mb-21">If your course material references specific websites, or online videos you can add their details below, they will then be shown in the Media library within the online classroom which is available to each student.</p>
+        </div>
+    </div>
+    <form (ngSubmit)="submitSessionMediaForm()" [formGroup]="sessionMediaForm" *ngIf="sessionMediaForm != undefined">
+        <div class="form-row">
+            <div class="form-group col-12 col-lg-3">
+                <label>Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter a name e.g. BBC News Article" formControlName="name" class="form-control" />
+                <div *ngIf="sessionMediaFormControls.name.errors && (sessionMediaFormControls.name.dirty || sessionMediaFormControls.name.touched || sessionMediaFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="sessionMediaFormControls.name.errors.maxlength">Name has a character limit of 250 characters inc. spaces.</div>
+                    <div *ngIf="sessionMediaFormControls.name.errors.required">Please enter a name to continue</div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-6">
+                <label>Website address / Embed code</label>
+                <input type="text" id="content" placeholder="Website or Video URL Link" name="content" formControlName="content" class="form-control" placeholder="Please enter a valid website address to continue" />
+                <div *ngIf="sessionMediaFormControls.content.errors && (sessionMediaFormControls.content.dirty || sessionMediaFormControls.content.touched || sessionMediaFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="sessionMediaFormControls.content.errors.maxlength">Website address/Embed code has a character limit of 2000 characters inc. spaces.</div>
+                    <div *ngIf="sessionMediaFormControls.content.errors.required">Enter website address or embed code here</div>
+                </div>
+            </div>
+            <div class="form-group col-12 col-lg-3">
+                <label>Website or Video</label>
+                <select id="type" name="type" formControlName="type" class="form-control">
+                    <option [ngValue]="null" selected>Please select</option>
+                    <option *ngFor="let sessionMediaType of sessionMediaTypes" [ngValue]="sessionMediaType.value">{{sessionMediaType.name}}</option>
+                </select>
+                <div *ngIf="sessionMediaFormControls.type.errors && (sessionMediaFormControls.type.dirty || sessionMediaFormControls.type.touched || sessionMediaFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="sessionMediaFormControls.type.errors.required">Please select the type of resource</div>
+                </div>
+            </div>
+
+        </div>
+        <!--<div class="form-group col-12 text-right">
+            <button type="submit" class="btn btn-outline-dark btn-lg label-offset fs-15">Add</button>
+        </div>-->
+        <div class="mt-3" style="float: right; padding-bottom:2%;" >
+            <button type="button" data-dismiss="modal" aria-label="Close" class="poupClose" (click)="closeLessonDialogs()" style="float: left;">Close</button>
+            <button type="submit" data-dismiss="modal" aria-label="Submit" class="sub-next">Add</button>
+        </div>
+
+
+
+    </form>
+    <div class="form-row">
+        <div class="col-12 col-lg-2" *ngFor="let sessionMedia of sessionMedias">
+            <div class="card">
+                <div class="card-body position-relative">
+                    <svg width="60" height="63" viewBox="0 0 60 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M45.0205 13.0145H35.9114C35.2206 13.0145 34.6605 12.4293 34.6597 11.7069L34.6505 2.61822H21.5188C20.8276 2.61822 20.2672 2.03216 20.2672 1.30923C20.2672 0.586298 20.8276 0.000244887 21.5188 0.000244887H35.8764C35.8841 9.08807e-05 35.8918 9.29189e-06 35.8995 7.46604e-07C35.9105 -1.13381e-05 35.9214 0.000123306 35.9322 0.000402903C36.7746 0.00888951 37.5811 0.35891 38.1811 0.977564L46.5553 9.61028C46.7894 9.85177 46.8578 9.92512 46.9699 10.0666C47.3417 10.536 47.5238 11.0531 47.5238 11.7055L47.5238 21.9216C47.5238 22.6445 46.9634 23.2306 46.2722 23.2306C45.5809 23.2306 45.0205 22.6445 45.0205 21.9216V13.0145ZM37.1548 3.59559L37.1617 10.3965H43.752L37.1548 3.59559ZM7.16894 0.000454374C7.8602 0.000454374 8.42058 0.586507 8.42058 1.30944C8.42058 2.03237 7.8602 2.61843 7.16894 2.61843H3.37204C2.95983 2.61843 2.62632 2.96728 2.62632 3.39832V59.2821C2.62632 59.7138 2.95979 60.0627 3.37204 60.0627H44.2715C44.6861 60.0627 45.0197 59.714 45.0197 59.2821V56.3766C45.0197 55.6537 45.5801 55.0677 46.2714 55.0677C46.9626 55.0677 47.523 55.6537 47.523 56.3766V59.2821C47.523 61.1601 46.0684 62.6807 44.2715 62.6807H3.37204C1.57703 62.6807 0.123047 61.1595 0.123047 59.2821V3.39832C0.123047 1.52152 1.57722 0.000454374 3.37204 0.000454374H7.16894Z" fill="#485465" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.5108 3.46783L19.7238 8.14278C20.8684 9.41289 19.0467 11.2085 17.9021 9.93836L17.9015 9.93771L17.9008 9.93843L15.6303 7.41897L15.7237 15.5699L13.2206 15.6012L13.1304 7.73043L11.2493 9.91627L9.38867 8.16494L13.2627 3.66328L13.4118 3.48999L13.4121 3.49027L13.5607 3.63012C13.9753 3.01931 14.8544 2.73944 15.5108 3.46783ZM49.5744 32.9453C54.977 32.3616 59.4066 36.7728 59.4066 41.8049C59.4066 46.6352 55.3652 50.7176 50.581 50.7176H24.6552C20.0214 50.7176 16.2501 46.719 16.2501 41.8049C16.2501 38.9602 17.9286 36.0442 20.4984 34.3191C22.0176 24.2696 32.4803 19.8893 39.4917 26.3205C44.6826 25.6174 48.3936 28.7608 49.5744 32.9453ZM47.1729 33.6863C46.2442 30.3954 43.4588 28.4229 39.8125 28.9168L38.6908 29.0687L37.8404 28.2887C32.3433 23.2465 24.1879 26.6738 22.9703 34.7279L22.7949 35.8878L21.85 36.5222C19.9563 37.7936 18.7527 39.9059 18.7527 41.805C18.7527 45.281 21.4109 48.0997 24.6545 48.0997H50.5803C54.0007 48.0997 56.9027 45.1689 56.9027 41.805C56.9027 38.1888 53.6257 35.1395 49.831 35.5494L47.7617 35.773L47.1729 33.6863Z" fill="#2F80ED" />
+                    </svg>
+                    <div class="d-block mt-21 fs-15 fw-700">{{sessionMedia.name}}</div>
+                    <div class="d-block cl-light fw-500">{{sessionMedia.content}}</div>
+                    <i (click)="deleteSessionMedia(sessionMedia)" class="fal fa-times Cursor--pointer position-absolute" style="top: 14px; right: 14px"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+    <div class="w-100 alert alert-warning mb-42 py-28 px-21 d-flex align-items-center" *ngIf="tutor != null && tutor != undefined && tutor.profileApprovalStatus == 'Pending'" style="margin-top:7%;">
+    <!--<div class="w-100 alert alert-warning mb-42 py-28 px-21 d-flex align-items-center" *ngIf="tutor != null && tutor != undefined && ProfileApproval && tutor.profileApprovalStatus == 'Pending'">-->
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="#485465" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.5 7.5C6.5 5.57 8.07 4 10 4C11.93 4 13.5 5.57 13.5 7.5C13.5 9.08 12.44 10.403 11 10.837V12C11 12.553 10.553 13 10 13C9.447 13 9 12.553 9 12V10C9 9.447 9.447 9 10 9C10.827 9 11.5 8.327 11.5 7.5C11.5 6.673 10.827 6 10 6C9.173 6 8.5 6.673 8.5 7.5C8.5 8.053 8.053 8.5 7.5 8.5C6.947 8.5 6.5 8.053 6.5 7.5ZM9 15C9 14.447 9.447 14 10 14C10.553 14 11 14.447 11 15C11 15.553 10.553 16 10 16C9.447 16 9 15.553 9 15ZM10 18C5.589 18 2 14.411 2 10C2 5.589 5.589 2 10 2C14.411 2 18 5.589 18 10C18 14.411 14.411 18 10 18ZM10 0C4.486 0 0 4.486 0 10C0 15.514 4.486 20 10 20C15.514 20 20 15.514 20 10C20 4.486 15.514 0 10 0Z" />
+        </svg>
+        <div class="ml-21">
+            <h5 class="cl-dark fw-700">Your profile is currently being reviewed</h5>
+            <p class="cl-dark fw-500 mb-0">When it is approved, your lessons will be available for students to sign-up to publicly on the marketplace or privately via a shared link.</p>
+        </div>
+    </div>
+    <div class="Form_Block-Controls" *ngIf="!classSessionIdDialog">
+        <a href="/Tutor/ClassSessions/Edit/{{classSessionId}}" class="link-grey">Go back</a>
+        <a href="/Tutor/ClassSessions/Delete/{{classSessionId}}" class="ml-14 text-danger" *ngIf="classSessionId != undefined">Delete Lesson</a>
+        <a href="/Tutor/ClassSessions/SetupStudents/{{classSessionId}}" class="btn btn-primary btn-lg ml-auto">Add students<i class="ml-14 fal fa-long-arrow-right"></i></a>
+    </div>
+</div>

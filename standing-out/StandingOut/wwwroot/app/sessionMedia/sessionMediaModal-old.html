@@ -1,0 +1,53 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--upload" ng-init>
+
+        <div class="Modal__Header">
+            <h2>Add media</h2>
+            <button type="button" class="Modal__Close" ng-click="cancel()">×</button>
+        </div>
+
+        <div class="Modal__Content padding-bottom-none">
+            <form name="mediaForm" novalidate ng-submit="save()">
+                <section class="form">
+                    <div class="grid-x grid-margin-x">
+                        <div class="large-12 cell">
+                            <div class="grid-x">
+                                <div class="large-12 cell margin-bottom-base">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" ng-model="media.name" maxlength="250" ng-maxlength="250" required placeholder="Enter a name e.g. BBC News Article" />
+                                    <div ng-messages="mediaForm.name.$error" ng-if="mediaForm.name.$invalid && (mediaForm.name.$touched || mediaForm.submitted)">
+                                        <p ng-message="required" class="help-block">Please enter a name to continue</p>
+                                        <p ng-message="maxlength" class="help-block">This field can be no longer than 250 characters.</p>
+                                    </div>
+                                </div>
+                                <div class="large-12 cell margin-bottom-base">
+                                    <label>Website address</label>
+                                    <input type="text" class="form-control" name="content" ng-model="media.content" maxlength="2000" ng-maxlength="2000" required placeholder="Website or Video URL Link" />
+                                    <div ng-messages="mediaForm.content.$error" ng-if="mediaForm.content.$invalid && (mediaForm.content.$touched || mediaForm.submitted)">
+                                        <p ng-message="required" class="help-block">Enter website address</p>
+                                        <p ng-message="maxlength" class="help-block">This field can be no longer than 2000 characters.</p>
+                                    </div>
+                                </div>
+                                <div class="large-12 cell margin-bottom-base">
+                                    <label>Website or Video</label>
+                                    <select name="type" class="form-control" ng-model="media.type" ng-options="item.stringValue as item.name for item in mediaTypes" class="width--100" required />
+                                    <div ng-messages="mediaForm.type.$error" ng-if="mediaForm.type.$invalid && (mediaForm.type.$touched || mediaForm.submitted)">
+                                        <p ng-message="required" class="help-block">Please select the type of resource</p>
+                                    </div>
+                                </div>
+                                <div class="large-12 cell margin-bottom-base" ng-show="media.type !== undefined && media.type != null && media.content !== undefined && media.content != null && media.content.length > 0">
+                                    <iframe width="560" height="315" ng-src="{{getPreview()}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="Modal__Footer display--flex flex--alignCenter flex--spaceBetween">
+                    <button class="button button--tertiary" type="button" ng-click="cancel()">Cancel</button>
+                    <button class="button button--success" type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

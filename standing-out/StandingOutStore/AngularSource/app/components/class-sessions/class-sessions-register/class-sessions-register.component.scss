@@ -1,0 +1,23 @@
+.accordianTitle {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 4px 4px 0 0;
+    padding: 21px;
+    text-decoration: none;
+
+    .title-label {
+        font-size: 16px;
+        font-weight: 600;
+    }
+}
+
+.accordianContent {
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    border-top: 0;
+    border-radius: 0 0 4px 4px;
+    padding: 14px;
+}

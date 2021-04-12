@@ -1,0 +1,59 @@
+{
+  "_args": [
+    [
+      "chartnew.js@3.9.0",
+      "C:\\DevSO\\standing-out"
+    ]
+  ],
+  "_development": true,
+  "_from": "chartnew.js@3.9.0",
+  "_id": "chartnew.js@3.9.0",
+  "_inBundle": false,
+  "_integrity": "sha1-VRRtUYchnlxjT98AeuaTD72clvU=",
+  "_location": "/chartnew.js",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "chartnew.js@3.9.0",
+    "name": "chartnew.js",
+    "escapedName": "chartnew.js",
+    "rawSpec": "3.9.0",
+    "saveSpec": null,
+    "fetchSpec": "3.9.0"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/chartnew.js/-/chartnew.js-3.9.0.tgz",
+  "_spec": "3.9.0",
+  "_where": "C:\\DevSO\\standing-out",
+  "author": {
+    "name": "Vancoppenolle Francois",
+    "email": "francois.vancoppenolle@favomo.be",
+    "url": "http://fvancop.github.io/ChartNew.js/"
+  },
+  "bugs": {
+    "url": "https://github.com/FVANCOP/ChartNew.js/issues"
+  },
+  "description": "Simple HTML5 Charts using the canvas element",
+  "homepage": "https://github.com/FVANCOP/ChartNew.js#readme",
+  "keywords": [
+    "ChartNew.js",
+    "Chart.js",
+    "canvas",
+    "charts",
+    "HTML5"
+  ],
+  "license": "MIT",
+  "main": "ChartNew.js",
+  "name": "chartnew.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FVANCOP/ChartNew.js.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "3.9.0"
+}

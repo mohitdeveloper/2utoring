@@ -1,0 +1,84 @@
+﻿@model StandingOut.Data.DTO.ViewStudent
+
+@{
+    ViewData["Title"] = "View Student";
+}
+
+<div class="grid-container">
+    <div class="grid-x ">
+        <div class="large-1 cell"></div>
+        <div class="large-10 cell">
+            <div class="card card--hasGrid margin-left-auto margin-right-auto margin-bottom-base margin-top-extra-loose">
+                <div class="grid-x">
+                    <div class="large-12 cell text-align-center">
+                        <h2>@ViewData["Title"]</h2>
+                    </div>
+                </div>
+                <hr class="margin-top-base margin-bottom-base" />
+                <section class="form margin-top">
+                    <div class="grid-x grid-margin-x">
+                        <div class="large-3 cell">
+                            <img src="@Model.Student.GoogleProfilePicture" class="FillWidth" />
+                        </div>
+                        <div class="large-9 cell">
+                            <label asp-for="Student.FullName"></label>
+                            <input type="text" asp-for="Student.FullName" disabled />
+
+                            <label asp-for="Student.Email"></label>
+                            <input type="text" asp-for="Student.Email" disabled />
+
+                            <label asp-for="StudentSessions.Count">Sessions attended / to attend</label>
+                            <input type="text" asp-for="StudentSessions.Count" disabled />
+                        </div>
+                    </div>
+                </section>
+                <hr class="margin-bottom-loose margin-top-tight" />
+                <div class="grid-x grid-margin-x">
+                    <div class="large-6 cell">
+                        <a class="button button--tertiary button--hasIcon" asp-action="Index"><i class="fal fa-arrow-left"></i><span>Back</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="large-1 cell"></div>
+    </div>
+</div>
+<div class="grid-container margin-bottom-loose">
+    <div class="grid-x">
+        <div class="large-1 cell"></div>
+        <div class="large-10 cell">
+            <div class="card margin-left-auto margin-right-auto margin-bottom-base margin-top-base">
+                <h4>Lessons</h4>
+                <section class="table margin-top">
+                    <table class="datatable" cellpadding="0" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Session</th>
+                                <th>Tutor</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th>Total Attendees</th>
+                                <th>Start</th>
+                                <th>End</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.StudentSessions)
+                            {
+                                <tr>
+                                    <td><a asp-controller="ClassSessions" asp-action="Rooms" asp-route-id="@item.ClassSessionId">@Html.DisplayFor(modelItem => item.SessionName)</a></td>
+                                    <td><a asp-controller="Tutors" asp-action="Edit" asp-route-id="@item.TutorId">@Html.DisplayFor(modelItem => item.TutorName)</a></td>
+                                    <td>@Html.DisplayFor(modelItem => item.CurrentStatus)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.JoinDate.HasValue)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TotalAttendees)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

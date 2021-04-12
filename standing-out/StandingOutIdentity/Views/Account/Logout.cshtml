@@ -1,0 +1,16 @@
+﻿@model LogoutViewModel
+
+<div class="col-14 col-lg-8 offset-lg-2">
+    <div class="Card Card--toRepsond:small">
+        <h1 class="mb-5 fw-800">Logout</h1>
+        <p>Would you like to logout of IdentityServer?</p>
+        <form asp-action="Logout">
+            <input type="hidden" name="logoutId" value="@Model.LogoutId"  />
+            <fieldset>
+                <div class="form-group">
+                    <button class="btn btn-primary">Yes</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

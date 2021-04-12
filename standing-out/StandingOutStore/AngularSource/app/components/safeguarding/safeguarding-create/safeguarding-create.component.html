@@ -1,0 +1,53 @@
+﻿<div class="Page__Container--size:content mb-56 Page--process:LessonCreate">
+    <div class="form-row">
+        <div class="col-12">
+            <h1><b>Make a report</b></h1>
+            
+            <p style="margin-bottom:25px;">Your safety is our priority. Should you have any concerns and wish to raise a safeguarding issue below we will investigate the matter thoroughly and deal with it swiftly. </p>
+            
+            <form (ngSubmit)="send()" *ngIf="reportForm != undefined" [formGroup]="reportForm">
+                <div class="form-group" *ngIf="lessons.length > 0">
+                    <label for="classSessionId">Which class is this regarding? *</label>
+                    <select id="classSessionId" name="classSessionId" class="form-control" formControlName="classSessionId">
+                        <option [ngValue]="null">Select a class</option>
+                        <option *ngFor="let lesson of lessons" [ngValue]="lesson.classSessionId">{{lesson.name + ' (' + (lesson.startDate | date : 'd/M/yyyy') + ')'}}</option>
+                    </select>
+                    <div *ngIf="reportFormControls.classSessionId.errors && (reportFormControls.classSessionId.dirty || reportFormControls.classSessionId.touched || reportFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="reportFormControls.classSessionId.errors.required">Please select a class to continue</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="title">What type of behaviour do you want to report? *</label>
+                    <select id="title" name="title" class="form-control" formControlName="title">
+                        <option [ngValue]="null">Select a type of behaviour</option>
+                        <option [ngValue]="'Disruptive'">Disruptive</option>
+                        <option [ngValue]="'Offensive'">Offensive</option>
+                        <option [ngValue]="'Abusive'">Abusive</option>
+                        <option [ngValue]="'Harassing'">Harassing</option>
+                        <option [ngValue]="'Defamatory'">Defamatory</option>
+                        <option [ngValue]="'Threatening'">Threatening</option>
+                        <option [ngValue]="'Obscene'">Obscene</option>
+                        <option [ngValue]="'Sexually Oriented'">Sexually Oriented</option>
+                        <option [ngValue]="'Racially Offensive'">Racially Offensive</option>
+                        <option [ngValue]="'Other'">Other</option>
+                    </select>
+                    <div *ngIf="reportFormControls.title.errors && (reportFormControls.title.dirty || reportFormControls.title.touched || reportFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="reportFormControls.title.errors.required">Please select a type of behaviour to continue.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Tell us what happened *</label>
+                    <textarea id="description" name="description" class="form-control" formControlName="description" placeholder="Enter a description of what happened here"></textarea>
+                    <div *ngIf="reportFormControls.description.errors && (reportFormControls.description.dirty || reportFormControls.description.touched || reportFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="reportFormControls.description.errors.maxlength">The description has a character limit of 2000</div>
+                        <div *ngIf="reportFormControls.description.errors.required">Please enter a description of what happened in order to continue.</div>
+                    </div>
+                </div>
+                <div class="Form_Block-Controls">
+                    <a (click)="close()" class="link-grey">Cancel</a>
+                    <button type="submit" class="btn btn-primary btn-lg ml-auto">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

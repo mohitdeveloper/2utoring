@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] | 2utoring</title>
+    <!-- Google Tag Manager -->
+    <script>
+    (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-KNRHDFL');</script>
+    <!-- End Google Tag Manager -->
+
+
+    <link rel="shortcut icon" href="/favicon2/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon2/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon2/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon2/favicon-16x16.png">
+    <link rel="manifest" href="/favicon2/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+
+    <link href="~/lib/toastr/build/toastr.min.css" rel="stylesheet" />
+    <link href="~/fonts/font-awesome-5.7.2/css/all.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables.net-zf/css/dataTables.foundation.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables.net-buttons-zf/css/buttons.foundation.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables.net-colreorder-zf/css/colReorder.foundation.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables.net-fixedcolumns-zf/css/fixedColumns.foundation.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables.net-fixedheader-zf/css/fixedHeader.foundation.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/datatables.net-responsive-zf/css/responsive.foundation.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="~/lib/ng-sortable/dist/ng-sortable.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/ng-sortable/dist/ng-sortable.style.min.css" />
+
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+    @RenderSection("styles", required: false)
+</head>
+<body ng-app="standingOut">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KNRHDFL"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <div class="so-header">
+        <div class="small-12 so-header-wrapper hide-for-small-only">
+            <div class="so-page-wrapper-sm">
+                <div class="so-header-container">
+                    <div class="so-header-logo">
+                        <a href="/">
+                            <img src="~/images/2utoringlogo.png" alt="2utoring" />
+                        </a>
+                    </div>
+                    <nav class="navigation">
+                        <div class="navigation__item">
+                            <a href="/search/organisations">Find-an-Organisation</a>
+                        </div>
+                        <div class="navigation__item">
+                            <a href="/search/tutors">Find-a-Tutor</a>
+                        </div>
+                        <div class="navigation__item">
+                            <a href="/search">Search</a>
+                        </div>
+                        @*<div class="navigation__item">
+                                <a href="/tutorsignup">Tutor Sign Up</a>
+                            </div>*@
+                        <div class="navigation__item">
+                            <a href="/contactus">Contact Us</a>
+                        </div>
+                    </nav>
+                    <div class="header__controls">
+                        <div class="controls__userLoggedIn">
+                            @await Component.InvokeAsync("MyProfileHeader")
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Toggle for the Burger Menu-->
+        <div class="title-bar show-for-small-only clearfix" data-responsive-toggle="responsive-menu">
+            <a href="/">
+                <img src="~/images/2utoringlogo.png" alt="2utoring" width="120" />
+            </a>
+            <button type="button" data-toggle>
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- mobile menu-->
+        <div class="top-bar show-for-small-only" id="responsive-menu">
+            <div class="top-bar-left">
+                <ul class="menu" data-responsive-menu="accordion">
+                    <li><a href="/search/organisations">Find-an-Organisation</a></li>
+                    <li><a href="/search/tutors">Find-a-Tutor</a></li>
+                    <li><a href="/search">Search</a></li>
+                    <li><a href="/contactus">Contact Us</a></li>
+                    <li>
+                        <div class="so-user-information-container">
+                            @await Component.InvokeAsync("MyProfileHeader")
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="view view--headerVisibleFooterHidden">
+        <div class="view__panel">
+            @RenderBody()
+        </div>
+    </div>
+    <div class="loading" style="display:none">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+
+
+    <environment names="Development,Staging,Production">
+        <!-- Global JS that doesn't change -->
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/foundation-sites/dist/js/foundation.min.js"></script>
+
+        <script type="text/javascript" src="~/lib/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-zf/js/dataTables.foundation.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-buttons-zf/js/buttons.foundation.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-buttons/js/buttons.colVis.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-buttons/js/buttons.print.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-colreorder-zf/js/colReorder.foundation.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-fixedcolumns-zf/js/fixedColumns.foundation.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-fixedheader-zf/js/fixedHeader.foundation.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+        <script type="text/javascript" src="~/lib/datatables.net-responsive-zf/js/responsive.foundation.min.js"></script>
+
+        <script src="//cdn.ckeditor.com/4.7.0/standard/ckeditor.js"></script>
+
+        <script src="~/lib/underscore/underscore-min.js"></script>
+        <script src="~/lib/moment/moment.js"></script>
+
+        @*
+            Don't use this for modal service!
+            <script src="~/lib/magnific-popup/dist/jquery.magnific-popup.js"></script>
+        *@
+
+        <script src="~/lib/toastr/build/toastr.min.js"></script>
+
+        <script src="~/app/common/formatStr.prototype.js"></script>
+        <script src="~/app/common/slug.prototype.js"></script>
+        <script src="~/app/common/global.js"></script>
+    </environment>
+
+    <environment names="Development">
+        <!-- Development versions of Angular (easier to debug) -->
+
+        <script src="~/lib/angular/angular.js"></script>
+        <script src="~/lib/angular-resource/angular-resource.js"></script>
+        <script src="~/lib/angular-messages/angular-messages.js"></script>
+        <script src="~/lib/angular-cookies/angular-cookies.js"></script>
+        <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
+
+        <script src="~/lib/angular-modal-service/dst/angular-modal-service.js"></script>
+        <script src="~/lib/ng-file-upload/dist/ng-file-upload-shim.js"></script>
+        <script src="~/lib/ng-file-upload/dist/ng-file-upload-all.js"></script>
+        <script src="~/lib/ng-sortable/dist/ng-sortable.js"></script>
+        <script src="~/lib/html2canvas/dist/html2canvas.js"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <!-- Production versions of Angular (faster loading) -->
+
+        <script src="~/lib/angular/angular.js"></script>
+        <script src="~/lib/angular-resource/angular-resource.js"></script>
+        <script src="~/lib/angular-messages/angular-messages.js"></script>
+        <script src="~/lib/angular-cookies/angular-cookies.js"></script>
+        <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
+
+        <script src="~/lib/angular-modal-service/dst/angular-modal-service.js"></script>
+        <script src="~/lib/ng-file-upload/dist/ng-file-upload-shim.js"></script>
+        <script src="~/lib/ng-file-upload/dist/ng-file-upload-all.js"></script>
+        <script src="~/lib/ng-sortable/dist/ng-sortable.js"></script>
+        <script src="~/lib/html2canvas/dist/html2canvas.js"></script>
+        @*<script src="~/lib/angular/angular.min.js"></script>
+            <script src="~/lib/angular-resource/angular-resource.min.js"></script>
+            <script src="~/lib/angular-messages/angular-messages.min.js"></script>
+            <script src="~/lib/angular-cookies/angular-cookies.min.js"></script>
+            <script src="~/lib/angular-sanitize/angular-sanitize.min.js"></script>
+
+            <script src="~/lib/angular-modal-service/dst/angular-modal-service.min.js"></script>
+            <script src="~/lib/ng-file-upload/dist/ng-file-upload-shim.min.js"></script>
+            <script src="~/lib/ng-file-upload/dist/ng-file-upload-all.min.js"></script>
+            <script src="~/lib/ng-sortable/dist/ng-sortable.min.js"></script>
+            <script src="~/lib/html2canvas/dist/html2canvas.min.js"></script>*@
+    </environment>
+
+    <environment names="Development,Staging,Production">
+        <!-- Our Angular Files -->
+        <!-- Angular Directives -->
+        <script asp-append-version="true" src="~/app/app.services.js"></script>
+        <script asp-append-version="true" src="~/app/app.controllers.js"></script>
+        <script asp-append-version="true" src="~/app/app.directives.js"></script>
+
+        <!-- Custom Directives -->
+        <script asp-append-version="true" src="~/app/directives/dynamicdatepicker.directive.js"></script>
+
+        <!-- Generic Delete Confirm -->
+        <script asp-append-version="true" src="~/app/delete/deleteModal.controller.js"></script>
+        <script asp-append-version="true" src="~/app/services/delete.service.js"></script>
+
+        <!-- Generic Alert Confirm -->
+        <script asp-append-version="true" src="~/app/alertPop/alertPopModal.controller.js"></script>
+        <script asp-append-version="true" src="~/app/services/alertPop.service.js"></script>
+
+        <script asp-append-version="true" src="~/app/app.js"></script>
+
+        <!-- Custom Services -->
+        <script asp-append-version="true" src="~/app/services/dragdrop.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/classroomSessions.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/sessionMedias.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/enums.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/sessionGroups.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/sessionDocuments.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/classSessions.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/safeguardReports.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/search.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/tutors.service.js"></script>
+        <script asp-append-version="true" src="~/app/services/familyLinks.service.js"></script>
+
+        <!-- Custom Controllers -->
+        <script asp-append-version="true" src="~/app/sessionSetup/setupDocuments.controller.js"></script>
+        <script asp-append-version="true" src="~/app/sessionSetup/setupGroups.controller.js"></script>
+        <script asp-append-version="true" src="~/app/sessionSetup/setupMedia.controller.js"></script>
+        <script asp-append-version="true" src="~/app/sessionMedia/sessionMediaModal.controller.js"></script>
+        <script asp-append-version="true" src="~/app/sessionGroup/sessionGroupModal.controller.js"></script>
+        <script asp-append-version="true" src="~/app/sessionSetup/documentPermissionsModal.controller.js"></script>
+        <script asp-append-version="true" src="~/app/sessions/sessionIndex.controller.js"></script>
+        <script asp-append-version="true" src="~/app/safeguardReport/safeguardReportModal.controller.js"></script>
+        <script asp-append-version="true" src="~/app/search/search.controller.js"></script>
+        <script asp-append-version="true" src="~/app/my/familyLinkAddModal.controller.js"></script>
+
+    </environment>
+
+    <script>
+        $(document).foundation();
+
+        $(".has-children").click(function () {
+            $(this).siblings("ul").slideToggle();
+        });
+
+        $('.menu li:first a').mouseenter().mouseleave();
+
+        $(document).ready(function () {
+            // Slide Down menu
+            $('#menu > li:has(>ul)').mouseover(function () {
+                $(this).children('ul').slideDown('medium');
+            });
+            $('#menu > li').mouseleave(function () {
+                $('#menu > li:has(>ul)').children('ul').slideUp('medium');
+            });
+        })
+    </script>
+
+    @RenderSection("scripts", required: false)
+
+    @await Component.InvokeAsync("Intercom")
+</body>
+</html>

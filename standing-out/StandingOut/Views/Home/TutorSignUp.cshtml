@@ -1,0 +1,93 @@
+﻿@model StandingOut.Data.DTO.TutorSignUp
+
+@{
+    ViewData["Title"] = "Tutor Sign Up";
+}
+
+<main class="so-content-page">
+
+    <section class="so-section-generic-text so-align-text-left so-generic-no-padding-top so-min-page-size">
+        <div class="grid-container">
+            <div class="grid-x align-center">
+                <div class="cell large-8">
+                    <h1 class="so-color-orange">@ViewData["Title"]</h1>
+                    <p>We're thrilled you want to join us here at Standing Out! Just fill in the short form below and we'll contact you to get the ball rolling.</p>
+                </div>
+            </div>
+
+            <form asp-antiforgery="true" action="/TutorSignUp" method="post" accept-charset="" class="grid-x grid-padding-y align-center">
+                <div class="large-8 cell">
+                    <div class="grid-x grid-padding-x">
+                        <div class="small-3 cell">
+                            <label asp-for="Email" class="text-right middle"></label>
+                        </div>
+                        <div class="small-9 cell">
+                            <input asp-for="Email" type="email" maxlength="255" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="large-8 cell">
+                    <div class="grid-x grid-padding-x">
+                        <div class="small-3 cell">
+                            <label asp-for="FirstName" class="text-right middle"></label>
+                        </div>
+                        <div class="small-9 cell">
+                            <input asp-for="FirstName" type="text" maxlength="255" required />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="large-8 cell">
+                    <div class="grid-x grid-padding-x">
+                        <div class="small-3 cell">
+                            <label asp-for="LastName" class="text-right middle"></label>
+                        </div>
+                        <div class="small-9 cell">
+                            <input asp-for="LastName" type="text" maxlength="255" required />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="large-8 cell">
+                    <div class="grid-x grid-padding-x">
+                        <div class="small-3 cell">
+                            <label asp-for="Phone" class="text-right middle"></label>
+                        </div>
+                        <div class="small-9 cell">
+                            <input asp-for="Phone" type="number" maxlength="20" required />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="large-8 cell">
+                    <div class="grid-x grid-padding-x">
+                        <div class="small-3 cell">
+                            <label asp-for="Message" class="text-right middle">Any additional information? (Qualifications / Experience / etc)</label>
+                        </div>
+                        <div class="small-9 cell">
+                            <textarea asp-for="Message" maxlength="2000"></textarea>
+                            <span asp-validation-for="Message" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="large-8 cell">
+                    <div class="grid-x grid-padding-x align-right">
+                        <div class="cell medium-3">
+                            <div class="grid-x align-right">
+                                <div class="medium-shrink">
+                                    <button type="submit" value="Send" class="button">Send</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+</main>

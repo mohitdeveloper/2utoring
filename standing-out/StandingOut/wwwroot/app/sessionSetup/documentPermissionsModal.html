@@ -1,0 +1,56 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="white-popup-block wide-modal grid-container" ng-init>
+        <div class="grid-x">
+            <div class="large-12 cell">
+                <button type="button" class="mfp-close" ng-click="cancel()">×</button>
+            </div>
+        </div>
+        <div class="grid-x">
+            <div class="large-12 cell">
+                <h3>Share the file{{'\'s ' + names}}</h3>
+            </div>
+            <div class="large-12 cell" ng-show="showWarning">
+                <p>This will overrite any previous permissions set for these files, for the session.</p>
+            </div>
+            <div class="large-8 cell">
+                <span>Student</span>
+            </div>
+            <div class="large-2 cell">
+                <div class="grid-x">
+                    <div class="large-4 cell">
+                        <input type="checkbox" ng-change="setRead()" ng-model="readToggle" />
+                    </div>
+                    <div class="large-8 cell">
+                        <span>View only</span>
+                    </div>
+                </div>
+            </div>
+            <div class="large-2 cell">
+                <div class="grid-x">
+                    <div class="large-4 cell">
+                        <input type="checkbox" ng-change="setWrite()" ng-model="writeToggle" />
+                    </div>
+                    <div class="large-8 cell">
+                        <span>Edit</span>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="sessionAttendee in sessionAttendees" class="large-12 cell">
+                <div class="grid-x">
+                    <div class="large-8 cell">
+                        <span>{{sessionAttendee.name}}</span>
+                    </div>
+                    <div class="large-2 cell">
+                        <input type="checkbox" ng-change="readChanged($index)" ng-model="sessionAttendee.isReadable" />
+                    </div>
+                    <div class="large-2 cell">
+                        <input type="checkbox" ng-change="writeChanged($index)" ng-model="sessionAttendee.isWriteable" />
+                    </div>
+                </div>
+            </div>
+            <div class="large-12">
+                <button type="button" ng-click="share()">Share</button>
+            </div>
+        </div>
+    </div>
+</div>

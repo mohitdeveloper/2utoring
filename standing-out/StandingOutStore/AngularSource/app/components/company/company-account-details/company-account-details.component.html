@@ -1,0 +1,270 @@
+<form [formGroup]="companyBasicInfoForm" (ngSubmit)="submitCompanyBasicInfoForm()" class="Page__Container--size:medium mb-20">
+    <h1 class="text-center"><b>Account details</b></h1><!-- Screen 1 -->
+    <div class="Form__Block"
+         style="border:1px solid #D9D9D9; padding:5%; border-radius: 5px; box-shadow: 5px 3px #D9D9D9;">
+        <h3>Administrator details</h3>
+        <div class="form-row" style="margin-top:15px;">
+            <div class="form-group col-lg-6">
+                <label>First Name *</label>
+                <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control"
+                       placeholder="sname" />
+                <div *ngIf="basicInfoFormCompanyControls.firstName.errors && (basicInfoFormCompanyControls.firstName.dirty || basicInfoFormCompanyControls.firstName.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.firstName.errors.maxlength">
+                        This field should
+                        only
+                        allow a first name of 20 characters (inc. spaces) to be added.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.firstName.errors.required">
+                        Please enter your
+                        first
+                        name to continue.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-6">
+                <label for="exampleInputEmail1">Surname *</label>
+                <input type="text" id="lastName" name="lastName" formControlName="lastName"
+                       class="form-control" placeholder="Surname" />
+                <div *ngIf="basicInfoFormCompanyControls.lastName.errors && (basicInfoFormCompanyControls.lastName.dirty || basicInfoFormCompanyControls.lastName.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.lastName.errors.maxlength">
+                        This field
+                        should only
+                        allow a first name of 20 characters (inc. spaces) to be added.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.lastName.errors.required">
+                        Please enter your
+                        surname to continue.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-12">
+                <label>Email address</label>
+                <input type="email" id="email" name="email" formControlName="email" class="form-control"
+                       placeholder="Email Address" readonly />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-6">
+                <label>Telephone No. *</label>
+                <input type="tel" id="telephoneNumber" name="telephoneNumber"
+                       formControlName="telephoneNumber" class="form-control"
+                       placeholder="Enter your telephone no." />
+                <div *ngIf="basicInfoFormCompanyControls.telephoneNumber.errors && (basicInfoFormCompanyControls.telephoneNumber.dirty || basicInfoFormCompanyControls.telephoneNumber.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.telephoneNumber.errors.maxlength">
+                        This
+                        field
+                        should only allow a telephone no. of 12 characters (inc. spaces) to be added.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.telephoneNumber.errors.required">
+                        Please
+                        enter a
+                        valid telephone no. to continue.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.telephoneNumber.errors.pattern">
+                        Please
+                        enter a
+                        valid telephone no.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-6">
+                <label>Mobile No.</label>
+                <input type="tel" id="mobileNumber" name="mobileNumber" formControlName="mobileNumber"
+                       class="form-control" placeholder="Enter your mobile no." />
+                <div *ngIf="basicInfoFormCompanyControls.mobileNumber.errors && (basicInfoFormCompanyControls.mobileNumber.dirty || basicInfoFormCompanyControls.mobileNumber.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.mobileNumber.errors.maxlength">
+                        This field
+                        should
+                        only allow a mobile no. of 12 characters (inc. spaces) to be added.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.mobileNumber.errors.required">
+                        Please enter
+                        a valid
+                        mobile no. to continue
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.mobileNumber.errors.pattern">
+                        Please enter a
+                        valid
+                        mobile no.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Form__Block"
+         style="border:1px solid #D9D9D9; padding:5%; border-radius: 5px;box-shadow: 5px 3px #D9D9D9;">
+        <h3>Company Details</h3>
+        <div class="form-row" style="margin-top:15px;">
+            <div class="form-group col-lg-12">
+                <label>Company Name *</label>
+                <input type="text" id="companyName" name="companyName" formControlName="companyName"
+                       class="form-control" placeholder="Company name" />
+                <div *ngIf="basicInfoFormCompanyControls.companyName.errors && (basicInfoFormCompanyControls.companyName.dirty || basicInfoFormCompanyControls.companyName.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.companyName.errors.maxlength">
+                        This field
+                        should
+                        only allow a company name of 20 characters (inc. spaces) to be added.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.companyName.errors.required">
+                        Please enter
+                        company
+                        name to continue.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="exampleInputEmail1">Registration No.</label>
+                <input type="text" id="companyRegistrationNumber" name="companyRegistrationNumber"
+                       formControlName="companyRegistrationNumber" class="form-control"
+                       placeholder="Registration No." />
+                <div *ngIf="basicInfoFormCompanyControls.companyRegistrationNumber.errors && (basicInfoFormCompanyControls.companyRegistrationNumber.dirty || basicInfoFormCompanyControls.companyRegistrationNumber.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.companyRegistrationNumber.errors.maxlength">
+                        This
+                        field should only allow a registration no. of 20 characters (inc. spaces) to be
+                        added.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.companyRegistrationNumber.errors.required">
+                        Please
+                        enter registration no. to continue.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-12">
+                <label>Address Line1</label>
+                <input type="text" id="addressLine1" name="addressLine1" formControlName="addressLine1" class="form-control" placeholder="Address" />
+                <div *ngIf="basicInfoFormCompanyControls.addressLine1.errors && (basicInfoFormCompanyControls.addressLine1.dirty || basicInfoFormCompanyControls.addressLine1.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.addressLine1.errors.required">
+                        Please
+                        enter a
+                        company address to continue.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-12">
+                <label>Address Line2</label>
+                <input type="text" id="addressLine2" name="addressLine2"
+                       formControlName="addressLine2" class="form-control" placeholder="Address" />
+                <div *ngIf="basicInfoFormCompanyControls.addressLine2.errors && (basicInfoFormCompanyControls.addressLine2.dirty || basicInfoFormCompanyControls.addressLine2.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.addressLine2.errors.required">
+                        Please
+                        enter a
+                        company address to continue.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-12">
+                <label>Country</label>
+                <!--<select id="country" name="country" formControlName="country" class="form-control" placeholder="Select a country">
+                                <option [ngValue]="null">Select your country</option>
+                                <option *ngFor="let country of countries" [ngValue]="country.countryId">{{country.name
+                }}</option>
+                </select>
+                <div *ngIf="basicInfoFormCompanyControls.country.errors && (basicInfoFormCompanyControls.country.dirty || basicInfoFormCompanyControls.country.touched || paymentFormSubmitted)" class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.country.errors.maxlength">Country has a character limit of 250</div>
+                    <div *ngIf="basicInfoFormCompanyControls.country.errors.required">Please select your country to continue.</div>
+                </div>-->
+                <input type="text" id="country" name="country"
+                       formControlName="country" class="form-control" placeholder="Country" />
+                <div *ngIf="basicInfoFormCompanyControls.country.errors && (basicInfoFormCompanyControls.country.dirty || basicInfoFormCompanyControls.country.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.country.errors.required">
+                        Country
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-12">
+                <label>Postcode</label>
+                <input type="text" id="companyPostcode" name="companyPostcode"
+                       formControlName="companyPostcode" class="form-control" placeholder="Post code" />
+                <div *ngIf="basicInfoFormCompanyControls.companyPostcode.errors && (basicInfoFormCompanyControls.companyPostcode.dirty || basicInfoFormCompanyControls.companyPostcode.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.companyPostcode.errors.required">
+                        Postcode
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-lg-6">
+                <label>Telephone No. *</label>
+                <input type="tel" id="companyTelephoneNumber" name="companyTelephoneNumber"
+                       formControlName="companyTelephoneNumber" class="form-control"
+                       placeholder="Enter your telephone no." />
+                <div *ngIf="basicInfoFormCompanyControls.companyTelephoneNumber.errors && (basicInfoFormCompanyControls.companyTelephoneNumber.dirty || basicInfoFormCompanyControls.companyTelephoneNumber.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.companyTelephoneNumber.errors.maxlength">
+                        This
+                        field should only allow a telephone no. of 12 characters (inc. spaces) to be
+                        added.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.companyTelephoneNumber.errors.required">
+                        Please
+                        enter a valid telephone no. to continue.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.companyTelephoneNumber.errors.pattern">
+                        Please
+                        enter a valid telephone no.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-6">
+                <label>Mobile No.</label>
+                <input type="tel" id="companyMobileNumber" name="companyMobileNumber"
+                       formControlName="companyMobileNumber" class="form-control"
+                       placeholder="Enter your mobile no." />
+                <div *ngIf="basicInfoFormCompanyControls.companyMobileNumber.errors && (basicInfoFormCompanyControls.companyMobileNumber.dirty || basicInfoFormCompanyControls.companyMobileNumber.touched || CompanyBasicInfoFormSubmitted)"
+                     class="error" role="alert">
+                    <div *ngIf="basicInfoFormCompanyControls.companyMobileNumber.errors.maxlength">
+                        This
+                        field should only allow a mobile no. of 12 characters (inc. spaces) to be added.
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.companyMobileNumber.errors.required">
+                        Please
+                        enter a valid mobile no. to continue
+                    </div>
+                    <div *ngIf="basicInfoFormCompanyControls.companyMobileNumber.errors.pattern">
+                        Please
+                        enter a valid mobile no.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-lg-12">
+                <label>Email address</label>
+                <input type="email" id="companyEmail" name="companyEmail" formControlName="companyEmail"
+                       class="form-control" placeholder="Company Email Address" />
+            </div>
+            <div class="form-row">
+                <div class="form-group col-lg-12">
+                    <label class="form-check" for="marketingAccepted">
+                        <input type="checkbox" class="form-control" id="marketingAccepted" name="marketingAccepted" formControlName="marketingAccepted" />
+                        <span class="label">I would like to receive relevant tips, tricks and offers from the 2utoring team.</span>
+                    </label>
+                    <div *ngIf="basicInfoFormCompanyControls.marketingAccepted.errors && (basicInfoFormCompanyControls.marketingAccepted.dirty || basicInfoFormCompanyControls.marketingAccepted.touched || CompanyBasicInfoFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="basicInfoFormCompanyControls.marketingAccepted.errors.required">You need to accept our terms and conditions to continue.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Form_Block-Controls">
+            <button type="submit" class="btn btn-primary btn-lg ml-auto">Update</button>
+        </div>
+    </div>
+</form>

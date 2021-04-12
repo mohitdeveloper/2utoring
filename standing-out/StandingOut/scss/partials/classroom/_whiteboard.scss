@@ -1,0 +1,532 @@
+﻿// Whiteboard Varibles
+$tileSmall: 35px!default;
+$tileLarge: 42px!default;
+$toolNoSmall: 4!default;
+$toolNoLarge: 4!default;
+$toolbarBgColor: $bodyColour!default;
+$activeColor: '#d8dfed'!default;
+
+// Placeholder Styles
+%input {
+    display: block;
+    width: 100%;
+    min-height: 42px;
+    max-height: 42px;
+    padding: 0 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #eaeaea;
+    border-radius: 0.357rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    &:not(:last-child) {
+        margin-right: 7px
+    }
+
+}
+
+%horizontalToolBar {
+    align-items: center;
+    background-color: $toolbarBgColor;
+    display: flex;
+    flex: 0 0 100%;
+    justify-content: space-between;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+}
+
+@mixin range {
+    input[type="range"] {
+        -webkit-appearance: none;
+        border-radius: 7px;
+        width: 100%;
+        height: 14px;
+        background: #eee;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: 0.2s;
+        transition: opacity 0.2s;
+        
+        &:hover {
+            opacity: 1;
+        }
+        
+        &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            background: #ff9900;
+            cursor: pointer;
+        }
+    }
+}
+
+@mixin whiteboardLayout {
+    @include breakSmall {
+        grid-template-columns: $tileSmall 1fr;
+
+        .view__panel--thirds:nth-child(2) &,
+        .view__panel--thirds:nth-child(3) &,
+        .view__panel--quad & {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @include breakLarge {
+        grid-template-columns: $tileLarge 1fr;
+
+        .view__panel--thirds:nth-child(2) &,
+        .view__panel--thirds:nth-child(3) &,
+        .view__panel--quad & {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+@mixin tileSize($size) {
+    @if ($size == 'respond') {
+        @include breakSmall {
+            min-height: $tileSmall;
+            max-height: $tileSmall;
+            min-width: $tileSmall;
+            max-width: $tileSmall;
+        }
+
+        @include breakLarge {
+            min-height: $tileLarge;
+            max-height: $tileLarge;
+            min-width: $tileLarge;
+            max-width: $tileLarge;
+        }
+    }
+    @elseif ($size == 'default') {
+        font-size: 16px;
+        min-height: $tileLarge;
+        max-height: $tileLarge;
+        min-width: $tileLarge;
+        max-width: $tileLarge;
+    }
+}
+
+@mixin tileSizeOffset {
+    @include breakSmall {
+        left: $tileSmall;
+
+        .view__panel--thirds:nth-child(2) &,
+        .view__panel--thirds:nth-child(3) &,
+        .view__panel--quad & {
+            left: 0;
+            top: $tileSmall;
+        }
+    }
+
+    @include breakLarge {
+        left: $tileLarge;
+
+        .view__panel--thirds:nth-child(2) &,
+        .view__panel--thirds:nth-child(3) &,
+        .view__panel--quad & {
+            left: 0;
+            top: $tileLarge;
+        }
+    }
+}
+
+@mixin toolPanelCount {
+    @include breakSmall {
+        min-width: calc(#{$tileSmall} * #{$toolNoSmall});
+        width: calc(#{$tileSmall} * #{$toolNoSmall});
+    }
+
+    @include breakLarge {
+        min-width: calc(#{$tileLarge} * #{$toolNoLarge});
+        width: calc(#{$tileLarge} * #{$toolNoLarge});
+    }
+}
+
+
+@mixin colourPickerStyling($size) {
+    .sp-replacer {
+        background-color: transparent;
+        border: 0;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    
+        .sp-dd {
+            display: none;
+        }
+
+        .sp-preview {
+            $reducer: 24px;
+            height: 60%;
+            width: 60%;
+            border: 0;
+            cursor: pointer;
+
+            .sp-preview-inner {
+                border-radius: 3px;
+                border: 1px solid #aaa;
+            }
+        }
+    }
+}
+
+@mixin buttons {
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    display: inline-block;
+    font-family: $fontFamily;
+    outline: none;
+
+    &:hover {
+        background-color: #d8dfed;
+    }
+
+    &.active {
+        background-color: #d8dfed;
+    }
+
+    img {
+        width: 40%;
+    }
+}
+
+.Whiteboard {
+
+    @include whiteboardLayout;
+    display: grid;
+    grid-template-areas: "toolbar toolbar" "tools canvas" "bottombar bottombar";
+    grid-template-rows: $tileLarge 1fr 56px;
+    height: 100%;
+    overflow: hidden;
+
+    .view__panel--thirds:nth-child(2) &,
+    .view__panel--thirds:nth-child(3) &,
+    .view__panel--quad & {
+        grid-template-areas: "toolbar" "canvas" "bottombar";
+        grid-template-rows: auto 1fr $tileLarge;
+    }
+
+    &.Whiteboard__ToolBar--active {
+        .view__panel--thirds:nth-child(2) &,
+        .view__panel--thirds:nth-child(3) &,
+        .view__panel--quad & {
+            grid-template-areas: "toolbar" "tools" "canvas" "bottombar";
+            grid-template-rows: auto auto 1fr $tileLarge;
+        }
+    }
+
+    &.show {
+        border-top: 1px solid $borderAccentColor;
+        height: calc(100% - 56px);
+    }
+
+    &__Tools {
+        grid-area: tools;
+        background-color: $toolbarBgColor;
+
+        .view__panel--thirds:nth-child(2) &,
+        .view__panel--thirds:nth-child(3) &,
+        .view__panel--quad & {
+            display: none;
+        }
+
+        &--active {
+            .view__panel--thirds:nth-child(2) &,
+            .view__panel--thirds:nth-child(3) &,
+            .view__panel--quad & {
+                display: flex;
+            }
+        }
+
+        .Tool__Button {
+            @include buttons;
+            @include tileSize('respond');
+        }
+
+        .Tool__Group {
+            @include tileSize('respond');
+            display: inline-block;
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 0 0 7px 7px;
+                border-color: transparent transparent #212121 transparent;
+            }
+        }
+
+
+        .Tool__Color {
+            @include tileSize('respond');
+            align-items: center;
+            display: inline-flex;
+            position: relative;
+        }
+
+        .Tool__Panel {
+            @include tileSizeOffset;
+            background-color: #F4F6FA;
+            box-shadow: inset 0 -1px 0 $borderAccentColor, inset 0 1px 0 $borderAccentColor, inset -1px 0 0 $borderAccentColor;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            position: absolute;
+            top: 0;
+
+            .view__panel--thirds:nth-child(2) &,
+            .view__panel--thirds:nth-child(3) &,
+            .view__panel--quad & {
+                box-shadow: inset 0 -1px 0 $borderAccentColor, inset 1px 0 0 $borderAccentColor, inset -1px 0 0 $borderAccentColor;
+            }
+
+            & > button {
+                @include tileSize('respond');
+            }
+
+            &--shapes {
+                @include toolPanelCount;
+                z-index: 1;
+            }
+
+            &--zoom {
+                @include tileSize('respond');
+                @include toolPanelCount;
+                @include range;
+                align-items: center;
+                box-sizing: border-box;
+                padding-left: 21px;
+                padding-right: 21px;
+                z-index: 1;
+            }
+        }
+
+        div.hidden {
+            display: none;
+        }
+
+        div.show {
+            display: inline-flex;
+        }
+
+        @include colourPickerStyling('respond');
+    }
+
+    &__Canvas {
+        grid-area: canvas;
+        background-color: #F4F6FA;
+        overflow: auto;
+        position: relative;
+        width: 100%;
+
+        .Whiteboard--hidden & {
+            height: 100%;
+            width: 100%;
+        }
+
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            &:nth-child(2) {
+                pointer-events: none;
+                z-index: 100;
+            }
+
+            &:nth-child(3) {
+                pointer-events: none;
+                z-index: 200;
+            }
+        }
+    }
+
+    &__TopBar {
+        @extend %horizontalToolBar;
+        grid-area: toolbar;
+
+        .Whiteboard__Icons {
+            align-items: center;
+            display: flex;
+
+            .Tool__Button, .File__Button {
+                @include buttons;
+                @include tileSize('default');
+            }
+
+            .File__Button--showTools {
+                display: none;
+                position: relative;
+
+                &::before {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 0 0 7px 7px;
+                    border-color: transparent transparent #212121 transparent;
+                }
+
+                .view__panel--thirds:nth-child(2) &,
+                .view__panel--thirds:nth-child(3) &,
+                .view__panel--quad & {
+                    @include buttons;
+                    @include tileSize('respond');
+                }
+            }
+
+            & > div {
+                align-items: center;
+                display: flex;
+                height: $tileLarge;
+                padding-left: 14px;
+                padding-right: 14px;
+
+                input[type=number] {
+                    @extend %input;
+                    text-align: center;
+                    width: 50px;
+
+                    &::-webkit-inner-spin-button,
+                    &::-webkit-outer-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+                }
+
+                .Tool__Name {
+                    display: block;
+                    font-size: 14px;
+                    margin-right: 21px;
+                    text-align: right;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    &__BottomBar {
+        @extend %horizontalToolBar;
+        grid-area: bottombar;
+
+        .Whiteboard__Properties {
+            align-items: center;
+            display: flex;
+
+            @include colourPickerStyling('default');
+            @include range;
+
+            select {
+                @extend %input;
+                height: 35px;
+            }
+
+            & > div {
+                align-items: center;
+                display: flex;
+                padding-left: 14px;
+                padding-right: 14px;
+
+
+                input.hiddenInput {
+                    width: 0 !important;
+                    border: 0 !important;
+                    background-color: transparent !important;
+                }
+            }
+
+            .Tool__Name {
+                display: block;
+                font-size: 14px;
+                font-weight: 500;
+                margin-right: 21px;
+                text-align: right;
+                white-space: nowrap;
+            }
+
+            .Tool__Color {
+                @include tileSize('respond');
+                align-items: center;
+                display: inline-flex;
+                position: relative;
+            }
+
+            select.Font__Options {
+                min-width: 40px;
+            }
+
+            select.Font__Options {
+                min-width: 120px;
+
+                option {
+
+                    &[value="arial"] {
+                        font-family: arial;
+                    }
+
+                    &[value="arial black"] {
+                        font-family: arial black;
+                    }
+
+                    &[value="comic sans ms"] {
+                        font-family: comic sans ms;
+                    }
+
+                    &[value="courier"] {
+                        font-family: courier;
+                    }
+
+                    &[value="garamond"] {
+                        font-family: garamond;
+                    }
+
+                    &[value="georgia"] {
+                        font-family: georgia;
+                    }
+
+                    &[value="helvetica"] {
+                        font-family: helvetica;
+                    }
+
+                    &[value="impact"] {
+                        font-family: impact;
+                    }
+
+                    &[value="times new roman"] {
+                        font-family: times new roman;
+                    }
+
+                    &[value="trebuchet ms"] {
+                        font-family: trebuchet ms;
+                    }
+
+                    &[value="verdana"] {
+                        font-family: verdana;
+                    }
+                }
+            }
+        }
+    }
+}

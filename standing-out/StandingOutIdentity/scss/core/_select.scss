@@ -1,0 +1,17 @@
+// ----------------------------------------------------
+// Select
+// ----------------------------------------------------
+
+select, input {
+    background-color: #fff;
+}
+
+select.form-control {
+    appearance: none;
+    position: relative;
+    background-image: url('../images/icons/chevron-down.svg');
+    background-position: center right 14px;
+    background-repeat: no-repeat;
+    background-size: 14px;
+    cursor: pointer;
+}

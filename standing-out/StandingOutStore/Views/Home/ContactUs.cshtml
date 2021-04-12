@@ -1,0 +1,159 @@
+﻿@model StandingOut.Data.DTO.ContactUs
+
+@{
+    ViewData["Title"] = "Get In Touch | 2utoring.com | Help & Support";
+}
+
+@section meta{
+    <meta content="We’re here to answer your questions, form new collaborations, develop new featuresand ultimately create the best education platform for you." name="description">
+    <meta content="Get In Touch | 2utoring.com | Help &amp; Support" property="og:title">
+    <meta content="We’re here to answer your questions, form new collaborations, develop new featuresand ultimately create the best education platform for you." property="og:description">
+    <meta content="Get In Touch | 2utoring.com | Help &amp; Support" property="twitter:title">
+    <meta content="We’re here to answer your questions, form new collaborations, develop new featuresand ultimately create the best education platform for you." property="twitter:description">
+    <meta property="og:type" content="website">
+    <meta content="summary_large_image" name="twitter:card">
+}
+
+@section scripts{
+
+    @*<script type="text/javascript">
+            var recaptchaCallback = function () {
+                grecaptcha.render('recaptcha_element', {
+                  'sitekey' : '@ViewBag.RecaptchaSiteKey'
+                });
+            };
+        </script>
+
+        <script src="https://www.google.com/recaptcha/api.js?onload=recaptchaCallback&render=explicit"
+                async defer>
+        </script>*@
+}
+
+<div class="_2u_intro-section">
+    <div class="_2u_inner-wrapper-1">
+        <h2 class="_2u_heading-2">Need help?</h2>
+        <h1 class="_2u_heading">Get in touch</h1><img src="/images/Asset-1.svg" loading="lazy" alt="" class="_2u_image-header-graphic">
+        <p class="_2u_body-1 _2u_centre _2u_contact-header">We’re here to answer your questions, form new collaborations, develop new featuresand ultimately create the best education platform for you, so please do contact us and our team will get back to you as soon as possible.</p>
+    </div>
+</div>
+<div class="_2u_divider"><img src="/images/Asset-5_2.svg" loading="lazy" alt="" class="_2u_divider-home-2 _2u_get-in-touch"></div>
+<div class="_2u_hero-section-green">
+    <div class="_2u_inner-wrapper-2 _2u_contact">
+        <h2 class="_2u_subheading">Send a message</h2>
+        <div class="w-form">
+            <form id="wf-form-Send-us-a-message" name="wf-form-Send-us-a-message" data-name="Send us a message" method="post" asp-antiforgery="true" asp-route="ContactUs" class="w-clearfix">
+                <input type="text" asp-for="Name" class="_2u_text-field w-input" maxlength="256" data-name="Name" placeholder="Name" id="Name" required="">
+
+                <input type="text" class="_2u_text-field _2u_left w-input" maxlength="256" data-name="Last Name" placeholder="Last Name" id="Last-Name">
+
+                <input type="tel" asp-for="PhoneNo" class="_2u_text-field _2u_phone w-input" maxlength="10" data-name="Phone Number" placeholder="Phone Number" id="Phone-Number">
+
+                <input type="email" asp-for="Email" class="_2u_text-field _2u_email w-input" maxlength="256" data-name="Email Address" placeholder="Email Address" id="Email-Address" required="">
+
+                <textarea name="Message" asp-for="Message" maxlength="5000" id="Message" placeholder="Message" data-name="Message" class="_2u_text-field _2u_area w-input"></textarea>
+
+                <input type="submit" value="Send message" data-wait="Please wait..." class="_2u_submit-button w-button">
+                <label class="w-checkbox _2u_checkbox-field">
+                    <input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input _2u_checkbox">
+                    <span class="_2u_checkbox-label w-form-label">From time to time, 2utoring would like to send you information we think you’d be interested in. If you do not want to receive these, please untick the box.</span>
+                </label>
+            </form>
+            <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="_2u_divider"><img src="/images/Asset-6.svg" loading="lazy" alt="" class="_2u_divider-home-2 _2u_bottom"></div>
+@*<div class="_2u_inner-wrapper-2 _2u_contact">
+    <div class="_2u_columns-7 w-row">
+        <div class="_2u_image-column-left _2u_text _2u_contact w-col w-col-7">
+            <h2 class="_2u_subheading _2u_left _2u_contact">Priority Support</h2>
+            <p class="_2u_body-1 _2u_contact-support">As a parent or student you can file a report from within your dashboard or classroom area.</p>
+            <a href="https://www.ceop.police.uk/Safety-Centre/" target="_blank" class="_2u_button-icon-wrap _2u_reverse _2u_contact w-inline-block w-clearfix">
+                <div class="_2u_button-icon-text _2u_reverse">Raise a safeguarding concern</div><img src="/images/arrow-grey.svg" loading="lazy" width="7" alt="" class="_2u_image-5">
+            </a>
+        </div>
+        <div class="_2u_image-column-right w-col w-col-5"><img src="/images/Asset-2.svg" loading="lazy" alt=""></div>
+    </div>
+</div>*@
+@*<div class="_2u_divider"><img src="/images/Asset-25_1.svg" loading="lazy" alt="" class="_2u_divider-home-2"></div>*@
+<div class="_2u_intro-section _2u_contact _2u_bottom-space" style="background: white;">
+    <div class="_2u_inner-wrapper-2">
+        <h2 class="_2u_subheading _2u_contact _2u_extra-space">Technical Support</h2>
+        <div class="_2u_div-block w-clearfix">
+            <h3 class="_2u_h3 _2u_left _2u_orange _2u_contact">For technical support queries, please sign in to your account and use the live chat messaging tool at the bottom right of your display.</h3><img src="/images/Asset-3.svg" loading="lazy" width="75" alt="" class="_2u_intercom-icon">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--<div class="_2u_intro-section">
+    <div class="_2u_inner-wrapper-1">
+        <h2 class="_2u_heading-2">Need help?</h2>
+        <h1 class="_2u_heading">Get in touch</h1><img src="~//images/Asset-1.svg" loading="lazy" alt="" class="_2u_image-header-graphic">
+        <p class="_2u_body-1 _2u_centre _2u_contact-header">We’re here to answer your questions, form new collaborations, develop new featuresand ultimately create the best education platform for you, so please do contact us and our team will get back to you as soon as possible.</p>
+    </div>
+</div>
+<div class="_2u_divider"><img src="~//images/Asset-5_2.svg" loading="lazy" alt="" class="_2u_divider-home-2 _2u_get-in-touch"></div>
+<div class="_2u_hero-section-green">
+    <div class="_2u_inner-wrapper-2 _2u_contact">
+        <h2 class="_2u_subheading">Send a message</h2>
+        <div class="w-form">-->
+@*<div class="form-group">
+        <div id="recaptcha_element"></div>
+    </div>*@
+<!--<form id="wf-form-Send-us-a-message" name="wf-form-Send-us-a-message" data-name="Send us a message" method="post" asp-antiforgery="true" asp-route="ContactUs" class="w-clearfix">
+                <input type="text" asp-for="Name" class="_2u_text-field w-input" maxlength="256" data-name="Name" placeholder="Name" id="Name" required="">
+
+                <input type="text" class="_2u_text-field _2u_left w-input" maxlength="256" data-name="Last Name" placeholder="Last Name" id="Last-Name">
+
+                <input type="tel" asp-for="PhoneNo" class="_2u_text-field _2u_phone w-input" maxlength="10" data-name="Phone Number" placeholder="Phone Number" id="Phone-Number">
+
+                <input type="email" asp-for="Email" class="_2u_text-field _2u_email w-input" maxlength="256" data-name="Email Address" placeholder="Email Address" id="Email-Address" required="">
+
+                <textarea name="Message" asp-for="Message" maxlength="5000" id="Message" placeholder="Message" data-name="Message" class="_2u_text-field _2u_area w-input"></textarea>
+
+
+                <input type="submit" value="Send message" data-wait="Please wait..." class="_2u_submit-button w-button">
+                <label class="w-checkbox _2u_checkbox-field">
+                    <input type="checkbox" id="checkbox" name="checkbox" data-name="Checkbox" class="w-checkbox-input _2u_checkbox">
+                    <span class="_2u_checkbox-label w-form-label">From time to time, 2utoring would like to send you information we think you’d be interested in. If you do not want to receive these, please untick the box.</span>
+                </label>
+            </form>
+            <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="_2u_divider"><img src="~//images/Asset-6.svg" loading="lazy" alt="" class="_2u_divider-home-2 _2u_bottom"></div>
+<div class="_2u_inner-wrapper-2 _2u_contact">
+    <div class="_2u_columns-7 w-row">
+        <div class="_2u_image-column-left _2u_text _2u_contact w-col w-col-7">
+            <h2 class="_2u_subheading _2u_left _2u_contact">Priority Support</h2>
+            <a href="https://www.ceop.police.uk/safety-centre" class="_2u_button-icon-wrap _2u_reverse _2u_contact w-inline-block w-clearfix">
+                <div class="_2u_button-icon-text _2u_reverse">Raise a safeguarding concern</div><img src="~//images/arrow-grey.svg" loading="lazy" width="7" alt="" class="_2u_image-5">
+            </a>
+        </div>
+        <div class="_2u_image-column-right w-col w-col-5"><img src="~//images/Asset-2.svg" loading="lazy" alt=""></div>
+    </div>
+</div>
+<div class="_2u_divider"><img src="~//images/Asset-25_1.svg" loading="lazy" alt="" class="_2u_divider-home-2"></div>
+<div class="_2u_intro-section _2u_contact _2u_bottom-space">
+    <div class="_2u_inner-wrapper-2">
+        <h2 class="_2u_subheading _2u_contact _2u_extra-space">Technical Support</h2>
+        <div class="_2u_div-block w-clearfix">
+            <h3 class="_2u_h3 _2u_left _2u_orange _2u_contact">For technical support queries, please sign in to your account and use the live chat messaging tool at the bottom right of your display.</h3><img src="~//images/Asset-3.svg" loading="lazy" width="75" alt="" class="_2u_intercom-icon">
+        </div>
+    </div>
+</div>-->

@@ -1,0 +1,220 @@
+<div *ngIf="tutor != null && tutor != undefined">
+    <div class="row my-56">
+        <div class="col-12 col-lg-6">
+            <div class="d-lg-flex align-items-center">
+                <div class="Avatar Avatar--size:largest mr-lg-63 tutorLogos">
+                    <img *ngIf="tutor.storeProfileImageDownload != ''" src="{{tutor.storeProfileImageDownload}}" alt="{{tutor.userTitle}} {{tutor.userFullName}}" />
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+            <div *ngIf="profileThreeUploaderShow">
+                <div ng2FileDrop
+                     [ngClass]="{'nv-file-over': profileThreeDropZoneOver}"
+                     (fileOver)="fileOverProfileThreeUploader($event)"
+                     [uploader]="profileThreeUploader"
+                     (onFileDrop)="profileThreeUploaderFileDropped($event)"
+                     (click)="fileInput.click()"
+                     class="File-Uploader">
+                    <!--<i class="fal fa-arrow-to-bottom"></i>Drag and drop files or <u>select</u> to upload-->
+                    <div>
+                        <p class="text-center">
+                            <i class="fal fa-arrow-to-bottom"></i>Drag and drop files or
+                        </p>
+                        <p class="text-center"><u>Click here</u> to upload</p>
+                    </div>
+                </div>
+                <input type="file" #fileInput ng2FileSelect [uploader]="profileThreeUploader" style="display:none;" (change)="profileThreeUploaderFileDropped($event)" />
+            </div>
+        </div>
+
+    </div>
+    <div class="col-12">
+        <angular-cropper #angularCropper [cropperOptions]="config" [imageUrl]="profileThreeUploaderPreviewUrl"></angular-cropper>
+        <img *ngIf="profileThreeUploader.queue.length > 0" [src]="profileThreeCroppedImage" />
+
+    </div>
+    <div class="col-12">
+        <h3>About you</h3>
+        <form (ngSubmit)="submitProfileForm()" [formGroup]="profileForm" *ngIf="profileForm != undefined" class="mt-35">
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label for="header">Headline*</label>
+                    <input type="text" id="header" name="header" formControlName="header" class="form-control" placeholder="Tell learners about you in a short snappy sentence to sell yourself (e.g. Award Winning Maths Tutor)" />
+                    <div *ngIf="profileFormControls.header.errors && (profileFormControls.header.dirty || profileFormControls.header.touched || profileFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="profileFormControls.header.errors.required">Headline is required</div>
+                        <div *ngIf="profileFormControls.header.errors.maxlength">Header has a character limit of 250</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>Sub Header</label>
+                    <textarea rows="6" id="subHeader" name="subHeader" formControlName="subHeader" class="form-control" placeholder="Let people know why you would be the perfect tutor for them"></textarea>
+                    <div *ngIf="profileFormControls.subHeader.errors && (profileFormControls.subHeader.dirty || profileFormControls.subHeader.touched || profileFormSubmitted)" class="error" role="alert">
+                        <!--<div *ngIf="profileFormControls.subHeader.errors.required">Sub Header is required</div>-->
+                        <div *ngIf="profileFormControls.subHeader.errors.maxlength">Sub header has a character limit of 2000</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>Bio</label>
+                    <textarea rows="6" id="biography" name="biography" formControlName="biography" class="form-control" placeholder="Let people know why you would be the perfect tutor for them"></textarea>
+                    <div *ngIf="profileFormControls.biography.errors && (profileFormControls.biography.dirty || profileFormControls.biography.touched || profileFormSubmitted)" class="error" role="alert">
+                        <!--<div *ngIf="profileFormControls.subHeader.errors.required">Bio is required</div>-->
+                        <div *ngIf="profileFormControls.subHeader.errors.maxlength">Bio has a character limit of 2000</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>Your Teaching Experience</label>
+                    <textarea rows="6" id="profileTeachingExperiance" name="profileTeachingExperiance" formControlName="profileTeachingExperiance" class="form-control" placeholder="Describe your previous teaching experience, this could be past roles you’ve held, or previous tutoring experience"></textarea>
+                    <div *ngIf="profileFormControls.profileTeachingExperiance.errors && (profileFormControls.profileTeachingExperiance.dirty || profileFormControls.profileTeachingExperiance.touched || profileFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="profileFormControls.profileTeachingExperiance.errors.required">Teaching experience is required</div>
+                        <div *ngIf="profileFormControls.profileTeachingExperiance.errors.maxlength">Teaching experience has a character limit of 2000</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label>How you teach</label>
+                    <textarea rows="6" id="profileHowITeach" name="profileHowITeach" formControlName="profileHowITeach" class="form-control" placeholder="Describe your teaching style, help students understand what their experience of learning with you might be like"></textarea>
+                    <div *ngIf="profileFormControls.profileHowITeach.errors && (profileFormControls.profileHowITeach.dirty || profileFormControls.profileHowITeach.touched || profileFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="profileFormControls.profileHowITeach.errors.required">How I teach is required</div>
+                        <div *ngIf="profileFormControls.profileHowITeach.errors.maxlength">How I teach has a character limit of 2000</div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <hr class="mt-28 my-35" />
+    <div class="col-12 mb-42">
+        <form (ngSubmit)="submitQualificationForm()" [formGroup]="qualificationForm" *ngIf="qualificationForm != undefined">
+            <h3>Your qualifications and experience</h3>
+            <div class="form-row">
+                <div class="form-group col-12 col-lg-10 mt-35">
+                    <label for="exampleInputEmail1">Qualification name</label>
+                    <input type="text" id="name" name="name" formControlName="name" class="form-control" placeholder="Mathematics and Philosophy Degree – University of Liverpool" />
+                    <div *ngIf="qualificationFormControls.name.errors && (qualificationFormControls.name.dirty || qualificationFormControls.name.touched || qualificationFormSubmitted)" class="error" role="alert">
+                        <div *ngIf="qualificationFormControls.name.errors.required">Qualification name is required</div>
+                        <div *ngIf="qualificationFormControls.name.errors.maxlength">Please enter at least one qualification you possess.</div>
+                    </div>
+                </div>
+                <div class="form-group col-12 col-lg-2 pt-lg-35">
+                    <button type="submit" class="btn btn-outline-dark btn-lg label-offset w-100 fs-14 fw-700">Add</button>
+                </div>
+            </div>
+        </form>
+        <span class="Badge" *ngFor="let tutorQualification of tutorQualifications">{{tutorQualification.name}}   <i class="fal fa-times Cursor--pointer" (click)="deleteTutorQualification(tutorQualification)"></i></span>
+    </div>
+    <div class="col-12 mb-42">
+        <h3>Upload your qualifications / certificates</h3>
+        <form (ngSubmit)="submitProfileThreeForm()">
+            <div class="row" *ngIf="qualificationFormUploaderShow">
+                <div class="col">
+                    <div ng2FileDrop
+                         [ngClass]="{'nv-file-over': qualificationFormDropZoneOver}"
+                         (fileOver)="fileOverQualificationFormUploader($event)"
+                         [uploader]="qualificationFormUploader"
+                         (onFileDrop)="qualificationFormUploaderFileDropped($event)"
+                         (click)="fileInput2.click()"
+                         class="File-Uploader mt-35">
+                        <!--<i class="fal fa-arrow-to-bottom"></i>Drag and drop a photo or <u>select</u> to upload-->
+                        <div>
+                            <p class="text-center">
+                                <i class="fal fa-arrow-to-bottom"></i>Drag and drop a photo or
+                            </p>
+                            <p class="text-center"><u>Click here</u> to upload </p>
+                        </div>
+                    </div>
+                    <input type="file" #fileInput2 ng2FileSelect [uploader]="qualificationFormUploader" style="display:none;" (change)="qualificationFormUploaderFileDropped($event)" />
+                </div>
+            </div>
+
+            <div class="card bxs-0 my-21 fw-600 fs-15 card--toRepsond:small" *ngFor="let tutorCertificate of tutorCertificates">
+                <div class="card-body d-flex">
+                    <div class="form-row w-100 flw-100">
+                        <div class="col-12 d-flex align-items-center">
+                            <i class="fal fa-times-circle mr-14 Cursor--pointer" (click)="deleteTutorCertificate(tutorCertificate)"></i>
+                            <span class="fs-sm-21 fs-lg-14">{{tutorCertificate.certificateFileName}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-12 mb-42">
+
+            <!--<h3>Subjects and levels you teach</h3>
+                <form (ngSubmit)="submitSubjectForm()" [formGroup]="subjectForm" *ngIf="subjectForm != undefined">
+                    <div class="card bxs-0 mt-35 mb-21 card--toRepsond:small">
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-12 col-md-6">
+                                    <label>Subject <i class="fal fa-info-circle" data-toggle="tooltip" data-placement="top" title="Please contact us with any missing subjects (and subcategories) - we will then add these into the platform for you."></i></label>
+                                    <select id="subjectId" name="subjectId" formControlName="subjectId" (change)="getSubjectCategorys()" class="form-control">
+                                        <option [ngValue]="null">Please select</option>
+                                        <option *ngFor="let subject of subjects" [ngValue]="subject.id">{{subject.name}}</option>
+                                    </select>
+                                    <div *ngIf="subjectFormControls.subjectId.errors && (subjectFormControls.subjectId.dirty || subjectFormControls.subjectId.touched || subjectFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="subjectFormControls.subjectId.errors.required">Please enter at least one subject you teach to continue.</div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <label>Topic</label>
+                                    <select id="subjectCategoryId" name="subjectCategoryId" formControlName="subjectCategoryId" class="form-control">
+                                        <option [ngValue]="null">Please select</option>
+                                        <option *ngFor="let subjectCategory of subjectCategorys" [ngValue]="subjectCategory.id">{{subjectCategory.name}}</option>
+                                    </select>
+                                    <div *ngIf="subjectFormControls.subjectCategoryId.errors && (subjectFormControls.subjectCategoryId.dirty || subjectFormControls.subjectCategoryId.touched || subjectFormSubmitted)" class="error" role="alert">
+                                        <div *ngIf="subjectFormControls.subjectCategoryId.errors.required">Please enter a topic for this subject to continue.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col mb-0">
+                                    <label class="mb-14 mv-lg-0">Levels</label>
+                                    <div class="d-lg-flex align-items-center justify-content-between">
+                                        <div class="d-lg-flex align-content-center flex-wrap">
+                                            <div formArrayName="tutorSubjectStudyLevels" *ngFor="let studyLevel of subjectForm.get('tutorSubjectStudyLevels')['controls']; let i=index" class="d-inline-block w-100 w-lg-25 mb-14">
+                                                <label class="form-check mb-14 mb-md-0 mr-28" [formGroupName]="i">
+                                                    <input type="checkbox" id="studyLevel_{{i}}" name="studyLevel_{{i}}" formControlName="checked" class="form-check-input">
+                                                    <span class="label" for="defaultCheck1">{{tutorSubjectStudyLevelsFormArrayControls.value[i].name}}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt-14 mb-0"/>
+                                    <div class="d-flex">
+                                        <button type="submit" class="btn btn-outline-dark btn-lg w-100 w-lg-auto fs-14 fw-700 mt-21 ml-0 ml-lg-auto">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="card bxs-0 mb-21 fw-600 fs-15 card--toRepsond:small" *ngFor="let tutorSubject of tutorSubjects">
+                    <div class="card-body d-flex">
+                        <div class="form-row w-100 flw-100">
+                            <div class="col-6 d-flex align-items-center">
+                                <i class="fal fa-times-circle mr-14 Cursor--pointer" (click)="deleteTutorSubject(tutorSubject)"></i>
+                                <span class="fs-sm-21 fs-lg-14">{{tutorSubject.subjectName}}, {{tutorSubject.subjectCategoryName}}</span>
+                            </div>
+                            <div class="col-6">{{tutorSubject.tutorSubjectStudyLevelsString}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <!--<div class="col-12 mb-42">-->
+            <!--<app-calender #calendarRef [bookedSlot]="bookedSlot" [registerdEvents]="registerdEvents" [tutorId]="tutorId" [isWeekVisible]="true" [isDateEventEditable]="true" [isViewOnly]="false">
+            </app-calender>-->
+            <!--<app-calender-scheduler #calendarRef [bookedSlot]="bookedSlot" [registerdEvents]="registerdEvents" [tutorId]="tutorId" [isWeekVisible]="false" [isDateEventEditable]="true" [isViewOnly]="false">
+                </app-calender-scheduler>
+            </div>-->
+        <div class="Form_Block-Controls">
+            <a href="/Tutor/Profile/View" class="link-grey">Cancel</a>
+            <button type="button" (click)="submitProfileForm()" class="btn btn-primary btn-lg ml-auto">Save Changes</button>
+        </div>
+    </div>

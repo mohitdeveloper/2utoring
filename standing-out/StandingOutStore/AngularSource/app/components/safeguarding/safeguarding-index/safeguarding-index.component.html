@@ -1,0 +1,109 @@
+<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="align-items-start mb-0 mb-lg-14">
+                <h3 class="safeGardingTitle">{{title}}</h3>
+            </div>
+            <br>
+            <div class="form-row mb-4">
+                <div class="col-12 col-lg-auto mb-14 mb-lg-0">
+                    <select class="custom-select Textbox--largeVerticalPadding" [(ngModel)]="searchModel.take" (ngModelChange)="reloadData()">
+                        <option selected>Filter by</option>
+                        <option *ngFor="let option of takeValues" [ngValue]="option.take">{{option.name}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-auto  mb-lg-0">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control Textbox--iconPrepend Textbox--largeVerticalPadding" [(ngModel)]="searchModel.search" placeholder="Search" aria-label="Search" aria-describedby="button-search" (keydown)="onType($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-success Button--largeVerticalPadding" type="button" id="button-search" (click)="reloadData()">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="styled">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <span (click)="alterOrder('SessionName')">
+                                    Session
+                                    <span [hidden]="!(searchModel.sortType == 'SessionName' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'SessionName' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('TutorName')">
+                                    Tutor
+                                    <span [hidden]="!(searchModel.sortType == 'TutorName' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'TutorName' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('UserName')">
+                                    User
+                                    <span [hidden]="!(searchModel.sortType == 'UserName' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'UserName' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('LogDate')">
+                                    Date
+                                    <span [hidden]="!(searchModel.sortType == 'LogDate' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'LogDate' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('Title')">
+                                    Type
+                                    <span [hidden]="!(searchModel.sortType == 'Title' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'Title' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span (click)="alterOrder('Status')">
+                                    Status
+                                    <span [hidden]="!(searchModel.sortType == 'Status' && searchModel.order == 'DESC')" class="fas fa-caret-down"></span>
+                                    <span [hidden]="!(searchModel.sortType == 'Status' && searchModel.order != 'DESC')" class="fas fa-caret-up"></span>
+                                </span>
+                            </th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of results.data">
+                            <td>{{item.sessionName}}</td>
+                            <td>{{item.tutorName}}</td>
+                            <td>{{item.userName}}</td>
+                            <td>{{item.logDate | date : 'dd/MM/yyyy HH:mm'}}</td>
+                            <td>{{item.title}}</td>
+                            <td>{{item.status}}</td>
+                            <td>
+                                <div class="d-flex justify-content-end">
+                                    <a [href]="'/Admin/Safeguarding/View/' + item.safeguardReportId" class="text-success">View</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center Pagination mt-35" *ngIf="results.paged !== undefined && results.paged != null">
+                <span class="pagination-info">Page {{results.paged.page}} of {{results.paged.totalPages}}</span>
+                <ul class="pagination justify-content-end mb-0">
+                    <li [class]="results.paged.page === 1 ? 'page-item disabled' : 'page-item'">
+                        <button (click)="previous()" class="page-link"><i class="fal fa-chevron-left"></i></button>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">{{results.paged.page}}</a></li>
+                    <li [class]="results.paged.page >= results.paged.totalPages ? 'page-item disabled' : 'page-item'">
+                        <button (click)="next()" class="page-link"><i class="fal fa-chevron-right"></i></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

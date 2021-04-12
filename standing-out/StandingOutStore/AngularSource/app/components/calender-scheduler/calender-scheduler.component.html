@@ -1,0 +1,31 @@
+<h4 *ngIf="showAvailabilityPopup" class="availableCalendarSettingPage">Availability Calendar <i class="fa fa-info-circle Cursor--pointer" id="mcur" (click)="showInformation()"></i> </h4>
+<br />
+<br />
+<div class="row" *ngIf="isWeekVisible">
+    <ng-container *ngFor="let w of weekdays;let i=index;">
+        <div class="week_day_box" (click)="setEventOnWeek(i)">
+            <p style="text-align:center;border-bottom: 1px solid #ccc">{{w.dayName}}</p>
+            <ng-container *ngFor="let e of w.events;let j = index;">
+                <p class="time_title" (click)="editWeekTimeSlot($event,i,j,e.from_time,e.to_time)">{{e.from_time}}-{{e.to_time}}</p>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>
+<div class="row">
+    <div class="col-12" id="monthChangeButtons" style="margin-bottom:5px; display:none;">
+        <button type="button" class="sub-next col-5" style="font-size: 11px; margin-left:12px;padding:10px;" (click)="changeMonthPre()">
+            Pre-Month
+        </button>
+        <button type="button" class="sub-next col-5" style="font-size: 11px; margin-left:15px;padding:10px;" (click)="changeMonthNext()">
+            Next-Month
+        </button>
+    </div>
+
+    <div class="col-md-12">
+        <full-calendar (renderRunner)="onEventRender($event.detail)" #fullcalendar [options]="calendarOptions">
+        </full-calendar> 
+    </div>
+</div>
+
+
+

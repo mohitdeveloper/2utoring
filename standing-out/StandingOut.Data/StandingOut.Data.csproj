@@ -1,0 +1,117 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190529151200_ChatPermissions.cs" />
+    <Compile Remove="Migrations\20190822120513_Session.cs" />
+    <Compile Remove="Migrations\20190822120844_SessionWhiteboardSaveAlter.cs" />
+    <Compile Remove="Migrations\20190822144730_SessionWhiteboardSaveAlter2.cs" />
+    <Compile Remove="Migrations\20190822151031_SessionWhiteboardSaveAlter2.cs" />
+    <Compile Remove="Migrations\20190822151137_SessionWhiteboardSaveAlter2.cs" />
+    <Compile Remove="Migrations\20190822151431_SessionWhiteboardSave.cs" />
+    <Compile Remove="Migrations\20190823133225_WhiteBoardInactive.cs" />
+    <Compile Remove="Migrations\20190823151543_WhiteboardSaveName.cs" />
+    <Compile Remove="Migrations\20190827083526_SavesPlural.cs" />
+    <Compile Remove="Migrations\20191219160828_ChatIndividualsOff.cs" />
+    <Compile Remove="Migrations\20200414154344_HubObject.cs" />
+    <Compile Remove="Migrations\20200414154344_HubObject.Designer.cs" />
+    <Compile Remove="Migrations\20200415100406_HubObject.cs" />
+    <Compile Remove="Migrations\20200415100406_HubObject.Designer.cs" />
+    <Compile Remove="Migrations\20200416105418_Catergories.cs" />
+    <Compile Remove="Migrations\20200416105418_Catergories.Designer.cs" />
+    <Compile Remove="Migrations\20200416105720_Catergories.cs" />
+    <Compile Remove="Migrations\20200416105720_Catergories.Designer.cs" />
+    <Compile Remove="Migrations\20200417151102_RemoveClassField.cs" />
+    <Compile Remove="Migrations\20200417151102_RemoveClassField.Designer.cs" />
+    <Compile Remove="Migrations\20200421102211_PromoCode.cs" />
+    <Compile Remove="Migrations\20200421102211_PromoCode.Designer.cs" />
+    <Compile Remove="Migrations\20200421113515_PromoCodeModAndClassChange.cs" />
+    <Compile Remove="Migrations\20200421113515_PromoCodeModAndClassChange.Designer.cs" />
+    <Compile Remove="Migrations\20200421114245_PromoCodeModAndClassChange.cs" />
+    <Compile Remove="Migrations\20200421114245_PromoCodeModAndClassChange.Designer.cs" />
+    <Compile Remove="Migrations\20200421192806_ParentUserFields.cs" />
+    <Compile Remove="Migrations\20200421192806_ParentUserFields.Designer.cs" />
+    <Compile Remove="Migrations\20200423094855_sessionAttendeeActions.cs" />
+    <Compile Remove="Migrations\20200423094855_sessionAttendeeActions.Designer.cs" />
+    <Compile Remove="Migrations\20201119130234_AddRepeatedAvailability.cs" />
+    <Compile Remove="Migrations\20201119130234_AddRepeatedAvailability.Designer.cs" />
+    <Compile Remove="Migrations\20210105135142_AddProfileStatusColumnInCompany.cs" />
+    <Compile Remove="Migrations\20210105135142_AddProfileStatusColumnInCompany.Designer.cs" />
+    <Compile Remove="Migrations\20210218125112_AddMessageTables.cs" />
+    <Compile Remove="Migrations\20210218125112_AddMessageTables.Designer.cs" />
+    <Compile Remove="Migrations\20210218130448_AddMessageTables.cs" />
+    <Compile Remove="Migrations\20210218130448_AddMessageTables.Designer.cs" />
+    <Compile Remove="Migrations\20210218131053_AddMessageTables.cs" />
+    <Compile Remove="Migrations\20210218131053_AddMessageTables.Designer.cs" />
+    <Compile Remove="Migrations\20210218134735_NotificationMessageTable.cs" />
+    <Compile Remove="Migrations\20210218134735_NotificationMessageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210218135255_NotificationMessageTable.cs" />
+    <Compile Remove="Migrations\20210218135255_NotificationMessageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210218140154_AddMessageTables.cs" />
+    <Compile Remove="Migrations\20210218140154_AddMessageTables.Designer.cs" />
+    <Compile Remove="Migrations\20210218140409_AddNotificationMessageTable.cs" />
+    <Compile Remove="Migrations\20210218140409_AddNotificationMessageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210218140825_AddNotificationMessageTable.cs" />
+    <Compile Remove="Migrations\20210218140825_AddNotificationMessageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210218141329_AddNotificationMessageTable.cs" />
+    <Compile Remove="Migrations\20210218141329_AddNotificationMessageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210218142123_AddPageNotificationMessageTable.cs" />
+    <Compile Remove="Migrations\20210218142123_AddPageNotificationMessageTable.Designer.cs" />
+    <Compile Remove="Migrations\20210224051510_AddParentTitleColumn.cs" />
+    <Compile Remove="Migrations\20210224051510_AddParentTitleColumn.Designer.cs" />
+    <Compile Remove="Migrations\20210226064830_AddNotificationColumn.cs" />
+    <Compile Remove="Migrations\20210226064830_AddNotificationColumn.Designer.cs" />
+    <Compile Remove="Migrations\20210226065239_AddNotificationColumn.cs" />
+    <Compile Remove="Migrations\20210226065239_AddNotificationColumn.Designer.cs" />
+    <Compile Remove="Migrations\20210226065922_AddNotificationColumn.cs" />
+    <Compile Remove="Migrations\20210226065922_AddNotificationColumn.Designer.cs" />
+    <Compile Remove="Migrations\20210305101216_AddColumnInTutorAndCompanyTables.cs" />
+    <Compile Remove="Migrations\20210305101216_AddColumnInTutorAndCompanyTables.Designer.cs" />
+    <Compile Remove="Migrations\20210403063643_AddColInWebContactTable.cs" />
+    <Compile Remove="Migrations\20210403063643_AddColInWebContactTable.Designer.cs" />
+    <Compile Remove="Migrations\20210403063910_AddColInWebContactTable.cs" />
+    <Compile Remove="Migrations\20210403063910_AddColInWebContactTable.Designer.cs" />
+    <Compile Remove="Migrations\20210403064427_AddColInWebContactTable.cs" />
+    <Compile Remove="Migrations\20210403064427_AddColInWebContactTable.Designer.cs" />
+    <Compile Remove="Migrations\20210403065607_AddColInWebContactTable.cs" />
+    <Compile Remove="Migrations\20210403065607_AddColInWebContactTable.Designer.cs" />
+    <Compile Remove="Migrations\20210403070424_AddColInWebContactTable.cs" />
+    <Compile Remove="Migrations\20210403070424_AddColInWebContactTable.Designer.cs" />
+    <Compile Remove="Migrations\20210403070741_AddColInWebContactTable.cs" />
+    <Compile Remove="Migrations\20210403070741_AddColInWebContactTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.38.0.1530" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore">
+      <HintPath>bin\Debug\netstandard2.1\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Identity.Core">
+      <HintPath>bin\Debug\netstandard2.1\Microsoft.Extensions.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Identity.Stores">
+      <HintPath>bin\Debug\netstandard2.1\Microsoft.Extensions.Identity.Stores.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>

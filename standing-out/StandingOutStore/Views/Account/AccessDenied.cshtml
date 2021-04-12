@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Oops, access has been denied! ";
+}
+
+@section meta{
+    <meta name="robots" content="noindex">
+    <meta name="title" content="@ViewData["Title"]" />
+}
+
+<section class="panel white">
+    <div class="row">
+        <div class="large-1 columns">
+            <img src="~/images/icons/fail.png" />
+        </div>
+        <div class="large-11 columns">
+            <div class="content">
+                
+                <p>Oops, access has been denied!</p>
+            </div>
+        </div>
+    </div>
+</section>

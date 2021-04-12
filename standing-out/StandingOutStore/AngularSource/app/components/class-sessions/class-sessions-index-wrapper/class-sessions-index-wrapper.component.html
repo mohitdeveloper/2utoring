@@ -1,0 +1,26 @@
+<div class="Page__Container--size:content mb-56 Page--process:SettingPage">
+    <div class="form-row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-start mb-14 mb-lg-28">
+                <h1 class="mb-0">Lessons</h1>
+                <a href="/Tutor/ClassSessions/Create" class="btn btn-info Button--largeVerticalPadding">Add lesson</a>
+            </div>
+
+            <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-upcoming-tab" data-toggle="tab" href="#nav-upcoming" role="tab" aria-controls="nav-upcoming" aria-selected="true">Present &amp; Future</a>
+                    <a class="nav-item nav-link" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="false">Previous classes</a>
+                </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-upcoming" role="tabpanel" aria-labelledby="nav-upcoming-tab">
+                    <app-class-sessions-index [filter]="'upcoming'"></app-class-sessions-index>
+                </div>
+                <div class="tab-pane fade" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab">
+                    <app-class-sessions-index [filter]="'previous'"></app-class-sessions-index>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

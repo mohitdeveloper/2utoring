@@ -1,0 +1,45 @@
+﻿.header {
+    background-color: white;
+    box-shadow: $boxShadowBase;
+    box-sizing: border-box;
+    display: flex;
+    height: 120px;
+    justify-content: space-between;
+    width: 100%;
+
+    &__logo {
+        background-color: yellow;
+        margin: $spacingBase $spacingTight;
+        width: 20%;
+    }
+
+    &__nav {
+        background-color: green;
+        margin: $spacingBase 0;
+        width: 60%;
+    }
+
+    &__controls {
+        background-color: blue;
+        margin: $spacingBase $spacingTight;
+        width: 20%;
+    }
+}
+
+nav {
+    align-content: center;
+    display: flex;
+    justify-content: center;
+
+
+    & > div.icon {
+        margin-left: $spacingBase;
+        margin-right: $spacingBase;
+        text-align: center;
+
+        i {
+            font-size: $headerIconSize;
+            margin-bottom: $spacingExtraTight;
+        }
+    }
+}

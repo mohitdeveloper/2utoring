@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Account Setup Issue";
+}
+
+<div class="grid-container grid-container--narrow">
+    <div class="grid-x grid-margin-x margin-top-extra-loose">
+        <div class="large-12 cell">
+            <div class="card">
+                <h1 class="text-align-center margin-y-tight">You need to link your Google account</h1>
+                <p class="text-align-center">This lesson has been setup by the Tutor to include features that use Google Drive and Docs. Before entering the Classroom, you’ll need to link your Google account by hitting the button below.</p>
+                <hr class="margin-y-loose" />
+                <div class="grid-x">
+                    <div class="large-6 cell text-align-right">
+                        <a href="@(ViewBag.IdentitySiteUrl + "/Account/LinkAccount?returnUrl=" + ViewBag.ReturnUrl)" class="button button--primary">Link your Google account</a>
+                        <a class="btn btn-outline-dark btn-lg label-offset fs-15" href="https://accounts.google.com/signup/v2/webcreateaccount?hl=en&flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">Create new Google account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

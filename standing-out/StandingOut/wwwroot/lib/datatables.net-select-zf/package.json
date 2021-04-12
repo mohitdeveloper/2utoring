@@ -1,0 +1,63 @@
+{
+  "_from": "datatables.net-select-zf@1.3.1",
+  "_id": "datatables.net-select-zf@1.3.1",
+  "_inBundle": false,
+  "_integrity": "sha512-98TGFa9mfqBpmM4LxyGWBYUURRRz8Cy5VtBOO9PyRSVELYEYgfwIClAw8HqJhkkDUQ63hsUEp17XT6jAVDMfZQ==",
+  "_location": "/datatables.net-select-zf",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "datatables.net-select-zf@1.3.1",
+    "name": "datatables.net-select-zf",
+    "escapedName": "datatables.net-select-zf",
+    "rawSpec": "1.3.1",
+    "saveSpec": null,
+    "fetchSpec": "1.3.1"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/datatables.net-select-zf/-/datatables.net-select-zf-1.3.1.tgz",
+  "_shasum": "cfa4bcd75100c6803cb52853c53612a60fc0a743",
+  "_spec": "datatables.net-select-zf@1.3.1",
+  "_where": "C:\\DevSO\\standing-out",
+  "author": {
+    "name": "SpryMedia Ltd",
+    "url": "http://datatables.net"
+  },
+  "bugs": {
+    "url": "https://datatables.net/forums"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "datatables.net-select": "1.3.1",
+    "datatables.net-zf": "^1.10.15",
+    "jquery": ">=1.7"
+  },
+  "deprecated": false,
+  "description": "Select for DataTables with styling for [Zurb Foundation](http://foundation.zurb.com/)",
+  "files": [
+    "css/**/*.css",
+    "js/**/*.js"
+  ],
+  "homepage": "https://datatables.net",
+  "keywords": [
+    "select",
+    "selection",
+    "DataTables",
+    "jQuery",
+    "table",
+    "Foundation"
+  ],
+  "license": "MIT",
+  "main": "js/select.foundation.js",
+  "name": "datatables.net-select-zf",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataTables/Dist-DataTables-Select-Foundation.git"
+  },
+  "style": "css/select.foundation.css",
+  "version": "1.3.1"
+}

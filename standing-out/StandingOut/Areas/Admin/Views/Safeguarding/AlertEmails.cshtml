@@ -1,0 +1,56 @@
+@model StandingOut.Data.Models.Setting
+@{
+    ViewData["Title"] = "Edit Safeguard Alert Emails";
+}
+
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="large-3 cell"></div>
+        <div class="large-6 cell">
+            <div class="card card--hasGrid margin-x-auto margin-y-extra-loose">
+                <div class="grid-x align-middle">
+                    <div class="large-12 cell text-align-center">
+                        <h2>@ViewData["Title"]</h2>
+                    </div>
+                </div>
+                <hr class="margin-top-base margin-bottom-base" />
+                <section class="form margin-top">
+                    <form asp-antiforgery="true">
+                        <div class="grid-x grid-margin-x">
+                            <div class="large-12 cell text-small">
+                                <p class="margin-bottom-base">If you're worried that your child is being groomed online or sexually exploited you should report your concerns to COEP.</p>
+                                <p class="margin-bottom-base">CEOP is a command of the National Crime Agency and can investigate what is happening - with the assurance that the safety and wellbeing of your child is paramount at all times. You can make a report to CEOP using the CEOP Safety Centre</p>
+                                <p class="margin-bottom-base">It is not always easy to spot the signs of online grooming and sexual exploitation so if you have any concerns at all about someone your child is in contact with, you should get in touch. You should always report if your child is or has been in contact with someone who is:</p>
+                                <ul style="list-style-position: inside">
+                                    <li class="margin-bottom-extra-tight">Chatting online to your child about sex</li>
+                                    <li class="margin-bottom-extra-tight">Asking them to do sexual things on webcam</li>
+                                    <li class="margin-bottom-extra-tight">Asking them to meet up if they've only met them online</li>
+                                    <li class="margin-bottom-extra-tight">Requesting sexual pictures</li>
+                                    <li class="margin-bottom-extra-tight">Forcing them into sexual activity</li>
+                                    <li class="margin-bottom-extra-tight">Making them feel unsafe</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr class="margin-top-base margin-bottom-base" />
+                        <div class="grid-x grid-margin-x">
+                            <div class="large-12 cell">
+                                <label asp-for="SafeguardReportAlertEmail"></label>
+                                <input type="text" asp-for="SafeguardReportAlertEmail" />
+                                <span asp-validation-for="SafeguardReportAlertEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <hr class="margin-bottom-loose margin-top-tight" />
+                        <div class="grid-x grid-margin-x">
+                            <div class="large-6 cell">
+                                <a class="button button--tertiary" asp-action="Index">Cancel</a>
+                            </div>
+                            <div class="large-6 cell text-align-right">
+                                <input type="submit" value="Create" class="button button--primary" />
+                            </div>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

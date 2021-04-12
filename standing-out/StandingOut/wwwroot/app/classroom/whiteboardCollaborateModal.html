@@ -1,0 +1,48 @@
+﻿<div class="popup-overlay">
+    <div id="group" name="group" class="Modal Modal--collaborateWhiteboard" ng-init>
+        <div class="Modal__Header">
+            <button type="button" class="Modal__Close" ng-click="cancel()"><i class="fal fa-times-circle"></i></button>
+            <h2>Collaborate on Whiteboard</h2>
+        </div>
+        <form name="mediaForm" novalidate ng-submit="save()">
+            <div class="Modal__Content padding-y-none">
+                <div class="Content__Row grid-x border-bottom padding-y-base" ng-repeat="group in usersAndGroups.groups">
+                    <div class="large-12 cell">
+                        <div class="text-large text-strong margin-bottom-tight">{{group.name}}</div>
+                    </div>
+                    <div class="large-12 cell" ng-show="group.whiteboards.length > 0">
+                        <div class="grid-x grid-margin-y flex--alignCenter" ng-repeat="whiteboard in group.whiteboards">
+                            <div class="large-8 cell">
+                                <span>{{whiteboard.name}}</span>
+                            </div>
+                            <div class="large-4 cell text-align-right">
+                                <button class="button button--primary" ng-click="collaborate(whiteboard.sessionWhiteBoardId)">Open</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-12 cell" ng-show="group.whiteboards.length == 0">
+                        <span>No whiteboards to show!</span>
+                    </div>
+                </div>
+                <div class="Content__Row grid-x border-bottom padding-y-base" ng-repeat="user in usersAndGroups.users">
+                    <div class="large-12 cell">
+                        <div class="text-large text-strong margin-bottom-tight">{{user.name}}</div>
+                    </div>
+                    <div class="large-12 cell" ng-show="user.whiteboards.length > 0">
+                        <div class="grid-x grid-margin-y flex--alignCenter" ng-repeat="whiteboard in user.whiteboards">
+                            <div class="large-8 cell">
+                                <span>{{whiteboard.name}}</span>
+                            </div>
+                            <div class="large-4 cell text-align-right">
+                                <button class="button button--primary" ng-click="collaborate(whiteboard.sessionWhiteBoardId)">Open</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="large-12 cell" ng-show="user.whiteboards.length == 0">
+                        <span>No whiteboards to show!</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

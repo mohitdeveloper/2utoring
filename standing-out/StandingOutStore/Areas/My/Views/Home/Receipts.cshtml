@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Receipts";
+}
+
+@section meta{
+    <meta name="robots" content="noindex">
+    <meta name="title" content="@ViewData["Title"]" />
+    @*<meta name="description" content="[[METAREQUIRED]]" />
+        <meta name="keywords" content="[[METAREQUIRED]]" />*@
+
+}
+
+<app-root id="app-angular" app-mode="receipts-index"></app-root>
+
+@section scripts{
+
+    <script type="text/javascript">
+        var title = '@ViewData["Title"]';
+    </script>
+
+    <environment names="Development">
+        <!-- Development versions of Angular (easier to debug) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/vendor.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/main.js"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <!-- Production versions of Angular (faster loading) -->
+
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/runtime.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/polyfills.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/styles.js"></script>
+        <script asp-append-version="true" type="text/javascript" src="~/lib/angular/production/main.js"></script>
+    </environment>
+
+}

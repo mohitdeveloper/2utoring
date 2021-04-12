@@ -1,0 +1,237 @@
+﻿<style>
+    button {
+        margin-left: 10px;
+    }
+</style>
+<div class="my-7 Page__Container--size:content mb-56">
+    <div class="row">
+        <div class="col-10">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="currentTabStep" [destroyOnHide]="false" orientation="horizontal">
+                <li ngbNavItem="basic-info-tab">
+                    <a ngbNavLink>
+                        <span>Basic Info</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+
+                    <ng-template ngbNavContent>
+                        <h2 class="text-center">Basic Info</h2>
+                        <br>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label" for="userFullName">Title</label>
+                            <div class="col-8">
+                                <input type="text" id="userTitle" name="userTitle" class="form-control" [(ngModel)]="tutor.userTitle" readonly />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label" for="userFullName">Name</label>
+                            <div class="col-8">
+                                <input type="text" id="userFullName" name="userFullName" class="form-control" [(ngModel)]="tutor.userFullName" readonly />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label" for="userEmail">Email</label>
+                            <div class="col-8">
+                                <input type="text" id="userEmail" name="userEmail" class="form-control" [(ngModel)]="tutor.userEmail" readonly />
+                            </div>
+                        </div>
+
+
+                        <!--<div class="form-group row">
+                        <label class="col-4 col-form-label" for="stripePlanName">Plan</label>
+                        <div class="col-8">
+                            <input type="text" id="stripePlanName" name="stripePlanName" class="form-control" [(ngModel)]="tutor.stripePlanName" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label" for="stripeCustomerId">Stripe Customer ID</label>
+                        <div class="col-8">
+                            <input type="text" id="stripeCustomerId" name="stripeCustomerId" class="form-control" [(ngModel)]="tutor.stripeCustomerId" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label" for="stripeSubscriptionId">Stripe Subscription ID</label>
+                        <div class="col-8">
+                            <input type="text" id="stripeSubscriptionId" name="stripeSubscriptionId" class="form-control" [(ngModel)]="tutor.stripeSubscriptionId" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label" for="paymentStatus">Payment Status</label>
+                        <div class="col-8">
+                            <input type="text" id="paymentStatus" name="paymentStatus" class="form-control" [(ngModel)]="tutor.paymentStatus" readonly />
+                        </div>
+                    </div>-->
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">Date of Birth</label>
+                            <div class="col-8">
+                                <input type="text" id="dateOfBirth" name="dateOfBirth" class="form-control" value="{{tutor.dateOfBirth | date: 'dd/MM/yyyy'}}" readonly />
+                            </div>
+                        </div>
+
+
+
+
+                    </ng-template>
+                </li>
+                <li ngbNavItem="profile-view-tab" (click)="viewProfile()">
+                    <a ngbNavLink>
+                        <span>Profile View</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <h2>Profile</h2>
+                        <app-tutor-profile-view #tutorProfileRef [tutorId]="tutorId" [showEditButton]="false"></app-tutor-profile-view>
+                    </ng-template>
+                </li>
+                <li ngbNavItem="dbs-check-tab" *ngIf="tutor.hasDbsCheck == true">
+                    <a ngbNavLink>
+                        <span>DBS Check</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label" for="dbsCertificateNumber">DBS Certificate Number</label>
+                            <div class="col-8">
+                                <input type="text" id="dbsCertificateNumber" name="dbsCertificateNumber" class="form-control" [(ngModel)]="tutor.dbsCertificateNumber" readonly />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label" for="dbsApprovalStatus">Status</label>
+                            <div class="col-8">
+                                <input type="text" id="dbsApprovalStatus" name="dbsApprovalStatus" [(ngModel)]="tutor.dbsApprovalStatus" class="form-control" readonly disabled />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label">DBS File</label>
+                            <div class="col-8" *ngIf="!hasDBSCertificates">
+                                No DBS Certificate Found
+                            </div>
+                            <div class="col-8 table-responsive" *ngIf="hasDBSCertificates">
+                                <table class="styled">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let item of tutor.tutorCertificates">
+                                            <td *ngIf="item.certificateType=='DBS'">{{item.certificateFileName}}</td>
+                                            <td *ngIf="item.certificateType=='DBS'"><a class="btn btn-success" target="_blank" href="/admin/tutors/downloadCertificate/{{item.tutorCertificateId}}">Download</a></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+
+                <li ngbNavItem="certificates-tab">
+                    <a ngbNavLink>
+                        <span>Certificates</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+
+                    <ng-template ngbNavContent>
+                        <h2>Certificates</h2>
+
+                        <div class="row" style="margin-top:30px;margin-bottom:30px;" *ngIf="hasQualificationCertificates">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="styled">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of tutor.tutorCertificates">
+                                                <td *ngIf="item.certificateType=='Qualification'">{{item.certificateFileName}}</td>
+                                                <td *ngIf="item.certificateType=='Qualification'"><a class="btn btn-success" target="_blank" href="/admin/tutors/downloadCertificate/{{item.tutorCertificateId}}">Download</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin:6px;" *ngIf="!hasQualificationCertificates">
+                            <h4>  No Certificate Found</h4>
+                        </div>
+                    </ng-template>
+                </li>
+
+                <li ngbNavItem="qualifications-tab">
+                    <a ngbNavLink>
+                        <span>Qualifications</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <h2>Qualifications</h2>
+
+                        <div class="row" style="margin-top:30px;margin-bottom:30px;">
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="styled">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of tutor.tutorQualifications">
+                                                <td>{{item.name}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </ng-template>
+                </li>
+            </ul>
+        </div>
+        <a href="/admin/tutors" class="btn btn-success col-sm-12 col-lg-2">Back</a>
+    </div>
+    
+    <hr>
+    <div class="row">
+        <div class="col-lg-8 col-sm-12 mt-5 m-auto">
+            <div [ngbNavOutlet]="nav" class="col-md-12 col-lg"></div>
+        </div>
+    </div>
+    <hr>
+    <div class="row col-12">
+        <div class="col-md-3" *ngIf="needsProfileApproval()">
+            <button type="button" class="btn btn-primary mt-3 col-sm-12" *ngIf="tutor.profileApprovalStatus != 'Approved'" (click)="approveProfileConfirm()">Approve Profile</button>
+            <button type="button" class="btn btn-danger mt-3 col-sm-12" *ngIf="tutor.profileApprovalStatus != 'Rejected'" (click)="rejectProfileConfirm()">Reject Profile</button>
+        </div>
+        <!--<div class="col-md-4" *ngIf="needsDbsApproval()">
+            <button type="button" class="btn btn-primary" (click)="approveDBSConfirm()">Approve DBS Certificate</button>
+            <button type="button" class="btn btn-danger"  (click)="rejectDBSConfirm()">Reject DBS Certificate</button>
+        </div>-->
+
+        <div class="col-md-4" *ngIf="needsDbsApproval() && tutor.hasDbsCheck == true">
+            <button type="button" class="btn btn-primary mt-3 col-sm-12" *ngIf="tutor.hasDbsCheck == true && tutor.dbsApprovalStatus != 'Approved'" (click)="approveDBSConfirm()">Approve DBS Certificate</button>
+            <button type="button" class="btn btn-danger mt-3 col-sm-12" *ngIf="tutor.hasDbsCheck == true && tutor.dbsApprovalStatus != 'Rejected'" (click)="rejectDBSConfirm()">Reject DBS Certificate</button>
+        </div>
+
+        <!-- Even on NoFee plan we allow SuperAdmin to disable Tutor's Account (Sets Profile and DBS Status to Rejected)
+            So skipped check for needsDbsApproval, needsProfileApproval for this button
+        -->
+        <div class="col-md-3">
+            <button type="button" class="btn btn-danger mb-3 mt-3 col-sm-12" *ngIf="(tutor.hasDbsCheck == true && tutor.dbsApprovalStatus != 'Rejected') || (tutor.profileApprovalStatus != 'Rejected')" (click)="rejectAccount()">Disable Tutor's Account</button>
+        </div>
+    </div>
+</div>

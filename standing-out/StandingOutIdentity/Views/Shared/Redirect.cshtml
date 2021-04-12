@@ -1,0 +1,19 @@
+@model RedirectViewModel
+
+@{
+    ViewData["Title"] = "Redirect";
+}
+
+<div class="col-14 col-lg-8 offset-lg-2">
+    <div class="Card Card--toRepsond:small">
+        <div class="text-center">
+            <h1 class="mb-5 fw-800">You are now being returned to the application.</h1>
+            <p>Once complete, you may close this tab</p>
+        </div>
+    </div>
+</div>
+
+<meta http-equiv="refresh" content="0;url=@Model.RedirectUrl" data-url="@Model.RedirectUrl">
+<script src="~/js/signin-redirect.js"></script>
+
+

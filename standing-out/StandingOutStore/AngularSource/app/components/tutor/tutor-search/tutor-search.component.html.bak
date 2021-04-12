@@ -1,0 +1,639 @@
+<main>
+    <!-- Top search -->
+    <section class="sec top-search">
+        <div class="container">
+            <form [formGroup]="tutorSearchForm">
+                <p>YOUR SEARCH CRITERIA </p>
+                <div class="d-flex justify-content-between align-items-center top-search-row">
+                    <div class="d-flex top-search-left">
+                        <!--<div class="top-search-left-in">
+                            <span class="feild-icon"><img src="/lib/assets/images/user-icon.svg" alt="" /></span>
+                            <a href="javascript:void(0);" class="active">
+                                <span>SEARCH BY </span>
+                                <input formControlName="searchType" type="radio" value="Tutor" /> Tutor
+                            </a>
+                        </div>-->
+
+                        <div class="top-search-left-in">
+                            <input #courseCreateNow formControlName="searchType" type="radio" value="Tutor" (click)="setSerachType($event)" />
+                            <a href="javascript:void(0);"><span>SEARCH BY</span> Tutor </a>
+                            <span class="feild-icon"><img src="/lib/assets/images/user-icon.svg" alt="" /></span>
+                        </div>
+
+                        <div class="top-search-left-in">
+                            <input type="radio" formControlName="searchType" value="Course" (click)="setSerachType($event)" />
+                            <a href="javascript:void(0);"><span>SEARCH BY</span> Course </a>
+                            <span class="feild-icon"><img src="/lib/assets/images/user-icon.svg" alt="" /></span>
+                        </div>
+
+                        <!--<div class="top-search-left-in">
+                            <span class="feild-icon"><img src="/lib/assets/images/book-icon.svg" alt="" /></span>
+                            <a href="javascript:void(0);"><span>SEARCH BY</span>
+                            <input formControlName="searchType" type="radio" value="Course" /> Course</a>
+                        </div>-->
+                    </div>
+                    <div class="d-flex top-search-center">
+                        <div class="top-search-feild">
+                            <span class="feild-icon"><img src="/lib/assets/images/cap-icon.svg" alt="" /></span>
+                            <!--<input class="form-control" type="text" placeholder="French" value="French" />-->
+                            <select id="subjectId" name="subjectId" formControlName="subjectId" class="form-control" style="padding:10px 20px 10px 55px" (change)="onSubjectChange($event)">
+                                <option value="0">Select Subject</option>
+                                <option *ngFor="let subject of subjects" [value]="subject.subjectId" [selected]="subject.subjectId==selectedSubjectId?'selected':''">
+                                    {{ subject.name }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="top-search-feild">
+                            <span class="feild-icon"><img src="/lib/assets/images/sliders-icon.svg" alt="" /></span>
+                            <!--<input class="form-control" type="text" placeholder="" value="All Levels" />-->
+                            <select id="levelId" name="levelId" formControlName="levelId" class="form-control" style="padding:10px 20px 10px 55px" (change)="onLevelChange($event)">
+                                <option value="0">Select Level</option>
+                                <option *ngFor="let levels of studyLevels" value="{{levels.studyLevelId}}" [selected]="levels.studyLevelId==this.tutorFilter.studyLevelId?'selected':''">
+                                    {{ levels.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between top-search-right">
+                        <div class="checkbox switcher" *ngIf="tutorFilter.searchType == 'Course'">
+                            <label for="isUnder18">
+                                <input type="checkbox" formControlName="isUnder18" id="isUnder18" [checked]="isUnder18?'checked':''" (change)="setAgeRange($event)">
+                                <span><small></small></span>
+                                <small>Under 18?</small>
+                            </label>
+                        </div>
+                        <button (click)="getTutorRecords()" type="button"><img src="/lib/assets/images/search-icon.png" alt="" /></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- letest semron -->
+    <section class="sec bg-light light-image-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-lg-3 left-bar">
+                    <p>REFINE YOUR SEARCH</p>
+                    <div class="left-bar-in">
+                        <h4>Days</h4>
+
+                        <ul class="left-bar-nav">
+                            <!--<li><a href="javascript:void(0);" class="active">Select all</a></li>-->
+                            <li><a href="javascript:void(0);" (click)="clearSearchFilter('Days')">Clear All</a></li>
+                        </ul>
+                        <ul>
+                            <li *ngFor="let t of tutorOnDays" [ngClass]="{'d-flex':true, 'justify-content-between':true, 'hidden-feild': t.tutorCount==0}">
+                                <label class="container-checkbox">
+                                    <input class="weekDays" type="checkbox" (click)="getSelectedDays($event)" [checked]="tutorFilter.SearchDay.includes(daysObj[t.dayOfWeek])" [value]="daysObj[t.dayOfWeek]"> {{t.dayOfWeek}}
+                                    <span class="checkmark"></span>
+                                </label>
+                                <span>{{t.tutorCount}}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="left-bar-in">
+                        <h4>Time</h4>
+                        <ul class="left-bar-nav">
+                            <!--<li><a href="javascript:void(0);" class="active">Select all</a></li>-->
+                            <li><a href="javascript:void(0);" (click)="clearSearchFilter('Time')">Clear All</a></li>
+                        </ul>
+                        <div class="create-sub-col from-time">
+                            <input type="time" class="col-md-10" value="00:00" #filterTime>
+                            <span style=" font-size: 20px; float: right; margin: 4px 8px 0 1px; cursor: pointer;" (click)="getFilterTime()"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="left-bar-in" *ngIf="tutorFilter.searchType == 'Course'">
+                        <h4>Course Duration</h4>
+                        <ul class="left-bar-nav">
+                            <li><a href="javascript:void(0);" (click)="clearSearchFilter('CourseDuration')">Clear All</a></li>
+                        </ul>
+                        <div id="time-range">
+                            <p>
+                                <span class="slider-time021">1 Week</span> - <span class="slider-time022">50 Week</span>
+                            </p>
+                            <div class="sliders_step1">
+                                <div class="flat-slider" id="slider-range2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="left-bar-in" *ngIf="tutorFilter.searchType == 'Tutor'">
+                        <h4>Tutor Availability</h4>
+                        <ul class="left-bar-nav">
+                            <!--<li><a href="javascript:void(0);" class="active">Select all</a></li>-->
+                            <li><a href="javascript:void(0);" (click)="clearSearchFilter('Availability')">Clear All</a></li>
+                        </ul>
+                        <div id="time-range">
+                            <p><span class="slider-time">1 Week</span></p>
+                            <div class="sliders_step1">
+                                <div class="flat-slider" id="slider-range"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="left-bar-in">
+                        <h4>Price</h4>
+                        <ul class="left-bar-nav">
+                            <!--<li><a href="javascript:void(0);" class="active">Select all</a></li>-->
+                            <li><a href="javascript:void(0);" (click)="clearSearchFilter('Price')">Clear All</a></li>
+                        </ul>
+                        <div class="btn-group btn-toggle" *ngIf="tutorFilter.searchType == 'Tutor'">
+                            <button [ngClass]="{ 'btn btn-lg btn-default': true,'active': tutorFilter.searchPricePerPerson.IsOneToOne}" (click)="tutorFilter.searchPricePerPerson.IsOneToOne = true;clearSearchFilter('Price',true);">One-to-One</button>
+                            <button [ngClass]="{ 'btn btn-lg': true,'active': !tutorFilter.searchPricePerPerson.IsOneToOne}" (click)="tutorFilter.searchPricePerPerson.IsOneToOne = false;clearSearchFilter('Price',false);">Group</button>
+                        </div>
+                        <div id="date-range">
+                            <p>
+                                <ng-container *ngIf="tutorFilter.searchType == 'Course'">
+                                    &pound; <span class="slider-time01">1</span> -  <span class="slider-time02">&pound; 100</span>
+                                </ng-container>
+                                <ng-container *ngIf="tutorFilter.searchType == 'Tutor'">
+                                    <span class="slider-time01">1 /hr</span> - <span class="slider-time02">&pound; 100 /hr</span>
+                                </ng-container>
+                            </p>
+                            <div class="sliders_step1">
+                                <div class="flat-slider" id="slider-range1"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="left-bar-in" *ngIf="tutorFilter.searchType == 'Course'">
+                        <h4>Class Sizes</h4>
+                        <ul class="left-bar-nav">
+                            <li><a href="javascript:void(0);" (click)="clearSearchFilter('classSize')">Clear All</a></li>
+                        </ul>
+                        <div id="date-range">
+                            <p><span class="slider-time041">1</span> -  <span class="slider-time042">10</span> Students</p>
+                            <div class="sliders_step1">
+                                <div class="flat-slider" id="slider-range3"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="left-bar-in">
+                        <p>ADVANCED SEARCH</p>
+                        <ul class="left-bar-nav">
+                            <!--<li><a href="javascript:void(0);" class="active">Select all</a></li>-->
+                            <li><a href="javascript:void(0);" (click)="clearSearchFilter('AdSearch')">Clear All</a></li>
+                        </ul>
+                        <div class="">
+                            <h4>Tutor Name</h4>
+                            <ngx-autocomplete [searchKeyword]="'userFullName'"
+                                              [inputId]="'tutorId'"
+                                              [placeholderValue]="'Enter Tutor Name'"
+                                              [entries]="tutorArray"
+                                              (selectedValue)="selectedTutorSearchForm($event)">
+                            </ngx-autocomplete>
+
+                            <!--<input type="text" placeholder="Enter Tutor Name" value="" class="form-control">-->
+                        </div>
+                        <br>
+                        <div class="">
+                            <h4>Company Name</h4>
+                            <ngx-autocomplete [searchKeyword]="'companyName'"
+                                              [inputId]="'companyId'"
+                                              [placeholderValue]="'Enter Company Name'"
+                                              [entries]="companyArray"
+                                              (selectedValue)="selectedCompanySearchForm($event)">
+                            </ngx-autocomplete>
+                        </div>
+                    </div>
+
+                    <!--<div class="left-bar-in">
+                        <h4>Class Sizes</h4>
+                        <div id="date-range">
+                            <p><span class="slider-time03">1</span> -  <span class="slider-time04">10</span> Students
+                            </p>
+                            <div class="sliders_step1">
+                                <div class="flat-slider" id="slider-range2"></div>
+                            </div>
+                        </div>
+                    </div>-->
+
+                </div>
+                <div class="col-md-8 col-lg-9 right-bar">
+                    <div class="tabs-container">
+                        <ul class="d-flex tabs">
+                            <li [class.active]="tutorFilter.sortType =='Cheapest'" rel="tab1" (click)="showTab(1)">Cheapest</li>
+                            <li style="display:none;" [class.active]="currentTab == 2" rel="tab2" (click)="showTab(2)">Best <span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <span>12 REVIEWS</span></span></li>
+                            <li [class.active]="tutorFilter.sortType =='Popular' " rel="tab3" (click)="showTab(3)">Popular</li>
+                        </ul>
+                        <div class="tab_container" *ngIf="tutorFilter.searchType == 'Tutor'">
+                            <h3 class="d_active tab_drawer_heading" rel="tab1">Cheapest <span class="cheap-price">£15-30/hr</span></h3>
+                            <div id="tab1" [style.display]="currentTab == 1?'block':'none'" class="tab_content">
+                                <p class="sub-head">TUTORS MATCHING YOUR SEARCH</p>
+
+                                <ng-template *ngIf="tutorList.length==0" [ngTemplateOutlet]="noRecordFoundTutor"></ng-template>
+
+                                <ng-container *ngFor="let t of tutorList|slice:0:currentLimit;let i = index;">
+                                    <ng-template *ngIf="i==4" [ngTemplateOutlet]="noRecordFoundTutorFourth"></ng-template>
+                                    <!-- <p class="sub-head">TUTORS YOU COULD CREATE CUSTOM LESSONS OR COURSES WITH</p> -->
+                                    <div class="lessons-courses cource-match">
+                                        <div class="d-flex align-items-start tab-row">
+                                            <div class="left-image">
+                                                <a href="javascript:void(0);">
+                                                    <img *ngIf="t?.storeProfileImageDownload != ''" src="{{t?.storeProfileImageDownload}}" alt="{{t?.userFullName}}" />
+                                                    <img *ngIf="t?.storeProfileImageDownload ==''" src="/lib/assets/images/search-box-image1.png" alt="{{t?.userFullName}}" />
+                                                </a>
+                                            </div>
+                                            <div class="detail-center">
+                                                <div class="detail-center-top">
+                                                    <h3>{{ t.userFullName }}</h3>
+                                                    <span *ngIf="t?.dbsApprovalStatus == 'Approved'" class="head-tag">Enhanced DBS</span>
+                                                </div>
+                                                <div class="course-with-agency">
+                                                    <div class="course-with-agency-left">
+                                                        <p class="uni-link"> <a *ngFor="let tq of t.tutorQualification" href="javascript:void(0);">{{ tq }}</a> </p>
+                                                        <p class="uni-tag"><a *ngFor="let tsl of t.tutorSubjectNameList" href="javascript:void(0);">{{ tsl }}</a></p>
+                                                    </div>
+                                                    <div class="course-with-agency-right" *ngIf="t?.currentCompany">
+                                                        <a href="javascript:void(0);">
+                                                            <img *ngIf="t?.currentCompany?.storeProfileImageDownload != ''" src="{{t.currentCompany.storeProfileImageDownload}}" alt="{{t.userFullName}}" />
+                                                            <img *ngIf="t?.currentCompany?.storeProfileImageDownload ==''" src="/lib/assets/images/tutor-icon.png" alt="{{t.userFullName}}" />
+
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex btn-group-right">
+                                                    <a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                    <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                    <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>
+
+
+                                                    <a href="javascript:void(0);" (click)="redirectMe('tutorCourses',t?.tutorId)" class="custom-btn btn-blue">Explore Courses</a>
+                                                    <a href="javascript:void(0);" (click)="redirectMe('viewTutor',t?.tutorId)" class="custom-btn btn-fill">View Tutor</a>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex detail-center-bottom">
+                                                <div class="detail-center-bottom-col">
+                                                    <a href="javascript:void(0);" class="d-flex">
+                                                        <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-icon.svg" alt=""></span>
+                                                        <span class="bottom-col-text">
+                                                            <small>One-to-one</small>
+                                                            £ {{ t.tutorPriceLesson.oneToOneMinPrice }}- {{ t.tutorPriceLesson.oneToOneMaxPrice }}/ hr
+                                                        </span>
+                                                    </a>
+                                                    <p class="text-down">{{ t.tutorPriceLesson.oneToOneLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                                                </div>
+                                                <div class="detail-center-bottom-col">
+                                                    <a href="javascript:void(0);" class="d-flex">
+                                                        <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
+                                                        <span class="bottom-col-text">
+                                                            <small>Group Lessons</small>
+                                                            £ {{ t.tutorPriceLesson.groupMinPrice }}- {{ t.tutorPriceLesson.groupMaxPrice }}/ hr
+                                                        </span>
+                                                    </a>
+                                                    <p class="text-down">{{ t.tutorPriceLesson.groupLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a *ngIf="(i==(currentLimit-1) && (tutorList.length>currentLimit) )" href="javascript:void(0);" (click)="showMoreData()" class="button-full">Show more results</a>
+                                </ng-container>
+
+                            </div>
+                            <!-- #tab1 -->
+                            <h3 class="tab_drawer_heading" rel="tab3">Popular</h3>
+                            <div id="tab3" [style.display]="currentTab == 3?'block':'none'" class="tab_content">
+                                <p class="sub-head">TUTORS MATCHING YOUR SEARCH</p>
+
+                                <ng-template *ngIf="tutorList.length==0" [ngTemplateOutlet]="noRecordFoundTutor"></ng-template>
+
+                                <ng-container *ngFor="let t of tutorList|slice:0:currentLimit;let i = index;">
+
+                                    <ng-template *ngIf="i==4" [ngTemplateOutlet]="noRecordFoundTutorFourth"></ng-template>
+                                    <div class="lessons-courses cource-match">
+                                        <!-- <p class="sub-head">TUTORS YOU COULD CREATE CUSTOM LESSONS OR COURSES WITH</p> -->
+                                        <div class="d-flex align-items-start tab-row">
+                                            <div class="left-image">
+                                                <a href="javascript:void(0);">
+                                                    <img *ngIf="t?.storeProfileImageDownload != ''" src="{{t?.storeProfileImageDownload}}" alt="{{t?.userFullName}}" />
+                                                    <img *ngIf="t?.storeProfileImageDownload ==''" src="/lib/assets/images/search-box-image1.png" alt="{{t?.userFullName}}" />
+                                                </a>
+                                            </div>
+                                            <div class="detail-center">
+                                                <div class="detail-center-top">
+                                                    <h3>{{ t.userFullName }}</h3>
+                                                    <span class="head-tag" *ngIf="t?.dbsApprovalStatus == 'Approved'">Enhanced DBS</span>
+                                                </div>
+                                                <div class="course-with-agency">
+                                                    <div class="course-with-agency-left">
+                                                        <p class="uni-link"> <a *ngFor="let tq of t.tutorQualification" href="javascript:void(0);">{{ tq }}</a> </p>
+                                                        <p class="uni-tag"><a *ngFor="let tsl of t.tutorSubjectNameList" href="javascript:void(0);">{{ tsl }}</a></p>
+                                                    </div>
+                                                    <div class="course-with-agency-right" *ngIf="t?.currentCompany">
+                                                        <a href="javascript:void(0);">
+                                                            <img *ngIf="t.currentCompany?.storeProfileImageDownload != ''" src="{{t.currentCompany?.storeProfileImageDownload}}" alt="{{t.userFullName}}" />
+                                                            <img *ngIf="t.currentCompany?.storeProfileImageDownload ==''" src="/lib/assets/images/tutor-icon.png" alt="{{t.userFullName}}" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex btn-group-right">
+
+                                                    <a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                    <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                    <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>
+
+
+
+
+                                                    <a href="javascript:void(0);" (click)="redirectMe('tutorCourses',t?.tutorId)" class="custom-btn btn-blue">Explore Courses</a>
+                                                    <a href="javascript:void(0);" (click)="redirectMe('viewTutor',t?.tutorId)" class="custom-btn btn-fill">View Tutor</a>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex detail-center-bottom">
+                                                <div class="detail-center-bottom-col">
+                                                    <a href="javascript:void(0);" class="d-flex">
+                                                        <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-icon.svg" alt=""></span>
+                                                        <span class="bottom-col-text">
+                                                            <small>One-to-one</small>
+                                                            £ {{ t.tutorPriceLesson.oneToOneMinPrice }}- {{ t.tutorPriceLesson.oneToOneMaxPrice }}/ hr
+                                                        </span>
+                                                    </a>
+                                                    <p class="text-down">{{ t.tutorPriceLesson.oneToOneLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                                                </div>
+                                                <div class="detail-center-bottom-col">
+                                                    <a href="javascript:void(0);" class="d-flex">
+                                                        <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
+                                                        <span class="bottom-col-text">
+                                                            <small>Group Lessons</small>
+                                                            £ {{ t.tutorPriceLesson.groupMinPrice }}- {{ t.tutorPriceLesson.groupMaxPrice }}/ hr
+                                                        </span>
+                                                    </a>
+                                                    <p class="text-down">{{ t.tutorPriceLesson.groupLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a *ngIf="(i==(currentLimit-1) && (tutorList.length>currentLimit) )" href="javascript:void(0);" (click)="showMoreData()" class="button-full">Show more results</a>
+                                </ng-container>
+                            </div>
+                            <!-- #tab3 -->
+
+                        </div>
+
+                        <div class="tab_container" *ngIf="tutorFilter.searchType == 'Course'">
+                            <h3 class="d_active tab_drawer_heading" rel="tab1">Cheapest <span class="cheap-price">£15-30/hr</span></h3>
+                            <div id="tab1" [style.display]="currentTab == 1?'block':'none'" class="tab_content">
+                                <p class="sub-head">COURCES MATCHING YOUR SEARCH</p>
+
+                                <ng-template *ngIf="courseList.length==0" [ngTemplateOutlet]="noRecordFound"></ng-template>
+
+                                <ng-container *ngFor="let t of courseList|slice:0:currentLimit;let i = index;trackBy: trackByFn">
+
+
+                                    <ng-template *ngIf="i==4" [ngTemplateOutlet]="noRecordFound"></ng-template>
+
+                                    <!-- <p class="sub-head">TUTORS YOU COULD CREATE CUSTOM LESSONS OR COURSES WITH</p> -->
+                                    <div class="lessons-courses cource-match">
+                                        <div class="d-flex align-items-start tab-row">
+                                            <div class="left-image">
+                                                <!--<a href="javascript:void(0);"><img src="/lib/assets/images/search-box-image5.png" alt=""></a>-->
+                                                <a href="javascript:void(0);">
+                                                    <img [src]="i | randomimage:subjectsImages[t?.subjectName]:t?.subjectName">
+                                                </a>
+                                            </div>
+                                            <div class="detail-center">
+                                                <div class="lessons-courses-head">
+                                                    <h2>{{ t.name }}</h2>
+                                                    <span class="s-ses">{{t.classSessionsCount}} Sessions</span>
+                                                    <p class="lessons-date-time">
+                                                        <span><i><img src="/lib/assets/images/celander-icon.svg" alt=""></i>Starts  {{t.classSessions[0].startDate | date:'EEEE d MMMM' }} </span>
+                                                        <span><i><img src="/lib/assets/images/watch-icon.svg" alt=""></i> {{t.classSessions[0].startDate  | date:'h a' }} - {{t.classSessions[0].endDate | date:'h a'}}</span>
+                                                    </p>
+                                                </div>
+                                                <div class="d-flex align-items-start">
+                                                    <!--<div class="left-image">
+                                                        <a href="javascript:void(0);">
+                                                            <img *ngIf="t?.storeProfileImageDownload != ''" src="{{t?.storeProfileImageDownload}}" alt="{{t.tutorName}}" />
+                                                            <img *ngIf="t?.storeProfileImageDownload ==''" src="/lib/assets/images/search-box-image1.png" alt="{{t.tutorName}}" />
+                                                        </a>
+                                                    </div>-->
+                                                    <div class="left-image">
+                                                        <a href="javascript:void(0);">
+                                                            <!--<img *ngIf="t?.storeProfileImageDownload != ''" src="{{t?.storeProfileImageDownload}}" alt="{{t.tutorName}}" />
+                                                            <img *ngIf="t?.storeProfileImageDownload ==''" src="/lib/assets/images/search-box-image1.png" alt="{{t.tutorName}}" />-->
+                                                            <img *ngIf="t?.tutorImage != ''" src="{{t?.tutorImage}}" alt="{{t.tutorName}}" />
+                                                            <img *ngIf="t?.tutorImage ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{t.tutorName}}" />
+
+                                                        </a>
+                                                    </div>
+                                                    <div class="detail-center">
+
+                                                        <div class="detail-center-top">
+                                                            <h3>{{t.tutorName}}</h3>
+                                                            <span class="head-tag" *ngIf="t?.dbsApprovalStatus == 'Approved'">Enhanced DBS</span>
+                                                        </div>
+                                                        <p class="uni-link"><a *ngFor="let tq of t.tutorQualification" href="javascript:void(0);">{{ tq }}</a> </p>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex btn-group-right">
+                                                    <!--COURCES MATCHING YOUR SEARCH-->
+                                                    <!--<a href="javascript:void(0);" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>-->
+
+                                                    <a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                    <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                    <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>
+
+
+
+
+                                                    <a href="javascript:void(0);" (click)="redirectMe('viewTutor',t?.tutorId)" class="custom-btn btn-blue">View Tutor</a>
+                                                    <a href="javascript:void(0);" (click)="redirectMe('courseDetails',t?.courseId)" class="custom-btn btn-fill">Course Details</a>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex detail-center-bottom">
+                                                <div class="course-with-agency-right">
+                                                    <a href="javascript:void(0);">
+                                                        <img *ngIf="t?.currentCompany?.storeProfileImageDownload != ''" src="{{t.currentCompany?.storeProfileImageDownload}}" alt="{{t?.currentCompany?.companyName}}" />
+                                                        <img *ngIf="t?.currentCompany?.storeProfileImageDownload ==''" src="/lib/assets/images/tutor-icon.png" alt="{{t?.currentCompany?.companyName}}" />
+                                                    </a>
+                                                </div>
+                                                <div class="detail-center-bottom-col">
+                                                    <a href="javascript:void(0);" class="d-flex">
+                                                        <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
+                                                        <span class="bottom-col-text">
+                                                            <small>Group Course</small>
+                                                            £ {{ t.classSessionsTotalAmount }}
+                                                        </span>
+                                                    </a>
+                                                    <p class="text-down">{{ t.maxClassSize - t.courseAttendeesCount }} PLACES  <span>LEFT TO BOOK</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a *ngIf="(i==(currentLimit-1) && (courseList.length>currentLimit) )" href="javascript:void(0);" (click)="showMoreData()" class="button-full">Show more results</a>
+                                </ng-container>
+
+                            </div>
+                            <!-- #tab1 -->
+                            <h3 class="tab_drawer_heading" rel="tab3">Popular</h3>
+                            <div id="tab3" [style.display]="currentTab == 3?'block':'none'" class="tab_content">
+                                <p class="sub-head">COURCES MATCHING YOUR SEARCH</p>
+                                <ng-template *ngIf="courseList.length==0" [ngTemplateOutlet]="noRecordFound"></ng-template>
+                                <ng-container *ngFor="let t of courseList|slice:0:currentLimit;let i = index;trackBy: trackByFn">
+                                    <ng-template *ngIf="i==4" [ngTemplateOutlet]="noRecordFound"></ng-template>
+                                    <div class="lessons-courses cource-match" *ngIf="tutorFilter.sortType=='Popular'">
+                                        <div class="lessons-courses cource-match">
+                                            <!-- <p class="sub-head">TUTORS YOU COULD CREATE CUSTOM LESSONS OR COURSES WITH</p> -->
+                                            <div class="d-flex align-items-start tab-row">
+                                                <div class="left-image">
+                                                    <a href="javascript:void(0);">
+                                                        <img [src]="i | randomimage:subjectsImages[t?.subjectName]:t?.subjectName">
+                                                    </a>
+                                                </div>
+                                                <div class="detail-center">
+                                                    <div class="lessons-courses-head">
+                                                        <h2>{{ t.name }}</h2>
+                                                        <span class="s-ses">{{t.classSessionsCount}} Sessions</span>
+                                                        <p class="lessons-date-time">
+                                                            <span><i><img src="/lib/assets/images/celander-icon.svg" alt=""></i>Starts  {{t.classSessions[0].startDate | date:'EEEE d MMMM' }} </span>
+                                                            <span><i><img src="/lib/assets/images/watch-icon.svg" alt=""></i> {{t.classSessions[0].startDate  | date:'h a' }} - {{t.classSessions[0].endDate | date:'h a'}}</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="left-image">
+                                                            <a href="javascript:void(0);">
+                                                                <!--<img *ngIf="t?.storeProfileImageDownload != ''" src="{{t?.storeProfileImageDownload}}" alt="{{t.tutorName}}" />
+                                                                <img *ngIf="t?.storeProfileImageDownload ==''" src="/lib/assets/images/search-box-image1.png" alt="{{t.tutorName}}" />-->
+                                                                <img *ngIf="t?.tutorImage != ''" src="{{t?.tutorImage}}" alt="{{t.tutorName}}" />
+                                                                <img *ngIf="t?.tutorImage ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{t.tutorName}}" />
+
+                                                            </a>
+                                                        </div>
+                                                        <!--<div class="left-image">
+                                                            <a href="javascript:void(0);">
+                                                                <img *ngIf="t?.storeProfileImageDownload != ''" src="{{t?.storeProfileImageDownload}}" alt="{{t.tutorName}}" />
+                                                                <img *ngIf="t?.storeProfileImageDownload ==''" src="/lib/assets/images/search-box-image1.png" alt="{{t.tutorName}}" />
+                                                            </a>
+                                                        </div>-->
+                                                        <div class="detail-center">
+
+                                                            <div class="detail-center-top">
+                                                                <h3>{{t.tutorName}}</h3>
+                                                                <span class="head-tag" *ngIf="t?.dbsApprovalStatus == 'Approved'">Enhanced DBS</span>
+                                                            </div>
+                                                            <p class="uni-link"><a *ngFor="let tq of t.tutorQualification" href="javascript:void(0);">{{ tq }}</a> </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex btn-group-right">
+                                                        <!--course-->
+                                                        <a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>
+                                                        <!--<a href="javascript:void(0);" *ngIf="isAuthenticated == 'False'" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                                        <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(userType))" disabled="disabled" class="custom-btn btn-green">Book Tutor</a>-->
+
+                                                        <a href="javascript:void(0);" (click)="redirectMe('viewTutor',t?.tutorId)" class="custom-btn btn-blue">View Tutor</a>
+                                                        <a href="javascript:void(0);" (click)="redirectMe('courseDetails',t?.courseId)" class="custom-btn btn-fill">Course Details</a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex detail-center-bottom">
+                                                    <div class="course-with-agency-right">
+                                                        <a href="javascript:void(0);">
+                                                            <img *ngIf="t?.currentCompany?.storeProfileImageDownload != ''" src="{{t.currentCompany?.storeProfileImageDownload}}" alt="{{t?.currentCompany?.companyName}}" />
+                                                            <img *ngIf="t?.currentCompany?.storeProfileImageDownload ==''" src="/lib/assets/images/tutor-icon.png" alt="{{t?.currentCompany?.companyName}}" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="detail-center-bottom-col">
+                                                        <a href="javascript:void(0);" class="d-flex">
+                                                            <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
+                                                            <span class="bottom-col-text">
+                                                                <small>Group Course</small>
+                                                                £ {{ t.classSessionsTotalAmount }}
+                                                            </span>
+                                                        </a>
+                                                        <p class="text-down">{{ t.maxClassSize - t.courseAttendeesCount }} PLACES  <span>LEFT TO BOOK</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- .tab_container -->
+                                    <a *ngIf="(i==(currentLimit-1) && (courseList.length>currentLimit) )" href="javascript:void(0);" (click)="showMoreData()" class="button-full">Show more results</a>
+                                </ng-container>
+                            </div>
+                            <!-- #tab3 -->
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<ng-template #noRecordFound>
+    <div class="d-flex tab-row">
+        <div class="left-image no-radius"><a href="javascript:void(0);"><img src="/lib/assets/images/search-box-image5.svg" alt="" /></a></div>
+        <div class="detail-center">
+            <a href="javascript:void(0);" class="tutor-icon"><img src="/lib/assets/images/tutor-icon.png" alt="" /></a>
+            <div class="detail-center-top">
+                <h3>Create your own course or lesson</h3>
+            </div>
+            <p class="link-color mb-0">If you can't find what your looking for book your own one to one or group classes</p>
+            <p style="color:#999;" class="link-color mb-0">
+                Simply select the curriculum, tutor and times. For group classes, select your class size, send invites to your friends to join your lesson and learn together.
+                <span style="font-weight:bold">Group classes are greater value for money</span>.
+            </p>
+        </div>
+
+        <div class="btn-group-right">
+            <a href="javascript:void(0);" (click)="setSerachTypeCreateNow()" class="custom-btn btn-fill">Create Now</a>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #noRecordFoundTutor>
+    <div class="d-flex tab-row">
+        <div class="left-image no-radius"><a href="javascript:void(0);"><img src="/lib/assets/images/search-box-image5.svg" alt="" /></a></div>
+        <div class="detail-centers" style="margin-left:5%;">
+            <a href="javascript:void(0);" class="tutor-icon"><img src="/lib/assets/images/tutor-icon.png" alt="" /></a>
+            <div class="detail-center-top">
+                <h3>No tutors found</h3>
+            </div>
+            <p class="link-color mb-0">If you can't find a tutor try widening your search.</p>
+            <p style="color:#999;" class="link-color mb-0">
+                Once you have found your ideal tutor, simply purchase an existing course or create your own by clicking on the book tutor button.
+                <br>
+                <span style="font-weight:bold">Creating group classes are greater value for money!</span>
+            </p>
+        </div>
+
+        <!--<div class="btn-group-right">
+            <a href="javascript:void(0);" class="custom-btn btn-fill">Create Now</a>
+        </div>-->
+    </div>
+</ng-template>
+
+<ng-template #noRecordFoundTutorFourth>
+    <div class="d-flex tab-row">
+        <div class="left-image no-radius"><a href="javascript:void(0);"><img src="/lib/assets/images/search-box-image5.svg" alt="" /></a></div>
+        <div class="detail-centers" style="margin-left:5%;">
+            <a href="javascript:void(0);" class="tutor-icon"><img src="/lib/assets/images/tutor-icon.png" alt="" /></a>
+            <p class="link-color mb-0">If you can't find a tutor try widening your search.</p>
+            <p style="color:#999;" class="link-color mb-0">
+                Once you have found your ideal tutor, simply purchase an existing course or create your own by clicking on the book tutor button.
+                <br>
+                <span style="font-weight:bold">Creating group classes are greater value for money!</span>
+            </p>
+        </div>
+
+        <!--<div class="btn-group-right">
+            <a href="javascript:void(0);" class="custom-btn btn-fill">Create Now</a>
+        </div>-->
+    </div>
+</ng-template>
+
+
+
+

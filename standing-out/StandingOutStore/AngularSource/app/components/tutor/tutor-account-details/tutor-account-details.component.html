@@ -1,0 +1,163 @@
+
+<div class="Page__Container--size:medium mb-56">
+    <div class="row">
+        <div class="col">
+            <form (ngSubmit)="submitBasicInfoForm()" [formGroup]="basicInfoForm" *ngIf="basicInfoForm != undefined">
+                <h1 class="fw-800 fs-32 mb-56">Account</h1>
+                <div class="Form__Block">
+                    <div class="form-row">
+                        <div class="form-group col-12 col-lg-4">
+                            <label>Title*</label>
+                            <select id="title" name="title" formControlName="title" class="form-control">
+                                <option [ngValue]="null">Select a title</option>
+                                <option *ngFor="let userTitle of userTitles" [ngValue]="userTitle.name">{{userTitle.name}}</option>
+                            </select>
+                            <div *ngIf="basicInfoFormControls.title.errors && (basicInfoFormControls.title.dirty || basicInfoFormControls.title.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="basicInfoFormControls.title.errors.maxlength">Title has a character limit of 250</div>
+                                <div *ngIf="basicInfoFormControls.title.errors.required">Please select a title to continue. </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-lg-6">
+                            <label>First Name *</label>
+                            <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control" placeholder="Enter your first name" />
+                            <div *ngIf="basicInfoFormControls.firstName.errors && (basicInfoFormControls.firstName.dirty || basicInfoFormControls.firstName.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="basicInfoFormControls.firstName.errors.maxlength">This field should only allow a first name of 20 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="basicInfoFormControls.firstName.errors.required">Please enter your first name to continue.</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-lg-6">
+                            <label for="exampleInputEmail1">Surname *</label>
+                            <input type="text" id="lastName" name="lastName" formControlName="lastName" class="form-control" placeholder="Enter your surname" />
+                            <div *ngIf="basicInfoFormControls.lastName.errors && (basicInfoFormControls.lastName.dirty || basicInfoFormControls.lastName.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="basicInfoFormControls.lastName.errors.maxlength">This field should only allow a first name of 20 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="basicInfoFormControls.lastName.errors.required">Please enter your surname to continue.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-lg-6">
+                            <label>Email address</label>
+                            <input type="text" id="email" name="email" formControlName="email" class="form-control" placeholder="Email Address" readonly />
+                        </div>
+                        <div class="form-group col-12 col-lg-6">
+                            <label>Date of birth *</label>
+                            <div class="form-row">
+                                <div class="col-4">
+                                    <input type="number" step="1" placeholder="DD" id="dateOfBirthDay" name="dateOfBirthDay" formControlName="dateOfBirthDay" class="form-control" />
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" step="1" placeholder="MM" id="dateOfBirthMonth" name="dateOfBirthMonth" formControlName="dateOfBirthMonth" class="form-control" />
+                                </div>
+                                <div class="col-4">
+                                    <input type="number" step="1" placeholder="YYYY" id="dateOfBirthYear" name="dateOfBirthYear" formControlName="dateOfBirthYear" class="form-control" />
+                                </div>
+                            </div>
+                            <div *ngIf="!checkDateValid() && (((basicInfoFormControls.dateOfBirthYear.dirty || basicInfoFormControls.dateOfBirthYear.touched) &&
+                                         (basicInfoFormControls.dateOfBirthMonth.dirty || userDetailFormControls.dateOfBirthMonth.touched) &&
+                                         (basicInfoFormControls.dateOfBirthDay.dirty || basicInfoFormControls.dateOfBirthDay.touched))
+                                         || basicInfoFormSubmitted)" class="error" role="alert">
+                                <div>Please enter a day or month or year to continue.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-lg-6">
+                            <label>Telephone No. *</label>
+                            <input type="tel" id="telephoneNumber" name="telephoneNumber" formControlName="telephoneNumber" class="form-control" placeholder="Enter your telephone no." />
+                            <div *ngIf="basicInfoFormControls.telephoneNumber.errors && (basicInfoFormControls.telephoneNumber.dirty || basicInfoFormControls.telephoneNumber.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="basicInfoFormControls.telephoneNumber.errors.maxlength">This field should only allow a telephone no. of 12 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="basicInfoFormControls.telephoneNumber.errors.required">Please enter a valid telephone no. to continue. </div>
+                                <div *ngIf="basicInfoFormControls.telephoneNumber.errors.pattern">Please enter a valid telephone no.</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-lg-6">
+                            <label>Mobile No.</label>
+                            <input type="tel" id="mobileNumber" name="mobileNumber" formControlName="mobileNumber" class="form-control" placeholder="Enter your mobile no." />
+                            <div *ngIf="basicInfoFormControls.mobileNumber.errors && (basicInfoFormControls.mobileNumber.dirty || basicInfoFormControls.mobileNumber.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="basicInfoFormControls.mobileNumber.errors.maxlength">his field should only allow a mobile no. of 12 characters (inc. spaces) to be added.</div>
+                                <div *ngIf="basicInfoFormControls.mobileNumber.errors.required">Please enter a valid mobile no. to continue</div>
+                                <div *ngIf="basicInfoFormControls.mobileNumber.errors.pattern">Please enter a valid mobile no.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-12">
+                            <label class="form-check" for="marketingAccepted">
+                                <input type="checkbox" class="form-control" id="marketingAccepted" name="marketingAccepted" formControlName="marketingAccepted" />
+                                <span class="label">I would like to receive relevant tips, tricks and offers from the 2utoring team</span>
+                            </label>
+                            <div *ngIf="basicInfoFormControls.marketingAccepted.errors && (basicInfoFormControls.marketingAccepted.dirty || basicInfoFormControls.marketingAccepted.touched || basicInfoFormSubmitted)" class="error" role="alert">
+                                <div *ngIf="basicInfoFormControls.marketingAccepted.errors.required">You need to accept our terms and conditions to continue.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bank Details form (conditional display) -->
+                    <div *ngIf="bankDetailsApplicable && bankDetailsForm != undefined">
+                        <hr />
+                        <form [formGroup]="bankDetailsForm" *ngIf="bankDetailsForm != undefined">
+                            <h1 class="fw-800 fs-32 mb-14">Bank Details</h1>
+                            <div class="row">
+                                <div class="col-12 col-lg-8 mb-28 mb-lg-0">
+                                    <div class="Form__Block">
+                                        <div class="form-row">
+                                            <div class="col-8">
+                                                <div class="form-group">
+                                                    <label for="bankAccountNumber">Account number *</label>
+                                                    <input type="text" id="bankAccountNumber" name="bankAccountNumber" formControlName="bankAccountNumber" class="form-control" placeholder="Account number" />
+                                                    <div *ngIf="bankDetailsFormControls.bankAccountNumber.errors && (bankDetailsFormControls.bankAccountNumber.dirty || bankDetailsFormControls.bankAccountNumber.touched || bankDetailsFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="bankDetailsFormControls.bankAccountNumber.errors.maxlength">This field only allows max 20 characters.</div>
+                                                        <div *ngIf="bankDetailsFormControls.bankAccountNumber.errors.required">Please enter your bank account number to continue.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label for="bankSortCode">Sort code *</label>
+                                                    <input type="text" id="bankSortCode" name="bankSortCode" formControlName="bankSortCode" class="form-control" placeholder="Sort code" maxlength="8" />
+                                                    <div *ngIf="bankDetailsFormControls.bankSortCode.errors && (bankDetailsFormControls.bankSortCode.dirty || bankDetailsFormControls.bankSortCode.touched || bankDetailsFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="bankDetailsFormControls.bankSortCode.errors.maxlength">This field only allows max 10 characters.</div>
+                                                        <div *ngIf="bankDetailsFormControls.bankSortCode.errors.required">Please enter your bank sort code to continue.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-8">
+                                                <div class="form-group">
+                                                    <label>First line of your address *</label>
+                                                    <input type="text" id="addressLine1" name="addressLine1" formControlName="addressLine1" class="form-control" placeholder="Enter the first line of your address" maxlength="250" />
+                                                    <div *ngIf="bankDetailsFormControls.addressLine1.errors && (bankDetailsFormControls.addressLine1.dirty || bankDetailsFormControls.addressLine1.touched || bankDetailsFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="bankDetailsFormControls.addressLine1.errors.maxlength">First line address has a character limit of 250</div>
+                                                        <div *ngIf="bankDetailsFormControls.addressLine1.errors.required">Please enter the first line of your address to continue.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-group">
+                                                    <label>Postcode *</label>
+                                                    <input type="text" id="postCode" name="postCode" formControlName="postCode" class="form-control" placeholder="Enter your postcode" maxlength="10" />
+                                                    <div *ngIf="bankDetailsFormControls.postCode.errors && (bankDetailsFormControls.postCode.dirty || bankDetailsFormControls.postCode.touched || bankDetailsFormSubmitted)" class="error" role="alert">
+                                                        <div *ngIf="bankDetailsFormControls.postCode.errors.maxlength">Postcode has a character limit of 10</div>
+                                                        <div *ngIf="bankDetailsFormControls.postCode.errors.required">Please enter the post code of your address to continue.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="Form_Block-Controls">
+                        <a href="/Tutor/Settings" class="link-grey">Go back</a>
+                        <button type="submit" class="btn btn-primary btn-lg ml-auto">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

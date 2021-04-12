@@ -1,0 +1,74 @@
+﻿@model StandingOut.Data.DTO.CompanyProfile
+
+@{
+    ViewData["Title"] = "Company - " + Model.Name;
+}
+
+<main class="so-content-page">
+
+    <section class="so-section-generic-text so-min-page-size">
+        <div class="grid-container">
+
+            <div class="grid-x so-search-item-container">
+
+                <div class="cell medium-12">
+                    <div class="grid-x search-item-row">
+                        
+                        @if (!string.IsNullOrWhiteSpace(Model.ImageDownloadUrl)) { 
+                            <div class="cell medium-2">
+                                <div>
+                                    <div class="search-item-row__profile">
+                                        <img src="@Model.ImageDownloadUrl">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="cell medium-10">
+                            <h1>@Model.Name</h1>
+                            <h2>@Model.Header</h2>
+                            <h3>@Model.SubHeader</h3>
+                            <p>@Html.Raw(Model.BiographyHtml)</p>
+                        </div>
+                    </div>
+                </div>
+
+                @if (Model.Tutors.Count > 0)
+                {
+                    <div class="grid-x">
+                    @foreach (var tutor in Model.Tutors.OrderByDescending(x => x.Header))
+                    {
+                        <div class="cell medium-12">
+                            
+                            <div class="grid-x">
+                                <div class="large-12">
+                                    <div class="grid-x search-item-row">
+                                        @if (!string.IsNullOrWhiteSpace(tutor.ImageDownloadUrl)) { 
+                                            <div class="cell medium-2">
+                                                <div>
+                                                    <div class="search-item-row__profile">
+                                                        <img src="@tutor.ImageDownloadUrl">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="cell medium-10">                                    
+                                            
+                                            <h2>@tutor.Name</h2>                            
+                                            <h2>@tutor.Header</h2>
+                                            <h3>@tutor.SubHeader</h3>
+                                            <a asp-controller="tutors" asp-route-id="@tutor.TutorId" class="button">See my classes</a>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>
+</main>

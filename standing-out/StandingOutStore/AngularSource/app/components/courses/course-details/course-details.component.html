@@ -1,0 +1,208 @@
+<div class="banner">
+    <img src="/lib/assets/images/banner-image.jpg" alt="">
+</div>
+<main>
+    <!-- letest semron -->
+    <section class="sec bg-light light-image-bg">
+        <div class="container teacher-detail-page">
+            <div class="tab-row ses-up">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="teacher-detail">
+                            <div class="lessons-courses-head">
+                                <h2>{{courseData.course?.name}}</h2>
+                                <span class="s-ses">{{courseData.course?.classSessionsCount}} Sessions</span>
+                                <p class="lessons-date-time">
+                                    <span><i><img src="/lib/assets/images/celander-icon.svg" alt="" /></i> Starts  {{courseData.course?.startDate | date:'EEEE d MMMM' }} </span>
+                                    <span><i><img src="/lib/assets/images/watch-icon.svg" alt="" /></i> {{courseData.course?.startDate | date:'h:mm a' }} - {{courseData.course?.endDate | date:'h:mm a'}}</span>
+                                </p>
+                            </div>
+                            <div class="clearfix backToSearchMi">
+                                <a href="javascript:void(0);" (click)="backToSearch()" class="back-to"><i class="fa fa-arrow-left"></i> Back to explore courses</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="home-school-right">
+                            <a href="javascript:void(0);">
+                                <img class="detailsCompImg" *ngIf="courseData.tutor?.currentCompany?.storeProfileImageDownload != ''" src="{{courseData.tutor?.currentCompany?.storeProfileImageDownload}}" alt="{{courseData.tutor?.currentCompany?.companyName}}" />
+                                <img class="detailsCompImg" *ngIf="courseData.tutor?.currentCompany?.storeProfileImageDownload ==''" src="/lib/assets/images/2utoringDefault.png" alt="{{courseData.tutor.currentCompany?.companyName}}" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-9">
+
+                        <div class="teacher-detail">
+
+                            <div class="d-flex tab-row teacher-detail-info">
+                                <div class="mt-3 left-image">
+                                    <a href="javascript:void(0);">
+                                        <img *ngIf="courseData.tutor?.storeProfileImageDownload != ''" src="{{courseData.tutor?.storeProfileImageDownload  }}" alt="{{courseData.tutor?.userFullName}}" />
+                                        <img *ngIf="courseData.tutor?.storeProfileImageDownload ==''" src="/lib/assets/images/search-box-image1.png" alt="{{tutor?.userFullName}}" />
+                                    </a>
+                                </div>
+                                <div class="detail-center">
+                                    <div class="detail-center-top">
+                                        <div class="clearfix">
+                                            <a href="javascript:void(0);" class="back-to">MEET YOUR TUTOR</a>
+                                        </div>
+                                        <h3>{{courseData.tutor?.userFullName}}</h3>
+                                        <span class="head-tag" *ngIf="courseData.tutor?.dbsApprovalStatus == 'Approved'">Enhanced DBS</span>
+                                        <!--<span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 12 REVIEWS</span>-->
+                                    </div>
+                                    <p class="uni-link"><a href="javascript:void(0);" *ngFor="let qualification of courseData.tutor?.tutorQualification">{{ qualification }}</a></p>
+                                    <p class="uni-tag"><a href="javascript:void(0);" *ngFor="let tsl of courseData.tutor?.tutorSubjectNameList">{{ tsl }}</a></p>
+                                    <p class="text-justify">{{ courseData.tutor?.subHeader }}</p>
+
+                                    <div class="d-flex align-items-center teacher-detail-row">
+                                        <div class="d-flex detail-center-bottom">
+                                            <div class="detail-center-bottom-col">
+                                                <a href="javascript:void(0);" class="d-flex">
+                                                    <span class="bottom-col-icon">
+                                                        <img src="/lib/assets/images/user-group-icon.svg" alt="" />
+                                                    </span>
+                                                    <span class="bottom-col-text">
+                                                        <small>One-to-one</small>
+                                                        {{ courseData.tutor?.tutorPriceLesson.oneToOneMinPrice | currency:'GBP':'symbol':'1.2-2' }}-{{ courseData.tutor?.tutorPriceLesson.oneToOneMaxPrice | currency:'GBP':'symbol':'1.2-2'}} / hr
+                                                    </span>
+                                                </a>
+                                                <p class="text-down">{{ courseData.tutor?.tutorPriceLesson.oneToOneLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                                            </div>
+                                            <div class="detail-center-bottom-col">
+                                                <a href="javascript:void(0);" class="d-flex">
+                                                    <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt="" /></span>
+                                                    <span class="bottom-col-text">
+                                                        <small>Group Lessons</small>
+                                                        {{ courseData.tutor?.tutorPriceLesson.groupMinPrice | currency:'GBP':'symbol':'1.2-2'}}-{{ courseData.tutor?.tutorPriceLesson.groupMaxPrice | currency:'GBP':'symbol':'1.2-2' }} / hr
+                                                    </span>
+                                                </a>
+                                                <p class="text-down">{{ courseData.tutor?.tutorPriceLesson.groupLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="teacher-detail-col">
+                                            <div class="btn-group-right">
+                                                <a href="javascript:void(0);" (click)="redirectMe('viewTutor',courseData?.tutor.tutorId)" class="custom-btn btn-green">View Tutor</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="professional-profile">
+                                <h5><span>COURSE DETAILS</span></h5>
+                                <p>{{courseData.course?.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+
+                        <div class="right-side-bar side-bar-bottom-self">
+                            <h4>BOOK YOUR COURSE</h4>
+                            <div class="right-side-bar-in">
+                                <div class="booked-courses"><span>SUBJECT</span> <p>{{courseData.course?.subjectName}}</p></div>
+                                <div class="booked-courses"><span>LEVEL</span> <p>{{courseData.course?.studyLevelName}}</p></div>
+                                <div class="booked-courses"><span>AGE RANGE</span> <p>{{ courseData.course?.isUnder18?'Under 18s':'Over 18s' }}</p></div>
+                            </div>
+                            <div class="right-side-bar-in">
+                                <div class="booked-courses"><span>LESSON TYPE</span> <p>{{ courseData.course?.maxClassSize > 0?'Group':'One To One' }} </p></div>
+                                <div class="booked-courses"><span>CLASS SIZE</span> <p>{{courseData.course?.maxClassSize}}</p></div>
+                                <div class="booked-courses"><span>AVAILABLE PLACES</span> <p>{{ courseData.course?.maxClassSize - courseData.course?.courseAttendeesCount }}</p></div>
+                            </div>
+                            <div class="booked-courses">
+                                <span>DATES</span>
+                                <p class="lessons-date-time" *ngFor="let t of courseData.course?.classSessions; let i = index;">
+                                    <span><i><img src="/lib/assets/images/celander-icon.svg" alt=""></i> {{t.startDate | date:'EEEE d MMMM' }}</span>
+                                    <span><i><img src="/lib/assets/images/watch-icon.svg" alt=""></i> {{t.startDate | date:'h:mm a' }}</span>
+                                </p>
+                            </div>
+                            <div class="side-bar-last-bottom" style="position:inherit">
+                                <div class="booked-courses course-price">
+                                    <span>TOTAL COURSE PRICE</span>
+                                    <p>{{courseData.course?.classSessionsTotalAmount | currency:'GBP':'symbol':'1.2-2'}}</p>
+                                </div>
+
+                                <a *ngIf="isAuthenticated == 'False'" href="javascript:void(0);" (click)="checkOutEvent(courseData.course?.maxClassSize - courseData.course?.courseAttendeesCount)" class="full-btn">Next: Checkout</a>
+                                <a *ngIf="isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="checkOutEvent(courseData.course?.maxClassSize - courseData.course?.courseAttendeesCount)" href="javascript:void(0);" class="full-btn">Next: Checkouts</a>
+                                <a *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" href="javascript:void(0);" disabled="disabled" class="full-btn">Next: Checkout</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <p class="sub-head" *ngIf="(courseData.relatedCourseList)? courseData.relatedCourseList.length > 0 : 0;">SIMILAR COURSES YOU MAY BE INTERESTED IN</p>
+            <div class="lessons-courses">
+                <ng-container *ngFor="let t of courseData.relatedCourseList; let i = index;">
+                    {{ t?.subjectName }}
+                    <div class="d-flex align-items-start tab-row">
+                        <div class="left-image">
+                            <a href="javascript:void(0);">
+                                <!--<img src="/lib/assets/images/search-box-image6.png" alt="" />-->
+                                <img [src]="i | randomimage:subjectsImages[t?.subjectName]:t?.subjectName" title="{{t?.name}}" alt="{{t?.name}}">
+                            </a>
+                        </div>
+                        <div class="detail-center">
+                            <div class="lessons-courses-head">
+                                <h2>{{ t?.courseName }}</h2>
+                                <span class="s-ses">{{ t?.classSessionsCount }} Sessions</span>
+                                <p class="lessons-date-time">
+                                    <span><i><img src="/lib/assets/images/celander-icon.svg" alt="" /></i> Starts {{t?.startDate | date:'EEEE d MMMM'}}</span>
+                                    <span><i><img src="/lib/assets/images/watch-icon.svg" alt="" /></i> {{t?.startDate | date:'h:mm a'}} - {{t?.startDate | date:'h:mm a'}}</span>
+                                </p>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <div class="left-image">
+                                    <a href="javascript:void(0);">
+                                        <img *ngIf="t?.tutorImage != ''" src="{{t?.tutorImage}}" alt="{{t.tutorName}}" />
+                                        <img *ngIf="t?.tutorImage ==''" src="/lib/assets/images/search-box-image1.png" alt="{{t.tutorName}}" />
+                                    </a>
+                                </div>
+                                <div class="detail-center">
+                                    <div class="detail-center-top">
+                                        <h3>{{ t?.tutorName }}</h3>
+                                        <span class="head-tag" *ngIf="t?.tutorDBSStatus == 'Approved'">Enhanced DBS</span>
+                                        <!--<span class="best-review"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 12 REVIEWS</span>-->
+                                    </div>
+                                    <p class="uni-link"><a *ngFor="let tq of t.tutorQualification" href="javascript:void(0);">{{ tq }}</a> </p>
+
+
+                                </div>
+                            </div>
+                            <div class="d-flex mt-3 btn-group-right">
+                                <!--<a href="javascript:void(0);" *ngIf="isAuthenticated == 'False'" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" disabled="disabled" class="custom-btn btn-green">Book Tutor</a>-->
+                                <!--<a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>-->
+
+                                <a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>
+
+
+                                <!--<a href="javascript:void(0);" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>-->
+                                <a href="javascript:void(0);" (click)="redirectMe('viewTutor',t?.tutorId)" class="custom-btn btn-blue">View Tutor</a>
+                                <a href="javascript:void(0);" (click)="redirectMe('courseDetails',t?.courseId)" class="custom-btn btn-fill">Course Details</a>
+                            </div>
+                        </div>
+                        <div class="d-flex detail-center-bottom">
+                            <div class="detail-center-bottom-col">
+                                <a href="javascript:void(0);" class="d-flex">
+                                    <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt="" /></span>
+                                    <span class="bottom-col-text">
+                                        <small>Group Course</small>
+                                        {{ t?.courseTotalAmount | currency:'GBP':'symbol':'1.2-2' }}
+                                    </span>
+                                </a>
+                                <p class="text-down">{{ t?.placesRemaining }} PLACES  <span>LEFT TO BOOK</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </section>
+</main>
