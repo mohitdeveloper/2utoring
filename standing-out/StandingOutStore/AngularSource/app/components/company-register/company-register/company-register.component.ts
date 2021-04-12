@@ -161,7 +161,7 @@ export class CompanyRegisterComponent implements OnInit {
             whatWeDo: [''],
             whyWeDoIt: [''],
             whyChooseUs: [''],
-            platformUse: ['']
+            //platformUse: ['']
         });
 
         //payment page
@@ -279,7 +279,7 @@ export class CompanyRegisterComponent implements OnInit {
                         whoWeAre: [success.whoWeAre],
                         whatWeDo: [success.whatWeDo],
                         whyWeDoIt: [success.whyWeDoIt],
-                        platformUse: ['1'],
+                        //platformUse: ['1'],
 
                     });
                     $('.loading').hide();
@@ -348,7 +348,7 @@ export class CompanyRegisterComponent implements OnInit {
                         whatWeDo: [success.whatWeDo, [Validators.maxLength(1999)]],
                         whyWeDoIt: [success.whyWeDoIt, [Validators.maxLength(1999)]],
                         whyChooseUs: [success.whyChooseUs, [Validators.maxLength(1999)]],
-                        platformUse: ['1']
+                        //platformUse: ['1']
                     });
 
                     this.profileTwoFormSubmitted = false;
