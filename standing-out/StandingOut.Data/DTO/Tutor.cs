@@ -16,7 +16,7 @@ namespace StandingOut.Data.DTO
 
         public Guid TutorId { get; set; }
         public Guid? StripePlanId { get; set; }
-
+        public Guid? StripeCountryID { get; set; }
         [StringLength(250)]
         public string StripeCustomerId { get; set; }
         [StringLength(250)]
@@ -105,7 +105,7 @@ namespace StandingOut.Data.DTO
         public List<TutorOnDays> TutorOnDays { get; set; }
         public int TotalBookedSlot { get; set; }
         public int TotalSlotCount { get; set; }
-
+        public StripeCountry StripeCountry { get; set; }
     }
     public class BookedSlot
     {

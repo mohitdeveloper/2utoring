@@ -56,6 +56,7 @@ namespace StandingOut.Data.DTO
         public TutorApprovalStatus ProfileApprovalStatus { get; set; }
         public TutorApprovalStatus IDVerificationtStatus { get; set; }
         public Guid? StripePlanId { get; set; }
+        public Guid? StripeCountryID { get; set; }
         //public string StripeCustomerId { get; set; }
         //public string StripeSubscriptionId { get; set; }
         public string StripeConnectAccountId { get; set; }
@@ -70,6 +71,7 @@ namespace StandingOut.Data.DTO
         }
         public int CompanyCourseCount { get; set; }
         public List<Course> CompanyCourses { get; set; }
+        
     }
 
     public interface ICompanyId
@@ -112,6 +114,8 @@ namespace StandingOut.Data.DTO
         public List<SubjectStudyLevelSetup> SubjectStudyLevelSetups { get; set; }
         public List<Course> Courses { get; set; }
         public List<Tutor> Tutors { get; set; }
+
+        public StripeCountry StripeCountry { get; set; }
 
     }
 }

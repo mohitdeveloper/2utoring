@@ -295,7 +295,7 @@
                                                         <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-icon.svg" alt=""></span>
                                                         <span class="bottom-col-text">
                                                             <small>One-to-one</small>
-                                                            £ {{ t.tutorPriceLesson.oneToOneMinPrice }}- {{ t.tutorPriceLesson.oneToOneMaxPrice }}/ hr
+                                                            {{t?.stripeCountry.currencySymbol + (t.tutorPriceLesson.oneToOneMinPrice | number : '1.2-2') }}-{{t?.stripeCountry.currencySymbol + (t.tutorPriceLesson.oneToOneMaxPrice | number : '1.2-2') }}/hr
                                                         </span>
                                                     </a>
                                                     <p class="text-down">{{ t.tutorPriceLesson.oneToOneLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
@@ -305,7 +305,7 @@
                                                         <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
                                                         <span class="bottom-col-text">
                                                             <small>Group Lessons</small>
-                                                            £ {{ t.tutorPriceLesson.groupMinPrice }}- {{ t.tutorPriceLesson.groupMaxPrice }}/ hr
+                                                            {{t?.stripeCountry.currencySymbol + (t.tutorPriceLesson.groupMinPrice | number : '1.2-2') }}-{{t?.stripeCountry.currencySymbol + (t.tutorPriceLesson.groupMaxPrice | number : '1.2-2') }}/hr
                                                         </span>
                                                     </a>
                                                     <p class="text-down">{{ t.tutorPriceLesson.groupLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
@@ -486,7 +486,7 @@
                                                         <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
                                                         <span class="bottom-col-text">
                                                             <small>Group Course</small>
-                                                            £ {{ t.classSessionsTotalAmount }}
+                                                            {{t?.stripeCountry.currencySymbol + (t.classSessionsTotalAmount | number : '1.2-2') }}
                                                         </span>
                                                     </a>
                                                     <p class="text-down">{{ t.maxClassSize - t.courseAttendeesCount }} PLACES  <span>LEFT TO BOOK</span></p>

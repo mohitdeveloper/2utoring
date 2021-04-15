@@ -84,6 +84,7 @@ namespace StandingOut.Data.DTO
         public int CourseAttendeesCount { get; set; }
         public int TotalBookedSlot { get; set; }
         public int TotalSlotCount { get; set; }
+        public StripeCountry StripeCountry { get; set; }
 
     }
 
@@ -120,7 +121,8 @@ namespace StandingOut.Data.DTO
     {
         public Course Course { get; set; }
         public Tutor Tutor { get; set; }
-        public List<CourseDetail> RelatedCourseList { get; set; }
+        public StripeCountry StripeCountry { get; set; }
+    public List<CourseDetail> RelatedCourseList { get; set; }
     }
     public class CourseDetail
     {
@@ -140,6 +142,7 @@ namespace StandingOut.Data.DTO
         public string TutorImage { get; set; }
         public TutorApprovalStatus TutorDBSStatus { get; set; }
         public List<string> TutorQualification { get; set; }
+        public StripeCountry StripeCountry { get; set; }
 
 
     }

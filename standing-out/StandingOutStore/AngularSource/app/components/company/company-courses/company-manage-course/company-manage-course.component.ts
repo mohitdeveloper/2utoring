@@ -14,7 +14,9 @@ import { DatePipe } from '@angular/common';
 import { GoogleLinkModal } from '../../../utilities/google-link-modal/google-link-modal';
 import { SaveConfirmDialog } from '../../../courses/save-confirm/save-confirm-dialog.component';
 
+
 declare var jQuery: any;
+declare var stripeCountry: any;
 
 @Component({
     selector: 'app-company-manage-course',
@@ -26,6 +28,7 @@ export class CompanyManageCourseComponent implements OnInit {
     //doSomething() {
     //    alert(1);
     //}
+    stripeCountry: any = stripeCountry;
     company: Company;
     subjectData: Array<any> = [];
     tutorsData: Array<any> = [];

@@ -6,6 +6,7 @@ import { CalenderComponent } from '../../calender/calender.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 declare var isAuthenticated: any;
+/*declare var stripeCountry: any;*/
 @Component({
     selector: 'app-tutor-profile-view',
     templateUrl: './tutor-profile-view.component.html',
@@ -17,7 +18,7 @@ export class TutorProfileViewComponent implements OnInit {
     @Input() showEditButton: boolean;
 
     isAuthenticated = isAuthenticated;
-
+    /*stripeCountry: any = stripeCountry;*/
     loaded: number = 0;
     toLoad: number = 3;
     tutor: Tutor;

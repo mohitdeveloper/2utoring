@@ -8,7 +8,7 @@
                         <h4 class="fw-600">Let's set up your profile, it will just take a minute</h4>
                         <div class="mt-42">
                             <div class="form-row">
-                                <div class="form-group col-lg-6">
+                                <div class="form-group col-sm-12 col-lg-6">
                                     <label>Title *</label>
                                     <select id="parentTitle" name="parentTitle" formControlName="parentTitle" class="form-control">
                                         <option [ngValue]="null">Select a title</option>
@@ -18,6 +18,17 @@
                                         <div *ngIf="guardianDetailFormControls.parentTitle.errors.required">Please select title to continue</div>
                                     </div>
                                 </div>
+
+                                <!--<div class="form-group col-sm-12 col-lg-6">
+                                    <div class="form-group">
+                                        <label>Country</label>
+                                        <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" placeholder="Enter a promo code">-->
+                                            <!--<option [ngValue]="null">Select your country</option>-->
+                                            <!--<option *ngFor="let stripeCountry of stripeCountrys; let i = index" [selected]="i == 1" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
+
+                                        </select>
+                                    </div>
+                                </div>-->
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-lg-6">

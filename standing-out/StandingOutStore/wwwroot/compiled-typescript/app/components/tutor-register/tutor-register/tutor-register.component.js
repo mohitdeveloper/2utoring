@@ -40,14 +40,13 @@ var angular_cropperjs_1 = require("angular-cropperjs");
 //1. Tutor direct registration (with StripePlanId)
 //2. Tutor register on Company Invite (with CompanyId)
 var TutorRegisterComponent = /** @class */ (function () {
-    function TutorRegisterComponent(dialog, fb, toastr, tutorsService, enumsService, stripeService, stripeCountrysService, stripePlansService, tutorQualificationsService, tutorCertificatesService, tutorSubjectsService, subjectsService, subjectCategoriesService, studyLevelsService, sanitizer, companyService) {
+    function TutorRegisterComponent(dialog, fb, toastr, tutorsService, enumsService, stripeService, stripePlansService, tutorQualificationsService, tutorCertificatesService, tutorSubjectsService, subjectsService, subjectCategoriesService, studyLevelsService, sanitizer, companyService, stripeCountrysService) {
         this.dialog = dialog;
         this.fb = fb;
         this.toastr = toastr;
         this.tutorsService = tutorsService;
         this.enumsService = enumsService;
         this.stripeService = stripeService;
-        this.stripeCountrysService = stripeCountrysService;
         this.stripePlansService = stripePlansService;
         this.tutorQualificationsService = tutorQualificationsService;
         this.tutorCertificatesService = tutorCertificatesService;
@@ -57,10 +56,12 @@ var TutorRegisterComponent = /** @class */ (function () {
         this.studyLevelsService = studyLevelsService;
         this.sanitizer = sanitizer;
         this.companyService = companyService;
+        this.stripeCountrysService = stripeCountrysService;
         this.serviceHelper = new service_helper_1.ServiceHelper();
         this.stripePlanId = stripePlanId || null;
         this.companyId = companyId || null;
         this.currentCompany = new models_1.Company();
+        this.stripeCountryId = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
         this.tutorId = undefined;
         this.tutorFirstName = '';
         this.tutorInitialRegistrationStep = 0;
@@ -101,6 +102,7 @@ var TutorRegisterComponent = /** @class */ (function () {
         this.subjectCategorys = [];
         this.journeyTypeForTutor = false;
         this.dbsCheckAllowedInSubscriptoin = true;
+        this.stripeCountrys = [];
         this.editSlot = true;
         this.skipType = false;
         this.supportedFileTypes = ['image/png', 'image/jpeg'];
@@ -247,6 +249,10 @@ var TutorRegisterComponent = /** @class */ (function () {
         //    this.ProfileApprovalRequired = res.adminDashboard_ProfileApproval_ApprovalRequired;
         //}, err => {
         //})
+        this.stripeCountrysService.get()
+            .subscribe(function (countrySuccess) {
+            _this.stripeCountrys = countrySuccess;
+        });
         //this.getSubscription();
         if (this.journeyType == models_1.RegistrationJourneyType.TutorRegistration) {
             this.journeyTypeForTutor = true;
@@ -291,10 +297,12 @@ var TutorRegisterComponent = /** @class */ (function () {
             return; // Skip this if not given.
         this.companyService.getById(companyId)
             .subscribe(function (success) {
+            debugger;
             $('.loading').hide();
             console.log("Company details:", companyId, success);
             _this.company = success;
             _this.company.companyName = _this.company.companyName.toLocaleUpperCase();
+            _this.stripeCountryId = _this.company.stripeCountryID;
         }, function (error) {
         });
     };
@@ -324,12 +332,14 @@ var TutorRegisterComponent = /** @class */ (function () {
             });
             this.tutorsService.getBasicInfo()
                 .subscribe(function (success) {
+                debugger;
                 _this.currentCompany = success.currentCompany; // can be null..
                 _this.preventJoiningAnotherCompany();
                 _this.basicInfoFormSubmitted = false;
                 _this.basicInfoForm = _this.fb.group({
                     userId: [success.userId],
                     title: [success.title, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
+                    stripeCountryId: [_this.stripeCountryId, [forms_1.Validators.required]],
                     firstName: [success.firstName, [forms_1.Validators.required, forms_1.Validators.maxLength(20)]],
                     lastName: [success.lastName, [forms_1.Validators.required, forms_1.Validators.maxLength(20)]],
                     telephoneNumber: [success.telephoneNumber, [forms_1.Validators.required, forms_1.Validators.maxLength(250), forms_1.Validators.pattern('^[0-9]+$')]],
@@ -341,7 +351,7 @@ var TutorRegisterComponent = /** @class */ (function () {
                     termsAndConditionsAccepted: [Boolean(success.termsAndConditionsAccepted), [forms_1.Validators.required]],
                     marketingAccepted: [success.marketingAccepted, []],
                     //wizcraft
-                    platformUse: ['1', []],
+                    platFormUse: ['3'],
                 });
                 $('.loading').hide();
             }, function (error) {
@@ -630,10 +640,10 @@ var TutorRegisterComponent = /** @class */ (function () {
             //    joiningCompanyId: this.companyId
             //};
             if (this.companyId && this.journeyType == 3) {
-                basicInfo = __assign(__assign({}, this.basicInfoForm.getRawValue()), { dateOfBirth: new Date(Date.parse(this.getDateString())), joiningCompanyId: this.companyId, IDVerificationtStatus: 99 });
+                basicInfo = __assign(__assign({}, this.basicInfoForm.getRawValue()), { dateOfBirth: new Date(Date.parse(this.getDateString())), joiningCompanyId: this.companyId, IDVerificationtStatus: 99, platFormUse: Number(this.basicInfoForm.getRawValue().platFormUse) });
             }
             else {
-                basicInfo = __assign(__assign({}, this.basicInfoForm.getRawValue()), { dateOfBirth: new Date(Date.parse(this.getDateString())), joiningCompanyId: this.companyId, stripePlanId: this.stripePlan != null ? this.stripePlan.stripePlanId : '', IDVerificationtStatus: 0 });
+                basicInfo = __assign(__assign({}, this.basicInfoForm.getRawValue()), { dateOfBirth: new Date(Date.parse(this.getDateString())), joiningCompanyId: this.companyId, stripePlanId: this.stripePlan != null ? this.stripePlan.stripePlanId : '', IDVerificationtStatus: 0, platFormUse: Number(this.basicInfoForm.getRawValue().platFormUse) });
             }
             debugger;
             this.tutorsService.saveBasicInfo(basicInfo)
@@ -1274,8 +1284,8 @@ var TutorRegisterComponent = /** @class */ (function () {
             templateUrl: './tutor-register.component.html',
             styleUrls: ['./tutor-register.component.scss']
         }),
-        __metadata("design:paramtypes", [dialog_1.MatDialog, forms_1.FormBuilder, ngx_toastr_1.ToastrService, services_1.TutorsService, services_1.EnumsService, services_1.StripeService, services_1.StripeCountrysService, services_1.StripePlansService, services_1.TutorQualificationsService, services_1.TutorCertificatesService, services_1.TutorSubjectsService, services_1.SubjectsService, services_1.SubjectCategoriesService, services_1.StudyLevelsService, platform_browser_1.DomSanitizer,
-            services_1.CompanyService])
+        __metadata("design:paramtypes", [dialog_1.MatDialog, forms_1.FormBuilder, ngx_toastr_1.ToastrService, services_1.TutorsService, services_1.EnumsService, services_1.StripeService, services_1.StripePlansService, services_1.TutorQualificationsService, services_1.TutorCertificatesService, services_1.TutorSubjectsService, services_1.SubjectsService, services_1.SubjectCategoriesService, services_1.StudyLevelsService,
+            platform_browser_1.DomSanitizer, services_1.CompanyService, services_1.StripeCountrysService])
     ], TutorRegisterComponent);
     return TutorRegisterComponent;
 }());

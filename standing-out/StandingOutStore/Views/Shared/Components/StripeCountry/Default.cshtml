@@ -1,0 +1,9 @@
+﻿@model StandingOut.Data.DTO.StripeCountry
+
+@if (User.Identity.IsAuthenticated)
+{
+    <script>
+        var stripeCountry = @Html.Raw(Json.Serialize(Model));
+        //console.log(stripeCountry);
+    </script>
+}

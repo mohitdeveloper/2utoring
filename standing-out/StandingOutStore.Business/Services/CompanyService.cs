@@ -284,6 +284,7 @@ namespace StandingOutStore.Business.Services
             user.DateOfBirth = model.DateOfBirth;
             user.TermsAndConditionsAccepted = model.TermsAndConditionsAccepted;
             user.MarketingAccepted = model.MarketingAccepted;
+            user.StripeCountryID = model.StripeCountryID;
 
             model.UserId = user.Id;
             await _UserManager.UpdateAsync(user);
@@ -836,7 +837,7 @@ namespace StandingOutStore.Business.Services
         public async Task<DTO.CompanyProfileViewModel> GetAboutCompany(Guid companyId)
         {
 
-            string includeProperties = "CompanyTeam,CompanyTutors, CompanyTutors.Tutor,CompanyTutors.Tutor.TutorQualifications, CompanyTutors.Tutor.Users, Courses,Courses.Tutor,Courses.ClassSessions,SubjectStudyLevelSetups,SubjectStudyLevelSetups.Subject,SubjectStudyLevelSetups.StudyLevel";
+            string includeProperties = "AdminUser.StripeCountry,CompanyTeam,CompanyTutors, CompanyTutors.Tutor,CompanyTutors.Tutor.TutorQualifications, CompanyTutors.Tutor.Users, Courses,Courses.Tutor,Courses.ClassSessions,SubjectStudyLevelSetups,SubjectStudyLevelSetups.Subject,SubjectStudyLevelSetups.StudyLevel";
             var company = await _UnitOfWork.Repository<Models.Company>().GetSingle(o => o.CompanyId == companyId, includeProperties: includeProperties);
             var ObjCompany = Mapping.Mappings.Mapper.Map<Models.Company, DTO.CompanyProfileViewModel>(company);
             ObjCompany.Courses = ObjCompany.Courses.Where(x => x.CourseType == CourseType.Public && x.CourseAttendeesCount < x.MaxClassSize && x.Completed == false && x.Cancelled == false && x.EndDate.Value.UtcDateTime >= DateTime.UtcNow).ToList();
@@ -863,7 +864,7 @@ namespace StandingOutStore.Business.Services
                 item.TotalBookedSlot = classSession.Count;
                 #endregion
             }
-
+            ObjCompany.StripeCountry = Mapping.Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(company.AdminUser.StripeCountry);
             foreach (var tutorItem in ObjCompany.Tutors)
             {
                 tutorItem.SubjectStudyLevelSetup = new List<DTO.SubjectStudyLevelSetup>();

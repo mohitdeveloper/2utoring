@@ -117,7 +117,8 @@ course.classSessionsTotalAmount | currency : lesson.sessionCurrency
         <div class="summary-total" style="border-bottom:none;">
             <div class="summary-total-left">
                 <p>
-                    £ {{ course?.classSessionsTotalAmount }} <span>TOTAL COURSE PRICE</span>
+                    {{course?.stripeCountry.currencySymbol + (course?.classSessionsTotalAmount | number : '1.2-2') }}
+                    <span>TOTAL COURSE PRICE</span>
                 </p>
             </div>  
         </div>

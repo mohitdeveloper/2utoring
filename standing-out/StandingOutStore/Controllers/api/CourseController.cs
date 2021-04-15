@@ -26,12 +26,14 @@ namespace StandingOutStore.Controllers.api
         private readonly ICourseService _courseService;
         private readonly ITutorService _tutorService;
         private readonly ICompanyTutorService _companyTutorService;
+        private readonly IStripeCountryService _StripeCountryService;
 
-        public CourseController(ICourseService courseService,ITutorService tutorService, ICompanyTutorService companyTutorService, UserManager<Models.User> userManager, IUserService userService,IOptions<AppSettings> appSettings, ICompanyService companyService) : base(userManager, appSettings, companyService)
+        public CourseController(IStripeCountryService stripeCountryService,ICourseService courseService,ITutorService tutorService, ICompanyTutorService companyTutorService, UserManager<Models.User> userManager, IUserService userService,IOptions<AppSettings> appSettings, ICompanyService companyService) : base(userManager, appSettings, companyService)
         {
             _courseService = courseService;
             _tutorService = tutorService;
             _companyTutorService = companyTutorService;
+            _StripeCountryService = stripeCountryService;
         }
 
         [HttpPost("Paged")]
@@ -90,7 +92,9 @@ namespace StandingOutStore.Controllers.api
         public async Task<IActionResult> GetPurchaseCouresData(Guid id)
         {
             var returnModel = await _courseService.GetPurchaseCouresData(id);
-            return Ok(Mappings.Mapper.Map<Models.Course, DTO.Course>(returnModel));
+            var model = Mappings.Mapper.Map<Models.Course, DTO.Course>(returnModel);
+            model.StripeCountry = Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(returnModel.Tutor.Users.FirstOrDefault().StripeCountry);
+            return Ok(model);
         }
         [AllowAnonymous]
         [HttpGet("getCouresInfo/{id}")]

@@ -29,6 +29,7 @@ var SubjectStudyLevelSetupIndexComponent = /** @class */ (function () {
         this.tutorId = null;
         this.colMdLg = 6;
         this.isFilterVisible = 1;
+        this.stripeCountry = stripeCountry;
         this.title = title;
         this.alertMessage = null;
         this.takeValues = [

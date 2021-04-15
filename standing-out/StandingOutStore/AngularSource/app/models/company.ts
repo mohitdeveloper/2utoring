@@ -65,4 +65,5 @@ export class Company {
     userFullName: string;
     emailAddress: string;
     tutorId: string;
+    stripeCountryID: string;
 }

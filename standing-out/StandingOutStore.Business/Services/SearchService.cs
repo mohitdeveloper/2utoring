@@ -50,7 +50,7 @@ namespace StandingOutStore.Business.Services
                        && o.Completed == false && o.Cancelled == false
                        && o.Tutor.ProfileApprovalStatus == TutorApprovalStatus.Approved
                        && o.CourseType == CourseType.Public
-                        , includeProperties: "Company,Tutor.Users,Tutor.TutorQualifications,Tutor.TutorAvailabilities,ClassSessions.SessionAttendees,OrderItems,Subject");
+                        , includeProperties: "Company,Tutor.Users.StripeCountry,Tutor.TutorQualifications,Tutor.TutorAvailabilities,ClassSessions.SessionAttendees,OrderItems,Subject");
 
             if (model.SubjectId.HasValue)
             {
@@ -95,6 +95,10 @@ namespace StandingOutStore.Business.Services
                 CourseObj.TotalBookedSlot = await GetBookedSlot(item.Tutor.Users.FirstOrDefault().Id);
                 CourseObj.TotalSlotCount = await GetFutureAvailableSlot(item.Tutor.TutorId);
                 #endregion
+
+                #region Stripe Country
+                CourseObj.StripeCountry = Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(item.Tutor.Users.FirstOrDefault().StripeCountry);
+                #endregion
                 searchCourseModel.CourseList.Add(CourseObj);
             }
             return searchCourseModel;
@@ -112,7 +116,7 @@ namespace StandingOutStore.Business.Services
             var tutor = _UnitOfWork.Repository<Models.Tutor>().GetQueryable(o => o.IsDeleted == false
             && o.ProfileApprovalStatus == TutorApprovalStatus.Approved
 
-            , includeProperties: "Users,TutorQualifications,TutorAvailabilities,CompanyTutors.Company");
+            , includeProperties: "Users.StripeCountry,TutorQualifications,TutorAvailabilities,CompanyTutors.Company");
 
             if (tutor != null)
             {
@@ -135,7 +139,10 @@ namespace StandingOutStore.Business.Services
                     {
                         continue;
                     }*/
-                    
+                    #region Tutor Stripe Country
+                    tutorObj.StripeCountry= Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(item.Users.FirstOrDefault().StripeCountry); 
+                    #endregion
+
                     #region Tutor Availabilities and Booked slot
                     tutorObj.TotalBookedSlot = await GetBookedSlot(item.Users.FirstOrDefault().Id);
                     tutorObj.TotalSlotCount = await GetFutureAvailableSlot(item.TutorId);

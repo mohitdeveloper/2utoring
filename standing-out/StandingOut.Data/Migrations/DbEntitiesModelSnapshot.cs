@@ -1825,6 +1825,16 @@ namespace StandingOut.Data.Migrations
 
                     b.Property<DateTime?>("CreatedDate");
 
+                    b.Property<string>("CurrencyCode")
+                        .HasMaxLength(10);
+
+                    b.Property<int?>("CurrencyOrder");
+
+                    b.Property<string>("CurrencySymbol")
+                        .HasMaxLength(10);
+
+                    b.Property<int?>("DecimalMultiplier");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("ModifiedBy");
@@ -1833,6 +1843,8 @@ namespace StandingOut.Data.Migrations
 
                     b.Property<string>("Name")
                         .HasMaxLength(250);
+
+                    b.Property<bool>("SupportedPayout");
 
                     b.Property<bool>("TopOfList");
 
@@ -2221,6 +2233,8 @@ namespace StandingOut.Data.Migrations
 
                     b.Property<int>("PaymentStatus");
 
+                    b.Property<int?>("PlatformUse");
+
                     b.Property<string>("PostCode")
                         .HasMaxLength(10);
 
@@ -2587,6 +2601,8 @@ namespace StandingOut.Data.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<Guid?>("StripeCountryID");
+
                     b.Property<string>("StripeCustomerId");
 
                     b.Property<string>("TelephoneNumber")
@@ -2617,6 +2633,8 @@ namespace StandingOut.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("StripeCountryID");
 
                     b.HasIndex("TutorId");
 
@@ -3401,6 +3419,11 @@ namespace StandingOut.Data.Migrations
 
             modelBuilder.Entity("StandingOut.Data.Models.User", b =>
                 {
+                    b.HasOne("StandingOut.Data.Models.StripeCountry", "StripeCountry")
+                        .WithMany()
+                        .HasForeignKey("StripeCountryID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("StandingOut.Data.Models.Tutor", "Tutor")
                         .WithMany("Users")
                         .HasForeignKey("TutorId")

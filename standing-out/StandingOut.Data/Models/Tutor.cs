@@ -65,6 +65,9 @@ namespace StandingOut.Data.Models
         [StringLength(2000)]
         public string ProfileImageFileName { get; set; }
 
+        public int? PlatformUse { get; set; }
+        
+
 
         [StringLength(250)]
         public string StripeConnectAccountId { get; set; } // acct_xxxxxxx  (Setup on PayoutOauth - AuthenticateStripeConnectResponse only)
@@ -85,8 +88,6 @@ namespace StandingOut.Data.Models
         public bool ProfileUpgradeMessageRead { get; set; }
         public bool ProfileSetupStarted { get; set; }
         public bool ProfileFieldsAllComplete { get; set; }
-
-        public int PlatformUse { get; set; }
 
         // Bank details
         [StringLength(20)]

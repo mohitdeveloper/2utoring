@@ -91,6 +91,7 @@ var StudentEnrollComponent = /** @class */ (function () {
     StudentEnrollComponent.prototype.setupUserDetailForm = function (user) {
         this.userDetailForm = this.formBuilder.group({
             title: [user.title, [forms_1.Validators.required]],
+            //stripeCountryId: [this.stripeCountryId, [Validators.required]],
             firstName: [user.firstName, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             lastName: [user.lastName, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             //childFirstName: ['', [Validators.required, Validators.maxLength(250)]],
@@ -183,6 +184,10 @@ var StudentEnrollComponent = /** @class */ (function () {
         // this.getLessonCard();    
         //get course details
         this.getCourse();
+        //this.stripeCountrysService.get()
+        //    .subscribe(countrySuccess => {
+        //        this.stripeCountrys = countrySuccess;
+        //    });
     };
     ;
     StudentEnrollComponent.prototype.getCourse = function () {

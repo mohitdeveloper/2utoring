@@ -39,7 +39,7 @@
                                     <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-icon.svg" alt="" /></span>
                                     <span class="bottom-col-text">
                                         <small>One-to-one</small>
-                                        {{ tutor?.tutorPriceLesson.oneToOneMinPrice | currency:'GBP':'symbol':'1.2-2' }}-{{ tutor?.tutorPriceLesson.oneToOneMaxPrice }} / hr
+                                        {{tutor?.stripeCountry.currencySymbol+(tutor?.tutorPriceLesson.oneToOneMinPrice | number : '1.2-2')}}-{{ tutor?.tutorPriceLesson.oneToOneMaxPrice| number : '1.2-2' }}/ hr
                                     </span>
                                 </a>
                                 <p class="text-down">{{ tutor?.tutorPriceLesson.oneToOneLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
@@ -49,7 +49,7 @@
                                     <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt="" /></span>
                                     <span class="bottom-col-text">
                                         <small>Group Lessons</small>
-                                        {{ tutor?.tutorPriceLesson.groupMinPrice | currency:'GBP':'symbol':'1.2-2' }}-{{ tutor?.tutorPriceLesson.groupMaxPrice }}/ hr
+                                        {{tutor?.stripeCountry.currencySymbol+(tutor?.tutorPriceLesson.groupMinPrice | number : '1.2-2')}}-{{ tutor?.tutorPriceLesson.groupMaxPrice| number : '1.2-2' }}/ hr
                                     </span>
                                 </a>
                                 <p class="text-down">{{ tutor?.tutorPriceLesson.groupLessonCount }} COMPLETED <span>IN LAST 30 DAYS</span></p>
@@ -125,8 +125,8 @@
                                                     <div class="d-flex" *ngFor="let subLevelDetails of tutor?.subjectStudyLevelSetup">
                                                         <div class="col-3">{{ subLevelDetails.subjectName }}</div>
                                                         <div class="col-3">{{ subLevelDetails.studyLevelName }}</div>
-                                                        <div class="col-3">{{ subLevelDetails.pricePerPerson | currency:'GBP':'symbol':'1.2-2'}}/hr</div>
-                                                        <div class="col-3">{{ subLevelDetails.groupPricePerPerson | currency:'GBP':'symbol':'1.2-2'}}/hr</div>
+                                                        <div class="col-3">{{ subLevelDetails.pricePerPerson | currency:stripeCountry.currencyCode:'symbol':'1.2-2'}}/hr</div>
+                                                        <div class="col-3">{{ subLevelDetails.groupPricePerPerson | currency:stripeCountry.currencyCode:'symbol':'1.2-2'}}/hr</div>
                                                     </div>-->
 
                                                     
@@ -154,8 +154,8 @@
                                                                 <tr *ngFor="let subLevelDetails of tutor?.subjectStudyLevelSetup">
                                                                     <td>{{ subLevelDetails.subjectName }}</td>
                                                                     <td>{{ subLevelDetails.studyLevelName }}</td>
-                                                                    <td>{{ subLevelDetails.pricePerPerson | currency:'GBP':'symbol':'1.2-2' }}/hr</td>
-                                                                    <td>{{ subLevelDetails.groupPricePerPerson | currency:'GBP':'symbol':'1.2-2'}}/hr</td>
+                                                                    <td>{{tutor?.stripeCountry.currencySymbol+(subLevelDetails.pricePerPerson | number : '1.2-2')}}/hr</td>
+                                                                    <td>{{tutor?.stripeCountry.currencySymbol+(subLevelDetails.groupPricePerPerson | number : '1.2-2')}}/hr</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table> 
@@ -276,7 +276,7 @@
                                                             <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
                                                             <span class="bottom-col-text">
                                                                 <small>Group Course</small>
-                                                                {{t.classSessionsTotalAmount | currency:'GBP':'symbol':'1.2-2'}}
+                                                                {{tutor?.stripeCountry.currencySymbol+(t.classSessionsTotalAmount | number : '1.2-2')}}
                                                             </span>
                                                         </a>
                                                         <p class="text-down">{{ t.maxClassSize - t.courseAttendeesCount }} PLACES  <span>LEFT TO BOOK</span></p>

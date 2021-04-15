@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 
 declare let area: string;
+declare var stripeCountry: any;
 
 @Component({
     selector: 'app-tutor-earnings',
@@ -16,6 +17,7 @@ export class TutorEarningsComponent implements OnInit {
     colspan: number = 7;
     alertMessage: any = null;
     showReloadList: boolean = false;
+    stripeCountry: any = stripeCountry;
     //toLoad: number = this.stripeConnectAccountId !== undefined && this.stripeConnectAccountId != null && this.stripeConnectAccountId != '' && (success == true || success === undefined) ? 1 : 0;
     //loaded: number = 0;
 

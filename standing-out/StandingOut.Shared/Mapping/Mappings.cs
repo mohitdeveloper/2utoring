@@ -113,15 +113,17 @@ namespace StandingOut.Shared.Mapping
                     .ForMember(o => o.CompanyName, src => src.MapFrom(u => u.Name))
                     .ForMember(o => o.CompanyRegistrationNumber, src => src.MapFrom(u => u.RegistrationNo))
                     .ForMember(o => o.CompanyDescription, src => src.MapFrom(u => u.Description))
-                    .ForMember(o => o.UserId, src => src.MapFrom(u => u.AdminUser.Id));
+                    .ForMember(o => o.UserId, src => src.MapFrom(u => u.AdminUser.Id))
+                    .ForMember(o => o.StripeCountryID, src => src.MapFrom(u => u.AdminUser.StripeCountryID));
 
                 cfg.CreateMap<Models.Tutor, DTO.Tutor>()
                     .ForMember(o => o.UserFullName, src => src.MapFrom(u => u.Users.FirstOrDefault().FullName))
                     .ForMember(o => o.UserFirstName, src => src.MapFrom(u => u.Users.FirstOrDefault().FirstName))
                     .ForMember(o => o.UserEmail, src => src.MapFrom(u => u.Users.FirstOrDefault().Email))
                     .ForMember(o => o.UserTitle, src => src.MapFrom(u => u.Users.FirstOrDefault().Title))
-                    .ForMember(o => o.UserId, src => src.MapFrom(u => u.Users.FirstOrDefault().Id));
-                    
+                    .ForMember(o => o.UserId, src => src.MapFrom(u => u.Users.FirstOrDefault().Id))
+                    .ForMember(o => o.StripeCountryID, src => src.MapFrom(u => u.Users.FirstOrDefault().StripeCountryID));
+
 
                 cfg.CreateMap<Models.Tutor, DTO.AdminTutorDetails>()
                     .ForMember(o => o.UserFullName, src => src.MapFrom(u => u.Users.FirstOrDefault().FullName))
@@ -454,12 +456,13 @@ namespace StandingOut.Shared.Mapping
                     //.ForMember(x => x.Created, src => src.MapFrom(x => x.Order.CreatedDate.HasValue ? x.Order.CreatedDate.Value.ToLocalTime(): DateTime.MinValue))
                     .ForMember(x => x.LessonStartDate, src => src.MapFrom(x => x.ClassSession.StartDate.ToLocalTime()))
                     .ForMember(x => x.Amount, src => src.MapFrom(x => x.AmountCharged * 100))
-                    .ForMember(x => x.Id, 
-                            src => src.MapFrom(x => 
-                            (x.OrderItem != null && x.OrderItem.Order != null && x.OrderItem.Order.PaymentProviderFields != null) 
+                    .ForMember(x => x.Id,
+                            src => src.MapFrom(x =>
+                            (x.OrderItem != null && x.OrderItem.Order != null && x.OrderItem.Order.PaymentProviderFields != null)
                             ? x.OrderItem.Order.PaymentProviderFields.ReceiptId : "Unknown"))
                     .ForMember(x => x.AmountRefunded, src => src.MapFrom(x => (x.Refunded && x.AttendeeRefundId != null) ? x.AttendeeRefund.Amount * 100 : 0m))
-                    .ForMember(x => x.ClassSessionName, src => src.MapFrom(x => x.ClassSession.Name));
+                    .ForMember(x => x.ClassSessionName, src => src.MapFrom(x => x.ClassSession.Name))
+                    .ForMember(x => x.StripeCountry, src => src.MapFrom(x => x.ClassSession.Owner.StripeCountry));//Add StripeCountry for Currency Symbol by wizcraft
 
                 cfg.CreateMap<Models.SafeguardReport, DTO.SafeguardReportIndex>()
                     .ForMember(x => x.SessionName, src => src.MapFrom(x => x.ClassSessionId.HasValue ? x.ClassSession.Name : null))

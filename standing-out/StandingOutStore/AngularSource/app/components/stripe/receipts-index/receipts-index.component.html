@@ -44,7 +44,8 @@
                                             <td>{{item.created | date : 'dd/MM/yyyy hh:mm'}}</td>
                                             <td>{{item.lessonStartDate | date : 'dd/MM/yyyy hh:mm'}}</td>
                                             <td>{{item.classSessionName}}</td>
-                                            <td>{{(item.amount / 100) | currency : item.currency.toUpperCase()}}</td>
+                                            <!--<td>{{(item.amount / 100) | currency : item.currency.toUpperCase()}}</td>-->
+                                        <td>{{item.stripeCountry.currencySymbol+((item.amount / item.stripeCountry.decimalMultiplier) | number : '1.2-2')}}</td>
                                             <td>{{friendlyStatus(item)}}</td>
                                             <td>
                                                 <button type="button" (click)="initiateRefund(item)" class="btn btn-secondary" *ngIf="isRefundable(item)">Refund</button>

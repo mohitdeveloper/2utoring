@@ -52,4 +52,5 @@ export class Tutor {
     tutorQualification: any;
     tutorCertificates: any;
     profileImageFileLocation: any;
+    stripeCountry: any;
 }

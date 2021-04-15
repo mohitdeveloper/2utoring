@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InviteStudentDialogComponent } from '../invite-student-dialog/invite-student-dialog.component';
 
 declare var alertMessage: any;
-
+declare var stripeCountry: any;
 @Component({
     selector: 'app-courses-index',
     templateUrl: './courses-index.component.html',
@@ -24,7 +24,7 @@ export class CoursesIndexComponent implements OnInit {
     @Input() actionTaken: boolean;
     @Input() isCompany: boolean;
     @Input() maxClassSize: string;
-
+    stripeCountry: any = stripeCountry;
     url: string = window.location.hostname;
     alertMessage: any = alertMessage;
     courseId: string;

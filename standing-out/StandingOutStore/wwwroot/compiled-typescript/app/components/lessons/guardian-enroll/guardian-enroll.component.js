@@ -39,6 +39,8 @@ var GuardianEnrollComponent = /** @class */ (function () {
         this.courseId = courseId;
         //classSessionId: string = classSessionId;
         this.step = index_1.GuardianRegistrationStep.GuardianDetail;
+        //stripeCountrys: StripeCountry[] = [];
+        //stripeCountryId: string = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
         this.lesson = null;
         this.course = null;
         this.user = null;
@@ -104,6 +106,7 @@ var GuardianEnrollComponent = /** @class */ (function () {
     GuardianEnrollComponent.prototype.setupGuardianDetailForm = function (user) {
         this.guardianDetailForm = this.formBuilder.group({
             parentTitle: [user.childTitle, [forms_1.Validators.required]],
+            //stripeCountryId: [this.stripeCountryId, [Validators.required]],
             firstName: [user.firstName, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             lastName: [user.lastName, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             telephoneNumber: [user.telephoneNumber, [forms_1.Validators.required, forms_1.Validators.maxLength(250), forms_1.Validators.pattern('^[0-9]+$')]],
@@ -219,6 +222,10 @@ var GuardianEnrollComponent = /** @class */ (function () {
         this.getUserTitel();
         //this.getLessonCard();
         this.getCourse();
+        //this.stripeCountrysService.get()
+        //    .subscribe(countrySuccess => {
+        //        this.stripeCountrys = countrySuccess;
+        //    });
     };
     ;
     GuardianEnrollComponent.prototype.getCourse = function () {

@@ -126,6 +126,8 @@ namespace StandingOutStore.Business.Services
                     var inviteOut = await courseInviteService.Create(sender, invite);
                 }
             }
+            sender.StripeCountryID = basketModel.Payment.StripeCountryId;
+            await _UserManager.UpdateAsync(sender);
         }
     }
 }

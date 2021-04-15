@@ -234,7 +234,7 @@
                                                     <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-icon.svg" alt=""></span>
                                                     <span class="bottom-col-text">
                                                         <small>One-to-one</small>
-                                                        £ {{ selectedTutorData?.tutorPriceLesson?.oneToOneMinPrice }}-{{ selectedTutorData?.tutorPriceLesson?.oneToOneMaxPrice }} / hr
+                                                        {{stripeCountry.currencySymbol+( selectedTutorData?.tutorPriceLesson?.oneToOneMinPrice | number : '1.2-2')}} - {{stripeCountry.currencySymbol+( selectedTutorData?.tutorPriceLesson?.oneToOneMaxPrice | number : '1.2-2')}}/ hr
                                                     </span>
                                                 </a>
                                                 <p class="text-down">{{ selectedTutorData?.tutorPriceLesson?.oneToOneLessonCount }} &nbsp;&nbsp; COMPLETED <span>IN LAST 30 DAYS</span></p>
@@ -244,7 +244,8 @@
                                                     <span class="bottom-col-icon"><img src="/lib/assets/images/user-group-3-icon.svg" alt=""></span>
                                                     <span class="bottom-col-text">
                                                         <small>Group Lessons</small>
-                                                        £ {{ selectedTutorData?.tutorPriceLesson?.groupMinPrice }}-{{ selectedTutorData?.tutorPriceLesson?.groupMaxPrice }} / hr
+
+                                                        {{stripeCountry.currencySymbol+(selectedTutorData?.tutorPriceLesson?.groupMinPrice | number : '1.2-2')}} - {{stripeCountry.currencySymbol+(selectedTutorData?.tutorPriceLesson?.groupMaxPrice | number : '1.2-2')}}/ hr
                                                     </span>
                                                 </a>
                                                 <p class="text-down">{{ selectedTutorData?.tutorPriceLesson?.groupLessonCount }} &nbsp;&nbsp; COMPLETED <span>IN LAST 30 DAYS</span></p>
@@ -428,7 +429,7 @@
                                             </div>
                                             <div class="lesson-detail-col-sm">
                                                 <div class="lesson-rate">
-                                                    <span class="rate-sign">£</span>
+                                                    <span class="rate-sign">{{stripeCountry.currencySymbol}}</span>
                                                     <span class="rate-stud">
                                                         <input class='price-txt' *ngIf="pricePerPersonEditAllowed" formControlName="pricePerPerson" type="number" min="5" id="pricePerPerson"
                                                                name="pricePerPerson" placeholder="Price"
@@ -444,7 +445,7 @@
                                                             Please enter per each student
                                                         </div>
                                                         <div *ngIf="getContactsFormGroup(i).controls['pricePerPerson'].errors.min">
-                                                            Price can't be less then {{5 | currency:'GBP':'symbol':'1.2-2'}}
+                                                            Price can't be less then {{stripeCountry.currencySymbol+( 5 | number : '1.2-2')}}
                                                         </div>
                                                     </div>
 
@@ -692,7 +693,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between summary-total">
                                     <div class="summary-total-left">
-                                        <p>£{{getTotleLessonPrice()}} <span>TOTAL COURSE PRICE</span></p>
+                                        <p>{{stripeCountry.currencySymbol+( getTotleLessonPrice() | number : '1.2-2')}} <span>TOTAL COURSE PRICE</span></p>
                                     </div>
                                     <button type="submit" class="sub-next" (click)="setCurrentStep(13)">Finish: Create Course</button>
                                 </div>

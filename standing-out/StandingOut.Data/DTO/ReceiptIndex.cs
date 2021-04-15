@@ -19,5 +19,6 @@ namespace StandingOut.Data.DTO
 
         // From metadata
         public string ClassSessionName { get; set; }
+        public StripeCountry StripeCountry { get; set; }
     }
 }

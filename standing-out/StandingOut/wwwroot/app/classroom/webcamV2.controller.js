@@ -141,15 +141,23 @@
                 $scope.dragFloater = function (event) {
 
                     // https://javascript.info/mouse-drag-and-drop <- Excellent tutorial for how to impliment native drag drop
-
+                     
                     // Only do this if the panel is closed
                     if (!$scope.isPanelOpen) {
                         // Get our element
                         var element = document.getElementById('floaterPanel');
-
+                        var css = getComputedStyle(document.body);
+                        var shiftX;
+                        var shiftY;
+                        //wizcraft
                         // Find out how much our click is from offset from the centre of the element
-                        var shiftX = event.clientX - element.getBoundingClientRect().left;
-                        var shiftY = event.clientY - element.getBoundingClientRect().top;
+                        if (navigator.userAgent.indexOf('Firefox') != -1 && parseFloat(navigator.userAgent.substring(navigator.userAgent.indexOf('Firefox') + 8)) >= 3.6) {
+                            shiftX = parseInt(event.offsetX / 1);
+                            shiftY = parseInt(event.offsetY / 1);
+                        } else {
+                            shiftX = parseInt(event.clientX / css.zoom - element.getBoundingClientRect().left);
+                            shiftY = parseInt(event.clientY / css.zoom - element.getBoundingClientRect().top);
+                        }
 
                         // Find the screen size minus the size of the element (so can prevent pushing out of the screen - for the most part)
                         var screenX = document.body.getBoundingClientRect().right - element.getBoundingClientRect().width;
@@ -165,13 +173,23 @@
                         element.style.zIndex = 1000;
 
                         // Move the element
-                        moveAt(element.pageX, event.pageY);
+                        moveAt(event.pageX, event.pageY);
 
                         // Function for moving element definition
                         function moveAt(x, y) {
                             // Assign new positions
-                            var newX = x - shiftX;
-                            var newY = y - shiftY;
+                            //var newX = x - shiftX;
+                            //var newY = y - shiftY;
+                            var newX;
+                            var newY;
+                            if (navigator.userAgent.indexOf('Firefox') != -1 && parseFloat(navigator.userAgent.substring(navigator.userAgent.indexOf('Firefox') + 8)) >= 3.6) {
+                                newX = parseInt(x / 0.75 - shiftX);
+                                newY = parseInt(y / 0.75 - shiftY);
+                            } else {
+                                newX = x / css.zoom - shiftX;
+                                newY = y / css.zoom - shiftY;
+                            }
+
                             element.style.left = (newX < 0 ? 0 : (newX > screenX ? screenX : newX)) + 'px';
                             element.style.top = (newY < 0 ? 0 : (newY > screenY ? screenY : newY)) + 'px';
                         };

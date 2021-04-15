@@ -23,15 +23,17 @@ namespace StandingOutStore.Business.Services
         private readonly IHttpContextAccessor _HttpContext;
         private readonly AppSettings _AppSettings;
         private readonly UserManager<Models.User> _UserManager;
+        private readonly IStripeCountryService _StripeCountryService;
         private bool _Disposed;
 
-        public SessionInviteService(IUnitOfWork unitOfWork, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings, UserManager<Models.User> userManager)
+        public SessionInviteService(IUnitOfWork unitOfWork, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings, UserManager<Models.User> userManager, IStripeCountryService stripeCountryService)
         {
             _UnitOfWork = unitOfWork;
             _Enviroment = hosting;
             _HttpContext = httpContext;
             _AppSettings = appSettings.Value;
             _UserManager = userManager;
+            _StripeCountryService = stripeCountryService;
         }
 
         public SessionInviteService(IUnitOfWork unitOfWork, AppSettings appSettings)
@@ -99,8 +101,11 @@ namespace StandingOutStore.Business.Services
                 if (data.CourseId != null)
                 {
                     StringBuilder sb = new StringBuilder();
-                    var classSession = await _UnitOfWork.Repository<Models.ClassSession>().Get(x => x.CourseId == data.CourseId, includeProperties: "Course,Course.Tutor.Users,Subject, StudyLevel");
-                   if(classSession.Count>0)
+                    var classSession = await _UnitOfWork.Repository<Models.ClassSession>().Get(x => x.CourseId == data.CourseId, includeProperties: "Course,Course.Tutor.Users.StripeCountry,Subject, StudyLevel");
+                    var course = classSession.FirstOrDefault().Course;
+                    var stripeCountry = course.Tutor.Users.FirstOrDefault().StripeCountry;
+                    var coursePriceTotal = course.ClassSessions.Where(x => x.IsDeleted == false && x.StartDate.UtcDateTime >= DateTime.Now.AddMinutes(5).ToUniversalTime()).Sum(x => x.PricePerPerson);
+                    if (classSession.Count>0)
                     {
                         sb.Append("<table style='border-collapse:collapse; width:100%;'>");
                         sb.Append("<thead><tr>");
@@ -122,16 +127,15 @@ namespace StandingOutStore.Business.Services
                             sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>" + item.Subject.Name + "</td>");
                             sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>" + item.StudyLevel.Name + "</td>");
                             sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>" + item.StartDate.ToString("MM/dd/yyyy h:mm tt") + "</td>");
-                            sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>£" + item.PricePerPerson.ToString("#.##") + "</td>");
+                            sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>"+ stripeCountry.CurrencySymbol + item.PricePerPerson.ToString("#.##") + "</td>");
                             sb.Append("</tr>");
                         }
                         sb.Append("</tbody>");
                         sb.Append("</table>");
                     }
-
+                    
                    
-                    var course = classSession.FirstOrDefault().Course;
-                    var coursePriceTotal = course.ClassSessions.Where(x => x.IsDeleted == false && x.StartDate.UtcDateTime >= DateTime.Now.AddMinutes(5).ToUniversalTime()).Sum(x => x.PricePerPerson);
+                   
                     string fName = course.Tutor.Users.FirstOrDefault().FirstName;
                     string lName = course.Tutor.Users.FirstOrDefault().LastName;
                     fName = char.ToUpper(fName[0]) + fName.Substring(1);
@@ -147,7 +151,7 @@ namespace StandingOutStore.Business.Services
                         { "{{tutorFullName}}", tutorFullName },
                         { "{{lessonName}}", course.Name },
                         { "{{lessonDateTime}}", DateTimeOffset.Parse(course.StartDate.Value.ToString()).ToString("dd-MM-yyyy hh:mm tt") },
-                        { "{{lessonPrice}}", "£" + (coursePriceTotal>0?coursePriceTotal.ToString("#.##"):"0.00") },
+                        { "{{lessonPrice}}",  stripeCountry.CurrencySymbol + (coursePriceTotal>0?coursePriceTotal.ToString("#.##"):"0.00") },
                         {"{{classSessionDetail}}",sb.ToString() },
                         //{ "{{lessonSignUpUrl}}", _AppSettings.MainSiteUrl + "/" + (user == null || !user.IsParent ? "student-enroll" : "guardian-enroll") + "/" + model.ClassSessionId },
                         { "{{lessonSignUpUrl}}", _AppSettings.MainSiteUrl + "/Invitation-course-detail/"+course.CourseId},

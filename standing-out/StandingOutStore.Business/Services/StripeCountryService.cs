@@ -18,15 +18,17 @@ namespace StandingOutStore.Business.Services
         private readonly IHttpContextAccessor _HttpContext;
 		private readonly AppSettings _AppSettings;
         private readonly UserManager<Models.User> _UserManager;
+        private readonly IUserService _UserService;
         private bool _Disposed;
 
-        public StripeCountryService(IUnitOfWork unitOfWork, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings, UserManager<Models.User> userManager)
+        public StripeCountryService(IUnitOfWork unitOfWork, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings, UserManager<Models.User> userManager,IUserService userService)
         {
             _UnitOfWork = unitOfWork;
             _Enviroment = hosting;
             _HttpContext = httpContext;
 			_AppSettings = appSettings.Value;
             _UserManager = userManager;
+            _UserService = userService;
         }
 
 		public StripeCountryService(IUnitOfWork unitOfWork, AppSettings appSettings)
@@ -47,6 +49,16 @@ namespace StandingOutStore.Business.Services
         {
             return await _UnitOfWork.Repository<Models.StripeCountry>().Get();
         }
+        public async Task<Models.StripeCountry> GetById(Guid id)
+        {
+            return await _UnitOfWork.Repository<Models.StripeCountry>().GetSingle(x=>x.StripeCountryId==id);
+        }
+
+        public async Task<Models.StripeCountry> GetByCode(string code)
+        {
+            return await _UnitOfWork.Repository<Models.StripeCountry>().GetSingle(x => x.CurrencyCode == code);
+        }
+       
     }
 }
 

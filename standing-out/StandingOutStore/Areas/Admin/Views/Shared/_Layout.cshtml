@@ -61,11 +61,16 @@
 
     <link rel="canonical" href="@url.ToString().ToLower()" />
     @RenderSection("styles", required: false)
+    @if (User.Identity.IsAuthenticated)
+    {
+        @await Component.InvokeAsync("StripeCountry")
+    }
     @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
     {
         @await Component.InvokeAsync("PlanValidity")
-
     }
+
+
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->

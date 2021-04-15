@@ -11,7 +11,7 @@
     @RenderSection("meta", required: true)
     <!-- Google Tag Manager -->
     <script>
-    (function (w, d, s, l, i) {
+        (function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':
                     new Date().getTime(), event: 'gtm.js'
@@ -61,7 +61,10 @@
 
     <link rel="canonical" href="@url.ToString().ToLower()" />
     @RenderSection("styles", required: false)
-
+    @if (User.Identity.IsAuthenticated)
+    {
+        @await Component.InvokeAsync("StripeCountry")
+    }
 </head>
 <body class="_2u_body">
 
@@ -73,7 +76,7 @@
     <!-- End Google Tag Manager (noscript) -->
     <!-- Header Start -->
     
-    <div class="_2u_header webHeader">
+    <div class="_2u_header">
 
         <header>
             <nav class="navbar navbar-expand-lg navbar-light">

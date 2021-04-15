@@ -361,7 +361,7 @@
 
                                 <div class="d-flex justify-content-between summary-total">
                                     <div class="summary-total-left">
-                                        <p>£ {{getTotleLessonPrice()}} <span>PRICE PER STUDENT</span></p>
+                                        <p>{{selectedTutorsData?.stripeCountry.currencySymbol+(getTotleLessonPrice() | number : '1.2-2')}} <span>PRICE PER STUDENT</span></p>
                                     </div>
                                     <button type="button" (click)="setCurrentStep(9)" class="sub-next">Next</button>
                                 </div>
@@ -479,7 +479,10 @@
                                             </div>
                                             <div class="summary-total">
                                                 <div class="summary-total-left">
-                                                    <p>£ {{getTotleLessonPrice()}} <span>PRICE PER STUDENT</span></p>
+                                                    <p>
+                                                        {{selectedTutorsData?.stripeCountry.currencySymbol+(getTotleLessonPrice() | number : '1.2-2')}}
+                                                        <span>PRICE PER STUDENT</span>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

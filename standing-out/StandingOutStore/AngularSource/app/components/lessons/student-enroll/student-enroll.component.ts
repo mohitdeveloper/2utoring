@@ -1,10 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { LessonCard, UserDetail, EnumOption } from '../../../models/index';
-import { ClassSessionsService, UsersService, CoursesService, EnumsService } from '../../../services/index';
+import { ClassSessionsService, UsersService, CoursesService, EnumsService} from '../../../services/index';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UtilitiesHelper } from '../../../helpers';
 import { LessonEnrollModal, LessonEnrollLinkedAccountModal } from '../../../partials';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+//import { StripeCountry } from '../../../models';
 
 declare var title: any;
 declare var courseId: any;
@@ -32,7 +33,8 @@ export class StudentEnrollComponent implements OnInit {
     user: UserDetail = null;
     userTitles: EnumOption[] = [];
     cameFromLinkAccount: string = cameFromLinkAccount;
-
+    //stripeCountrys: StripeCountry[] = [];
+    //stripeCountryId: string = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
     userDetailForm: FormGroup;
     userDetailFormSubmitted: boolean;
     get userDetailFormControls() { return this.userDetailForm.controls; };
@@ -71,6 +73,7 @@ export class StudentEnrollComponent implements OnInit {
     setupUserDetailForm(user: UserDetail): void {
         this.userDetailForm = this.formBuilder.group({
             title: [user.title, [Validators.required]],
+            //stripeCountryId: [this.stripeCountryId, [Validators.required]],
             firstName: [user.firstName, [Validators.required, Validators.maxLength(250)]],
             lastName: [user.lastName, [Validators.required, Validators.maxLength(250)]],
             //childFirstName: ['', [Validators.required, Validators.maxLength(250)]],
@@ -166,6 +169,10 @@ export class StudentEnrollComponent implements OnInit {
        // this.getLessonCard();    
         //get course details
         this.getCourse();
+        //this.stripeCountrysService.get()
+        //    .subscribe(countrySuccess => {
+        //        this.stripeCountrys = countrySuccess;
+        //    });
     };
 
     getCourse() {

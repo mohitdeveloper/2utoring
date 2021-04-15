@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SubjectStudylevelInfoDialogComponent } from '../subject-studylevel-info-dialog/subject-studylevel-info-dialog.component';
 
 declare var title: string;
-
+declare var stripeCountry: any;
 @Component({
     selector: 'app-subject-studylevel-setup-index',
     templateUrl: './subject-studylevel-setup-index.component.html',
@@ -40,7 +40,7 @@ export class SubjectStudyLevelSetupIndexComponent implements OnInit {
         //    this.searchModel.owningEntityId = this.owningEntityId;
         //}
     }
-
+    stripeCountry: any = stripeCountry;
     title: string = title;
     alertMessage: any = null;
     takeValues: any[] = [

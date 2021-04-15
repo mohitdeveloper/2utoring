@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { StudyLevelsService, SubjectsService, SubjectStudyLevelSetupService } from '../../../services';
 import { ToastrService } from 'ngx-toastr';
-
+declare var stripeCountry: any;
 
 @Component({
     selector: 'app-subject-studylevel-create-dialog',
@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
     encapsulation: ViewEncapsulation.None
 })
 export class SubjectStudylevelCreateDialogComponent {
-
+    stripeCountry: any = stripeCountry;
     subjectData: Array<any> = [];
     StudyLevels: Array<any> = [];
     subjectPriceData: any;
@@ -36,6 +36,7 @@ export class SubjectStudylevelCreateDialogComponent {
         @Inject(MAT_DIALOG_DATA) public data, private fb: FormBuilder, private StudyLevelsService: StudyLevelsService, private subjectService: SubjectsService, private SubjectStudyLevelSetupService: SubjectStudyLevelSetupService, private toastr: ToastrService) {
         this.subjectPriceId = data.id;
         debugger;
+        
         if (data.subjectId) {
             this.selectedSubjectId = data.subjectId;
             this.getStudyLevelsBySubject(data.subjectId);

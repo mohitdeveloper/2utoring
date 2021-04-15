@@ -436,7 +436,7 @@ namespace StandingOutStore.Business.Services
 
             var paidAttendees = await _UnitOfWork.Repository<Models.SessionAttendee>()
                 .Get(x => x.OrderId != null && receiptIds.Contains(x.OrderItem.Order.PaymentProviderFields.ReceiptId),
-                    includeProperties: "OrderItem, OrderItem.Order, OrderItem.Order.PaymentProviderFields, ClassSession, AttendeeRefund");
+                    includeProperties: "OrderItem, OrderItem.Order, OrderItem.Order.PaymentProviderFields, ClassSession.Owner.StripeCountry, AttendeeRefund");
 
             result.Data = Mappings.Mapper.Map<List<Models.SessionAttendee>, List<DTO.ReceiptIndex>>(paidAttendees);
 
@@ -446,6 +446,7 @@ namespace StandingOutStore.Business.Services
                 receiptItem.Currency = receipts.FirstOrDefault(x => x.Id == receiptItem.Id)?.Currency ?? "gbp";
                 receiptItem.Status = receipts.FirstOrDefault(x => x.Id == receiptItem.Id)?.Status;
                 if (string.IsNullOrEmpty(receiptItem.Status)) receiptItem.Status = "Unknown";
+                
             }
 
             // Receipt is at course level now.. since you buy courses not lessons

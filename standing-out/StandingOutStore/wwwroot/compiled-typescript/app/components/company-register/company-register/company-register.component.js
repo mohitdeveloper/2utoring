@@ -54,6 +54,7 @@ var CompanyRegisterComponent = /** @class */ (function () {
         this.sanitizer = sanitizer;
         this.serviceHelper = new service_helper_1.ServiceHelper();
         this.ownerEntityType = 'Company';
+        this.stripeCountryId = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
         this.stripePlanId = stripePlanId; // '81070046-8dc3-4ca9-3129-08d7e6c57421';
         this.companyId = undefined;
         this.companyFirstName = '';
@@ -163,10 +164,15 @@ var CompanyRegisterComponent = /** @class */ (function () {
         //get meet team data
         this.getMyTeamData();
         this.getStripePlanDetails(this.stripePlanId);
+        this.stripeCountrysService.get()
+            .subscribe(function (countrySuccess) {
+            _this.stripeCountrys = countrySuccess;
+        });
         this.companyBasicInfoForm = this.fb.group({
             title: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             firstName: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(20)]],
             lastName: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(20)]],
+            stripeCountryId: [this.stripeCountryId, [forms_1.Validators.required]],
             telephoneNumber: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250), forms_1.Validators.pattern('^[0-9]+$')]],
             email: [''],
             mobileNumber: ['', [forms_1.Validators.maxLength(250), forms_1.Validators.pattern('^[0-9]+$')]],
@@ -185,7 +191,6 @@ var CompanyRegisterComponent = /** @class */ (function () {
             whatWeDo: [''],
             whyWeDoIt: [''],
             whyChooseUs: [''],
-            platformUse: ['']
         });
         //payment page
         this.paymentForm = this.fb.group({
@@ -278,6 +283,7 @@ var CompanyRegisterComponent = /** @class */ (function () {
                     title: [success.title, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
                     firstName: [success.firstName, [forms_1.Validators.required, forms_1.Validators.maxLength(20)]],
                     lastName: [success.lastName, [forms_1.Validators.required, forms_1.Validators.maxLength(20)]],
+                    stripeCountryId: [_this.stripeCountrys[0].stripeCountryId, [forms_1.Validators.required]],
                     telephoneNumber: [success.telephoneNumber, [forms_1.Validators.required, forms_1.Validators.maxLength(250), forms_1.Validators.pattern('^[0-9]+$')]],
                     email: [{ value: success.email, disabled: true }],
                     mobileNumber: [success.mobileNumber, [forms_1.Validators.maxLength(250), forms_1.Validators.pattern('^[0-9]+$')]],
@@ -296,7 +302,6 @@ var CompanyRegisterComponent = /** @class */ (function () {
                     whoWeAre: [success.whoWeAre],
                     whatWeDo: [success.whatWeDo],
                     whyWeDoIt: [success.whyWeDoIt],
-                    platformUse: ['1'],
                 });
                 $('.loading').hide();
             }, function (error) {
@@ -368,7 +373,6 @@ var CompanyRegisterComponent = /** @class */ (function () {
                     whatWeDo: [success.whatWeDo, [forms_1.Validators.maxLength(1999)]],
                     whyWeDoIt: [success.whyWeDoIt, [forms_1.Validators.maxLength(1999)]],
                     whyChooseUs: [success.whyChooseUs, [forms_1.Validators.maxLength(1999)]],
-                    platformUse: ['1']
                 });
                 _this.profileTwoFormSubmitted = false;
                 _this.profileTwoForm = _this.fb.group({

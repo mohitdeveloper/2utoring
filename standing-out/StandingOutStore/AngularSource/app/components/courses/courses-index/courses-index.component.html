@@ -115,7 +115,9 @@
                         <span *ngIf="item.published">Published</span>
                     <!--</span>-->
                 </td>
-                <td>{{item.classSessionsTotalAmount | currency:'GBP':'symbol':'1.2-2'}}</td>
+                <td>
+                    {{stripeCountry.currencySymbol + ( item.classSessionsTotalAmount | number : '1.2-2')}}
+                </td>
                 <td class="text-right">
                     <a href="javascript:void(0)" (click)="getLink(item)" class="ml-14 text-success" title="Direct booking link"><i class="fa fa-link" aria-hidden="true"></i></a>
                     <a href="javascript:void(0)" (click)="editCourse(item,isCompany)" class="ml-14 text-dark" title="Edit"><i class="fas fa-pencil ng-star-inserted"></i></a>

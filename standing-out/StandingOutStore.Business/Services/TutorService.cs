@@ -81,10 +81,11 @@ namespace StandingOutStore.Business.Services
         public async Task<DTO.Tutor> GetTutorAvailabilities(Guid tutorId)
         {
             //return await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId, includeProperties: "Users,TutorAvailabilities");
-            var tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId, includeProperties: "Users,TutorAvailabilities");
+            var tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId, includeProperties: "Users.StripeCountry,TutorAvailabilities");
             tutor.TutorAvailabilities = tutor.TutorAvailabilities.Where(x => x.IsDeleted == false && x.EndTime.ToUniversalTime() >= DateTime.Now.ToUniversalTime()).OrderBy(x => x.SlotType).ToList();
             var bookedCourse = await _UnitOfWork.Repository<Models.Course>().Get(o => o.TutorId == tutorId && o.IsDeleted == false, includeProperties: "ClassSessions");
             DTO.Tutor dataModel = Mapping.Mappings.Mapper.Map<Models.Tutor, DTO.Tutor>(tutor);
+            dataModel.StripeCountry= Mapping.Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(tutor.Users.FirstOrDefault().StripeCountry);
             IList<string> subject = new List<string>();
             var tutorSubject = await _UnitOfWork.Repository<Models.SubjectStudyLevelSetup>().Get(x => x.TutorId == tutorId, includeProperties: "Subject");
             foreach (var item in tutorSubject)
@@ -239,7 +240,8 @@ namespace StandingOutStore.Business.Services
                 user.DateOfBirth = model.DateOfBirth;
                 user.TermsAndConditionsAccepted = model.TermsAndConditionsAccepted;
                 user.MarketingAccepted = model.MarketingAccepted;
-
+                user.StripeCountryID = model.StripeCountryID;
+                
                 await _UserManager.UpdateAsync(user);
 
                 await _UserManager.AddToRoleAsync(user, "Tutor");
@@ -293,6 +295,7 @@ namespace StandingOutStore.Business.Services
                         tutor.StripePlanId = model.StripePlanId;
                         tutor.CalendarId = 999;
                         tutor.IDVerificationtStatus = model.IDVerificationtStatus;
+                        tutor.PlatformUse = model.PlatformUse;
                         //tutor.PaymentStatus = PaymentStatus.Paid;
                         tutor.PaymentStatus = PaymentStatus.Failed;
                         await _UnitOfWork.Repository<Models.Tutor>().Insert(tutor);
@@ -1495,14 +1498,14 @@ namespace StandingOutStore.Business.Services
         {
 
             DTO.Tutor tutorDetail = new DTO.Tutor();
-            Models.Tutor tutor = null; ;
+            Models.Tutor tutor = null;
             if (_HttpContext.HttpContext.User.Identity.IsAuthenticated)
             {
                 var logedInUser = await _UserManager.FindByEmailAsync(_HttpContext.HttpContext.User.Identity.Name);
 
                 if (logedInUser != null && logedInUser.TutorId == tutorId)
                 {
-                    tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId && o.IsDeleted == false, includeProperties: "Users,TutorQualifications,CompanyTutors.Company");
+                    tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId && o.IsDeleted == false, includeProperties: "Users.StripeCountry,TutorQualifications,CompanyTutors.Company");
                 }
                 else
                 {
@@ -1511,21 +1514,22 @@ namespace StandingOutStore.Business.Services
                     var company = await GetTutorCompany(tutorId);
                     if ((isAdmin && company != null) || isSuperAdmin)
                     {
-                        tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId && o.IsDeleted == false, includeProperties: "Users,TutorQualifications,CompanyTutors.Company");
+                        tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId && o.IsDeleted == false, includeProperties: "Users.StripeCountry,TutorQualifications,CompanyTutors.Company");
                     }
                     else
                     {
-                        tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId && o.IsDeleted == false && o.ProfileApprovalStatus == TutorApprovalStatus.Approved, includeProperties: "Users,TutorQualifications,CompanyTutors.Company");
+                        tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId && o.IsDeleted == false && o.ProfileApprovalStatus == TutorApprovalStatus.Approved, includeProperties: "Users.StripeCountry,TutorQualifications,CompanyTutors.Company");
                     }
                 }
             }
             else
             {
-                tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId && o.IsDeleted == false && o.ProfileApprovalStatus == TutorApprovalStatus.Approved, includeProperties: "Users,TutorQualifications,CompanyTutors.Company");
+                tutor = await _UnitOfWork.Repository<Models.Tutor>().GetSingle(o => o.TutorId == tutorId && o.IsDeleted == false && o.ProfileApprovalStatus == TutorApprovalStatus.Approved, includeProperties: "Users.StripeCountry,TutorQualifications,CompanyTutors.Company");
             }
             if (tutor != null)
             {
                 tutorDetail = Mappings.Mapper.Map<Models.Tutor, DTO.Tutor>(tutor);
+                tutorDetail.StripeCountry= Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(tutor.Users.FirstOrDefault().StripeCountry);
                 var company = tutor.CompanyTutors.FirstOrDefault();
                 if (company != null)
                 {

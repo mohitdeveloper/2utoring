@@ -124,15 +124,17 @@
                             <!--<span class="badge badge-success" style="padding: 7px 14px; font-size: 13px;" *ngIf="item.earningsPaid">Paid</span>-->
                             <span [class]="(item.paymentStatus=='Paid Out' || item.paymentStatus=='Credited') ? 'badge badge-success' : 'badge badge-danger'" style="padding: 7px 14px; font-size: 13px;">{{item.paymentStatus}}</span>
                         </td>
-                        <td class="text-right"><span class="value--positive">+ {{item.studentFees | currency:'GBP':'symbol':'1.2-2'}}</span></td>
-                        <td *ngIf="area == 'Admin'" class="text-right"><span class="value--negative">- {{item.standingOutFees | currency:'GBP':'symbol':'1.2-2'}}</span></td>
-                        <td class="text-right"><span class="value--positive">+ {{item.vendorEarningAmount | currency:'GBP':'symbol':'1.2-2'}}</span></td>
+                        <td class="text-right"><span class="value--positive">+ {{stripeCountry.currencySymbol+(item.studentFees | number : '1.2-2')}}</span></td>
+                        <td *ngIf="area == 'Admin'" class="text-right"><span class="value--negative">- {{stripeCountry.currencySymbol+(item.standingOutFees | number : '1.2-2')}}</span></td>
+                        <td class="text-right"><span class="value--positive">+ {{stripeCountry.currencySymbol+(item.vendorEarningAmount | number : '1.2-2')}}</span></td>
                     </tr>
                     <tr>
                         <td *ngIf="colspan==8" colspan="8"></td>
                         <td *ngIf="colspan==7" colspan="7"></td>
                         <td class="text-right fw-700">Total</td>
-                        <td class="text-right fw-700">{{getTotalEarnings() | currency:'GBP':'symbol':'1.2-2'}}</td>
+                        <td class="text-right fw-700">
+                            {{stripeCountry.currencySymbol+(getTotalEarnings() | number : '1.2-2')}}
+                        </td>
                     </tr>
                 </tbody>
             </table>

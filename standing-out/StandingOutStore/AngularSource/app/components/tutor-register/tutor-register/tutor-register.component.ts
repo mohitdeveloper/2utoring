@@ -46,7 +46,7 @@ export class TutorRegisterComponent implements OnInit {
 
     company: Company; // as per companyId param
     currentCompany: Company = new Company();
-
+    stripeCountryId: string = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
     tutorId: string = undefined;
     tutorFirstName: string = '';
     tutorInitialRegistrationStep: number = 0;
@@ -129,7 +129,7 @@ export class TutorRegisterComponent implements OnInit {
     journeyTypeForTutor: boolean = false;
     isFilterVisible: number;
     dbsCheckAllowedInSubscriptoin: boolean = true;
-
+    stripeCountrys: StripeCountry[] = [];
     ProfileApprovalRequired: boolean;
     editSlot: boolean = true;
 
@@ -157,8 +157,8 @@ export class TutorRegisterComponent implements OnInit {
         checkCrossOrigin: true
     };
 
-    constructor(public dialog: MatDialog, private fb: FormBuilder, private toastr: ToastrService, private tutorsService: TutorsService, private enumsService: EnumsService, private stripeService: StripeService, private stripeCountrysService: StripeCountrysService, private stripePlansService: StripePlansService, private tutorQualificationsService: TutorQualificationsService, private tutorCertificatesService: TutorCertificatesService, private tutorSubjectsService: TutorSubjectsService, private subjectsService: SubjectsService, private subjectCategoriesService: SubjectCategoriesService, private studyLevelsService: StudyLevelsService, private sanitizer: DomSanitizer,
-        private companyService: CompanyService) { }
+    constructor(public dialog: MatDialog, private fb: FormBuilder, private toastr: ToastrService, private tutorsService: TutorsService, private enumsService: EnumsService, private stripeService: StripeService, private stripePlansService: StripePlansService, private tutorQualificationsService: TutorQualificationsService, private tutorCertificatesService: TutorCertificatesService, private tutorSubjectsService: TutorSubjectsService, private subjectsService: SubjectsService, private subjectCategoriesService: SubjectCategoriesService, private studyLevelsService: StudyLevelsService,
+        private sanitizer: DomSanitizer , private companyService: CompanyService, private stripeCountrysService: StripeCountrysService) { }
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
@@ -232,6 +232,11 @@ export class TutorRegisterComponent implements OnInit {
         //}, err => {
         //})
 
+        this.stripeCountrysService.get()
+            .subscribe(countrySuccess => {
+                this.stripeCountrys = countrySuccess;
+            });
+
         //this.getSubscription();
         if (this.journeyType == RegistrationJourneyType.TutorRegistration) {
             this.journeyTypeForTutor = true;
@@ -280,10 +285,12 @@ export class TutorRegisterComponent implements OnInit {
 
         this.companyService.getById(companyId)
             .subscribe(success => {
+                debugger;
                 $('.loading').hide();
                 console.log("Company details:", companyId, success)
                 this.company = success;
                 this.company.companyName = this.company.companyName.toLocaleUpperCase();
+                this.stripeCountryId = this.company.stripeCountryID;
             }, error => {
             });
     }
@@ -315,6 +322,7 @@ export class TutorRegisterComponent implements OnInit {
                 });
             this.tutorsService.getBasicInfo()
                 .subscribe(success => {
+                    debugger;
                     this.currentCompany = success.currentCompany; // can be null..
                     this.preventJoiningAnotherCompany();
 
@@ -322,6 +330,7 @@ export class TutorRegisterComponent implements OnInit {
                     this.basicInfoForm = this.fb.group({
                         userId: [success.userId],
                         title: [success.title, [Validators.required, Validators.maxLength(250)]],
+                        stripeCountryId: [this.stripeCountryId, [Validators.required]],
                         firstName: [success.firstName, [Validators.required, Validators.maxLength(20)]],
                         lastName: [success.lastName, [Validators.required, Validators.maxLength(20)]],
                         telephoneNumber: [success.telephoneNumber, [Validators.required, Validators.maxLength(250), Validators.pattern('^[0-9]+$')]],
@@ -333,7 +342,7 @@ export class TutorRegisterComponent implements OnInit {
                         termsAndConditionsAccepted: [Boolean(success.termsAndConditionsAccepted), [Validators.required]],
                         marketingAccepted: [success.marketingAccepted, []],
                         //wizcraft
-                        platformUse: ['1', []],
+                        platFormUse: ['3'],
 
                     });
                     $('.loading').hide();
@@ -643,13 +652,13 @@ export class TutorRegisterComponent implements OnInit {
             //    dateOfBirth: new Date(Date.parse(this.getDateString())),
             //    joiningCompanyId: this.companyId
             //};
-
             if (this.companyId && this.journeyType == 3) {
                 basicInfo = {
                     ...this.basicInfoForm.getRawValue(),
                     dateOfBirth: new Date(Date.parse(this.getDateString())),
                     joiningCompanyId: this.companyId,
-                    IDVerificationtStatus: 99
+                    IDVerificationtStatus: 99,
+                    platFormUse: Number(this.basicInfoForm.getRawValue().platFormUse)
                 };
             }
             else {
@@ -658,7 +667,8 @@ export class TutorRegisterComponent implements OnInit {
                     dateOfBirth: new Date(Date.parse(this.getDateString())),
                     joiningCompanyId: this.companyId,
                     stripePlanId: this.stripePlan != null ? this.stripePlan.stripePlanId : '',
-                    IDVerificationtStatus: 0
+                    IDVerificationtStatus: 0,
+                    platFormUse: Number(this.basicInfoForm.getRawValue().platFormUse)
                 };
             }
 

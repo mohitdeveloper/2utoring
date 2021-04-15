@@ -27,6 +27,7 @@ var SubjectStudylevelCreateDialogComponent = /** @class */ (function () {
         this.subjectService = subjectService;
         this.SubjectStudyLevelSetupService = SubjectStudyLevelSetupService;
         this.toastr = toastr;
+        this.stripeCountry = stripeCountry;
         this.subjectData = [];
         this.StudyLevels = [];
         this.existingLevels = [];

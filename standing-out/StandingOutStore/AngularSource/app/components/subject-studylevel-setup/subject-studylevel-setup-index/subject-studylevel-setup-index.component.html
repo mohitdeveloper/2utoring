@@ -98,8 +98,8 @@
                     <tr *ngFor="let item of results.data">
                         <td>{{item.subjectName}}</td>
                         <td>{{item.studyLevelName}}</td>
-                        <td> {{item.pricePerPerson | currency:'GBP':'symbol':'1.2-2'}}</td>
-                        <td>{{item.groupPricePerPerson | currency:'GBP':'symbol':'1.2-2'}}</td>
+                        <td> {{stripeCountry.currencySymbol+( item.pricePerPerson | number : '1.2-2')}}</td>
+                        <td> {{stripeCountry.currencySymbol+( item.groupPricePerPerson | number : '1.2-2')}}</td>
                         <td *ngIf="userType=='Company'">{{item.updateByName}}</td>
                         <td>
                             <div>

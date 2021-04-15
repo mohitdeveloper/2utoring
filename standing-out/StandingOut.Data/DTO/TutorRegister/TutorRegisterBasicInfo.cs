@@ -30,6 +30,9 @@ namespace StandingOut.Data.DTO.TutorRegister
         public DateTime DateOfBirth { get; set; }
         public bool TermsAndConditionsAccepted { get; set; }
         public bool MarketingAccepted { get; set; }
+
+        public int? PlatformUse { get; set; }
+        public Guid? StripeCountryID { get; set; }
         public TutorApprovalStatus IDVerificationtStatus { get; set; }
 
 

@@ -281,7 +281,7 @@
                                             </div>
                                             <div class="lesson-detail-col-sm">
                                                 <div class="lesson-rate">
-                                                    <span class="rate-sign">£</span>
+                                                    <span class="rate-sign">{{stripeCountry.currencySymbol}}</span>
                                                     <span class="rate-stud">
                                                         <input class='price-txt' *ngIf="pricePerPersonEditAllowed" formControlName="pricePerPerson" type="number" min="5" id="pricePerPerson"
                                                                name="pricePerPerson" placeholder="Price"
@@ -297,7 +297,7 @@
                                                             Please enter per each student
                                                         </div>
                                                         <div *ngIf="getContactsFormGroup(i).controls['pricePerPerson'].errors.min">
-                                                            Price can't be less then {{5 | currency:'GBP':'symbol':'1.2-2'}}
+                                                            Price can't be less then {{stripeCountry.currencySymbol+(5 | number:'1.2-2')}}
                                                         </div>
                                                     </div>
 
@@ -506,7 +506,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between summary-total">
                                     <div class="summary-total-left">
-                                        <p><span>TOTAL COURSE PRICE</span> £{{getTotleLessonPrice()}}</p>
+                                        <p><span>TOTAL COURSE PRICE</span> {{stripeCountry.currencySymbol+(getTotleLessonPrice()| number : '1.2-2')}}</p>
                                     </div>
                                     <button type="button" class="sub-next" (click)="setCurrentStep(12)">Finish: Create Course</button>
                                 </div>

@@ -33,6 +33,7 @@ export class CompanyRegisterComponent implements OnInit {
 
     company: Company;
     ownerEntityType: string = 'Company';
+    stripeCountryId: string = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
     stripePlanId: string = stripePlanId; // '81070046-8dc3-4ca9-3129-08d7e6c57421';
     companyId: string = undefined;
     companyFirstName: string = '';
@@ -139,10 +140,16 @@ export class CompanyRegisterComponent implements OnInit {
         this.getMyTeamData();
         this.getStripePlanDetails(this.stripePlanId);
 
+         this.stripeCountrysService.get()
+            .subscribe(countrySuccess => {
+                this.stripeCountrys = countrySuccess;
+            });
+
         this.companyBasicInfoForm = this.fb.group({
             title: ['', [Validators.required, Validators.maxLength(250)]],
             firstName: ['', [Validators.required, Validators.maxLength(20)]],
             lastName: ['', [Validators.required, Validators.maxLength(20)]],
+            stripeCountryId: [this.stripeCountryId, [Validators.required]],
             telephoneNumber: ['', [Validators.required, Validators.maxLength(250), Validators.pattern('^[0-9]+$')]],
             email: [''],
             mobileNumber: ['', [Validators.maxLength(250), Validators.pattern('^[0-9]+$')]],
@@ -261,6 +268,7 @@ export class CompanyRegisterComponent implements OnInit {
                         title: [success.title, [Validators.required, Validators.maxLength(250)]],
                         firstName: [success.firstName, [Validators.required, Validators.maxLength(20)]],
                         lastName: [success.lastName, [Validators.required, Validators.maxLength(20)]],
+                        stripeCountryId: [this.stripeCountrys[0].stripeCountryId, [Validators.required]],
                         telephoneNumber: [success.telephoneNumber, [Validators.required, Validators.maxLength(250), Validators.pattern('^[0-9]+$')]],
                         email: [{ value: success.email, disabled: true }],
                         mobileNumber: [success.mobileNumber, [Validators.maxLength(250), Validators.pattern('^[0-9]+$')]],

@@ -74,6 +74,8 @@ namespace StandingOut.Data.Models
         [StringLength(250)]
         public string LinkAccountKeyTwo { get; set; }
         public DateTimeOffset? LinkAccountRequestDate { get; set; }
+        public Guid? StripeCountryID { get; set; }
+
 
         public virtual Tutor Tutor { get; set; }
 
@@ -86,6 +88,7 @@ namespace StandingOut.Data.Models
         public virtual List<SessionWhiteBoard> SessionWhiteBoards { get; set; }
         public virtual List<SessionWhiteBoardSave> SessionWhiteBoardSaves { get; set; }
         public virtual List<SessionWhiteBoardShare> SessionWhiteBoardShares { get; set; }
+        public virtual StripeCountry StripeCountry { get; set; }
 
         [Display(Name = "Full Name")]
         public string FullName { get { return $"{FirstName} {LastName}"; } }
@@ -95,7 +98,7 @@ namespace StandingOut.Data.Models
 
         public string IPAddress { get; set; }
         public string VerificationCode { get; set; }
-        
+
     }
 
 

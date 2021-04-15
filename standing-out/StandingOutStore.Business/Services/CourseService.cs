@@ -33,7 +33,8 @@ namespace StandingOutStore.Business.Services
         private readonly IHostingEnvironment _Enviroment;
         private readonly IHttpContextAccessor _HttpContext;
         private readonly AppSettings _AppSettings;
-        public CourseService(IUnitOfWork unitOfWork, IAzureFileHelper azureFileHelper, IGoogleHelper googleHelper, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings)
+        private readonly IStripeCountryService _StripeCountryService;
+        public CourseService(IUnitOfWork unitOfWork, IAzureFileHelper azureFileHelper, IGoogleHelper googleHelper, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings,IStripeCountryService stripeCountryService)
         {
             _UnitOfWork = unitOfWork;
             _AzureFileHelper = azureFileHelper;
@@ -41,6 +42,7 @@ namespace StandingOutStore.Business.Services
             _HttpContext = httpContext;
             _AppSettings = appSettings.Value;
             _Enviroment = hosting;
+            _StripeCountryService = stripeCountryService;
         }
         public void Dispose()
         {
@@ -454,24 +456,31 @@ namespace StandingOutStore.Business.Services
         }
         public async Task<Models.Course> GetPurchaseCouresData(Guid courseId)
         {
-            var courseModel = await _UnitOfWork.Repository<Models.Course>().GetSingle(x => x.CourseId == courseId && x.IsDeleted == false, includeProperties: "Subject, StudyLevel,SubjectCategory,Tutor,Tutor.Users,ClassSessions");
+            var courseModel = await _UnitOfWork.Repository<Models.Course>().GetSingle(x => x.CourseId == courseId && x.IsDeleted == false, includeProperties: "Subject, StudyLevel,SubjectCategory,Tutor,Tutor.Users.StripeCountry,ClassSessions");
             courseModel.ClassSessions = courseModel.ClassSessions.Where(x => x.IsDeleted == false && x.StartDate.UtcDateTime >= DateTime.UtcNow.AddMinutes(5)).ToList();
             return courseModel;
         }
         public async Task<DTO.CourseProfile> GetCouresInfo(Guid courseId)
         {
             CourseProfile CourseData = new CourseProfile();
-
+            DTO.StripeCountry stripeCountry = new DTO.StripeCountry();
             string includeProperties = "ClassSessions,ClassSessions.SessionAttendees,Tutor.Users,Company,Subject,StudyLevel,OrderItems";
             var data = await _UnitOfWork.Repository<Models.Course>().GetSingle(o => o.CourseId == courseId, includeProperties: includeProperties);
             var ObjCourse = Mapping.Mappings.Mapper.Map<Models.Course, DTO.Course>(data);
             var ObjTutor = Mapping.Mappings.Mapper.Map<Models.Tutor, DTO.Tutor>(data.Tutor);
+            if (ObjTutor.StripeCountryID != null)
+            {
+                var sCountry = await _StripeCountryService.GetById(Guid.Parse(ObjTutor.StripeCountryID.ToString()));
+                stripeCountry= Mapping.Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(sCountry);
+            }
+
             var classSession = ObjCourse.ClassSessions.Where(y => y.StartDate.UtcDateTime >= DateTime.UtcNow.AddMinutes(5) && y.EndDate.UtcDateTime >= DateTime.UtcNow && y.IsDeleted == false).ToList();
             ObjCourse.ClassSessions.Clear();
             ObjCourse.ClassSessions = classSession.OrderBy(x=>x.StartDate).ToList();
             ObjCourse.StartDate = ObjCourse.ClassSessions.First().StartDate;
             ObjCourse.ClassSessionsTotalAmount = classSession.Sum(x => x.PricePerPerson);
             ObjCourse.ClassSessionsCount = classSession.Count;
+            
             //ObjCourse.CourseAttendeesCount = data.ClassSessions.Sum(x => x.SessionAttendees.Where(o => o.Refunded == false).Count());
             ObjTutor.SubjectStudyLevelSetup = new List<DTO.SubjectStudyLevelSetup>();
             var tutorPriceList = await _UnitOfWork.Repository<Models.SubjectStudyLevelSetup>().Get(o => o.TutorId == ObjTutor.TutorId && o.IsDeleted == false, includeProperties: "Subject,StudyLevel");
@@ -514,6 +523,7 @@ namespace StandingOutStore.Business.Services
 
             CourseData.Course = ObjCourse;
             CourseData.Tutor = ObjTutor;
+            CourseData.StripeCountry = stripeCountry;
             CourseData.RelatedCourseList = await GetRelatedCouresDetail(ObjCourse);
             return CourseData;
         }
@@ -532,11 +542,16 @@ namespace StandingOutStore.Business.Services
                     var classSession = item.ClassSessions.Where(y=>y.IsDeleted==false).OrderByDescending(x => x.StartDate).FirstOrDefault();
                     if (classSession != null)
                     {
+                        DTO.StripeCountry stripeCountry = new DTO.StripeCountry();
                         #region Tutor Availabilities and Booked slot
                         int totalSlotCount = await GetFutureAvailableSlot(item.Tutor.TutorId);
                         int totalBookedSlot = await GetBookedSlot(item.Tutor.Users.FirstOrDefault().Id);
                         #endregion
-
+                        if (item.Tutor.Users.FirstOrDefault().StripeCountryID != null)
+                        {
+                            var sCountry = await _StripeCountryService.GetById(Guid.Parse(item.Tutor.Users.FirstOrDefault().StripeCountryID.ToString()));
+                            stripeCountry = Mapping.Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(sCountry);
+                        }
                         courseDetailList.Add(new CourseDetail
                         {
                             CourseId = item.CourseId,
@@ -554,7 +569,8 @@ namespace StandingOutStore.Business.Services
                             TutorName = item.Tutor.Users.FirstOrDefault().Title + ". " + item.Tutor.Users.FirstOrDefault().FirstName + " " + item.Tutor.Users.FirstOrDefault().LastName,
                             TutorDBSStatus = item.Tutor.DbsApprovalStatus,
                             TutorImage = !string.IsNullOrEmpty(item.Tutor.ProfileImageFileLocation) ? $"/Tutor/Home/DownloadTutorProfileImage/{item.Tutor.TutorId}?dummy={Guid.NewGuid()}" : "",
-                            TutorQualification = item.Tutor.TutorQualifications.Select(x => x.Name).ToList()
+                            TutorQualification = item.Tutor.TutorQualifications.Select(x => x.Name).ToList(),
+                            StripeCountry= stripeCountry
                         });
                     }
                 }

@@ -15,10 +15,8 @@ import { GoogleLinkModal } from '../../../utilities/google-link-modal/google-lin
 import { SaveConfirmDialog } from '../../../courses/save-confirm/save-confirm-dialog.component';
 import { Subscription } from 'rxjs';
 
-
-
-
 declare var jQuery: any;
+declare var stripeCountry: any;
 
 @Component({
     selector: 'app-tutor-create-course',
@@ -26,6 +24,7 @@ declare var jQuery: any;
     styleUrls: ['./tutor-create-course.component.css']
 })
 export class TutorCreateCourseComponent implements OnInit {
+    stripeCountry: any = stripeCountry;
     company: Company;
     subjectData: Array<any> = [];
     tutorsData: Array<any> = [];

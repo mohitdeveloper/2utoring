@@ -8,7 +8,6 @@
                 };
 
                 $scope.init = function () {
-
                 };
 
                 $scope.setFiles = function (files) {

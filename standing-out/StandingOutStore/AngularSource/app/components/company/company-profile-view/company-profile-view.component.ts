@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 declare var isAuthenticated: any;
+/*declare var stripeCountry: any;*/
 @Component({
     selector: 'app-company-profile-view',
     templateUrl: './company-profile-view.component.html',
@@ -17,6 +18,7 @@ export class CompanyProfileViewComponent implements OnInit {
     @Input() companyId: string;
     @Input() showEditButton: boolean;
     isAuthenticated = isAuthenticated;
+    /*stripeCountry: any = stripeCountry;*/
     hasDbsApproved: boolean = false;
     loaded: number = 0;
     toLoad: number = 2;

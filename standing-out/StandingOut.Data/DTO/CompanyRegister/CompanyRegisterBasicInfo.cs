@@ -83,6 +83,7 @@ namespace StandingOut.Data.DTO.CompanyRegister
         public int? DateOfBirthMonth { get; set; }
         public int? DateOfBirthYear { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public Guid? StripeCountryID { get; set; }
         // END User Fields
     }
 }
