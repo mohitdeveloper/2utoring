@@ -32,7 +32,7 @@ namespace StandingOutStore.Business.Services
         }
         public async Task<DTO.PlanValidity> CheckPlanValidity(User user)
         {
-            var settings = await _UnitOfWork.Repository<Models.Setting>().GetQueryable().AsNoTracking().FirstOrDefaultAsync();
+            //var settings = await _UnitOfWork.Repository<Models.Setting>().GetQueryable().AsNoTracking().FirstOrDefaultAsync();
 
             DTO.PlanValidity planValidity = new DTO.PlanValidity();
             planValidity.IsValidPlan = true;

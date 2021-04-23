@@ -21,12 +21,16 @@ namespace StandingOutStore.Controllers.api
         private readonly UserManager<Models.User> _UserManager;
         private readonly IUserService _UserService;
         private readonly ICompanyService companyService;
+        private readonly IStripeCountryService _StripeCountryService;
+        private readonly ISettingService _SettingService;
 
-        public UsersController(UserManager<Models.User> userManager, IUserService userService, ICompanyService companyService)
+        public UsersController(UserManager<Models.User> userManager, IUserService userService, ICompanyService companyService,IStripeCountryService stripeCountryService, ISettingService settingService)
         {
             _UserManager = userManager;
             _UserService = userService;
             this.companyService = companyService;
+            _StripeCountryService = stripeCountryService;
+            _SettingService = settingService;
         }
 
         [HttpGet("my/student")]
@@ -36,6 +40,15 @@ namespace StandingOutStore.Controllers.api
             var user = await _UserManager.FindByEmailAsync(User.Identity.Name);
             var existingLogins = await _UserService.GetUserLoginInfo(user.Id);
             var result = Mappings.Mapper.Map<Models.User, DTO.UserDetail>(user);
+            if (user!=null)
+            {
+                if(user.StripeCountryID!=null)
+                {
+                    var stripeCountry = await _StripeCountryService.GetById(Guid.Parse(user.StripeCountryID.ToString()));
+                    result.StripeCountry = Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(stripeCountry);
+                }
+            }
+           
             result.LocalLogin = User.Claims.Any(o => o.Type == "idp" && o.Value.Contains("local"));
             result.HasGoogleAccountLinked = existingLogins.Any(o => o.LoginProvider == "Google");
             return Ok(result);
@@ -56,6 +69,15 @@ namespace StandingOutStore.Controllers.api
                 model.LastName = model.ChildLastName;
                 model.ChildLastName = null;
                 model.ChildDateOfBirth = default;
+            }
+
+            if (user != null)
+            {
+                if (user.StripeCountryID != null)
+                {
+                    var stripeCountry = await _StripeCountryService.GetById(Guid.Parse(user.StripeCountryID.ToString()));
+                    model.StripeCountry = Mappings.Mapper.Map<Models.StripeCountry, DTO.StripeCountry>(stripeCountry);
+                }
             }
             model.LocalLogin = User.Claims.Any(o => o.Type == "idp" && o.Value.Contains("local"));
             model.HasGoogleAccountLinked = existingLogins.Any(o => o.LoginProvider == "Google");

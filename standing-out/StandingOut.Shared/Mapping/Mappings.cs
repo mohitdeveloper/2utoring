@@ -25,9 +25,9 @@ namespace StandingOut.Shared.Mapping
                 cfg.CreateMap<Models.GoogleFilePermission, DTO.GoogleFilePermission>();
                 cfg.CreateMap<Models.Company, DTO.CompanyProfileViewModel>()
                 .ForMember(o => o.CompanyTeam, src => src.MapFrom(u => u.CompanyTeam))
-                .ForMember(o => o.SubjectStudyLevelSetups, src => src.MapFrom(u => u.SubjectStudyLevelSetups.Where(x=>x.IsDeleted==false).ToList()))
-                .ForMember(o => o.Courses, src => src.MapFrom(u => u.Courses.Where(x=>!x.IsDeleted && x.ClassSessions.Where(y => !y.IsDeleted && y.StartDate.UtcDateTime >= DateTime.UtcNow && x.Tutor.ProfileApprovalStatus == TutorApprovalStatus.Approved).ToList().Count>0).ToList()))
-                .ForMember(o => o.Tutors, src => src.MapFrom(x => x.CompanyTutors.Where(y => !y.IsDeleted && !y.Tutor.IsDeleted && y.Tutor.ProfileApprovalStatus==TutorApprovalStatus.Approved).Select(z => z.Tutor)));
+                .ForMember(o => o.SubjectStudyLevelSetups, src => src.MapFrom(u => u.SubjectStudyLevelSetups.Where(x => x.IsDeleted == false).ToList()))
+                .ForMember(o => o.Courses, src => src.MapFrom(u => u.Courses.Where(x => !x.IsDeleted && x.ClassSessions.Where(y => !y.IsDeleted && y.StartDate.UtcDateTime >= DateTime.UtcNow && x.Tutor.ProfileApprovalStatus == TutorApprovalStatus.Approved).ToList().Count > 0).ToList()))
+                .ForMember(o => o.Tutors, src => src.MapFrom(x => x.CompanyTutors.Where(y => !y.IsDeleted && !y.Tutor.IsDeleted && y.Tutor.ProfileApprovalStatus == TutorApprovalStatus.Approved).Select(z => z.Tutor)));
 
                 cfg.CreateMap<Models.Course, DTO.Course>()
                  .ForMember(x => x.TutorName, src => src.MapFrom(u => u.Tutor.Users.FirstOrDefault().Title + ". " + u.Tutor.Users.FirstOrDefault().FirstName + " " + u.Tutor.Users.FirstOrDefault().LastName))
@@ -41,12 +41,11 @@ namespace StandingOut.Shared.Mapping
                  .ForMember(o => o.SubjectName, src => src.MapFrom(u => u.Subject.Name))
                  .ForMember(o => o.SubjectCategoryName, src => src.MapFrom(u => u.SubjectCategory.Name))
                  .ForMember(o => o.StudyLevelName, src => src.MapFrom(u => u.StudyLevel.Name))
-                 //.ForMember(o => o.ClassSessionsCount, src => src.MapFrom(u => u.ClassSessions.Sum(x => x.SessionAttendees.Where(o => o.IsDeleted == false && o.Refunded == false && o.Removed == false).Count())))
                  .ForMember(o => o.ClassSessionsCount, src => src.MapFrom(u => u.ClassSessions.Count(o => o.IsDeleted == false)))
                  .ForMember(o => o.ClassSessionsTotalAmount, src => src.MapFrom(u => u.ClassSessions.Sum(y => y.PricePerPerson)))
-                .ForMember(o => o.CourseAttendeesCount, src => src.MapFrom(u =>u.OrderItems!=null?u.OrderItems.Count(x => x.SessionAttendees.Any(o => o.IsDeleted == false && o.Refunded == false && o.Removed == false)):0));
+                 .ForMember(o => o.CourseAttendeesCount, src => src.MapFrom(u => u.OrderItems != null ? u.OrderItems.Count(x => x.SessionAttendees.Any(o => o.IsDeleted == false && o.Refunded == false && o.Removed == false)) : 0));
+                //.ForMember(o => o.ClassSessionsCount, src => src.MapFrom(u => u.ClassSessions.Sum(x => x.SessionAttendees.Where(o => o.IsDeleted == false && o.Refunded == false && o.Removed == false).Count())))
                 //.ForMember(o => o.CourseAttendeesCount, src => src.MapFrom(u => u.ClassSessions.Sum(x => x.SessionAttendees.Count(o => o.IsDeleted == false && o.Refunded == false && o.Removed == false)))); 
-
                 //.ForMember(o => o.ClassSessions, src => src.MapFrom(u => u.ClassSessions.Where(o=>o.IsDeleted==false).OrderBy(x=>x.StartDate).ToList()))
 
 
@@ -58,6 +57,10 @@ namespace StandingOut.Shared.Mapping
                 cfg.CreateMap<Models.SubjectStudyLevelSetup, DTO.SubjectStudyLevelSetupPrice>()
                     .ForMember(o => o.SubjectName, src => src.MapFrom(u => u.Subject.Name))
                     .ForMember(o => o.StudyLevelName, src => src.MapFrom(u => u.StudyLevel.Name));
+
+                cfg.CreateMap<Models.Setting, DTO.Setting>()
+                  .ForMember(o => o.ConversionPercent, src => src.MapFrom(u => u.ConversionPercent))
+                  .ForMember(o => o.ConversionFlat, src => src.MapFrom(u => u.ConversionFlat));
 
 
                 cfg.CreateMap<Models.ClassSession, DTO.ClassSession>()
@@ -71,17 +74,17 @@ namespace StandingOut.Shared.Mapping
                     .ForMember(o => o.StudentFees, src => src.MapFrom(u => u.SessionAttendees != null ? u.SessionAttendees.Where(y => y.Refunded == false).Sum(x => x.AmountCharged) : 0.00M))
                     .ForMember(o => o.StandingOutFees, src => src.MapFrom(u => u.SessionAttendees != null ? u.SessionAttendees.Where(y => y.Refunded == false).Sum(x => x.StandingOutActualCut) : 0.00M))
                     .ForMember(o => o.VendorEarningAmount, src => src.MapFrom(u => u.SessionAttendees != null ? u.SessionAttendees.Where(y => y.Refunded == false).Sum(x => x.VendorAmount) : 0.00M))
-                    //.ForMember(o => o.VendorEarningAmount, src => src.MapFrom(u => u.VendorEarnings.Sum(x => x.EarningAmount)))
-
                     .ForMember(o => o.SessionMediaCount, src => src.MapFrom(u => u.SessionMedia.Count(o => o.IsDeleted == false)))
-                     //.ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.SessionAttendees != null ? u.SessionAttendees.Where(o => o.Refunded == false && o.TutorPaid == TutorPaymentStatus.Paid).Count() >= 0 : false)); // We will no longer payout per attendee but per lesson
-                     .ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.VendorEarnings.All(x => x.VendorPayoutId.HasValue)))
+                    .ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.VendorEarnings.All(x => x.VendorPayoutId.HasValue)))
                      .ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.PaymentStatus == "Paid Out"));
+                //.ForMember(o => o.VendorEarningAmount, src => src.MapFrom(u => u.VendorEarnings.Sum(x => x.EarningAmount)))
+                //.ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.SessionAttendees != null ? u.SessionAttendees.Where(o => o.Refunded == false && o.TutorPaid == TutorPaymentStatus.Paid).Count() >= 0 : false)); // We will no longer payout per attendee but per lesson
+
 
                 //old one
-                  //.ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.SessionAttendees != null ? u.SessionAttendees.Where(o => o.Refunded == false && o.TutorPaid == TutorPaymentStatus.Paid).Count() >= 0 : false)); // We will no longer payout per attendee but per lesson
-                    //.ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.VendorEarnings.All(x => x.VendorPayoutId.HasValue)));
-                    //.ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.PaymentStatus == "Paid Out"));
+                //.ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.SessionAttendees != null ? u.SessionAttendees.Where(o => o.Refunded == false && o.TutorPaid == TutorPaymentStatus.Paid).Count() >= 0 : false)); // We will no longer payout per attendee but per lesson
+                //.ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.VendorEarnings.All(x => x.VendorPayoutId.HasValue)));
+                //.ForMember(o => o.EarningsPaid, src => src.MapFrom(u => u.PaymentStatus == "Paid Out"));
 
                 cfg.CreateMap<Models.ClassSession, DTO.ClassSessionIndex>()
                     .ForMember(x => x.TutorName, src => src.MapFrom(x => x.Owner == null || x.Owner.IsDeleted ? null : x.Owner.FirstName + " " + x.Owner.LastName))
@@ -152,7 +155,7 @@ namespace StandingOut.Shared.Mapping
                 cfg.CreateMap<Models.SessionAttendee, DTO.SessionAttendeeFileUploader>()
                     .ForMember(x => x.Name, src => src.MapFrom(x => x.FirstName + " " + x.LastName))
                     .ForMember(x => x.Email, src => src.MapFrom(x => x.User.GoogleEmail));
-                    
+
                 cfg.CreateMap<Models.SessionWhiteBoardSave, DTO.SessionWhiteBoardSaveResult>()
                     .ForMember(x => x.CreatedAt, src => src.MapFrom(x => x.CreatedDate ?? DateTime.Now));
 
@@ -179,8 +182,8 @@ namespace StandingOut.Shared.Mapping
 
                 cfg.CreateMap<Models.Tutor, DTO.GlobalSearchResult>()
                     .ForMember(x => x.Id, src => src.MapFrom(y => y.TutorId))
-                    //.ForMember(x => x.Name, src => src.MapFrom(y => y.Users.Where(x => !x.IsDeleted).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault()))
                     .ForMember(x => x.GlobalSearchType, src => src.MapFrom(y => GlobalSearchType.Tutor));
+                //.ForMember(x => x.Name, src => src.MapFrom(y => y.Users.Where(x => !x.IsDeleted).Select(x => x.FirstName + " " + x.LastName).FirstOrDefault()))
                 cfg.CreateMap<Models.Company, DTO.GlobalSearchResult>()
                     .ForMember(x => x.Id, src => src.MapFrom(y => y.CompanyId))
                     .ForMember(x => x.GlobalSearchType, src => src.MapFrom(y => GlobalSearchType.Company));
@@ -211,7 +214,7 @@ namespace StandingOut.Shared.Mapping
                 cfg.CreateMap<DTO.CompanyRegister.CompanyRegisterBasicInfo, Models.Company>()
                     .ForMember(o => o.AdminUserId, src => src.MapFrom(u => u.UserId))
                     .ForMember(o => o.Name, src => src.MapFrom(u => u.CompanyName))
-                    .ForMember(o => o.RegistrationNo, src => src.MapFrom(u => u.CompanyRegistrationNumber!=null? u.CompanyRegistrationNumber:""))
+                    .ForMember(o => o.RegistrationNo, src => src.MapFrom(u => u.CompanyRegistrationNumber != null ? u.CompanyRegistrationNumber : ""))
                     .ForMember(o => o.Postcode, src => src.MapFrom(u => u.CompanyPostcode))
                     .ForMember(o => o.EmailAddress, src => src.MapFrom(u => u.CompanyEmail))
                     .ForMember(o => o.TelephoneNumber, src => src.MapFrom(u => u.CompanyTelephoneNumber))
@@ -278,9 +281,9 @@ namespace StandingOut.Shared.Mapping
                     .ForMember(x => x.TutorFirstName, src => src.MapFrom(x => x.Owner.FirstName))
                     .ForMember(x => x.TutorLastName, src => src.MapFrom(x => x.Owner.LastName))
                     .ForMember(x => x.TutorProfileImageFileLocation, src => src.MapFrom(x => x.Owner.Tutor.ProfileImageFileLocation))
-                    .ForMember(x => x.IsApproved, 
-                            src => src.MapFrom(x => 
-                                x.Owner.Tutor.DbsApprovalStatus == TutorApprovalStatus.Approved 
+                    .ForMember(x => x.IsApproved,
+                            src => src.MapFrom(x =>
+                                x.Owner.Tutor.DbsApprovalStatus == TutorApprovalStatus.Approved
                                 ||
                                 x.Owner.Tutor.DbsApprovalStatus == TutorApprovalStatus.NotRequired
                                 ))
@@ -289,7 +292,7 @@ namespace StandingOut.Shared.Mapping
                     .ForMember(x => x.SessionDate, src => src.MapFrom(x => x.StartDate))
                     .ForMember(x => x.SessionDescriptionBody, src => src.MapFrom(x => x.LessonDescriptionBody))
                     .ForMember(x => x.SessionPrice, src => src.MapFrom(x => x.PricePerPerson))
-                    .ForMember(x => x.SessionCurrency, src => src.MapFrom(x => "GBP"))
+                    .ForMember(x => x.SessionCurrency, src => src.MapFrom(x => x.Owner.StripeCountry.CurrencyCode))//change by wizcraft 16-04-2021
                     .ForMember(x => x.TutorSubjects, src => src.MapFrom(x => x.Owner.Tutor.TutorSubjects.Where(o => o.IsDeleted == false).GroupBy(y => y.SubjectId).Select(y => y.First().Subject.Name)))
                        .ForMember(x => x.TutorHeadline, src => src.MapFrom(x => x.Owner.Tutor.Header));
 
@@ -297,7 +300,7 @@ namespace StandingOut.Shared.Mapping
                     .ForMember(x => x.TutorId, src => src.MapFrom(x => x.TutorId))
                     .ForMember(x => x.UrlSlug, src => src.MapFrom(x => x.Tutor.UrlSlug))
                     .ForMember(x => x.Salutation, src => src.MapFrom(x => x.Title))
-                    .ForMember(x => x.IsApproved, src => src.MapFrom(x => 
+                    .ForMember(x => x.IsApproved, src => src.MapFrom(x =>
                                 x.Tutor.DbsApprovalStatus == TutorApprovalStatus.Approved
                                 ||
                                 x.Tutor.DbsApprovalStatus == TutorApprovalStatus.NotRequired
@@ -453,17 +456,16 @@ namespace StandingOut.Shared.Mapping
                 //    .ForMember(x => x.ClassSessionName, src => src.MapFrom(x => GetValueFromMetadata(x.Metadata, "classSessionName")));
 
                 cfg.CreateMap<Models.SessionAttendee, DTO.ReceiptIndex>()
-                    //.ForMember(x => x.Created, src => src.MapFrom(x => x.Order.CreatedDate.HasValue ? x.Order.CreatedDate.Value.ToLocalTime(): DateTime.MinValue))
                     .ForMember(x => x.LessonStartDate, src => src.MapFrom(x => x.ClassSession.StartDate.ToLocalTime()))
-                    .ForMember(x => x.Amount, src => src.MapFrom(x => x.AmountCharged * 100))
+                    .ForMember(x => x.Amount, src => src.MapFrom(x => x.AmountCharged * x.ClassSession.Owner.StripeCountry.DecimalMultiplier))//change by wizcraft 16-04-2021 for DecimalMultiplier
                     .ForMember(x => x.Id,
                             src => src.MapFrom(x =>
                             (x.OrderItem != null && x.OrderItem.Order != null && x.OrderItem.Order.PaymentProviderFields != null)
                             ? x.OrderItem.Order.PaymentProviderFields.ReceiptId : "Unknown"))
-                    .ForMember(x => x.AmountRefunded, src => src.MapFrom(x => (x.Refunded && x.AttendeeRefundId != null) ? x.AttendeeRefund.Amount * 100 : 0m))
+                    .ForMember(x => x.AmountRefunded, src => src.MapFrom(x => (x.Refunded && x.AttendeeRefundId != null) ? x.AttendeeRefund.Amount * x.ClassSession.Owner.StripeCountry.DecimalMultiplier : 0m)) //change by wizcraft 16-04-2021 for DecimalMultiplier
                     .ForMember(x => x.ClassSessionName, src => src.MapFrom(x => x.ClassSession.Name))
                     .ForMember(x => x.StripeCountry, src => src.MapFrom(x => x.ClassSession.Owner.StripeCountry));//Add StripeCountry for Currency Symbol by wizcraft
-
+                    //.ForMember(x => x.Created, src => src.MapFrom(x => x.Order.CreatedDate.HasValue ? x.Order.CreatedDate.Value.ToLocalTime(): DateTime.MinValue))
                 cfg.CreateMap<Models.SafeguardReport, DTO.SafeguardReportIndex>()
                     .ForMember(x => x.SessionName, src => src.MapFrom(x => x.ClassSessionId.HasValue ? x.ClassSession.Name : null))
                     .ForMember(x => x.TutorName, src => src.MapFrom(x => x.ClassSessionId.HasValue ? x.ClassSession.Owner.FirstName + " " + x.ClassSession.Owner.LastName : null))

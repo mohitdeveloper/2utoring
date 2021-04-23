@@ -320,6 +320,11 @@ namespace StandingOutStore.Business.Services
             return courseModel;
         }
 
+        public async Task<Models.Course> GetOrderedCourseById(Guid courseId)
+        {
+            var courseModel = await _UnitOfWork.Repository<Models.Course>().GetSingle(x => x.CourseId == courseId && x.IsDeleted == false, includeProperties: "Tutor.Users.StripeCountry");
+            return courseModel;
+        }
         public async Task<DTO.PagedList<DTO.Course>> GetPaged(DTO.SearchModel model, Guid id, string role)
         {
             string includes = "Company,Subject, StudyLevel,SubjectCategory, ClassSessions,Tutor.Users, ClassSessions.SessionAttendees,OrderItems";

@@ -240,7 +240,7 @@ export class LessonTimetableComponent implements OnInit {
 
         }
         else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Please add lesson resources from within your classroom.');
             return;
         }
 

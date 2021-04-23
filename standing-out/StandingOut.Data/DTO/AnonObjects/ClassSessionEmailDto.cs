@@ -10,5 +10,6 @@ namespace StandingOut.Data.DTO
         public string LessonName { get; set; }
         public DateTimeOffset LessonStartDate { get; set; }
         public decimal LessonPrice { get; set; }
+        public string CurrencySymbol { get; set; }
     }
 }

@@ -25,13 +25,14 @@ export class CompanySubscriptionDetailsComponent implements OnInit {
     card: any;
     showStripeError: boolean = false;
     stripeError: string = null;
-
+    stripeCountryId: string;
     constructor(private fb: FormBuilder, private companysService: CompanyService, private stripeCountrysService: StripeCountrysService, private toastrService: ToastrService) { }
 
     ngOnInit(): void {
         this.companysService.getMy()
             .subscribe(success => {
                 this.company = success;
+                this.stripeCountryId = success.stripeCountryID;
                 this.setUpPaymentForm();
                 this.loadPaymentMethod();
                 this.loadSubscription();
@@ -63,7 +64,7 @@ export class CompanySubscriptionDetailsComponent implements OnInit {
                 this.paymentForm = this.fb.group({
                     companyId: [this.company.companyId],
                     stripePlanId: [this.company.stripePlanId, [Validators.required]],
-                    stripeCountryId: [this.stripeCountrys[0].stripeCountryId, [Validators.required]],
+                    stripeCountryId: [this.stripeCountryId, [Validators.required]],
                     cardName: ['', [Validators.required, Validators.maxLength(250)]],
                     addressLine1: ['', [Validators.required, Validators.maxLength(250)]],
                     paymentMethodId: [''],

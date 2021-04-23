@@ -95,6 +95,8 @@ namespace StandingOut.Data.Models
         public string AzureBlobConnectionString { get; set; }
         public decimal BaseClassSessionCommision { get; set; }
         public DateTime? MinimumDateForClassSession { get; set; }
+        public decimal ConversionPercent { get; set; }
+        public decimal ConversionFlat { get; set; }
 
     }
 }

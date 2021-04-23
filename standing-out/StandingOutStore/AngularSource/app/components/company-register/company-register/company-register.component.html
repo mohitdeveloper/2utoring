@@ -78,16 +78,18 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-sm-12 col-lg-6">
+                            <!--<div class="form-group col-sm-12 col-lg-6">
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" placeholder="Enter a promo code">
+                                    <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" placeholder="Enter a promo code">-->
                                         <!--<option [ngValue]="null">Select your country</option>-->
-                                        <option *ngFor="let stripeCountry of stripeCountrys; let i = index" [selected]="i == 1" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
+                                        <!--<ng-container *ngFor="let stripeCountry of stripeCountrys; let i = index">
+                                            <option  *ngIf="stripeCountry.supportedPayout==true"  [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
+                                        </ng-container>
 
                                     </select>
                                 </div>
-                            </div>
+                            </div>-->
 
                         </div>
                         <div class="form-row">
@@ -229,7 +231,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-lg-12">
-                                <label>Address Line1</label>
+                                <label>Address Line1 *</label>
                                 <input type="text" id="addressLine1" name="addressLine1" formControlName="addressLine1" class="form-control" placeholder="Address" />
                                 <div *ngIf="basicInfoFormCompanyControls.addressLine1.errors && (basicInfoFormCompanyControls.addressLine1.dirty || basicInfoFormCompanyControls.addressLine1.touched || CompanyBasicInfoFormSubmitted)"
                                      class="error" role="alert">
@@ -243,7 +245,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-lg-12">
-                                <label>Address Line2</label>
+                                <label>Address Line2 *</label>
                                 <input type="text" id="addressLine2" name="addressLine2"
                                        formControlName="addressLine2" class="form-control" placeholder="Address" />
                                 <div *ngIf="basicInfoFormCompanyControls.addressLine2.errors && (basicInfoFormCompanyControls.addressLine2.dirty || basicInfoFormCompanyControls.addressLine2.touched || CompanyBasicInfoFormSubmitted)"
@@ -258,7 +260,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-lg-12">
-                                <label>Country</label>
+                                <label>Country *</label>
                                 <!--<select id="country" name="country" formControlName="country" class="form-control" placeholder="Select a country">
                                                 <option [ngValue]="null">Select your country</option>
                                                 <option *ngFor="let country of countries" [ngValue]="country.countryId">{{country.name
@@ -280,13 +282,13 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-lg-12">
-                                <label>Postcode</label>
+                                <label>Postcode *</label>
                                 <input type="text" id="companyPostcode" name="companyPostcode"
                                        formControlName="companyPostcode" class="form-control" placeholder="Post code" />
                                 <div *ngIf="basicInfoFormCompanyControls.companyPostcode.errors && (basicInfoFormCompanyControls.companyPostcode.dirty || basicInfoFormCompanyControls.companyPostcode.touched || CompanyBasicInfoFormSubmitted)"
                                      class="error" role="alert">
                                     <div *ngIf="basicInfoFormCompanyControls.companyPostcode.errors.required">
-                                        Postcode
+                                        Postcode 
                                     </div>
                                 </div>
                             </div>
@@ -482,11 +484,13 @@
                                         <select id="stripeCountryId" name="stripeCountryId"
                                                 formControlName="stripeCountryId" class="form-control"
                                                 placeholder="Select a country">
-                                            <option [ngValue]="null">Select your country</option>
-                                            <option *ngFor="let stripeCountry of stripeCountrys"
-                                                    [ngValue]="stripeCountry.stripeCountryId">
-                                                {{stripeCountry.name}}
-                                            </option>
+                                            <!--<option [ngValue]="null">Select your country</option>-->
+                                            <ng-container *ngFor="let stripeCountry of stripeCountrys; let i = index">
+                                                <option *ngIf="stripeCountry.supportedPayout==true"
+                                                        [ngValue]="stripeCountry.stripeCountryId">
+                                                    {{stripeCountry.name}}
+                                                </option>
+                                            </ng-container>
                                         </select>
                                         <div *ngIf="paymentFormControls.stripeCountryId.errors && (paymentFormControls.stripeCountryId.dirty || paymentFormControls.stripeCountryId.touched || paymentFormSubmitted)"
                                              class="error" role="alert">

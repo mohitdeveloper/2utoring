@@ -25,6 +25,9 @@ var SettingsService = /** @class */ (function () {
     SettingsService.prototype.getIdentitySiteUrl = function () {
         return this.http.get(this.serviceHelper.baseApi + '/api/settings/getIdentitySiteUrl', { headers: this.serviceHelper.buildHeader() });
     };
+    SettingsService.prototype.getSetting = function () {
+        return this.http.get(this.serviceHelper.baseApi + '/api/settings/getSetting', { headers: this.serviceHelper.buildHeader() });
+    };
     SettingsService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_1.HttpClient])

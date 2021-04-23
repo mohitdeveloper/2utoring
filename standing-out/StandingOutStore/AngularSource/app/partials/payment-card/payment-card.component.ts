@@ -30,6 +30,7 @@ export class PaymentCardComponent {
     get paymentFormControls() { return this.paymentForm.controls; };
 
     submitPaymentForm(): void {
+        debugger;
         this.paymentFormSubmitted = true;
         if (this.paymentForm.valid) {
             $('.loading').show();
@@ -46,7 +47,7 @@ export class PaymentCardComponent {
                     this.stripeError = response.error;
                     $('.loading').hide();
                 } else {
-                    this.stripeService.connectPaymentMethod({ paymentMethodId: response.paymentMethod.id, cardName: this.paymentForm.controls.cardName.value })
+                    this.stripeService.connectPaymentMethod({ paymentMethodId: response.paymentMethod.id, cardName: this.paymentForm.controls.cardName.value, stripeCountryId: this.paymentForm.controls.stripeCountryId.value, userType:'Student' })
                         .subscribe(success => {
                             this.paymentCard = success;
                             this.showStripeError = false;

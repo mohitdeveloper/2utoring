@@ -28,7 +28,7 @@ var helpers_1 = require("../../../helpers");
 var partials_1 = require("../../../partials");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var StudentEnrollComponent = /** @class */ (function () {
-    function StudentEnrollComponent(coursesService, classSessionsService, usersService, enumsService, formBuilder, utilities, modalService) {
+    function StudentEnrollComponent(coursesService, classSessionsService, usersService, enumsService, formBuilder, utilities, modalService, settingsService) {
         this.coursesService = coursesService;
         this.classSessionsService = classSessionsService;
         this.usersService = usersService;
@@ -36,6 +36,7 @@ var StudentEnrollComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this.utilities = utilities;
         this.modalService = modalService;
+        this.settingsService = settingsService;
         this.title = title;
         this.courseId = courseId;
         //classSessionId: string = classSessionId;
@@ -44,6 +45,10 @@ var StudentEnrollComponent = /** @class */ (function () {
         this.user = null;
         this.userTitles = [];
         this.cameFromLinkAccount = cameFromLinkAccount;
+        this.isSupportedPayout = true;
+        this.userStripeCountryId = null;
+        this.conversionPercent = 0;
+        this.conversionFlat = 0;
         //if (localStorage.getItem('uniqueNumber') != '') {
         //    window.location.href = '/my-course'
         //}
@@ -65,6 +70,13 @@ var StudentEnrollComponent = /** @class */ (function () {
         });
     };
     ;
+    StudentEnrollComponent.prototype.getSetting = function () {
+        var _this = this;
+        this.settingsService.getSetting().subscribe(function (success) {
+            _this.conversionPercent = success.conversionPercent;
+            _this.conversionFlat = success.conversionFlat;
+        });
+    };
     StudentEnrollComponent.prototype.getUser = function () {
         var _this = this;
         this.usersService.getMy()
@@ -74,11 +86,25 @@ var StudentEnrollComponent = /** @class */ (function () {
                 _this.setupUserDetailForm(_this.user);
             }
             _this.checkGoogleAccount();
+            debugger;
+            if (_this.user.stripeCountry != null) {
+                if (_this.user.stripeCountry.supportedPayout == true) {
+                    _this.isSupportedPayout = true;
+                    _this.userStripeCountryId = _this.user.stripeCountry.stripeCountryId;
+                }
+                else {
+                    _this.isSupportedPayout = false;
+                    _this.userStripeCountryId = _this.user.stripeCountry.stripeCountryId;
+                }
+            }
         }, function (error) {
             console.log(error);
         });
     };
     ;
+    StudentEnrollComponent.prototype.getSupportedPayout = function (supportedPayout) {
+        this.isSupportedPayout = supportedPayout;
+    };
     StudentEnrollComponent.prototype.getUserTitel = function () {
         var _this = this;
         this.enumsService.get('UserTitle')
@@ -91,7 +117,6 @@ var StudentEnrollComponent = /** @class */ (function () {
     StudentEnrollComponent.prototype.setupUserDetailForm = function (user) {
         this.userDetailForm = this.formBuilder.group({
             title: [user.title, [forms_1.Validators.required]],
-            //stripeCountryId: [this.stripeCountryId, [Validators.required]],
             firstName: [user.firstName, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             lastName: [user.lastName, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             //childFirstName: ['', [Validators.required, Validators.maxLength(250)]],
@@ -179,15 +204,12 @@ var StudentEnrollComponent = /** @class */ (function () {
     ;
     // #endregion User First Time Setup
     StudentEnrollComponent.prototype.ngOnInit = function () {
+        this.getSetting();
         this.getUser();
         this.getUserTitel();
         // this.getLessonCard();    
         //get course details
         this.getCourse();
-        //this.stripeCountrysService.get()
-        //    .subscribe(countrySuccess => {
-        //        this.stripeCountrys = countrySuccess;
-        //    });
     };
     ;
     StudentEnrollComponent.prototype.getCourse = function () {
@@ -226,7 +248,7 @@ var StudentEnrollComponent = /** @class */ (function () {
             selector: 'app-student-enroll',
             templateUrl: './student-enroll.component.html'
         }),
-        __metadata("design:paramtypes", [index_1.CoursesService, index_1.ClassSessionsService, index_1.UsersService, index_1.EnumsService, forms_1.FormBuilder, helpers_1.UtilitiesHelper, ng_bootstrap_1.NgbModal])
+        __metadata("design:paramtypes", [index_1.CoursesService, index_1.ClassSessionsService, index_1.UsersService, index_1.EnumsService, forms_1.FormBuilder, helpers_1.UtilitiesHelper, ng_bootstrap_1.NgbModal, index_1.SettingsService])
     ], StudentEnrollComponent);
     return StudentEnrollComponent;
 }());

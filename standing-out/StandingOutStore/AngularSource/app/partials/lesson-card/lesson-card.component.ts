@@ -14,6 +14,7 @@ export class LessonCardComponent {
 
     @Input() lesson: LessonCard;
     @Input() course: LessonCard;
+    /*@Input() stripeCountry: any = null;*/
     @Input() selected: boolean = null;
     @Input() displayLarge: boolean = false;
     @Input() displayTutor: boolean = true;
@@ -21,7 +22,12 @@ export class LessonCardComponent {
     @Input() canUserBuy: boolean = true;
     @Input() isLoggedIn: boolean = false;
     @Input() isGuardian: boolean = false;
-
+    @Input() isSupportedPayout: boolean;
+    @Input() conversionPercent: number=0;
+    @Input() conversionFlat: number=0;
+    
+    
+    
    
     lessonDescription(): string {
         if (this.lesson == null)

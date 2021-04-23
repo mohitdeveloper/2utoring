@@ -57,7 +57,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label>Country *</label>
-                        <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control">
+                        <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" (change)="onCountryChange($event.target.value.trim())">
                             <option [ngValue]="null">Select your country</option>
                             <option *ngFor="let stripeCountry of stripeCountrys" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
                         </select>
@@ -98,7 +98,7 @@
 
                 <div class="error" role="alert" *ngIf="dateOfBirthInvalid()">
                     <!--Sorry, the course you have selected is for {{ under18 ? 'under' : 'over' }} 18's only.
-    Please choose an {{ under18 ? 'over' : 'under' }} 18 course from the <a [href]="'/course-search' + (under18 ? '' : '?under=false')">Marketplace</a>.-->
+                    Please choose an {{ under18 ? 'over' : 'under' }} 18 course from the <a [href]="'/course-search' + (under18 ? '' : '?under=false')">Marketplace</a>.-->
 
                     <ng-container *ngIf="under18">
                         Sorry, the course you have selected is for under 18’s only. Please choose an over 18’s course from the <a href="/course-search">Course Marketplace</a>.
@@ -120,4 +120,4 @@
             </div>
         </div>
     </div>
-    </div>
+</div>

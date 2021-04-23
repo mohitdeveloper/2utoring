@@ -18,6 +18,7 @@ var utilities_alert_modal_1 = require("../../components/utilities/utilities-aler
 var LessonCardComponent = /** @class */ (function () {
     function LessonCardComponent(modalService) {
         this.modalService = modalService;
+        /*@Input() stripeCountry: any = null;*/
         this.selected = null;
         this.displayLarge = false;
         this.displayTutor = true;
@@ -25,6 +26,8 @@ var LessonCardComponent = /** @class */ (function () {
         this.canUserBuy = true;
         this.isLoggedIn = false;
         this.isGuardian = false;
+        this.conversionPercent = 0;
+        this.conversionFlat = 0;
     }
     LessonCardComponent.prototype.lessonDescription = function () {
         if (this.lesson == null)
@@ -131,6 +134,18 @@ var LessonCardComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", Boolean)
     ], LessonCardComponent.prototype, "isGuardian", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], LessonCardComponent.prototype, "isSupportedPayout", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], LessonCardComponent.prototype, "conversionPercent", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], LessonCardComponent.prototype, "conversionFlat", void 0);
     LessonCardComponent = __decorate([
         core_1.Component({
             selector: 'app-lesson-card',

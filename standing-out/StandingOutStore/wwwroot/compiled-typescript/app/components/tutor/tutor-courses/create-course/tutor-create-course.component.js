@@ -55,6 +55,7 @@ var TutorCreateCourseComponent = /** @class */ (function () {
         this.SubjectCategoriesService = SubjectCategoriesService;
         this.sessionInvitesService = sessionInvitesService;
         this.cdref = cdref;
+        this.stripeCountry = stripeCountry;
         this.subjectData = [];
         this.tutorsData = [];
         this.subjectCategories = [];
@@ -1264,7 +1265,7 @@ var TutorCreateCourseComponent = /** @class */ (function () {
             });
         }
         else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Lesson start time has passed.');
             $event.target.checked = false;
             return false;
         }

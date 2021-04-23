@@ -1,10 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { LessonCard, UserDetail, UserGuardianDetail, GuardianRegistrationStep, EnumOption } from '../../../models/index';
-import { ClassSessionsService, UsersService, CoursesService, EnumsService } from '../../../services/index';
+import { ClassSessionsService, UsersService, CoursesService, EnumsService, SettingsService } from '../../../services/index';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LessonEnrollModal, LessonEnrollLinkedAccountModal } from '../../../partials';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//import { StripeCountry } from '../../../models';
 
 declare var title: any;
 declare var courseId: any;
@@ -18,7 +17,7 @@ declare var cameFromLinkAccount: any;
 
 export class GuardianEnrollComponent implements OnInit {
     constructor(private coursesService: CoursesService, private classSessionsService: ClassSessionsService, private usersService: UsersService, private enumsService: EnumsService,
-        private formBuilder: FormBuilder, private modalService: NgbModal) {
+        private formBuilder: FormBuilder, private modalService: NgbModal, private settingsService: SettingsService) {
         //if (localStorage.getItem('uniqueNumber') != '') {
         //    window.location.href = '/my-course'
         //}
@@ -30,15 +29,15 @@ export class GuardianEnrollComponent implements OnInit {
     step: GuardianRegistrationStep = GuardianRegistrationStep.GuardianDetail;
     get guardianRegistrationStep() { return GuardianRegistrationStep; }; 
 
-    //stripeCountrys: StripeCountry[] = [];
-    //stripeCountryId: string = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
-
     lesson: LessonCard = null;
     course: LessonCard = null;
     user: UserGuardianDetail = null;
     userTitles: EnumOption[] = [];
     cameFromLinkAccount: string = cameFromLinkAccount;
-
+    isSupportedPayout: boolean = true;
+    userStripeCountryId: string = null;
+    conversionPercent: number = 0;
+    conversionFlat: number = 0;
     guardianDetailForm: FormGroup;
     guardianDetailFormSubmitted: boolean;
     get guardianDetailFormControls() { return this.guardianDetailForm.controls; };
@@ -56,7 +55,13 @@ export class GuardianEnrollComponent implements OnInit {
                 console.log(error);
             });
     };
+    getSetting(): void {
+        this.settingsService.getSetting().subscribe(success => {
+            this.conversionPercent = success.conversionPercent;
+            this.conversionFlat = success.conversionFlat;
+        });
 
+    }
     getUser(): void {
         this.usersService.getMyGuardian()
             .subscribe(success => {
@@ -66,10 +71,24 @@ export class GuardianEnrollComponent implements OnInit {
                     this.setupChildDetailForm(this.user);
                 }
                 this.checkGoogleAccount();
+                 debugger;
+                if (this.user.stripeCountry != null) {
+                    if (this.user.stripeCountry.supportedPayout == true) {
+                        this.isSupportedPayout = true;
+                        this.userStripeCountryId = this.user.stripeCountry.stripeCountryId;
+                    }
+                    else {
+                        this.isSupportedPayout = false;
+                        this.userStripeCountryId = this.user.stripeCountry.stripeCountryId;
+                    }
+                }
             }, error => {
                 console.log(error);
             });
     };
+    getSupportedPayout(supportedPayout: any) {
+        this.isSupportedPayout = supportedPayout;
+    }
     getUserTitel(): void {
         this.enumsService.get('UserTitle')
             .subscribe(success => {
@@ -82,7 +101,6 @@ export class GuardianEnrollComponent implements OnInit {
     setupGuardianDetailForm(user: UserGuardianDetail): void {
         this.guardianDetailForm = this.formBuilder.group({
             parentTitle: [user.childTitle, [Validators.required]],
-            //stripeCountryId: [this.stripeCountryId, [Validators.required]],
             firstName: [user.firstName, [Validators.required, Validators.maxLength(250)]],
             lastName: [user.lastName, [Validators.required, Validators.maxLength(250)]],
             telephoneNumber: [user.telephoneNumber, [Validators.required, Validators.maxLength(250), Validators.pattern('^[0-9]+$')]],
@@ -197,14 +215,11 @@ export class GuardianEnrollComponent implements OnInit {
     // #endregion User First Time Setup
 
     ngOnInit() {
+        this.getSetting();
         this.getUser();
         this.getUserTitel();
         //this.getLessonCard();
         this.getCourse();
-        //this.stripeCountrysService.get()
-        //    .subscribe(countrySuccess => {
-        //        this.stripeCountrys = countrySuccess;
-        //    });
     };
 
     getCourse() {

@@ -1,165 +1,114 @@
 <!-------------main---------->
 <main>
-    <!--------Top banner------->
-    <section class="sec home-banner">
-        <div class="container">
-            <div class="container-top">
-                <div class="top-search-row tab-row">
-                    <div class="container-top-in">
-                        <a href="javascript:void(0);" class="company-logo"><img src="/lib/assets/images/logo.svg" alt=""></a>
-                        <h3><a href="javascript:void(0);">COURSE AND TUTOR SEARCH</a></h3>
-                        <h2>Your perfect course, with your best tutor</h2>
-                    </div>
-
-                    <form [formGroup]="mainSearchForm">
-                        <div class="row justify-content-center align-items-center container-top-form">
-                            <div class="col-md-12 d-flex justify-content-center align-items-center">
-                                <div class="d-flex top-search-left">
-
-                                    <div class="top-search-left-in">
-                                        <input formControlName="searchType" type="radio" value="Tutor" (click)="setSerachTypes($event)" />
-                                        <a href="javascript:void(0);"><span>SEARCH BY</span> Tutor </a>
-                                        <span class="feild-icon"><img src="/lib/assets/images/user-icon.svg" alt="" /></span>
-                                    </div>
-                                    <div class="top-search-left-in">
-                                        <input type="radio" formControlName="searchType" value="Course" (click)="setSerachTypes($event)" />
-                                        <a href="javascript:void(0);"><span>SEARCH BY</span> Course </a>
-                                        <span class="feild-icon"><img src="/lib/assets/images/user-icon.svg" alt="" /></span>
-                                    </div>
-                                </div>
-                                <div class="checkbox switcher" *ngIf="tutorFilter.searchType == 'Course'">
-                                    <label for="isUnder18">
-                                        <input type="checkbox" formControlName="isUnder18" id="isUnder18" (change)="setAgeRange($event)">
-                                        <span><small></small></span>
-                                        <small>Under 18?</small>
-                                    </label>
-                                </div>
-
-                            </div>
-                            <div class="col-md-12 d-flex justify-content-center align-items-center">
-                                <div class="d-flex top-search-center">
-                                    <div class="top-search-feild">
-                                        <span class="feild-icon"><img src="/lib/assets/images/cap-icon.svg" alt="" /></span>
-                                        <label>Subject</label>
-                                        <select id="subjectId" name="subjectId" formControlName="subjectId" class="form-control" (change)="onSubjectChange($event)" style="padding:12px 20px 10px 55px; font-size:15px;">
-                                            <option value="">Select Subject</option>
-                                            <option *ngFor="let subject of subjects" [value]="subject.subjectId">
-                                                {{ subject.name }}
-                                            </option>
-                                        </select>
-                                    </div>
-
-
-                                    <div class="top-search-feild">
-                                        <span class="feild-icon"><img src="/lib/assets/images/sliders-icon.svg" alt="" /></span>
-                                        <label>Level</label>
-                                        <!--<input class="form-control" type="text" placeholder="" value="All Levels" />-->
-                                        <select id="subjectId" name="subjectId" formControlName="levelId" class="form-control" (change)="onLevelChange($event)" style="padding:12px 20px 10px 55px; font-size:15px; ">
-                                            <option value="">Select Level</option>
-                                            <option *ngFor="let levels of studyLevels" value="{{levels.studyLevelId}}">
-                                                {{ levels.name }}
-                                            </option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between top-search-right">
-                                    <button type="button" (click)="getRecords()"><img src="/lib/assets/images/search-icon.png" alt="" /></button>
-                                </div>
-                            </div>
+        <!--------Top banner------->
+        <section class="sec home-banner">
+            <div class="container">
+                <div class="container-top">
+                    <div class="top-search-row tab-row">
+                        <div class="container-top-in">
+                            <a href="javascript:void(0);" class="company-logo"><img src="/lib/assets/images/logo.svg" alt=""></a>
+                            <h3><a href="javascript:void(0);">COURSE AND TUTOR SEARCH</a></h3>
+                            <h2>Your perfect course, with your best tutor</h2>
                         </div>
-                    </form>
+
+                        <form [formGroup]="mainSearchForm">
+                            <div class="row justify-content-center align-items-center container-top-form">
+                                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                                    <div class="d-flex top-search-left">
+
+                                        <div class="top-search-left-in">
+                                            <input formControlName="searchType" type="radio" value="Tutor" (click)="setSerachTypes($event)" />
+                                            <a href="javascript:void(0);"><span>SEARCH BY</span> Tutor </a>
+                                            <span class="feild-icon"><img src="/lib/assets/images/user-icon.svg" alt="" /></span>
+                                        </div>
+                                        <div class="top-search-left-in">
+                                            <input type="radio" formControlName="searchType" value="Course" (click)="setSerachTypes($event)" />
+                                            <a href="javascript:void(0);"><span>SEARCH BY</span> Course </a>
+                                            <span class="feild-icon"><img src="/lib/assets/images/user-icon.svg" alt="" /></span>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox switcher" *ngIf="tutorFilter.searchType == 'Course'">
+                                        <label for="isUnder18">
+                                            <input type="checkbox" formControlName="isUnder18" id="isUnder18" (change)="setAgeRange($event)">
+                                            <span><small></small></span>
+                                            <small>Under 18?</small>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                                    <div class="d-flex top-search-center">
+                                        <div class="top-search-feild">
+                                            <span class="feild-icon"><img src="/lib/assets/images/cap-icon.svg" alt="" /></span>
+                                            <label>Subject</label>
+                                            <select id="subjectId" name="subjectId" formControlName="subjectId" class="form-control" (change)="onSubjectChange($event)" style="padding:12px 20px 10px 55px; font-size:15px;">
+                                                <option value="">Select Subject</option>
+                                                <option *ngFor="let subject of subjects" [value]="subject.subjectId">
+                                                    {{ subject.name }}
+                                                </option>
+                                            </select>
+                                        </div>
+
+
+                                        <div class="top-search-feild">
+                                            <span class="feild-icon"><img src="/lib/assets/images/sliders-icon.svg" alt="" /></span>
+                                            <label>Level</label>
+                                            <!--<input class="form-control" type="text" placeholder="" value="All Levels" />-->
+                                            <select id="subjectId" name="subjectId" formControlName="levelId" class="form-control" (change)="onLevelChange($event)" style="padding:12px 20px 10px 55px; font-size:15px; ">
+                                                <option value="">Select Level</option>
+                                                <option *ngFor="let levels of studyLevels" value="{{levels.studyLevelId}}">
+                                                    {{ levels.name }}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between top-search-right">
+                                        <button type="button" (click)="getRecords()"><img src="/lib/assets/images/search-icon.png" alt="" /></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="container-top">
+                    <h2>If you can't find what you're looking for let us find it for you.</h2> <br>
+                    <div class="top-search-row tab-row">
+                        <app-website-contact></app-website-contact>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!------Dashboard home----->
+        <div class="_2u_features-section _2u_transparent">
+            <div class="_2u_inner-wrapper-2 _2u_no-top-space _2u_extra-top-mobile">
+                <h2 class="_2u_subheading _2u_wide _2u_students-bottom-space">Create your own class, invite a private tutor, and learn together</h2>
+                <p class="_2u_body-1 _2u_centre _2u_bottom-spacing _2u_reduced-bottom-mobile">Enjoy reduced costs by sharing it amongst your peers, you control who is inside the session and make learning fun.</p>
+                <div class="_2u_columns-2 _2u_top-spacing _2u_classroom _2u_cta _2u_extra _2u_no-bottom _2u_wider _2u_reduced-top-mobile w-row">
+                    <div class="_2u_top-three-columns w-col w-col-4">
+                        <img src="../images/Asset-14_2.svg" loading="lazy" alt="" class="_2u_student-types">
+                        <h3 class="_2u_h3 _2u_students">For Parents</h3>
+                        <p class="_2u_body-1 _2u_centre">Invite your childs' peers to join a session with a private tutor - you'll have peace of mind knowing that the tutor is DBS certified and this will give you a break from helping with homework!</p>
+                    </div>
+                    <div class="_2u_top-three-columns w-col w-col-4">
+                        <img src="../images/Asset-15_4.svg" loading="lazy" alt="" class="_2u_student-types _2u_middle">
+                        <h3 class="_2u_h3 _2u_students">For Students</h3>
+                        <p class="_2u_body-1 _2u_centre _2u_reduced">Are you all struggling to get to grips with a particular subject? Invite your friends to join you in a peer-to-peer session with a private tutor.</p>
+                    </div>
+                    <div class="_2u_top-three-columns w-col w-col-4">
+                        <img src="../images/Asset-16_2.svg" loading="lazy" alt="" class="_2u_student-types _2u_right">
+                        <h3 class="_2u_h3 _2u_students">For Adults</h3>
+                        <p class="_2u_body-1 _2u_centre">Maybe you are planning a holiday to France with friends and fancy brushing up on your french skills - create a peer-to-peer session with your friends, invite a french tutor and you'll be all set!</p>
+                    </div>
                 </div>
             </div>
-
-            <div class="container-top">
-                <h2>If you can't find what you're looking for let us find it for you.</h2> <br>
-                <div class="top-search-row tab-row">
-                    <app-website-contact></app-website-contact>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <!------Dashboard home----->
-    <div class="_2u_features-section _2u_transparent">
-        <div class="_2u_inner-wrapper-2 _2u_no-top-space _2u_extra-top-mobile">
-            <h2 class="_2u_subheading _2u_wide _2u_students-bottom-space">Create your own class, invite a private tutor, and learn together</h2>
-            <p class="_2u_body-1 _2u_centre _2u_bottom-spacing _2u_reduced-bottom-mobile">Enjoy reduced costs by sharing it amongst your peers, you control who is inside the session and make learning fun.</p>
-            <div class="_2u_columns-2 _2u_top-spacing _2u_classroom _2u_cta _2u_extra _2u_no-bottom _2u_wider _2u_reduced-top-mobile w-row">
-                <div class="_2u_top-three-columns w-col w-col-4">
-                    <img src="../images/Asset-14_2.svg" loading="lazy" alt="" class="_2u_student-types">
-                    <h3 class="_2u_h3 _2u_students">For Parents</h3>
-                    <p class="_2u_body-1 _2u_centre">Invite your childs' peers to join a session with a private tutor - you'll have peace of mind knowing that the tutor is DBS certified and this will give you a break from helping with homework!</p>
-                </div>
-                <div class="_2u_top-three-columns w-col w-col-4">
-                    <img src="../images/Asset-15_4.svg" loading="lazy" alt="" class="_2u_student-types _2u_middle">
-                    <h3 class="_2u_h3 _2u_students">For Students</h3>
-                    <p class="_2u_body-1 _2u_centre _2u_reduced">Are you all struggling to get to grips with a particular subject? Invite your friends to join you in a peer-to-peer session with a private tutor.</p>
-                </div>
-                <div class="_2u_top-three-columns w-col w-col-4">
-                    <img src="../images/Asset-16_2.svg" loading="lazy" alt="" class="_2u_student-types _2u_right">
-                    <h3 class="_2u_h3 _2u_students">For Adults</h3>
-                    <p class="_2u_body-1 _2u_centre">Maybe you are planning a holiday to France with friends and fancy brushing up on your french skills - create a peer-to-peer session with your friends, invite a french tutor and you'll be all set!</p>
-                </div>
-            </div>
-        </div>
-        <div class="_2u_screenshot-slider-wrapper _2u_no-apron">
-            <div data-delay="4500" data-animation="slide" data-autoplay="1" data-easing="ease-in-out" data-nav-spacing="5" data-duration="800" data-infinite="1" class="_2u_slider-2 w-slider">
-                <div class="w-slider-mask">
-                    <!--<div class="w-slide"><img src="../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-500.png 500w, ../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-800.png 800w, ../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-1080.png 1080w, ../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-1600.png 1600w, ../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01.png 2000w" alt=""></div>-->
-                    <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-1600.png"  alt=""></div>
-                </div>
-                <div class="_2u_left-arrow w-slider-arrow-left">
-                    <div class="_2u_icon-3 w-icon-slider-left"></div>
-                </div>
-                <div class="_2u_right-arrow w-slider-arrow-right">
-                    <div class="_2u_icon-2 w-icon-slider-right"></div>
-                </div>
-                <div class="_2u_slide-nav _2u_no-apron w-slider-nav w-slider-nav-invert w-round"></div>
-            </div>
-        </div>
-        <div class="_2u_inner-wrapper-2 _2u_no-top-space">
-            <div class="_2u_features-columns _2u_classroom w-row">
-                <div class="_2u_top-three-columns _2u_bottom-spacing w-col w-col-4">
-                    <div class="_2u_icon-wrapper _2u_features"><img src="../images/Asset-34_2.svg" loading="lazy" width="78" alt="" class="_2u_feature-icons"></div>
-                    <h3 class="_2u_h3 _2u_smaller _2u_teal">Step 1</h3>
-                    <p class="_2u_body-1 _2u_centre">Find your tutor or course</p>
-                </div>
-                <div class="_2u_top-three-columns _2u_bottom-spacing w-col w-col-4">
-                    <div class="_2u_icon-wrapper _2u_features"><img src="../images/Asset-35_2.svg" loading="lazy" width="78" alt="" class="_2u_feature-icons"></div>
-                    <h3 class="_2u_h3 _2u_smaller _2u_teal">Step 2</h3>
-                    <p class="_2u_body-1 _2u_centre">Book join or create a one to one or group course with your chosen tutor</p>
-                </div>
-                <div class="w-col w-col-4">
-                    <div class="_2u_icon-wrapper _2u_features"><img src="../images/Asset-36_2.svg" loading="lazy" width="78" alt="" class="_2u_feature-icons"></div>
-                    <h3 class="_2u_h3 _2u_smaller _2u_teal">Step 3</h3>
-                    <p class="_2u_body-1 _2u_centre">Send invites to your peers for group lessons, pay and attend, it's that simple!</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="_2u_divider"><img src="../images/divider1.svg" loading="lazy" alt="" class="_2u_divider-home-1 _2u_bottom"></div>
-
-        <div class="_2u_logo-section">
-            <h3 class="_2u_h3 _2u_home-features">A whole new world of collaborative working</h3><img src="../images/desktop-feature-icons.svg" loading="lazy" alt="" class="_2u_image-4"><img src="../images/mobile-feature-icons.svg" loading="lazy" alt="" class="_2u_image-4 _2u_mobile">
-        </div>
-        <div class="_2u_divider"><img src="../images/divider2.svg" loading="lazy" alt="" class="_2u_divider-home-1 _2u_top"></div>
-
-        <div class="_2u_home-screen-1">
-            <div class="_2u_inner-wrapper-2 _2u_less-bottom-home">
-                <h2 class="_2u_subheading _2u_home _2u_blackboard-home">Cloud based software that works on multiple browsers</h2>
-            </div>
-
             <div class="_2u_screenshot-slider-wrapper _2u_no-apron">
                 <div data-delay="4500" data-animation="slide" data-autoplay="1" data-easing="ease-in-out" data-nav-spacing="5" data-duration="800" data-infinite="1" class="_2u_slider-2 w-slider">
                     <div class="w-slider-mask">
-                        <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-500.png 500w, /images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-800.png 800w, /images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png 2000w" alt=""></div>
-                        <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-500.png 500w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-800.png 800w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-2000.png 2000w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01.png 3478w" alt=""></div>
-                        <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-500.png 500w, /images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-800.png 800w, /images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png 2000w" alt=""></div>
-                        <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-500.png 500w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-800.png 800w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-2000.png 2000w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png 3477w" alt=""></div>
-                        <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-500.png 500w, /images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-800.png 800w, /images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01.png 2000w" alt=""></div>
-                        <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-500.png 500w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-2000.png 2000w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-2600.png 2600w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-3200.png 3200w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01.png 3478w" alt=""></div>
+                        <!--<div class="w-slide"><img src="../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-500.png 500w, ../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-800.png 800w, ../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-1080.png 1080w, ../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-1600.png 1600w, ../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01.png 2000w" alt=""></div>-->
+                        <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-1_Row-6_For-Students-and-Parents_v2-01-p-1600.png" alt=""></div>
                     </div>
                     <div class="_2u_left-arrow w-slider-arrow-left">
                         <div class="_2u_icon-3 w-icon-slider-left"></div>
@@ -170,20 +119,72 @@
                     <div class="_2u_slide-nav _2u_no-apron w-slider-nav w-slider-nav-invert w-round"></div>
                 </div>
             </div>
-        </div>
-
-        <div class="_2u_hero-section">
-            <div class="_2u_inner-wrapper-2">
-                <h2 class="_2u_subheading _2u_safeguarding _2u_top-heading">How we keep you safe</h2>
-                <h3 class="_2u_h2 _2u_reduced-width _2u_safeguarding">Safeguarding is at the heart of our platforms' design, incorporating a number of mechanisms to keep you safe and provide total peace of mind.</h3>
-                <p class="_2u_body-1 _2u_centre _2u_bottom-spacing _2u_reduced-width">Digital classroom sessions on 2utoring with under 18s are multi-factor recorded, including each individual participant's screen, any active webcams, and audio channels. These recordings are encrypted and safely stored in the cloud for total protection and compliance. All tutors that have a green 'Enhanced DBS' status badge on their profile have been checked and validated by the 2utoring safeguarding team. This is unrivalled safety and security, on a truly revolutionary platform.</p>
-                <div class="_2u_button-container _2u_large _2u_safeguarding">
-                    <a asp-route="SafeguardingPolicy" href="/safeguarding-policy" class="_2u_button _2u_centre _2u_large _2u_padding _2u_green _2u_fixed-width w-button">Safeguarding Policy</a>
-                    <a asp-route="OnlineSafetySafeguarding" href="/online-safety-safeguarding" class="_2u_button _2u_centre _2u_large _2u_padding _2u_teal _2u_fixed-width w-button">Online Safety</a>
+            <div class="_2u_inner-wrapper-2 _2u_no-top-space">
+                <div class="_2u_features-columns _2u_classroom w-row">
+                    <div class="_2u_top-three-columns _2u_bottom-spacing w-col w-col-4">
+                        <div class="_2u_icon-wrapper _2u_features"><img src="../images/Asset-34_2.svg" loading="lazy" width="78" alt="" class="_2u_feature-icons"></div>
+                        <h3 class="_2u_h3 _2u_smaller _2u_teal">Step 1</h3>
+                        <p class="_2u_body-1 _2u_centre">Find your tutor or course</p>
+                    </div>
+                    <div class="_2u_top-three-columns _2u_bottom-spacing w-col w-col-4">
+                        <div class="_2u_icon-wrapper _2u_features"><img src="../images/Asset-35_2.svg" loading="lazy" width="78" alt="" class="_2u_feature-icons"></div>
+                        <h3 class="_2u_h3 _2u_smaller _2u_teal">Step 2</h3>
+                        <p class="_2u_body-1 _2u_centre">Book join or create a one to one or group course with your chosen tutor</p>
+                    </div>
+                    <div class="w-col w-col-4">
+                        <div class="_2u_icon-wrapper _2u_features"><img src="../images/Asset-36_2.svg" loading="lazy" width="78" alt="" class="_2u_feature-icons"></div>
+                        <h3 class="_2u_h3 _2u_smaller _2u_teal">Step 3</h3>
+                        <p class="_2u_body-1 _2u_centre">Send invites to your peers for group lessons, pay and attend, it's that simple!</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
+            <div class="_2u_divider"><img src="../images/divider1.svg" loading="lazy" alt="" class="_2u_divider-home-1 _2u_bottom"></div>
+
+            <div class="_2u_logo-section">
+                <h3 class="_2u_h3 _2u_home-features">A whole new world of collaborative working</h3><img src="../images/desktop-feature-icons.svg" loading="lazy" alt="" class="_2u_image-4"><img src="../images/mobile-feature-icons.svg" loading="lazy" alt="" class="_2u_image-4 _2u_mobile">
+            </div>
+            <div class="_2u_divider"><img src="../images/divider2.svg" loading="lazy" alt="" class="_2u_divider-home-1 _2u_top"></div>
+
+            <div class="_2u_home-screen-1">
+                <div class="_2u_inner-wrapper-2 _2u_less-bottom-home">
+                    <h2 class="_2u_subheading _2u_home _2u_blackboard-home">Cloud based software that works on multiple browsers</h2>
+                </div>
+
+                <div class="_2u_screenshot-slider-wrapper _2u_no-apron">
+                    <div data-delay="4500" data-animation="slide" data-autoplay="1" data-easing="ease-in-out" data-nav-spacing="5" data-duration="800" data-infinite="1" class="_2u_slider-2 w-slider">
+                        <div class="w-slider-mask">
+                            <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-500.png 500w, /images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-800.png 800w, /images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-2-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png 2000w" alt=""></div>
+                            <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-500.png 500w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-800.png 800w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-2000.png 2000w, /images/2utoring_Screen-Mockup-3-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01.png 3478w" alt=""></div>
+                            <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-500.png 500w, /images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-800.png 800w, /images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-4-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png 2000w" alt=""></div>
+                            <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-500.png 500w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-800.png 800w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01-p-2000.png 2000w, /images/2utoring_Screen-Mockup-5-Homepage-A-Whole-New-World-Of-Collaborative-Working-v1-01.png 3477w" alt=""></div>
+                            <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-500.png 500w, /images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-800.png 800w, /images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-6-Homepage-A-Whole-New-World-Of-Collaborative-Working-v2-01.png 2000w" alt=""></div>
+                            <div class="w-slide"><img src="../images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01.png" loading="lazy" sizes="(max-width: 767px) 100vw, (max-width: 991px) 96vw, (max-width: 1279px) 97vw, 100vw" srcset="/images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-500.png 500w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-1080.png 1080w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-1600.png 1600w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-2000.png 2000w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-2600.png 2600w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01-p-3200.png 3200w, /images/2utoring_Screen-Mockup-2_Row-2_For-Students-and-Parents_v2-01.png 3478w" alt=""></div>
+                        </div>
+                        <div class="_2u_left-arrow w-slider-arrow-left">
+                            <div class="_2u_icon-3 w-icon-slider-left"></div>
+                        </div>
+                        <div class="_2u_right-arrow w-slider-arrow-right">
+                            <div class="_2u_icon-2 w-icon-slider-right"></div>
+                        </div>
+                        <div class="_2u_slide-nav _2u_no-apron w-slider-nav w-slider-nav-invert w-round"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="_2u_hero-section">
+                <div class="_2u_inner-wrapper-2">
+                    <h2 class="_2u_subheading _2u_safeguarding _2u_top-heading">How we keep you safe</h2>
+                    <h3 class="_2u_h2 _2u_reduced-width _2u_safeguarding">Safeguarding is at the heart of our platforms' design, incorporating a number of mechanisms to keep you safe and provide total peace of mind.</h3>
+                    <p class="_2u_body-1 _2u_centre _2u_bottom-spacing _2u_reduced-width">Digital classroom sessions on 2utoring with under 18s are multi-factor recorded, including each individual participant's screen, any active webcams, and audio channels. These recordings are encrypted and safely stored in the cloud for total protection and compliance. All tutors that have a green 'Enhanced DBS' status badge on their profile have been checked and validated by the 2utoring safeguarding team. This is unrivalled safety and security, on a truly revolutionary platform.</p>
+                    <div class="_2u_button-container _2u_large _2u_safeguarding">
+                        <a asp-route="SafeguardingPolicy" href="/safeguarding-policy" class="_2u_button _2u_centre _2u_large _2u_padding _2u_green _2u_fixed-width w-button">Safeguarding Policy</a>
+                        <a asp-route="OnlineSafetySafeguarding" href="/online-safety-safeguarding" class="_2u_button _2u_centre _2u_large _2u_padding _2u_teal _2u_fixed-width w-button">Online Safety</a>
+                    </div>
+                </div>
+            </div>
+
+        </div> 
 </main>
-<!-----------End main-------->
+    
+    <!-----------End main-------->

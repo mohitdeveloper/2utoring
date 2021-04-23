@@ -38,6 +38,7 @@ var CompanySubscriptionDetailsComponent = /** @class */ (function () {
         this.companysService.getMy()
             .subscribe(function (success) {
             _this.company = success;
+            _this.stripeCountryId = success.stripeCountryID;
             _this.setUpPaymentForm();
             _this.loadPaymentMethod();
             _this.loadSubscription();
@@ -72,7 +73,7 @@ var CompanySubscriptionDetailsComponent = /** @class */ (function () {
             _this.paymentForm = _this.fb.group({
                 companyId: [_this.company.companyId],
                 stripePlanId: [_this.company.stripePlanId, [forms_1.Validators.required]],
-                stripeCountryId: [_this.stripeCountrys[0].stripeCountryId, [forms_1.Validators.required]],
+                stripeCountryId: [_this.stripeCountryId, [forms_1.Validators.required]],
                 cardName: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
                 addressLine1: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
                 paymentMethodId: [''],

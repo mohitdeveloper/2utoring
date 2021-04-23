@@ -241,8 +241,10 @@
                         <div class="form-group">
                             <label>Country</label>
                             <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" placeholder="Enter a promo code">
-                                <option [ngValue]="null">Select your country</option>
-                                <option *ngFor="let stripeCountry of stripeCountrys" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
+                                <!--<option [ngValue]="null">Select your country</option>-->
+                                <ng-container *ngFor="let stripeCountry of stripeCountrys; let i = index">
+                                    <option *ngIf="stripeCountry.supportedPayout==true" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
+                                </ng-container>
                             </select>
                             <div *ngIf="paymentFormControls.stripeCountryId.errors && (paymentFormControls.stripeCountryId.dirty || paymentFormControls.stripeCountryId.touched || paymentFormSubmitted)" class="error" role="alert">
                                 <div *ngIf="paymentFormControls.stripeCountryId.errors.maxlength">Country has a character limit of 250</div>

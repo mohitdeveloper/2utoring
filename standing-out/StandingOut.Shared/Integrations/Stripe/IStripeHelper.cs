@@ -17,13 +17,13 @@ namespace StandingOut.Shared.Integrations.Stripe
         Task<PaymentIntent> GetPaymentIntent(string paymentIntentId);
         Task DeletePaymentIntent(string paymentIntentId);
         Task<PaymentIntent> ConfirmPaymentIntent(string paymentIntentId);
-        Task<PaymentIntent> GetUpdatePaymentIntent(string paymentIntentId, string customerId, string paymentMethodId, decimal amount);
-        Task<PaymentIntent> CreatePaymentIntent(string paymentMethodId, decimal amount, string customerId = null, Dictionary<string, string> metadata = null,
-            bool offSession = true, bool confirm = false, string tutorId = null, string connectedAccount = null, decimal? transferAmount = null);
-        Task<PaymentIntent> CreatePaymentIntent(string paymentMethodId, decimal amount, string customerId = null, Dictionary<string, string> metadata = null,
+        //Task<PaymentIntent> GetUpdatePaymentIntent(string paymentIntentId, string customerId, string paymentMethodId, decimal amount);
+        //Task<PaymentIntent> CreatePaymentIntent(string paymentMethodId, decimal amount, string customerId = null, Dictionary<string, string> metadata = null,
+        //    bool offSession = true, bool confirm = false, string tutorId = null, string connectedAccount = null, decimal? transferAmount = null);
+        Task<PaymentIntent> CreatePaymentIntent(string paymentMethodId, decimal amount, Models.StripeCountry stripeCountry, string customerId = null, Dictionary<string, string> metadata = null,
             bool offSession = true, bool confirm = false, string orderId = null);
-        Task<Transfer> CreateTransferToVendor(decimal amount, string destinationConnectedAccountId, 
-            string OrderIdAsTransferGroup, string transferDescription, string paymentIntent, string currency = "gbp");
+        Task<Transfer> CreateTransferToVendor(decimal amount, string destinationConnectedAccountId,
+          string OrderIdAsTransferGroup, string transferDescription, string paymentIntent, Models.StripeCountry stripeCountry);
         Task<Refund> RefundPaymentIntent(string paymentIntentId, long? refundAmountInCents);
         Task<Subscription> CreateSubscription(SubscriptionCreateOptions subscription);
         Task<Plan> GetPlan(string planId);

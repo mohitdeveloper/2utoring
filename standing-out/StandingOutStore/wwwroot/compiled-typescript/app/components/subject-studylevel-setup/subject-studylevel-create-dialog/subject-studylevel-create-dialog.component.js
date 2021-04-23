@@ -19,7 +19,7 @@ var forms_1 = require("@angular/forms");
 var services_1 = require("../../../services");
 var ngx_toastr_1 = require("ngx-toastr");
 var SubjectStudylevelCreateDialogComponent = /** @class */ (function () {
-    function SubjectStudylevelCreateDialogComponent(dialogRef, data, fb, StudyLevelsService, subjectService, SubjectStudyLevelSetupService, toastr) {
+    function SubjectStudylevelCreateDialogComponent(dialogRef, data, fb, StudyLevelsService, subjectService, SubjectStudyLevelSetupService, toastr, stripeCountrysService) {
         this.dialogRef = dialogRef;
         this.data = data;
         this.fb = fb;
@@ -27,6 +27,7 @@ var SubjectStudylevelCreateDialogComponent = /** @class */ (function () {
         this.subjectService = subjectService;
         this.SubjectStudyLevelSetupService = SubjectStudyLevelSetupService;
         this.toastr = toastr;
+        this.stripeCountrysService = stripeCountrysService;
         this.stripeCountry = stripeCountry;
         this.subjectData = [];
         this.StudyLevels = [];
@@ -58,6 +59,14 @@ var SubjectStudylevelCreateDialogComponent = /** @class */ (function () {
         var _this = this;
         this.getAllSubject();
         this.getStudyLevels();
+        if (this.stripeCountry.currencySymbol == null) {
+            this.stripeCountrysService.getMyStripeCountry()
+                .subscribe(function (success) {
+                debugger;
+                _this.stripeCountry = success;
+            }, function (error) {
+            });
+        }
         //on edit case
         if (this.subjectPriceId) {
             this.SubjectStudyLevelSetupService.getById(this.subjectPriceId)
@@ -78,8 +87,8 @@ var SubjectStudylevelCreateDialogComponent = /** @class */ (function () {
         this.CreateSubjectPrice = this.fb.group({
             subjectId: ['', [forms_1.Validators.required]],
             studyLevelId: ['', [forms_1.Validators.required]],
-            pricePerPerson: ['', [forms_1.Validators.required, forms_1.Validators.min(5), forms_1.Validators.max(999)]],
-            groupPricePerPerson: ['', [forms_1.Validators.required, forms_1.Validators.min(5), forms_1.Validators.max(999)]],
+            pricePerPerson: ['', [forms_1.Validators.required, forms_1.Validators.min(10), forms_1.Validators.max(999)]],
+            groupPricePerPerson: ['', [forms_1.Validators.required, forms_1.Validators.min(10), forms_1.Validators.max(999)]],
             subjectStudyLevelSetupId: [null],
         });
     };
@@ -164,7 +173,7 @@ var SubjectStudylevelCreateDialogComponent = /** @class */ (function () {
             encapsulation: core_1.ViewEncapsulation.None
         }),
         __param(1, core_1.Inject(dialog_1.MAT_DIALOG_DATA)),
-        __metadata("design:paramtypes", [dialog_1.MatDialogRef, Object, forms_1.FormBuilder, services_1.StudyLevelsService, services_1.SubjectsService, services_1.SubjectStudyLevelSetupService, ngx_toastr_1.ToastrService])
+        __metadata("design:paramtypes", [dialog_1.MatDialogRef, Object, forms_1.FormBuilder, services_1.StudyLevelsService, services_1.SubjectsService, services_1.SubjectStudyLevelSetupService, ngx_toastr_1.ToastrService, services_1.StripeCountrysService])
     ], SubjectStudylevelCreateDialogComponent);
     return SubjectStudylevelCreateDialogComponent;
 }());

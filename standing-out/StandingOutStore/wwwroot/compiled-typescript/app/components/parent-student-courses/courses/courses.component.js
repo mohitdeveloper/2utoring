@@ -75,6 +75,10 @@ var CoursesComponent = /** @class */ (function () {
         this.published = true;
         this.errorObj = [{ 'key': 4, 'value': 'Please select level!' }, { 'key': 5, 'value': 'Please click next to save calendar changes!' }, { 'key': 6, 'value': 'Please enter course details!' }, { 'key': 8, 'value': 'Please enter lesson details!' }];
         this.isAuthenticated = isAuthenticated;
+        this.isSupportedPayout = true;
+        this.userStripeCountryId = null;
+        this.conversionPercent = 0;
+        this.conversionFlat = 0;
         this.tutorAvailable = false;
         this.gotTutors = false;
         this.hasGoogleAccountLinked = false;
@@ -190,6 +194,13 @@ var CoursesComponent = /** @class */ (function () {
             }, 300);
         }
     };
+    CoursesComponent.prototype.getSetting = function () {
+        var _this = this;
+        this.settingsService.getSetting().subscribe(function (success) {
+            _this.conversionPercent = success.conversionPercent;
+            _this.conversionFlat = success.conversionFlat;
+        });
+    };
     CoursesComponent.prototype.ngOnInit = function () {
         var _this = this;
         $('.loading').show();
@@ -201,6 +212,7 @@ var CoursesComponent = /** @class */ (function () {
             window.location.href = '/';
             return;
         }
+        this.getSetting();
         this.getAllSubject();
         this.getTutorAvailability(this.selectedTutorId);
         this.CompanyCourseForm = this.fb.group({
@@ -1270,7 +1282,7 @@ var CoursesComponent = /** @class */ (function () {
         var $container = $("html,body");
         var $scrollTo = $('#scroolHere');
         //$container.animate({ scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop(), scrollLeft: 0 }, 300); 
-        $container.animate({ scrollTop: $scrollTo.offset().top - 10, scrollLeft: 0 }, 300);
+        $container.animate({ scrollTop: $scrollTo.offset().top - 130, scrollLeft: 0 }, 300);
         if (this.currentStep == 5 && step != 5 && this.selectedEvent.length == 0) {
             this.toastr.error("Please select at least one slot!");
             return;
@@ -1490,6 +1502,16 @@ var CoursesComponent = /** @class */ (function () {
         });
         return totalPrice;
     };
+    CoursesComponent.prototype.getConversion = function () {
+        var conversionCharges = 0;
+        conversionCharges = (this.getTotleLessonPrice() * this.conversionPercent) / 100;
+        return conversionCharges;
+    };
+    CoursesComponent.prototype.getCouseTotal = function () {
+        var courseTotal = 0;
+        courseTotal = this.getTotleLessonPrice() + this.getConversion() + this.conversionFlat;
+        return courseTotal;
+    };
     CoursesComponent.prototype.createCourseDate = function (dt) {
         var tzo = -dt.getTimezoneOffset(), dif = tzo >= 0 ? '+' : '-', pad = function (num) {
             var norm = Math.floor(Math.abs(num));
@@ -1701,6 +1723,17 @@ var CoursesComponent = /** @class */ (function () {
         this.usersService.getMy()
             .subscribe(function (success) {
             _this.user = success;
+            debugger;
+            if (_this.user.stripeCountry != null) {
+                if (_this.user.stripeCountry.supportedPayout == true) {
+                    _this.isSupportedPayout = true;
+                    _this.userStripeCountryId = _this.user.stripeCountry.stripeCountryId;
+                }
+                else {
+                    _this.isSupportedPayout = false;
+                    _this.userStripeCountryId = _this.user.stripeCountry.stripeCountryId;
+                }
+            }
         }, function (error) {
             console.log(error);
         });
@@ -1766,6 +1799,10 @@ var CoursesComponent = /** @class */ (function () {
             }
         }
         this.sortLessonForm('delete');
+    };
+    CoursesComponent.prototype.getSupportedPayout = function (supportedPayout) {
+        debugger;
+        this.isSupportedPayout = supportedPayout;
     };
     __decorate([
         core_1.ViewChild('calendarRef', { static: false }),

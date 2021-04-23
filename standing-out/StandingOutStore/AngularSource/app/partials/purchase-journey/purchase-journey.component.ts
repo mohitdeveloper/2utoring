@@ -1,4 +1,4 @@
-﻿import { Component, Input, SimpleChanges } from '@angular/core';
+﻿import { Component, Input,Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 import { StripeCard, StripeCountry, PromoCode, Payment, Basket, BasketItem, CourseInvite, CreateBasketOrderResponse } from '../../models/index';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -20,8 +20,6 @@ Date.prototype.getWeek = function () {
     return Math.ceil((((this - dt) / 86400000) + dt.getDay() + 1) / 7);
 };
 
-
-
 @Component({
     selector: 'app-purchase-journey',
     templateUrl: './purchase-journey.component.html'
@@ -40,8 +38,8 @@ export class PurchaseJourneyComponent {
     @Input() dateOfBirth: Date;
     @Input() sessionDate: any;
     @Input() currentStep: any;
-
-    
+    @Output() supportedPayout = new EventEmitter<boolean>();
+    @Input() userStripeCountryId: any; 
     payment: Payment = new Payment();
     basket: Basket = new Basket();
 
@@ -106,9 +104,10 @@ export class PurchaseJourneyComponent {
 
 
     setupPaymentForm(): void {
+        debugger;
         this.paymentForm = this.formBuilder.group({
             cardName: ['', [Validators.required, Validators.maxLength(250)]],
-            stripeCountryId: [this.getDefaultCountry(), [Validators.required]],
+            stripeCountryId: [this.userStripeCountryId!=null? this.userStripeCountryId: this.getDefaultCountry(), [Validators.required]],
             addressLine1: ['', [Validators.required, Validators.maxLength(250)]]
         });
         this.setupCardField();
@@ -217,7 +216,7 @@ export class PurchaseJourneyComponent {
     };
     confirmPayment(): void { 
         console.log(this.promoCodeDetails);
-
+        debugger;
         // this.payment.classSessionId = this.classSessionId; 
         this.payment.paymentMethodId = this.paymentMethodId;
         this.payment.promoCode = this.promoCodeDetails == null ? null : this.promoCodeDetails.promoCodeId;
@@ -396,6 +395,7 @@ export class PurchaseJourneyComponent {
     };
 
     ngOnInit() {
+        debugger;
         $('.loading').show();
         this.getCard();
         this.getStripeCountries();
@@ -433,5 +433,19 @@ export class PurchaseJourneyComponent {
         //let weekOffset: any = Math.ceil(daysDifference / 7);
          localStorage.setItem('week', weekOffset);
         //return daysDifference;
+    }
+
+    onCountryChange(id: string) {
+        debugger;
+        var newId = id.split(':');
+        let selectedValue = this.stripeCountrys.filter(t => t.stripeCountryId == newId[1].trim());
+        if (selectedValue[0].supportedPayout) {
+            this.supportedPayout.emit(true);
+        }
+        else {
+            this.supportedPayout.emit(false);
+        }
+
+        
     }
 }

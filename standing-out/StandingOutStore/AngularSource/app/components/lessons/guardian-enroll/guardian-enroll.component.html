@@ -1,198 +1,187 @@
 ﻿<div class="my-35 my-md-28 my-lg-84">
     <div class="Page__Container Page__Container--size:default">
-        <div class="row">
-            <div class="col-sm-8">
-                <ng-container *ngIf="user != null && !user.isSetupComplete">
-                    <form (ngSubmit)="submitGuardianDetailForm()" [formGroup]="guardianDetailForm" *ngIf="step == guardianRegistrationStep.GuardianDetail && guardianDetailForm != undefined">
-                        <h1 class="mb-14 fw-800">Welcome {{user.firstName}}</h1>
-                        <h4 class="fw-600">Let's set up your profile, it will just take a minute</h4>
-                        <div class="mt-42">
-                            <div class="form-row">
-                                <div class="form-group col-sm-12 col-lg-6">
-                                    <label>Title *</label>
-                                    <select id="parentTitle" name="parentTitle" formControlName="parentTitle" class="form-control">
-                                        <option [ngValue]="null">Select a title</option>
-                                        <option *ngFor="let userTitle of userTitles" [ngValue]="userTitle.name">{{userTitle.name}}</option>
-                                    </select>
-                                    <div *ngIf="guardianDetailFormControls.parentTitle.errors && (guardianDetailFormControls.parentTitle.dirty || guardianDetailFormControls.parentTitle.touched || guardianDetailFormSubmitted)" class="error" role="alert">
-                                        <div *ngIf="guardianDetailFormControls.parentTitle.errors.required">Please select title to continue</div>
-                                    </div>
-                                </div>
-
-                                <!--<div class="form-group col-sm-12 col-lg-6">
-                                    <div class="form-group">
-                                        <label>Country</label>
-                                        <select id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" placeholder="Enter a promo code">-->
-                                            <!--<option [ngValue]="null">Select your country</option>-->
-                                            <!--<option *ngFor="let stripeCountry of stripeCountrys; let i = index" [selected]="i == 1" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
-
+            <div class="row">
+                <div class="col-sm-8">
+                    <ng-container *ngIf="user != null && !user.isSetupComplete">
+                        <form (ngSubmit)="submitGuardianDetailForm()" [formGroup]="guardianDetailForm" *ngIf="step == guardianRegistrationStep.GuardianDetail && guardianDetailForm != undefined">
+                            <h1 class="mb-14 fw-800">Welcome {{user.firstName}}</h1>
+                            <h4 class="fw-600">Let's set up your profile, it will just take a minute</h4>
+                            <div class="mt-42">
+                                <div class="form-row">
+                                    <div class="form-group col-lg-6">
+                                        <label>Title *</label>
+                                        <select id="parentTitle" name="parentTitle" formControlName="parentTitle" class="form-control">
+                                            <option [ngValue]="null">Select a title</option>
+                                            <option *ngFor="let userTitle of userTitles" [ngValue]="userTitle.name">{{userTitle.name}}</option>
                                         </select>
-                                    </div>
-                                </div>-->
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-lg-6">
-                                    <label>First Name *</label>
-                                    <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control" placeholder="Enter your first name" />
-                                    <div *ngIf="guardianDetailFormControls.firstName.errors && (guardianDetailFormControls.firstName.dirty || guardianDetailFormControls.firstName.touched || guardianDetailFormSubmitted)" class="error" role="alert">
-                                        <div *ngIf="guardianDetailFormControls.firstName.errors.maxlength">First Name has a character limit of 250 inc. spaces.</div>
-                                        <div *ngIf="guardianDetailFormControls.firstName.errors.required">Please enter your surname to continue.</div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="exampleInputEmail1">Surname *</label>
-                                    <input type="text" id="lastName" name="lastName" formControlName="lastName" class="form-control" placeholder="Enter your surname" />
-                                    <div *ngIf="guardianDetailFormControls.lastName.errors && (guardianDetailFormControls.lastName.dirty || guardianDetailFormControls.lastName.touched || guardianDetailFormSubmitted)" class="error" role="alert">
-                                        <div *ngIf="guardianDetailFormControls.lastName.errors.maxlength">Surname has a character limit of 250</div>
-                                        <div *ngIf="guardianDetailFormControls.lastName.errors.required">Please enter your surname to continue.</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-lg-12">
-                                    <label>Email address</label>
-                                    <input type="text" id="email" name="email" formControlName="email" class="form-control" placeholder="Enter your email address" readonly />
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-lg-6">
-                                    <label>Telephone No. *</label>
-                                    <input type="tel" id="telephoneNumber" name="telephoneNumber" formControlName="telephoneNumber" class="form-control" placeholder="Enter your telephone no." />
-                                    <div *ngIf="guardianDetailFormControls.telephoneNumber.errors && (guardianDetailFormControls.telephoneNumber.dirty || guardianDetailFormControls.telephoneNumber.touched || guardianDetailFormSubmitted)" class="error" role="alert">
-                                        <div *ngIf="guardianDetailFormControls.telephoneNumber.errors.maxlength">This field should only allow a telephone no. of 12 characters (inc. spaces) to be added.</div>
-                                        <div *ngIf="guardianDetailFormControls.telephoneNumber.errors.required">Please enter a valid telephone no. to continue.</div>
-                                        <div *ngIf="guardianDetailFormControls.telephoneNumber.errors.pattern">Telephone No is not valid</div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label>Mobile No.</label>
-                                    <input type="tel" id="mobileNumber" name="mobileNumber" formControlName="mobileNumber" class="form-control" placeholder="Enter your mobile no." />
-                                    <div *ngIf="guardianDetailFormControls.mobileNumber.errors && (guardianDetailFormControls.mobileNumber.dirty || guardianDetailFormControls.mobileNumber.touched || guardianDetailFormSubmitted)" class="error" role="alert">
-                                        <div *ngIf="guardianDetailFormControls.mobileNumber.errors.maxlength">his field should only allow a mobile no. of 12 characters (inc. spaces) to be added.</div>
-                                        <div *ngIf="guardianDetailFormControls.mobileNumber.errors.required">Please enter a valid mobile no. to continue</div>
-                                        <div *ngIf="guardianDetailFormControls.mobileNumber.errors.pattern">Mobile No is not valid</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-lg-12">
-                                    <label class="form-check" for="marketingAccepted">
-                                        <input type="checkbox" class="form-control" id="marketingAccepted" name="marketingAccepted" formControlName="marketingAccepted" />
-                                        <span class="label">I would like to recieve relevant tips, tricks and offers from the 2utoring team</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-lg-12">
-                                    <label class="form-check" for="termsAndConditionsAccepted">
-                                        <input type="checkbox" class="form-control" id="termsAndConditionsAccepted" name="termsAndConditionsAccepted" formControlName="termsAndConditionsAccepted" />
-                                        <span class="label">I have read and accepted the <a class="termsCondition" href="/terms-of-website-use" target="_blank">terms and conditions</a>, <a class="termsCondition" href="/privacy-policy" target="_blank">privacy notice</a> and the <a href="/terms-of-use" class="termsCondition">Terms of use.</a> </span>
-                                    </label>
-                                    <div *ngIf="guardianDetailFormControls.termsAndConditionsAccepted.errors && (guardianDetailFormControls.termsAndConditionsAccepted.dirty || guardianDetailFormControls.termsAndConditionsAccepted.touched || guardianDetailFormSubmitted)" class="error" role="alert">
-                                        <div>You need to accept our terms to continue</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" *ngIf="dateOfBirthInvalid()">
-                                <div class="col-sm-12">
-                                    <div class="error" role="alert">
-                                        Sorry, the course you have selected is for {{ course.isUnder18 ? 'under' : 'over' }} 18's only.
-                                        <!--Please choose an {{ lesson.isUnder16 ? 'over' : 'under' }} 18 lesson from the <a [href]="'/find-a-lesson' + (lesson.isUnder16 ? '' : '?under=false')">Marketplace</a>.-->
-                                        Please choose an {{ course.isUnder18 ? 'over' : 'under' }} 18 course from the <a [href]="'/course-search' + (course.isUnder18 ? '' : '?under=false')">Marketplace</a>.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <a href="#" (click)="back()" class="link-grey">Go back</a>
-                                <button type="submit" class="btn btn-primary btn-lg ml-auto" [disabled]="dateOfBirthInvalid()">Continue</button>
-                            </div>
-                        </div>
-                    </form>
-                    <form (ngSubmit)="submitChildDetailForm()" [formGroup]="childDetailForm" *ngIf="step == guardianRegistrationStep.ChildDetail && childDetailForm != undefined">
-                        <h1 class="mb-14 fw-800">Tell us who you're buying this for</h1>
-                        <h4 class="fw-600">Please enter the child's name who will be participating in this session</h4>
-                        <div class="mt-42">
-                            <div class="form-row">
-                                <div class="form-group col-lg-6">
-                                    <label>Title *</label>
-                                    <select id="childTitle" name="childTitle" formControlName="childTitle" class="form-control">
-                                        <option [ngValue]="null">Select a title</option>
-                                        <option *ngFor="let userTitle of userTitles" [ngValue]="userTitle.name">{{userTitle.name}}</option>
-                                    </select>
-                                    <div *ngIf="childDetailFormControls.childTitle.errors && (childDetailFormControls.childTitle.dirty || childDetailFormControls.childTitle.touched || childDetailFormSubmitted)" class="error" role="alert">
-                                        <div *ngIf="childDetailFormControls.childTitle.errors.required">Please select their title to continue</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-lg-6">
-                                    <label>First Name *</label>
-                                    <input type="text" id="childFirstName" name="childFirstName" formControlName="childFirstName" class="form-control" placeholder="Enter their first name" />
-                                    <div *ngIf="childDetailFormControls.childFirstName.errors && (childDetailFormControls.childFirstName.dirty || childDetailFormControls.childFirstName.touched || childDetailFormSubmitted)" class="error" role="alert">
-                                        <div *ngIf="childDetailFormControls.childFirstName.errors.maxlength">First Name has a character limit of 250</div>
-                                        <div *ngIf="childDetailFormControls.childFirstName.errors.required">Please enter their first name to continue.</div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-lg-6">
-                                    <label for="exampleInputEmail1">Surname *</label>
-                                    <input type="text" id="childLastName" name="childLastName" formControlName="childLastName" class="form-control" placeholder="Enter their surname" />
-                                    <div *ngIf="childDetailFormControls.childLastName.errors && (childDetailFormControls.childLastName.dirty || childDetailFormControls.childLastName.touched || childDetailFormSubmitted)" class="error" role="alert">
-                                        <div *ngIf="childDetailFormControls.childLastName.errors.maxlength">Surname has a character limit of 250</div>
-                                        <div *ngIf="childDetailFormControls.childLastName.errors.required">Please enter their surname to continue.</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-lg-6">
-                                    <label>Date of birth *</label>
-                                    <div class="form-row">
-                                        <div class="col-4">
-                                            <input type="number" step="1" placeholder="DD" id="dateOfBirthDay" name="dateOfBirthDay" formControlName="dateOfBirthDay" class="form-control" />
-                                        </div>
-                                        <div class="col-4">
-                                            <input type="number" step="1" placeholder="MM" id="dateOfBirthMonth" name="dateOfBirthMonth" formControlName="dateOfBirthMonth" class="form-control" />
-                                        </div>
-                                        <div class="col-4">
-                                            <input type="number" step="1" placeholder="YYYY" id="dateOfBirthYear" name="dateOfBirthYear" formControlName="dateOfBirthYear" class="form-control" />
+                                        <div *ngIf="guardianDetailFormControls.parentTitle.errors && (guardianDetailFormControls.parentTitle.dirty || guardianDetailFormControls.parentTitle.touched || guardianDetailFormSubmitted)" class="error" role="alert">
+                                            <div *ngIf="guardianDetailFormControls.parentTitle.errors.required">Please select title to continue</div>
                                         </div>
                                     </div>
-                                    <div *ngIf="!checkDateValid() && (((childDetailFormControls.dateOfBirthYear.dirty || childDetailFormControls.dateOfBirthYear.touched) &&
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-lg-6">
+                                        <label>First Name *</label>
+                                        <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control" placeholder="Enter your first name" />
+                                        <div *ngIf="guardianDetailFormControls.firstName.errors && (guardianDetailFormControls.firstName.dirty || guardianDetailFormControls.firstName.touched || guardianDetailFormSubmitted)" class="error" role="alert">
+                                            <div *ngIf="guardianDetailFormControls.firstName.errors.maxlength">First Name has a character limit of 250 inc. spaces.</div>
+                                            <div *ngIf="guardianDetailFormControls.firstName.errors.required">Please enter your surname to continue.</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="exampleInputEmail1">Surname *</label>
+                                        <input type="text" id="lastName" name="lastName" formControlName="lastName" class="form-control" placeholder="Enter your surname" />
+                                        <div *ngIf="guardianDetailFormControls.lastName.errors && (guardianDetailFormControls.lastName.dirty || guardianDetailFormControls.lastName.touched || guardianDetailFormSubmitted)" class="error" role="alert">
+                                            <div *ngIf="guardianDetailFormControls.lastName.errors.maxlength">Surname has a character limit of 250</div>
+                                            <div *ngIf="guardianDetailFormControls.lastName.errors.required">Please enter your surname to continue.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-lg-12">
+                                        <label>Email address</label>
+                                        <input type="text" id="email" name="email" formControlName="email" class="form-control" placeholder="Enter your email address" readonly />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-lg-6">
+                                        <label>Telephone No. *</label>
+                                        <input type="tel" id="telephoneNumber" name="telephoneNumber" formControlName="telephoneNumber" class="form-control" placeholder="Enter your telephone no." />
+                                        <div *ngIf="guardianDetailFormControls.telephoneNumber.errors && (guardianDetailFormControls.telephoneNumber.dirty || guardianDetailFormControls.telephoneNumber.touched || guardianDetailFormSubmitted)" class="error" role="alert">
+                                            <div *ngIf="guardianDetailFormControls.telephoneNumber.errors.maxlength">This field should only allow a telephone no. of 12 characters (inc. spaces) to be added.</div>
+                                            <div *ngIf="guardianDetailFormControls.telephoneNumber.errors.required">Please enter a valid telephone no. to continue.</div>
+                                            <div *ngIf="guardianDetailFormControls.telephoneNumber.errors.pattern">Telephone No is not valid</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label>Mobile No.</label>
+                                        <input type="tel" id="mobileNumber" name="mobileNumber" formControlName="mobileNumber" class="form-control" placeholder="Enter your mobile no." />
+                                        <div *ngIf="guardianDetailFormControls.mobileNumber.errors && (guardianDetailFormControls.mobileNumber.dirty || guardianDetailFormControls.mobileNumber.touched || guardianDetailFormSubmitted)" class="error" role="alert">
+                                            <div *ngIf="guardianDetailFormControls.mobileNumber.errors.maxlength">his field should only allow a mobile no. of 12 characters (inc. spaces) to be added.</div>
+                                            <div *ngIf="guardianDetailFormControls.mobileNumber.errors.required">Please enter a valid mobile no. to continue</div>
+                                            <div *ngIf="guardianDetailFormControls.mobileNumber.errors.pattern">Mobile No is not valid</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-lg-12">
+                                        <label class="form-check" for="marketingAccepted">
+                                            <input type="checkbox" class="form-control" id="marketingAccepted" name="marketingAccepted" formControlName="marketingAccepted" />
+                                            <span class="label">I would like to recieve relevant tips, tricks and offers from the 2utoring team</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-lg-12">
+                                        <label class="form-check" for="termsAndConditionsAccepted">
+                                            <input type="checkbox" class="form-control" id="termsAndConditionsAccepted" name="termsAndConditionsAccepted" formControlName="termsAndConditionsAccepted" />
+                                            <span class="label">I have read and accepted the <a class="termsCondition" href="/terms-of-website-use" target="_blank">terms and conditions</a>, <a class="termsCondition" href="/privacy-policy" target="_blank">privacy notice</a> and the <a href="/terms-of-use" class="termsCondition">Terms of use.</a> </span>
+                                        </label>
+                                        <div *ngIf="guardianDetailFormControls.termsAndConditionsAccepted.errors && (guardianDetailFormControls.termsAndConditionsAccepted.dirty || guardianDetailFormControls.termsAndConditionsAccepted.touched || guardianDetailFormSubmitted)" class="error" role="alert">
+                                            <div>You need to accept our terms to continue</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="dateOfBirthInvalid()">
+                                    <div class="col-sm-12">
+                                        <div class="error" role="alert">
+                                            Sorry, the course you have selected is for {{ course.isUnder18 ? 'under' : 'over' }} 18's only.
+                                            <!--Please choose an {{ lesson.isUnder16 ? 'over' : 'under' }} 18 lesson from the <a [href]="'/find-a-lesson' + (lesson.isUnder16 ? '' : '?under=false')">Marketplace</a>.-->
+                                            Please choose an {{ course.isUnder18 ? 'over' : 'under' }} 18 course from the <a [href]="'/course-search' + (course.isUnder18 ? '' : '?under=false')">Marketplace</a>.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <a href="#" (click)="back()" class="link-grey">Go back</a>
+                                    <button type="submit" class="btn btn-primary btn-lg ml-auto" [disabled]="dateOfBirthInvalid()">Continue</button>
+                                </div>
+                            </div>
+                        </form>
+                        <form (ngSubmit)="submitChildDetailForm()" [formGroup]="childDetailForm" *ngIf="step == guardianRegistrationStep.ChildDetail && childDetailForm != undefined">
+                            <h1 class="mb-14 fw-800">Tell us who you're buying this for</h1>
+                            <h4 class="fw-600">Please enter the child's name who will be participating in this session</h4>
+                            <div class="mt-42">
+                                <div class="form-row">
+                                    <div class="form-group col-lg-6">
+                                        <label>Title *</label>
+                                        <select id="childTitle" name="childTitle" formControlName="childTitle" class="form-control">
+                                            <option [ngValue]="null">Select a title</option>
+                                            <option *ngFor="let userTitle of userTitles" [ngValue]="userTitle.name">{{userTitle.name}}</option>
+                                        </select>
+                                        <div *ngIf="childDetailFormControls.childTitle.errors && (childDetailFormControls.childTitle.dirty || childDetailFormControls.childTitle.touched || childDetailFormSubmitted)" class="error" role="alert">
+                                            <div *ngIf="childDetailFormControls.childTitle.errors.required">Please select their title to continue</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-lg-6">
+                                        <label>First Name *</label>
+                                        <input type="text" id="childFirstName" name="childFirstName" formControlName="childFirstName" class="form-control" placeholder="Enter their first name" />
+                                        <div *ngIf="childDetailFormControls.childFirstName.errors && (childDetailFormControls.childFirstName.dirty || childDetailFormControls.childFirstName.touched || childDetailFormSubmitted)" class="error" role="alert">
+                                            <div *ngIf="childDetailFormControls.childFirstName.errors.maxlength">First Name has a character limit of 250</div>
+                                            <div *ngIf="childDetailFormControls.childFirstName.errors.required">Please enter their first name to continue.</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="exampleInputEmail1">Surname *</label>
+                                        <input type="text" id="childLastName" name="childLastName" formControlName="childLastName" class="form-control" placeholder="Enter their surname" />
+                                        <div *ngIf="childDetailFormControls.childLastName.errors && (childDetailFormControls.childLastName.dirty || childDetailFormControls.childLastName.touched || childDetailFormSubmitted)" class="error" role="alert">
+                                            <div *ngIf="childDetailFormControls.childLastName.errors.maxlength">Surname has a character limit of 250</div>
+                                            <div *ngIf="childDetailFormControls.childLastName.errors.required">Please enter their surname to continue.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-lg-6">
+                                        <label>Date of birth *</label>
+                                        <div class="form-row">
+                                            <div class="col-4">
+                                                <input type="number" step="1" placeholder="DD" id="dateOfBirthDay" name="dateOfBirthDay" formControlName="dateOfBirthDay" class="form-control" />
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="number" step="1" placeholder="MM" id="dateOfBirthMonth" name="dateOfBirthMonth" formControlName="dateOfBirthMonth" class="form-control" />
+                                            </div>
+                                            <div class="col-4">
+                                                <input type="number" step="1" placeholder="YYYY" id="dateOfBirthYear" name="dateOfBirthYear" formControlName="dateOfBirthYear" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div *ngIf="!checkDateValid() && (((childDetailFormControls.dateOfBirthYear.dirty || childDetailFormControls.dateOfBirthYear.touched) &&
                                          (childDetailFormControls.dateOfBirthMonth.dirty || childDetailFormControls.dateOfBirthMonth.touched) &&
                                          (childDetailFormControls.dateOfBirthDay.dirty || childDetailFormControls.dateOfBirthDay.touched))
                                          || childDetailFormSubmitted)" class="error" role="alert">
-                                        <div>The Date of birth you have enter is invalid</div>
+                                            <div>The Date of birth you have enter is invalid</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row" *ngIf="dateOfBirthInvalid()">
-                                <div class="col-sm-12">
-                                    <!--<div class="error" role="alert">
-                Sorry, the course you have selected is for under 18's only
-                Please choose an 18 or over course from the <a href="/find-a-lesson?under=false">Course Marketplace</a>.
-            </div>-->
+                                <div class="row" *ngIf="dateOfBirthInvalid()">
+                                    <div class="col-sm-12">
+                                        <!--<div class="error" role="alert">
+                                            Sorry, the course you have selected is for under 18's only
+                                            Please choose an 18 or over course from the <a href="/find-a-lesson?under=false">Course Marketplace</a>.
+                                        </div>-->
 
-                                    <div class="error" role="alert" *ngIf="course.isUnder18">
-                                        Sorry, the course you have selected is for under 18’s only. Please choose an over 18’s course from the <a href="/course-search">Course Marketplace</a>.
-                                    </div>
-                                    <div class="error" role="alert" *ngIf="!course.isUnder18">
-                                        Sorry, the course you have selected is for over 18’s only. Please choose an under 18’s course from the <a href="/course-search">Course Marketplace</a>.
+                                        <div class="error" role="alert" *ngIf="course.isUnder18">
+                                            Sorry, the course you have selected is for under 18’s only. Please choose an over 18’s course from the <a href="/course-search">Course Marketplace</a>.
+                                        </div>
+                                        <div class="error" role="alert" *ngIf="!course.isUnder18">
+                                            Sorry, the course you have selected is for over 18’s only. Please choose an under 18’s course from the <a href="/course-search">Course Marketplace</a>.
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <a href="#" (click)="back()" class="link-grey">Go back</a>
+                                    <button type="submit" class="btn btn-primary btn-lg ml-auto" [disabled]="dateOfBirthInvalid()">Continue</button>
+                                </div>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <a href="#" (click)="back()" class="link-grey">Go back</a>
-                                <button type="submit" class="btn btn-primary btn-lg ml-auto" [disabled]="dateOfBirthInvalid()">Continue</button>
-                            </div>
-                        </div>
-                    </form>
-                </ng-container>
+                        </form>
+                    </ng-container>
 
-                <!--<app-purchase-journey *ngIf="user != null && user.isSetupComplete" [classSessionId]="lesson != null ? lesson.classSessionId : null" [under18]="lesson != null ? lesson.isUnder16 : null" [dateOfBirth]="user.dateOfBirth"></app-purchase-journey>-->
-                    <app-purchase-journey *ngIf="user != null && user.isSetupComplete" [courseId]="course != null ? course.courseId : null" [under18]="course != null ? course.isUnder18 : null" [dateOfBirth]="user.dateOfBirth" [sessionDate]="course != null ? course.classSessions[0].startDate: null"></app-purchase-journey>
-            </div>
-            <div class="col-sm-4">
-                <app-lesson-card [lesson]="lesson" [course]="course" [selected]="user != null && user.isSetupComplete ? true : null"></app-lesson-card>
+                    <!--<app-purchase-journey *ngIf="user != null && user.isSetupComplete" [classSessionId]="lesson != null ? lesson.classSessionId : null" [under18]="lesson != null ? lesson.isUnder16 : null" [dateOfBirth]="user.dateOfBirth"></app-purchase-journey>-->
+                    <app-purchase-journey *ngIf="user != null && user.isSetupComplete" [courseId]="course != null ? course.courseId : null" [under18]="course != null ? course.isUnder18 : null" [dateOfBirth]="user.dateOfBirth" [sessionDate]="course != null ? course.classSessions[0].startDate: null" [userStripeCountryId]="userStripeCountryId" (supportedPayout)="getSupportedPayout($event)"></app-purchase-journey>
+                </div>
+                <div class="col-sm-4">
+                    <app-lesson-card [lesson]="lesson" [course]="course" [selected]="user != null && user.isSetupComplete ? true : null" [isSupportedPayout]="isSupportedPayout" [conversionPercent]="conversionPercent" [conversionFlat]="conversionFlat"></app-lesson-card>
+                </div>
             </div>
         </div>
     </div>
-</div>

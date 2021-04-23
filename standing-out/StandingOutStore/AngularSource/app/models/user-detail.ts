@@ -1,4 +1,6 @@
-﻿export class UserDetail {
+﻿import { StripeCountry } from "./stripe-country";
+
+export class UserDetail {
     title: string;
     firstName: string;
     lastName: string;
@@ -11,6 +13,7 @@
     isSetupComplete: boolean;
     hasGoogleAccountLinked: boolean;
     localLogin: boolean;
+    stripeCountry: StripeCountry;
 }
 
 export class MessageStatusUpdate {

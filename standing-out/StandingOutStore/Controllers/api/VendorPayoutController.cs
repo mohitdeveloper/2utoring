@@ -147,7 +147,8 @@ namespace StandingOutStore.Controllers.api
                             decimal finalAmount = 0;
                             if (payoutDetails.Item2.Amount > 0)
                             {
-                                finalAmount = payoutDetails.Item2.Amount / 100;
+                                //finalAmount = payoutDetails.Item2.Amount / 100;
+                                finalAmount = payoutDetails.Item2.Amount / lesson.Owner.StripeCountry.DecimalMultiplier; //change by wizcraft 16-04-2021
                             }
 
                             var vendorPayout = new Models.VendorPayout
@@ -184,7 +185,8 @@ namespace StandingOutStore.Controllers.api
         {
             var balance = await _StripeService.GetBalance(settings, vendor.StripeConnectAccountId);
             decimal totalAvailable = balance.Available.Sum(o => o.Amount);
-            if (totalAmount * 100m <= totalAvailable)
+            //if (totalAmount * 100m <= totalAvailable)
+             if (totalAmount * lesson.Owner.StripeCountry.DecimalMultiplier <= totalAvailable)//change by wizcraft 16-04-2021
             {
                 var payoutResult = await _StripeService.DoPayout(settings.StripeKey, totalAmount, lesson, vendor.StripeConnectAccountId, vendor.StripeConnectBankAccountId);
                 return payoutResult;

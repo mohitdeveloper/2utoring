@@ -7,6 +7,7 @@ import { StripeCountry, Tutor, StripeCard, StripeSubscription, StripePlan, Subsc
 import { DbsCheckDialog } from './dbscheck-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
+
 declare var Stripe: Function;
 
 @Component({
@@ -30,6 +31,7 @@ export class TutorSubscriptionDetailsComponent implements OnInit {
     stripePlans: StripePlan[];
     tutorsPlans: [];
     buttonText: string = 'Update changes';
+    stripeCountryId: string;
     //ProfileApprovalCheckNoFee: boolean;
     //DBSApprovalCheckNoFee: boolean;
     //ProfileApprovalCheckStarter: boolean;
@@ -56,16 +58,16 @@ export class TutorSubscriptionDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         this.tutorsService.getMy()
-            .subscribe(successOne => {
+            .subscribe(successOne => { 
                 this.currentStripePlanId = successOne.stripePlanId;
+                this.stripeCountryId = successOne.stripeCountryID;
                 this.tutor = successOne;
                 this.setUpPaymentForm();
                 this.loadPaymentMethod();
                 this.loadSubscription(); 
-
+                
                 this.stripePlansService.getSubscriptionPlan().subscribe(success => {
                     this.stripePlans = success;
-                    debugger;
 
                     if (success[0].stripePlanId == this.currentStripePlanId) {
                         this.selectedPlan(success[0].stripePlanId, success[0].subscription.subscriptionId);
@@ -105,12 +107,13 @@ export class TutorSubscriptionDetailsComponent implements OnInit {
     setUpPaymentForm(): void {
         this.stripeCountrysService.get()
             .subscribe(countrySuccess => {
+                debugger;
                 this.stripeCountrys = countrySuccess;
                 this.paymentFormSubmitted = false;
                 this.paymentForm = this.fb.group({
                     tutorId: [this.tutor.tutorId],
                     stripePlanId: [this.tutor.stripePlanId, [Validators.required]],
-                    stripeCountryId: [this.stripeCountrys[0].stripeCountryId, [Validators.required]],
+                    stripeCountryId: [this.stripeCountryId, [Validators.required]],
                     cardName: ['', [Validators.required, Validators.maxLength(250)]],
                     addressLine1: ['', [Validators.required, Validators.maxLength(250)]],
                     paymentMethodId: [''],

@@ -1,4 +1,6 @@
-﻿export class UserGuardianDetail {
+﻿import { StripeCountry } from "./stripe-country";
+
+export class UserGuardianDetail {
     firstName: string;
     lastName: string;
     email: string;
@@ -16,4 +18,5 @@
     isSetupComplete: boolean;
     hasGoogleAccountLinked: boolean;
     localLogin: boolean;
+    stripeCountry: StripeCountry;
 }

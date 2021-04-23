@@ -31,7 +31,7 @@ namespace StandingOutStore.Business.Services
         public async Task<List<VendorEarning>> TransferPendingVendorEarnings(Models.Setting settings,Guid id)
         {
             var earningsToProcess = await _UnitOfWork.Repository<Models.VendorEarning>()
-                .Get(x => x.PaymentProviderFieldSetId==null && x.ClassSessionId==id, includeProperties: "Tutor, Company, Order, Order.PaymentProviderFields, ClassSession");
+                .Get(x => x.PaymentProviderFieldSetId==null && x.ClassSessionId==id, includeProperties: "Tutor, Company, Order, Order.PaymentProviderFields, ClassSession.Owner.StripeCountry");
 
             using (var stripeHelper = StripeFactory.GetStripeHelper(settings.StripeKey, settings.StripeConnectClientId))
             {
@@ -45,7 +45,8 @@ namespace StandingOutStore.Business.Services
 
                     var transferDescription = $"Transfer for Lesson:{earning.ClassSession.Name}, Ended: {earning.ClassSession.EndDate:f}, OrderDt:{earning.Order.CreatedDate:f}";
                     var paymentIntent = earning.Order.PaymentProviderFields.ReceiptId; // Important - transfer is created against original PaymentIntent > Charge (hence the transfer relation to order via sourceTransaction).
-                    var transfer = await stripeHelper.CreateTransferToVendor(earning.EarningAmount, vendorConnectedAccountId, transferGroup, transferDescription, paymentIntent);
+                    //var transfer = await stripeHelper.CreateTransferToVendor(earning.EarningAmount, vendorConnectedAccountId, transferGroup, transferDescription, paymentIntent);
+                    var transfer = await stripeHelper.CreateTransferToVendor(earning.EarningAmount, vendorConnectedAccountId, transferGroup, transferDescription, paymentIntent,earning.ClassSession.Owner.StripeCountry);
                     if (transfer != null && !string.IsNullOrWhiteSpace(transfer.Id))
                     {
 
@@ -71,7 +72,7 @@ namespace StandingOutStore.Business.Services
         public async Task<List<VendorEarning>> GetVendorEarningsEligibleForPayout(DateTimeOffset endDateFilter, DateTimeOffset paymentDateFilter)
         {
             var selection = await _UnitOfWork.Repository<Models.VendorEarning>()
-                .Get(x => x.ClassSession.EndDate < endDateFilter && x.Order.CreatedDate < paymentDateFilter, includeProperties: "Tutor, Company, Order, VendorPayout, ClassSession, SessionAttendees");
+                .Get(x => x.ClassSession.EndDate < endDateFilter && x.Order.CreatedDate < paymentDateFilter, includeProperties: "Tutor, Company, Order, VendorPayout, ClassSession.Owner.StripeCountry, SessionAttendees");
             return selection.ToList();
         }
 

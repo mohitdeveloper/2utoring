@@ -31,6 +31,7 @@ var CourseDetailsComponent = /** @class */ (function () {
     }
     CourseDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
+        debugger;
         $('.loading').show();
         this.getUserAlertMessage();
         var n = window.location.pathname.split('/');
@@ -46,6 +47,12 @@ var CourseDetailsComponent = /** @class */ (function () {
         this.coursesService.getCourseDataById(this.courseId)
             .subscribe(function (success) {
             _this.courseData = success;
+            if (_this.courseData.course.maxClassSize - _this.courseData.course.courseAttendeesCount == 0) {
+                _this.checkOutButtonTxt = 'Sold Out';
+            }
+            else {
+                _this.checkOutButtonTxt = 'Next: Checkout';
+            }
             $('.loading').hide();
         }, function (error) {
         });
@@ -114,7 +121,7 @@ var CourseDetailsComponent = /** @class */ (function () {
             this.toastr.warning("If you can't find an appropriate time slot, send your chosen tutor a message from their profile area specifying your requirements.");
         }
         else {
-            this.toastr.warning("Action not allowed.");
+            this.toastr.warning("Please go to create a course to book your sessions.");
             //alert("CompanyTutor, Tutor, Company");
         }
     };

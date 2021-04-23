@@ -24,8 +24,8 @@ namespace StandingOut.Data.Models
 
         [StringLength(10)]
         public string CurrencySymbol { get; set; }
-        public int? DecimalMultiplier { get; set; }
-        public int? CurrencyOrder { get; set; }
+        public decimal DecimalMultiplier { get; set; }
+        public int CurrencyOrder { get; set; }
         public bool SupportedPayout { get; set; }
         
     }

@@ -284,7 +284,7 @@ namespace StandingOutStore.Business.Services
             user.DateOfBirth = model.DateOfBirth;
             user.TermsAndConditionsAccepted = model.TermsAndConditionsAccepted;
             user.MarketingAccepted = model.MarketingAccepted;
-            user.StripeCountryID = model.StripeCountryID;
+            //user.StripeCountryID = model.StripeCountryID;
 
             model.UserId = user.Id;
             await _UserManager.UpdateAsync(user);
@@ -359,6 +359,9 @@ namespace StandingOutStore.Business.Services
             company.StripePlanId = model.StripePlanId;
             await _UnitOfWork.Repository<Models.Company>().Update(company);
 
+            user.StripeCountryID = model.StripeCountryId;
+
+            await _UserManager.UpdateAsync(user);
             //await _CompanySubscriptionService.CreateCompanySubscription(company.CompanyId, model.StripePlanId);
 
             using (var stripeHelper = StripeFactory.GetStripeHelper(settings.StripeKey, settings.StripeConnectClientId))

@@ -30,6 +30,7 @@ var CoursesIndexComponent = /** @class */ (function () {
         this.classSessionFeaturesService = classSessionFeaturesService;
         this.onCourseEdit = new core_1.EventEmitter();
         this.onCourseDelete = new core_1.EventEmitter();
+        this.stripeCountry = stripeCountry;
         this.url = window.location.hostname;
         this.alertMessage = alertMessage;
         this.takeValues = [
@@ -149,7 +150,7 @@ var CoursesIndexComponent = /** @class */ (function () {
     ;
     CoursesIndexComponent.prototype.getLink = function (item) {
         if (this.filter == 'previous') {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Booking links are not available for past lessons.');
             return;
         }
         debugger;
@@ -174,7 +175,7 @@ var CoursesIndexComponent = /** @class */ (function () {
             this.toastr.success('The link for this course has been copied to your clipboard');
         }
         else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Booking links are only available once you have setup your payouts in the settings area.');
         }
     };
     ;
@@ -222,7 +223,7 @@ var CoursesIndexComponent = /** @class */ (function () {
     CoursesIndexComponent.prototype.getInviteStudentsWindow = function (item) {
         debugger;
         if (this.filter == 'previous') {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Students cannot be invited to past lessons.');
             return;
         }
         //localStorage.setItem('clasSize', this.maxSizeOfClass.toString());
@@ -266,7 +267,7 @@ var CoursesIndexComponent = /** @class */ (function () {
             });
         }
         else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('You can not send invitations for full, completed or cancelled lessons.');
         }
         //}
         //else {
@@ -275,7 +276,7 @@ var CoursesIndexComponent = /** @class */ (function () {
     };
     CoursesIndexComponent.prototype.editCourse = function (item, isCompany) {
         if (this.filter == 'previous') {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Previous lessons cannot be edited.');
             return;
         }
         if (item.courseAttendeesCount == 0 && item.published) {
@@ -290,7 +291,7 @@ var CoursesIndexComponent = /** @class */ (function () {
             }
         }
         else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Lesson start time has passed.');
         }
         //if (item.courseAttendeesCount > 0 ) {
         //    this.toastr.warning('Course having participants now! You can not edit.');
@@ -301,14 +302,14 @@ var CoursesIndexComponent = /** @class */ (function () {
     CoursesIndexComponent.prototype.deleteCourse = function (item) {
         debugger;
         if (this.filter == 'previous') {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Previous courses cannot be deleted.');
             return;
         }
         if (item.courseAttendeesCount == 0 || item.cancelled) {
             this.onCourseDelete.emit(item.courseId);
         }
         else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Purchased courses cannot be deleted.');
         }
         //if (attendiesCount > 0) {
         //    this.toastr.warning('Course having participants now! You can not delete.');

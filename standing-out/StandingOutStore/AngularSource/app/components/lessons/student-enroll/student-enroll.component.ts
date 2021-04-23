@@ -1,11 +1,10 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { LessonCard, UserDetail, EnumOption } from '../../../models/index';
-import { ClassSessionsService, UsersService, CoursesService, EnumsService} from '../../../services/index';
+import { ClassSessionsService, UsersService, CoursesService, EnumsService, SettingsService } from '../../../services/index';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UtilitiesHelper } from '../../../helpers';
 import { LessonEnrollModal, LessonEnrollLinkedAccountModal } from '../../../partials';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-//import { StripeCountry } from '../../../models';
 
 declare var title: any;
 declare var courseId: any;
@@ -19,7 +18,7 @@ declare var cameFromLinkAccount: any;
 })
 
 export class StudentEnrollComponent implements OnInit {
-    constructor(private coursesService: CoursesService, private classSessionsService: ClassSessionsService, private usersService: UsersService, private enumsService: EnumsService, private formBuilder: FormBuilder, private utilities: UtilitiesHelper, private modalService: NgbModal) {
+    constructor(private coursesService: CoursesService, private classSessionsService: ClassSessionsService, private usersService: UsersService, private enumsService: EnumsService, private formBuilder: FormBuilder, private utilities: UtilitiesHelper, private modalService: NgbModal, private settingsService: SettingsService) {
         //if (localStorage.getItem('uniqueNumber') != '') {
         //    window.location.href = '/my-course'
         //}
@@ -33,8 +32,10 @@ export class StudentEnrollComponent implements OnInit {
     user: UserDetail = null;
     userTitles: EnumOption[] = [];
     cameFromLinkAccount: string = cameFromLinkAccount;
-    //stripeCountrys: StripeCountry[] = [];
-    //stripeCountryId: string = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
+    isSupportedPayout: boolean = true;
+    userStripeCountryId: string = null;
+    conversionPercent: number = 0;
+    conversionFlat: number = 0;
     userDetailForm: FormGroup;
     userDetailFormSubmitted: boolean;
     get userDetailFormControls() { return this.userDetailForm.controls; };
@@ -48,7 +49,13 @@ export class StudentEnrollComponent implements OnInit {
                 console.log(error);
             });
     };
+    getSetting(): void {
+        this.settingsService.getSetting().subscribe(success => {
+            this.conversionPercent = success.conversionPercent;
+            this.conversionFlat = success.conversionFlat;
+        });
 
+    }
     getUser(): void {
         this.usersService.getMy()
             .subscribe(success => {
@@ -57,10 +64,27 @@ export class StudentEnrollComponent implements OnInit {
                     this.setupUserDetailForm(this.user);
                 }
                 this.checkGoogleAccount();
+                debugger;
+                if (this.user.stripeCountry != null) {
+                    if (this.user.stripeCountry.supportedPayout == true) {
+                        this.isSupportedPayout = true;
+                        this.userStripeCountryId = this.user.stripeCountry.stripeCountryId;
+                    }
+                    else {
+                        this.isSupportedPayout = false;
+                        this.userStripeCountryId = this.user.stripeCountry.stripeCountryId;
+                    }
+                }
+
             }, error => {
                 console.log(error);
             });
     };
+
+    getSupportedPayout(supportedPayout: any) {
+        this.isSupportedPayout = supportedPayout;
+    }
+
     getUserTitel(): void {
         this.enumsService.get('UserTitle')
             .subscribe(success => {
@@ -73,7 +97,6 @@ export class StudentEnrollComponent implements OnInit {
     setupUserDetailForm(user: UserDetail): void {
         this.userDetailForm = this.formBuilder.group({
             title: [user.title, [Validators.required]],
-            //stripeCountryId: [this.stripeCountryId, [Validators.required]],
             firstName: [user.firstName, [Validators.required, Validators.maxLength(250)]],
             lastName: [user.lastName, [Validators.required, Validators.maxLength(250)]],
             //childFirstName: ['', [Validators.required, Validators.maxLength(250)]],
@@ -164,15 +187,12 @@ export class StudentEnrollComponent implements OnInit {
     // #endregion User First Time Setup
 
     ngOnInit() {
+        this.getSetting();
         this.getUser();
         this.getUserTitel();
        // this.getLessonCard();    
         //get course details
         this.getCourse();
-        //this.stripeCountrysService.get()
-        //    .subscribe(countrySuccess => {
-        //        this.stripeCountrys = countrySuccess;
-        //    });
     };
 
     getCourse() {
@@ -218,5 +238,6 @@ export class StudentEnrollComponent implements OnInit {
     //    $('#mySecondPage').css('display', 'block');
     //}
 
+    
 
 }

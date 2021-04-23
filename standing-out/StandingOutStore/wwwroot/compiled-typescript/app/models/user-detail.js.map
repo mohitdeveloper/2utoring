@@ -1,1 +1,1 @@
-{"version":3,"file":"user-detail.js","sourceRoot":"","sources":["../../../../AngularSource/app/models/user-detail.ts"],"names":[],"mappings":";;;AAAA;IAAA;IAaA,CAAC;IAAD,iBAAC;AAAD,CAAC,AAbD,IAaC;AAbY,gCAAU;AAevB;IAAA;IAKA,CAAC;IAAD,0BAAC;AAAD,CAAC,AALD,IAKC;AALY,kDAAmB"}
+{"version":3,"file":"user-detail.js","sourceRoot":"","sources":["../../../../AngularSource/app/models/user-detail.ts"],"names":[],"mappings":";;;AAEA;IAAA;IAcA,CAAC;IAAD,iBAAC;AAAD,CAAC,AAdD,IAcC;AAdY,gCAAU;AAgBvB;IAAA;IAKA,CAAC;IAAD,0BAAC;AAAD,CAAC,AALD,IAKC;AALY,kDAAmB"}

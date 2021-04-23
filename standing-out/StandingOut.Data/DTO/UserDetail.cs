@@ -19,5 +19,6 @@ namespace StandingOut.Data.DTO
         public bool IsSetupComplete { get; set; }
         public bool HasGoogleAccountLinked { get; set; }
         public bool LocalLogin { get; set; }
+        public StripeCountry StripeCountry { get; set; }
     }
 }

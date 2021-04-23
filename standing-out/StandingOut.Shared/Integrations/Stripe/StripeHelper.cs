@@ -203,15 +203,15 @@ namespace StandingOut.Shared.Integrations.Stripe
         // Refer to TransferGroup ie OrderId for creating Transfers against. This links back transfers to an Order
         // Refer to OrderId for creating Transfers against a Transfer Group (OrderId)
         // https://stripe.com/docs/connect/charges-transfers
-        public async Task<PaymentIntent> CreatePaymentIntent(string paymentMethodId, decimal amount, string customerId = null, Dictionary<string, string> metadata = null,
+        public async Task<PaymentIntent> CreatePaymentIntent(string paymentMethodId, decimal amount, Models.StripeCountry stripeCountry, string customerId = null, Dictionary<string, string> metadata = null,
             bool offSession = true, bool confirm = false, string orderId = null)
         {
             var options = new PaymentIntentCreateOptions()
             {
                 Customer = customerId,
                 PaymentMethod = paymentMethodId,
-                Amount = (long)decimal.Multiply(amount, 100),
-                Currency = "gbp",
+                Amount = (long)decimal.Multiply(amount, stripeCountry.DecimalMultiplier),
+                Currency = stripeCountry.CurrencyCode,
                 SetupFutureUsage = offSession ? "off_session" : "on_session",
                 Metadata = metadata,
                 Confirm = false,
@@ -222,7 +222,7 @@ namespace StandingOut.Shared.Integrations.Stripe
         }
 
         public async Task<Transfer> CreateTransferToVendor(decimal amount, string destinationConnectedAccountId,
-            string OrderIdAsTransferGroup, string transferDescription, string originalPaymentIntent, string currency = "gbp")
+            string OrderIdAsTransferGroup, string transferDescription, string originalPaymentIntent, Models.StripeCountry stripeCountry)
         {
             //var vendorBalance = await GetBalance(destinationConnectedAccountId);
             var pi = await GetPaymentIntent(originalPaymentIntent);
@@ -230,8 +230,8 @@ namespace StandingOut.Shared.Integrations.Stripe
 
             var transferOptions = new TransferCreateOptions()
             {
-                Amount = (long)decimal.Multiply(amount, 100),
-                Currency = currency,
+                Amount = (long)decimal.Multiply(amount, stripeCountry.DecimalMultiplier),
+                Currency = stripeCountry.CurrencyCode,
                 Destination = destinationConnectedAccountId,
                 TransferGroup = OrderIdAsTransferGroup,
                 SourceTransaction = chargeId, 
@@ -316,7 +316,7 @@ namespace StandingOut.Shared.Integrations.Stripe
             baseUrl += $"&stripe_user[email]={user.Email}";
             baseUrl += $"&stripe_user[first_name]={user.FirstName}";
             baseUrl += $"&stripe_user[last_name]={user.LastName}";
-            baseUrl += $"&default_currency=gbp";
+            baseUrl += $"&default_currency="+user.StripeCountry.CurrencyCode;
             baseUrl += $"&stripe_user[url]=2utoring.com";
 
             if (user.DateOfBirth != null)
@@ -457,7 +457,7 @@ namespace StandingOut.Shared.Integrations.Stripe
             baseUrl += $"&stripe_user[email]={user.Email}";
             baseUrl += $"&stripe_user[first_name]={user.FirstName}";
             baseUrl += $"&stripe_user[last_name]={user.LastName}";
-            baseUrl += $"&default_currency=gbp";
+            baseUrl += $"&default_currency=" + user.StripeCountry.CurrencyCode;
             baseUrl += $"&stripe_user[url]=2utoring.com";
 
             if (user.DateOfBirth != null)

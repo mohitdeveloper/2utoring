@@ -104,7 +104,7 @@ var ClassSessionsRegisterComponent = /** @class */ (function () {
         var dt1 = new Date().getTime();
         var dt2 = new Date(this.lessondetail.endDate).getTime();
         if (dt1 > dt2) {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson has ended.');
             return true;
         }
         return false;
@@ -112,7 +112,7 @@ var ClassSessionsRegisterComponent = /** @class */ (function () {
     ClassSessionsRegisterComponent.prototype.remove = function (sessionAttendee) {
         var _this = this;
         if (this.classSession.started) {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson start time has passed.');
             return;
         }
         if (this.checkLessonValiditityByTime()) {
@@ -155,7 +155,7 @@ var ClassSessionsRegisterComponent = /** @class */ (function () {
         var _this = this;
         debugger;
         if (this.classSession.started) {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson start time has passed.');
             return;
         }
         if (this.checkLessonValiditityByTime()) {
@@ -210,7 +210,7 @@ var ClassSessionsRegisterComponent = /** @class */ (function () {
         }
         if (!this.classSession.started && this.sessionAttendeesCount > 1) {
             if (!this.canAddGroup()) {
-                this.toastrService.error('Action not allowed.');
+                this.toastrService.error('Max number of groups reached under current subscription.');
                 //this.addGroupNotAllowed();
                 return;
             }
@@ -232,7 +232,7 @@ var ClassSessionsRegisterComponent = /** @class */ (function () {
             });
         }
         else {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson start time has passed.');
             return;
         }
     };
@@ -293,7 +293,7 @@ var ClassSessionsRegisterComponent = /** @class */ (function () {
     ;
     ClassSessionsRegisterComponent.prototype.selectUser = function (userId) {
         if (this.classSession.started) {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson start time has passed.');
             return;
         }
         if (this.checkLessonValiditityByTime()) {

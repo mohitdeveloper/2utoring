@@ -169,9 +169,9 @@
                             <label>Price per student</label>
                             <div class="d-flexs subject-price">
                                 <span>One-to-one</span>
-                                <input style="border: none; border-bottom: 1px solid #ccc;" formControlName="pricePerPerson" type="number" min="5" id="pricePerPerson" name="pricePerPerson" placeholder="{{stripeCountry.currencySymbol+(5 | number : '1.2-2')}}" [value]="CreateSubjectPriceControls.pricePerPerson">
+                                <input style="border: none; border-bottom: 1px solid #ccc;" formControlName="pricePerPerson" type="number" min="10" id="pricePerPerson" name="pricePerPerson" placeholder="{{stripeCountry.currencySymbol+(10 | number : '1.2-2')}}" [value]="CreateSubjectPriceControls.pricePerPerson">
                                 <span class="onTone">One-to-many</span>
-                                <input style="border:none; border-bottom : 1px solid #ccc;" formControlName="groupPricePerPerson" type="number" min="5" id="groupPricePerPerson" name="groupPricePerPerson" placeholder="{{stripeCountry.currencySymbol+(5 | number : '1.2-2')}}" [value]="CreateSubjectPriceControls.groupPricePerPerson">
+                                <input style="border:none; border-bottom : 1px solid #ccc;" formControlName="groupPricePerPerson" type="number" min="10" id="groupPricePerPerson" name="groupPricePerPerson" placeholder="{{stripeCountry.currencySymbol+(10 | number : '1.2-2')}}" [value]="CreateSubjectPriceControls.groupPricePerPerson">
                             </div>
                             <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors && (CreateSubjectPriceControls.pricePerPerson.dirty || CreateSubjectPriceControls.pricePerPerson.touched || CreateSubjectPriceSubmitted)"
                                  class="error" role="alert">
@@ -179,7 +179,7 @@
                                     Please enter price per person
                                 </div>
                                 <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors.min">
-                                    Price can't be less then {{stripeCountry.currencySymbol+(5| number : '1.2-2')}}
+                                    Price can't be less then {{stripeCountry.currencySymbol+(10| number : '1.2-2')}}
                                 </div>
                                 <div *ngIf="CreateSubjectPriceControls.pricePerPerson.errors.max">
                                     Price can't be greater than {{stripeCountry.currencySymbol+(999 | number : '1.2-2')}}
@@ -193,7 +193,7 @@
                                     Please enter group price per person
                                 </div>
                                 <div *ngIf="CreateSubjectPriceControls.groupPricePerPerson.errors.min">
-                                    Group price can't be less then  {{stripeCountry.currencySymbol+(5 | number : '1.2-2')}}
+                                    Group price can't be less then  {{stripeCountry.currencySymbol+(10 | number : '1.2-2')}}
                                 </div>
                                 <div *ngIf="CreateSubjectPriceControls.groupPricePerPerson.errors.max">
                                     Group Price can't be greater then  {{stripeCountry.currencySymbol+(999 | number : '1.2-2')}}

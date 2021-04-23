@@ -32,7 +32,7 @@ namespace StandingOut.Data.DTO.TutorRegister
         public bool MarketingAccepted { get; set; }
 
         public int? PlatformUse { get; set; }
-        public Guid? StripeCountryID { get; set; }
+        public Guid StripeCountryID { get; set; }
         public TutorApprovalStatus IDVerificationtStatus { get; set; }
 
 

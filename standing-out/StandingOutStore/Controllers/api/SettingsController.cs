@@ -5,6 +5,8 @@ using StandingOutStore.Business.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
 using DTO = StandingOut.Data.DTO;
+using Models = StandingOut.Data.Models;
+using StandingOut.Shared.Mapping;
 
 namespace StandingOutStore.Controllers.api
 {
@@ -35,6 +37,15 @@ namespace StandingOutStore.Controllers.api
         public async Task<IActionResult> GetIdentitySiteUrl()
         {
             return Ok(_AppSettings.IdentitySiteUrl);
+        }
+
+        [HttpGet("getSetting")]
+        [ProducesResponseType(typeof(DTO.Setting), 200)]
+        public async Task<IActionResult> GetSetting()
+        {
+            var setting = await _SettingService.Get();
+            var result = Mappings.Mapper.Map<Models.Setting, DTO.Setting>(setting);
+            return Ok(result);
         }
     }
 }

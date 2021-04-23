@@ -75,7 +75,7 @@ namespace StandingOut.Data.Models
         public string LinkAccountKeyTwo { get; set; }
         public DateTimeOffset? LinkAccountRequestDate { get; set; }
         public Guid? StripeCountryID { get; set; }
-
+        
 
         public virtual Tutor Tutor { get; set; }
 
@@ -98,7 +98,7 @@ namespace StandingOut.Data.Models
 
         public string IPAddress { get; set; }
         public string VerificationCode { get; set; }
-
+        
     }
 
 

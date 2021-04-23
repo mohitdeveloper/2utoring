@@ -27,6 +27,7 @@ var dialog_1 = require("@angular/material/dialog");
 var confirmation_dialog_component_1 = require("../../company-register/company-register/confirmation-dialog.component");
 var ngx_toastr_1 = require("ngx-toastr");
 var forms_1 = require("@angular/forms");
+/*declare var stripeCountry: any;*/
 var CompanyProfileViewComponent = /** @class */ (function () {
     function CompanyProfileViewComponent(companysService, companySubjectsService, dialog, toastr, fb, coursesService, usersService) {
         this.companysService = companysService;
@@ -37,6 +38,7 @@ var CompanyProfileViewComponent = /** @class */ (function () {
         this.coursesService = coursesService;
         this.usersService = usersService;
         this.isAuthenticated = isAuthenticated;
+        /*stripeCountry: any = stripeCountry;*/
         this.hasDbsApproved = false;
         this.loaded = 0;
         this.toLoad = 2;
@@ -218,7 +220,7 @@ var CompanyProfileViewComponent = /** @class */ (function () {
             this.toastr.warning("If you can't find an appropriate time slot, send your chosen tutor a message from their profile area specifying your requirements.");
         }
         else {
-            this.toastr.warning("Action not allowed.");
+            this.toastr.warning("Please go to create a course to book your sessions.");
             //alert("CompanyTutor, Tutor, Company");
         }
     };

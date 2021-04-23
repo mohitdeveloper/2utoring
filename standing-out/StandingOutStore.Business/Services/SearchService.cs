@@ -82,10 +82,13 @@ namespace StandingOutStore.Business.Services
                 item.ClassSessions = classSession;
                 DTO.Course CourseObj = Mappings.Mapper.Map<Models.Course, DTO.Course>(item);
                 //int totalAttendees = classSession.Sum(x => x.SessionAttendees.Count);
-                if (CourseObj.CourseAttendeesCount >= item.MaxClassSize)
-                {
-                    continue;
-                }
+
+                //commented by wizcraft on 22-04-2021
+                //if (CourseObj.CourseAttendeesCount >= item.MaxClassSize)
+                //{
+                //    continue;
+                //}
+
                 //item.ClassSessions = classSession;
                 CourseObj.ClassSessions = Mappings.Mapper.Map<List<Models.ClassSession>, List<DTO.ClassSession>>(classSession);
                 CourseObj.TutorQualification = item.Tutor.TutorQualifications.Select(x => x.Name).Distinct().ToList();

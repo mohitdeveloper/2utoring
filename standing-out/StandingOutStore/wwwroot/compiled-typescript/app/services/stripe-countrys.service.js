@@ -21,6 +21,9 @@ var StripeCountrysService = /** @class */ (function () {
     StripeCountrysService.prototype.get = function () {
         return this.http.get(this.serviceHelper.baseApi + '/api/stripeCountrys', { headers: this.serviceHelper.buildHeader() });
     };
+    StripeCountrysService.prototype.getMyStripeCountry = function () {
+        return this.http.get(this.serviceHelper.baseApi + '/api/stripeCountrys/getMyStripeCountry', { headers: this.serviceHelper.buildHeader() });
+    };
     StripeCountrysService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_1.HttpClient])

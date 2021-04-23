@@ -252,7 +252,7 @@ namespace StandingOutStore.Business.Services
             //return response;
         }
 
-        public async Task<DTO.PaymentResponse> ConfirmOrderPayment(User user, Order newOrder, BasketDto basket)
+        public async Task<DTO.PaymentResponse> ConfirmOrderPayment(User user, Order newOrder, BasketDto basket,Models.StripeCountry stripeCountry)
         {
             var settings = await _UnitOfWork.Repository<Models.Setting>().GetQueryable().AsNoTracking().FirstAsync();
             using var stripeHelper = StripeFactory.GetStripeHelper(settings.StripeKey, settings.StripeConnectClientId);
@@ -293,6 +293,7 @@ namespace StandingOutStore.Business.Services
                 paymentIntent = await stripeHelper.CreatePaymentIntent(
                     paymentMethod.Id,
                     amount,
+                    stripeCountry,
                     user.StripeCustomerId,
                     metadata: new Dictionary<string, string>(new List<KeyValuePair<string, string>>()
                     {
@@ -395,6 +396,12 @@ namespace StandingOutStore.Business.Services
             var settings = await _UnitOfWork.Repository<Models.Setting>().GetQueryable().AsNoTracking().FirstAsync();
             using var stripeHelper = StripeFactory.GetStripeHelper(settings.StripeKey, settings.StripeConnectClientId);
             Stripe.PaymentMethod paymentMethod = null;
+            if(model.UserType=="Student")
+            {
+                user.StripeCountryID = model.stripeCountryId;
+                await _UserManager.UpdateAsync(user);
+            }
+            
             if (string.IsNullOrEmpty(user.StripeCustomerId))
             {
                 var customer = await stripeHelper.CreateCustomer(model.CardName, user.Email, model.PaymentMethodId);
@@ -434,6 +441,7 @@ namespace StandingOutStore.Business.Services
             var receipts = stripeResult.Data;
             var receiptIds = stripeResult.Data.Select(x => x.Id).ToList();
 
+            //change by wizcraft 16-04-2021 for CurrencySymbol
             var paidAttendees = await _UnitOfWork.Repository<Models.SessionAttendee>()
                 .Get(x => x.OrderId != null && receiptIds.Contains(x.OrderItem.Order.PaymentProviderFields.ReceiptId),
                     includeProperties: "OrderItem, OrderItem.Order, OrderItem.Order.PaymentProviderFields, ClassSession.Owner.StripeCountry, AttendeeRefund");
@@ -443,7 +451,7 @@ namespace StandingOutStore.Business.Services
             foreach (var receiptItem in result.Data)
             {
                 receiptItem.Created = receipts.FirstOrDefault(x => x.Id == receiptItem.Id)?.Created ?? DateTime.MinValue;
-                receiptItem.Currency = receipts.FirstOrDefault(x => x.Id == receiptItem.Id)?.Currency ?? "gbp";
+                receiptItem.Currency = receipts.FirstOrDefault(x => x.Id == receiptItem.Id)?.Currency ?? receiptItem.StripeCountry.CurrencyCode;
                 receiptItem.Status = receipts.FirstOrDefault(x => x.Id == receiptItem.Id)?.Status;
                 if (string.IsNullOrEmpty(receiptItem.Status)) receiptItem.Status = "Unknown";
                 
@@ -488,7 +496,11 @@ namespace StandingOutStore.Business.Services
         public async Task<string> GetStripeConnectOAuthLink(Models.Tutor tutor, Models.User user)
         {
             var settings = await _UnitOfWork.Repository<Models.Setting>().GetQueryable().AsNoTracking().FirstAsync();
-
+            if (user.StripeCountry == null)
+            {
+                var stripeCountry = await _UnitOfWork.Repository<Models.StripeCountry>().GetByID(user.StripeCountryID);
+                user.StripeCountry = stripeCountry;
+            }
             using (var stripeHelper = StripeFactory.GetStripeHelper(settings.StripeKey, settings.StripeConnectClientId))
             {
                 var redirectLink = await stripeHelper.GenerateStripeConnectOAuth(_AppSettings.MainSiteUrl + "/tutor/settings/payoutOAuth", tutor, user);
@@ -499,6 +511,11 @@ namespace StandingOutStore.Business.Services
         public async Task<string> GetStripeConnectOAuthLink(Models.Company company, Models.User user)
         {
             var settings = await _UnitOfWork.Repository<Models.Setting>().GetQueryable().AsNoTracking().FirstAsync();
+            if (user.StripeCountry == null)
+            {
+                var stripeCountry = await _UnitOfWork.Repository<Models.StripeCountry>().GetByID(user.StripeCountryID);
+                user.StripeCountry = stripeCountry;
+            }
 
             using (var stripeHelper = StripeFactory.GetStripeHelper(settings.StripeKey, settings.StripeConnectClientId))
             {
@@ -690,8 +707,7 @@ namespace StandingOutStore.Business.Services
         public async Task<(decimal amount, Stripe.Payout payout)> DoPayout(string StripeKey, decimal amountInPounds,
             Models.ClassSession session,
             string vendorConnectionAccountId,
-            string vendorDestinationBankAccountId,
-            string currency = "GBP"
+            string vendorDestinationBankAccountId
             )
         {
             //var settings = await settingService.Get();
@@ -715,10 +731,18 @@ namespace StandingOutStore.Business.Services
             //Stripe.StripeConfiguration.ApiKey = settings.StripeKey;
             Stripe.StripeConfiguration.ApiKey = StripeKey;
             var services = new Stripe.PayoutService();
-            var payout = await services.CreateAsync(
+            /*var payout = await services.CreateAsync(
                 new Stripe.PayoutCreateOptions { Amount = (long)(amountInPounds * 100), Currency = "GBP" },
                 new Stripe.RequestOptions { StripeAccount = vendorConnectionAccountId }
-                );
+                );*/
+
+            //change by wizcraft 16-04-2021
+            var payout = await services.CreateAsync(
+               new Stripe.PayoutCreateOptions { Amount = (long)(amountInPounds * session.Owner.StripeCountry.DecimalMultiplier), Currency = session.Owner.StripeCountry.CurrencyCode},
+               new Stripe.RequestOptions { StripeAccount = vendorConnectionAccountId }
+               );
+
+
             return (amountInPounds, payout);
             #endregion
         }

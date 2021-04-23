@@ -21,11 +21,12 @@ var subject_studylevel_delete_dialog_component_1 = require("../subject-studyleve
 var ngx_toastr_1 = require("ngx-toastr");
 var subject_studylevel_info_dialog_component_1 = require("../subject-studylevel-info-dialog/subject-studylevel-info-dialog.component");
 var SubjectStudyLevelSetupIndexComponent = /** @class */ (function () {
-    function SubjectStudyLevelSetupIndexComponent(subjectStudyLevelSetupService, dialog, toastr, usersService) {
+    function SubjectStudyLevelSetupIndexComponent(subjectStudyLevelSetupService, dialog, toastr, usersService, stripeCountrysService) {
         this.subjectStudyLevelSetupService = subjectStudyLevelSetupService;
         this.dialog = dialog;
         this.toastr = toastr;
         this.usersService = usersService;
+        this.stripeCountrysService = stripeCountrysService;
         this.tutorId = null;
         this.colMdLg = 6;
         this.isFilterVisible = 1;
@@ -123,6 +124,7 @@ var SubjectStudyLevelSetupIndexComponent = /** @class */ (function () {
     ;
     SubjectStudyLevelSetupIndexComponent.prototype.ngOnInit = function () {
         var _this = this;
+        debugger;
         this.getUserAlertMessage();
         this.subjectStudyLevelSetupService.getUserType()
             .subscribe(function (success) {
@@ -151,6 +153,14 @@ var SubjectStudyLevelSetupIndexComponent = /** @class */ (function () {
             this.searchModel.owningEntityId = this.owningEntityId;
         }
         this.getSubjectStudyLevelSetupData();
+        if (this.stripeCountry.currencySymbol == null) {
+            this.stripeCountrysService.getMyStripeCountry()
+                .subscribe(function (success) {
+                debugger;
+                _this.stripeCountry = success;
+            }, function (error) {
+            });
+        }
     };
     ;
     SubjectStudyLevelSetupIndexComponent.prototype.onType = function (event) {
@@ -283,7 +293,7 @@ var SubjectStudyLevelSetupIndexComponent = /** @class */ (function () {
         })
         // TODO - Continue here 25 Aug 2020...
         ,
-        __metadata("design:paramtypes", [index_2.SubjectStudyLevelSetupService, dialog_1.MatDialog, ngx_toastr_1.ToastrService, index_2.UsersService])
+        __metadata("design:paramtypes", [index_2.SubjectStudyLevelSetupService, dialog_1.MatDialog, ngx_toastr_1.ToastrService, index_2.UsersService, index_2.StripeCountrysService])
     ], SubjectStudyLevelSetupIndexComponent);
     return SubjectStudyLevelSetupIndexComponent;
 }());

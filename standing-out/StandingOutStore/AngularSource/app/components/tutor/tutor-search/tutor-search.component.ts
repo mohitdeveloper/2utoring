@@ -1342,7 +1342,7 @@ export class TutorSearchComponent implements OnInit {
             //alert("Parent/Student")
             this.toastr.warning("If you can't find an appropriate time slot, send your chosen tutor a message from their profile area specifying your requirements.");
         } else {
-            this.toastr.warning("Action not allowed.");
+            this.toastr.warning("Please go to create a course to book your sessions.");
             //alert("CompanyTutor, Tutor, Company");
         }
     }

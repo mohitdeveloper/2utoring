@@ -59,7 +59,10 @@ export class CoursesComponent implements OnInit {
     uniqueNumber: any;
 
     isAuthenticated = isAuthenticated;
-
+    isSupportedPayout: boolean = true;
+    userStripeCountryId: string = null;
+    conversionPercent: number = 0;
+    conversionFlat: number = 0;
     //companyId: any;
     pricePerPerson: number;
     tutorAvailable: boolean = false;
@@ -157,8 +160,7 @@ export class CoursesComponent implements OnInit {
         private usersService: UsersService,
         private sessionInvitesService: SessionInvitesService,
         private settingsService: SettingsService,
-        private cdref: ChangeDetectorRef
-
+        private cdref: ChangeDetectorRef,
 
     ) {
 
@@ -222,7 +224,13 @@ export class CoursesComponent implements OnInit {
 
 
     }
+    getSetting(): void {
+        this.settingsService.getSetting().subscribe(success => {
+            this.conversionPercent = success.conversionPercent;
+            this.conversionFlat = success.conversionFlat;
+        });
 
+    }
 
     ngOnInit(): void {
         $('.loading').show();
@@ -234,6 +242,7 @@ export class CoursesComponent implements OnInit {
             window.location.href = '/';
             return;
         }
+        this.getSetting();
         this.getAllSubject();
         this.getTutorAvailability(this.selectedTutorId);
 
@@ -1397,11 +1406,11 @@ export class CoursesComponent implements OnInit {
     //----------------------------------------------------------new implements----------------------------------------------------
     setCurrentStep(step, moveNext = 'Y', isSubmit = true) {
         debugger;
-       //window.scrollTo(0, 0);
+        //window.scrollTo(0, 0);
         var $container = $("html,body");
         var $scrollTo = $('#scroolHere');
         //$container.animate({ scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop(), scrollLeft: 0 }, 300); 
-        $container.animate({ scrollTop: $scrollTo.offset().top - 10 , scrollLeft: 0 }, 300); 
+        $container.animate({ scrollTop: $scrollTo.offset().top - 130, scrollLeft: 0 }, 300);
 
         if (this.currentStep == 5 && step != 5 && this.selectedEvent.length == 0) {
             this.toastr.error("Please select at least one slot!");
@@ -1641,6 +1650,16 @@ export class CoursesComponent implements OnInit {
         })
         return totalPrice;
     }
+    getConversion() {
+        let conversionCharges = 0;
+        conversionCharges = ((this.getTotleLessonPrice() * this.conversionPercent) / 100) + this.conversionFlat;
+        return conversionCharges;
+    }
+    getCouseTotal() {
+        let courseTotal = 0;
+        courseTotal = this.getTotleLessonPrice() + this.getConversion();
+        return courseTotal;
+    }
     createCourseDate(dt) {
 
         var tzo = -dt.getTimezoneOffset(),
@@ -1863,14 +1882,26 @@ export class CoursesComponent implements OnInit {
     }
 
     getUser(): void {
+        
         this.usersService.getMy()
             .subscribe(success => {
                 this.user = success;
+                debugger;
+                if (this.user.stripeCountry != null) {
+                    if (this.user.stripeCountry.supportedPayout == true) {
+                        this.isSupportedPayout = true;
+                        this.userStripeCountryId = this.user.stripeCountry.stripeCountryId;
+                    }
+                    else {
+                        this.isSupportedPayout = false;
+                        this.userStripeCountryId = this.user.stripeCountry.stripeCountryId;
+                    }
+                }
             }, error => {
                 console.log(error);
             });
     };
-
+   
     createEmailFormGroup(classSize) {
         //let formArray = this.fb.array([]);
         for (let i = 0; i < classSize; i++) {
@@ -1937,7 +1968,10 @@ export class CoursesComponent implements OnInit {
         }
         this.sortLessonForm('delete');
     }
-
+    getSupportedPayout(supportedPayout: any) {
+        debugger;
+        this.isSupportedPayout = supportedPayout;
+    }
 }
 
 

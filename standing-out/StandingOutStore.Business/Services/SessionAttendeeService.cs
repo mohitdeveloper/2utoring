@@ -30,12 +30,13 @@ namespace StandingOutStore.Business.Services
         private readonly AppSettings _AppSettings;
         private readonly UserManager<Models.User> _UserManager;
         private readonly IDbConnection _Connection;
+        private readonly ISettingService _SettingService;
         private bool _Disposed;
 
         const decimal STUDENT_INITIATED_CANCELLATION_CHARGE = 1;
-        const int AMOUNT_TO_CENT_MULTIPLIER = 100;
+        //const int AMOUNT_TO_CENT_MULTIPLIER = 100;//change by wizcraft 16-04-2021
 
-        public SessionAttendeeService(IUnitOfWork unitOfWork, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings,
+        public SessionAttendeeService(IUnitOfWork unitOfWork, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings, ISettingService settingService,
             UserManager<Models.User> userManager, IDbConnection connection)
         {
             _UnitOfWork = unitOfWork;
@@ -44,6 +45,7 @@ namespace StandingOutStore.Business.Services
             _AppSettings = appSettings.Value;
             _UserManager = userManager;
             _Connection = connection;
+            _SettingService = settingService;
         }
         public SessionAttendeeService(IUnitOfWork unitOfWork, IOptions<AppSettings> appSettings, IDbConnection connection)
         {
@@ -297,8 +299,9 @@ namespace StandingOutStore.Business.Services
             {
                 try
                 {
+                    //change by wizcraft 16-04-2021 for CurrencySymbol
                     var classSession = await _UnitOfWork.Repository<Models.ClassSession>()
-                    .GetQueryable(o => o.ClassSessionId == classSessionId, includeProperties: "ClassSession, ClassSession.Owner")
+                    .GetQueryable(o => o.ClassSessionId == classSessionId, includeProperties: "ClassSession, ClassSession.Owner.StripeCountry")
                     .AsNoTracking()
                     .Select(x => new DTO.ClassSessionEmailDto
                     {
@@ -306,7 +309,8 @@ namespace StandingOutStore.Business.Services
                         TutorLastName = x.Owner.LastName,
                         LessonName = x.Name,
                         LessonStartDate = x.StartDate,
-                        LessonPrice = x.PricePerPerson
+                        LessonPrice = x.PricePerPerson,
+                        CurrencySymbol=x.Owner.StripeCountry.CurrencySymbol
                     })
                     .FirstAsync();
 
@@ -320,7 +324,7 @@ namespace StandingOutStore.Business.Services
                         { "{{tutorFullName}}", classSession.TutorFirstName + " " + classSession.TutorLastName },
                         { "{{lessonName}}", classSession.LessonName },
                         { "{{lessonStartDate}}", TimeZoneInfo.ConvertTimeFromUtc(classSession.LessonStartDate.UtcDateTime, TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time")).ToString("d/M/yyyy h:mm tt").ToLower() },
-                        { "{{lessonPrice}}", "�" + classSession.LessonPrice.ToString("#.##") },
+                        { "{{lessonPrice}}", classSession.CurrencySymbol + classSession.LessonPrice.ToString("#.##") },
                         }, sessionAttendee.User.ContactEmail, settings.SendGridFromEmail, $"You have been removed from the register for the {classSession.LessonName} lesson");
                 }
                 catch { }
@@ -338,8 +342,9 @@ namespace StandingOutStore.Business.Services
 
             try
             {
+                //change by wizcraft 16-04-2021 for CurrencySymbol
                 var classSession = await _UnitOfWork.Repository<Models.ClassSession>()
-                .GetQueryable(o => o.ClassSessionId == classSessionId, includeProperties: "ClassSession, ClassSession.Owner")
+                .GetQueryable(o => o.ClassSessionId == classSessionId, includeProperties: "ClassSession, ClassSession.Owner.StripeCountry")
                 .AsNoTracking()
                 .Select(x => new DTO.ClassSessionEmailDto
                 {
@@ -347,9 +352,9 @@ namespace StandingOutStore.Business.Services
                     TutorLastName = x.Owner.LastName,
                     LessonName = x.Name,
                     LessonStartDate = x.StartDate,
-                    LessonPrice = x.PricePerPerson
-                })
-                .FirstAsync();
+                    LessonPrice = x.PricePerPerson,
+                    CurrencySymbol = x.Owner.StripeCountry.CurrencySymbol
+                }).FirstAsync();
 
                 var settings = await _UnitOfWork.Repository<Models.Setting>().GetQueryable().AsNoTracking().FirstAsync();
                 await Utilities.EmailUtilities.SendTemplateEmail(settings.SendGridApi,
@@ -361,7 +366,7 @@ namespace StandingOutStore.Business.Services
                         { "{{tutorFullName}}", classSession.TutorFirstName + " " + classSession.TutorLastName },
                         { "{{lessonName}}", classSession.LessonName },
                         { "{{lessonStartDate}}", TimeZoneInfo.ConvertTimeFromUtc(classSession.LessonStartDate.UtcDateTime, TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time")).ToString("d/M/yyyy h:mm tt").ToLower() },
-                        { "{{lessonPrice}}", "�" + classSession.LessonPrice.ToString("#.##") },
+                        { "{{lessonPrice}}", classSession.CurrencySymbol + classSession.LessonPrice.ToString("#.##") },
                     }, sessionAttendee.User.ContactEmail, settings.SendGridFromEmail, $"You have been added back to the register for the {classSession.LessonName} lesson");
             }
             catch { }
@@ -375,23 +380,32 @@ namespace StandingOutStore.Business.Services
 
                 var sessionAttendee = await _UnitOfWork.Repository<Models.SessionAttendee>()
                 .GetSingle(o => o.ClassSessionId == classSessionId && o.SessionAttendeeId == sessionAttendeeId,
-                includeProperties: "User, AttendeeRefund, VendorEarning, Order, Order.PaymentProviderFields, ClassSession, ClassSession.Course");
+                includeProperties: "User.StripeCountry, AttendeeRefund, VendorEarning, Order, Order.PaymentProviderFields, ClassSession, ClassSession.Course");
                 var settings = await _UnitOfWork.Repository<Models.Setting>().GetQueryable().AsNoTracking().FirstAsync();
 
                 if (sessionAttendee.VendorEarning?.VendorPayoutId != null || sessionAttendee.Refunded)
                 {
                     return false;
                 }
-
-                var refundedAmount = (sessionAttendee.AmountCharged >= STUDENT_INITIATED_CANCELLATION_CHARGE && studentInitiated) ?
-                    (sessionAttendee.AmountCharged - STUDENT_INITIATED_CANCELLATION_CHARGE) : sessionAttendee.AmountCharged;
+                var stripCountry = sessionAttendee.User.StripeCountry;
+                var refundedAmount = (sessionAttendee.AmountCharged >= STUDENT_INITIATED_CANCELLATION_CHARGE && studentInitiated) ?  (sessionAttendee.AmountCharged - STUDENT_INITIATED_CANCELLATION_CHARGE) : sessionAttendee.AmountCharged;
+                //decimal refundedAmount = sessionAttendee.AmountCharged;
+                if (stripCountry.SupportedPayout == false)
+                {
+                    var setting = await _SettingService.Get();
+                    refundedAmount = refundedAmount - ((refundedAmount * setting.ConversionPercent) / 100) - setting.ConversionFlat;
+                }
+                
                 Stripe.Refund stripeRefund = null;
                 using (var stripeHelper = StripeFactory.GetStripeHelper(settings.StripeKey, settings.StripeConnectClientId))
                 {
                     var paymentIntentId = sessionAttendee.Order?.PaymentProviderFields?.ReceiptId;
                     if (!string.IsNullOrEmpty(paymentIntentId))
                     {
-                        stripeRefund = await stripeHelper.RefundPaymentIntent(paymentIntentId, (long)refundedAmount * AMOUNT_TO_CENT_MULTIPLIER);
+                        
+                        //stripeRefund = await stripeHelper.RefundPaymentIntent(paymentIntentId, (long)refundedAmount * AMOUNT_TO_CENT_MULTIPLIER);
+                        stripeRefund = await stripeHelper.RefundPaymentIntent(paymentIntentId, (long)(refundedAmount * stripCountry.DecimalMultiplier));//change by wizcraft 16-04-2021
+
                         if (sessionAttendee.VendorEarningId != null)
                         {
                             sessionAttendee.VendorEarning.IsDeleted = true;
@@ -417,9 +431,10 @@ namespace StandingOutStore.Business.Services
                 sessionAttendee.AttendeeRefund = refundRecord;
 
                 //sessionAttendee.IsDeleted = true;
+                //change by wizcraft 16-04-2021 for CurrencySymbol
                 await _UnitOfWork.Repository<Models.SessionAttendee>().Update(sessionAttendee);
                 var classSessionEmailDto = await _UnitOfWork.Repository<Models.ClassSession>()
-                .GetQueryable(o => o.ClassSessionId == classSessionId, includeProperties: "ClassSession, ClassSession.Owner")
+                .GetQueryable(o => o.ClassSessionId == classSessionId, includeProperties: "ClassSession, ClassSession.Owner.StripeCountry")
                 .AsNoTracking()
                 .Select(x => new DTO.ClassSessionEmailDto
                 {
@@ -427,7 +442,8 @@ namespace StandingOutStore.Business.Services
                     TutorLastName = x.Owner.LastName,
                     LessonName = x.Name,
                     LessonStartDate = x.StartDate,
-                    LessonPrice = x.PricePerPerson
+                    LessonPrice = x.PricePerPerson,
+                    CurrencySymbol=x.Owner.StripeCountry.CurrencySymbol
                 })
                 .FirstAsync();
 
@@ -456,8 +472,8 @@ namespace StandingOutStore.Business.Services
                     { "{{tutorFullName}}", classSessionEmailDto.TutorFirstName + " " + classSessionEmailDto.TutorLastName },
                     { "{{lessonName}}", classSessionEmailDto.LessonName },
                     { "{{lessonStartDate}}", TimeZoneInfo.ConvertTimeFromUtc(classSessionEmailDto.LessonStartDate.UtcDateTime, TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time")).ToString("d/M/yyyy h:mm tt").ToLower() },
-                    { "{{refundedAmount}}", "�" + amountRefunded.ToString("#.##") },
-                    { "{{lessonPrice}}", "�" + classSessionEmailDto.LessonPrice.ToString("#.##") },
+                    { "{{refundedAmount}}", classSessionEmailDto.CurrencySymbol + amountRefunded.ToString("#.##") },
+                    { "{{lessonPrice}}", classSessionEmailDto.CurrencySymbol + classSessionEmailDto.LessonPrice.ToString("#.##") },
                 }, sessionAttendee.User.ContactEmail, settings.SendGridFromEmail, $"Your {classSessionEmailDto.LessonName} lesson has been cancelled on 2utoring");
         }
 
@@ -473,7 +489,7 @@ namespace StandingOutStore.Business.Services
                     { "{{tutorFullName}}", classSessionEmailDto.TutorFirstName + " " + classSessionEmailDto.TutorLastName },
                     { "{{lessonName}}", classSessionEmailDto.LessonName },
                     { "{{lessonStartDate}}", TimeZoneInfo.ConvertTimeFromUtc(classSessionEmailDto.LessonStartDate.UtcDateTime, TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time")).ToString("d/M/yyyy h:mm tt").ToLower() },
-                    { "{{lessonPrice}}", "�" + classSessionEmailDto.LessonPrice.ToString("#.##") },
+                    { "{{lessonPrice}}", classSessionEmailDto.CurrencySymbol + classSessionEmailDto.LessonPrice.ToString("#.##") },
                 }, sessionAttendee.User.Email, settings.SendGridFromEmail, $"{classSessionEmailDto.LessonName} has been cancelled on 2utoring");
         }
 

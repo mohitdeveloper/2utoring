@@ -28,24 +28,27 @@ var forms_1 = require("@angular/forms");
 var partials_1 = require("../../../partials");
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var GuardianEnrollComponent = /** @class */ (function () {
-    function GuardianEnrollComponent(coursesService, classSessionsService, usersService, enumsService, formBuilder, modalService) {
+    function GuardianEnrollComponent(coursesService, classSessionsService, usersService, enumsService, formBuilder, modalService, settingsService) {
         this.coursesService = coursesService;
         this.classSessionsService = classSessionsService;
         this.usersService = usersService;
         this.enumsService = enumsService;
         this.formBuilder = formBuilder;
         this.modalService = modalService;
+        this.settingsService = settingsService;
         this.title = title;
         this.courseId = courseId;
         //classSessionId: string = classSessionId;
         this.step = index_1.GuardianRegistrationStep.GuardianDetail;
-        //stripeCountrys: StripeCountry[] = [];
-        //stripeCountryId: string = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
         this.lesson = null;
         this.course = null;
         this.user = null;
         this.userTitles = [];
         this.cameFromLinkAccount = cameFromLinkAccount;
+        this.isSupportedPayout = true;
+        this.userStripeCountryId = null;
+        this.conversionPercent = 0;
+        this.conversionFlat = 0;
         //if (localStorage.getItem('uniqueNumber') != '') {
         //    window.location.href = '/my-course'
         //}
@@ -79,6 +82,13 @@ var GuardianEnrollComponent = /** @class */ (function () {
         });
     };
     ;
+    GuardianEnrollComponent.prototype.getSetting = function () {
+        var _this = this;
+        this.settingsService.getSetting().subscribe(function (success) {
+            _this.conversionPercent = success.conversionPercent;
+            _this.conversionFlat = success.conversionFlat;
+        });
+    };
     GuardianEnrollComponent.prototype.getUser = function () {
         var _this = this;
         this.usersService.getMyGuardian()
@@ -89,11 +99,25 @@ var GuardianEnrollComponent = /** @class */ (function () {
                 _this.setupChildDetailForm(_this.user);
             }
             _this.checkGoogleAccount();
+            debugger;
+            if (_this.user.stripeCountry != null) {
+                if (_this.user.stripeCountry.supportedPayout == true) {
+                    _this.isSupportedPayout = true;
+                    _this.userStripeCountryId = _this.user.stripeCountry.stripeCountryId;
+                }
+                else {
+                    _this.isSupportedPayout = false;
+                    _this.userStripeCountryId = _this.user.stripeCountry.stripeCountryId;
+                }
+            }
         }, function (error) {
             console.log(error);
         });
     };
     ;
+    GuardianEnrollComponent.prototype.getSupportedPayout = function (supportedPayout) {
+        this.isSupportedPayout = supportedPayout;
+    };
     GuardianEnrollComponent.prototype.getUserTitel = function () {
         var _this = this;
         this.enumsService.get('UserTitle')
@@ -106,7 +130,6 @@ var GuardianEnrollComponent = /** @class */ (function () {
     GuardianEnrollComponent.prototype.setupGuardianDetailForm = function (user) {
         this.guardianDetailForm = this.formBuilder.group({
             parentTitle: [user.childTitle, [forms_1.Validators.required]],
-            //stripeCountryId: [this.stripeCountryId, [Validators.required]],
             firstName: [user.firstName, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             lastName: [user.lastName, [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             telephoneNumber: [user.telephoneNumber, [forms_1.Validators.required, forms_1.Validators.maxLength(250), forms_1.Validators.pattern('^[0-9]+$')]],
@@ -218,14 +241,11 @@ var GuardianEnrollComponent = /** @class */ (function () {
     ;
     // #endregion User First Time Setup
     GuardianEnrollComponent.prototype.ngOnInit = function () {
+        this.getSetting();
         this.getUser();
         this.getUserTitel();
         //this.getLessonCard();
         this.getCourse();
-        //this.stripeCountrysService.get()
-        //    .subscribe(countrySuccess => {
-        //        this.stripeCountrys = countrySuccess;
-        //    });
     };
     ;
     GuardianEnrollComponent.prototype.getCourse = function () {
@@ -261,7 +281,7 @@ var GuardianEnrollComponent = /** @class */ (function () {
             templateUrl: './guardian-enroll.component.html'
         }),
         __metadata("design:paramtypes", [index_2.CoursesService, index_2.ClassSessionsService, index_2.UsersService, index_2.EnumsService,
-            forms_1.FormBuilder, ng_bootstrap_1.NgbModal])
+            forms_1.FormBuilder, ng_bootstrap_1.NgbModal, index_2.SettingsService])
     ], GuardianEnrollComponent);
     return GuardianEnrollComponent;
 }());

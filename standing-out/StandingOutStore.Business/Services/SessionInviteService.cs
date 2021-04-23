@@ -126,7 +126,7 @@ namespace StandingOutStore.Business.Services
                             sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;  width: 25%;'>" + item.LessonDescriptionBody + "</td>");
                             sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>" + item.Subject.Name + "</td>");
                             sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>" + item.StudyLevel.Name + "</td>");
-                            sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>" + item.StartDate.ToString("MM/dd/yyyy h:mm tt") + "</td>");
+                            sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>" + item.StartDate.ToString("dd-MM-yyyy hh:mm tt") + "</td>");
                             sb.Append("<td style='text-align: left;padding: 8px;border: 1px solid #eee;'>"+ stripeCountry.CurrencySymbol + item.PricePerPerson.ToString("#.##") + "</td>");
                             sb.Append("</tr>");
                         }

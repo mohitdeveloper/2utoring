@@ -22,7 +22,4 @@ namespace StandingOut.Data.DTO
         public int? CurrencyOrder { get; set; }
         public bool SupportedPayout { get; set; }
     }
-
-
-
 }

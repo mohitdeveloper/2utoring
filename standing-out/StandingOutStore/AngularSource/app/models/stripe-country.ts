@@ -3,4 +3,9 @@
     name: string;
     code: string;
     topOfList: boolean;
+    currencyCode: string;
+    currencySymbol: any;
+    decimalMultiplier: number;
+    currencyOrder: number;
+    supportedPayout: boolean;
 }

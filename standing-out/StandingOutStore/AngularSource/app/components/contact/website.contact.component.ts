@@ -58,9 +58,9 @@ export class WebsiteContactComponent implements OnInit {
             firstName: ['', [Validators.required, Validators.maxLength(100)]],
             lastName: ['', [Validators.required, Validators.maxLength(100)]],
             contactEmail: ['', [Validators.required, Validators.maxLength(250), Validators.email]],
-            subjectId: ['', [Validators.required]],
-            studyLevelId: ['', [Validators.required]],
-            searchFor: ['', [Validators.required]],
+            subjectId: [null, [Validators.required]],
+            studyLevelId: [null , [Validators.required]],
+            searchFor: [null, [Validators.required]],
             time: ['00:00'],
             days: ['', [Validators.required]],
             description: ['', [Validators.maxLength(2000)]],
@@ -74,7 +74,6 @@ export class WebsiteContactComponent implements OnInit {
         this.filterTime.nativeElement.value = '00:00';
     };
     submitContactForm(): void {
-        debugger;
         console.log(this.contactForm.value);
         this.contactFormSubmitted = true;
         if (this.contactForm.valid) {
@@ -85,6 +84,10 @@ export class WebsiteContactComponent implements OnInit {
                         this.selectedDays = [];
                         this.contactForm.reset();
                         this.contactFormSubmitted = false;
+                        //to set defaut dropdown value 
+                        this.contactForm.controls.state.setValue({ searchFor: null });
+                        this.contactForm.controls.state.setValue({ subjectId: null });
+                        this.contactForm.controls.state.setValue({ studyLevelId: null });
                     }
                 }, error => {
                     console.log(error);

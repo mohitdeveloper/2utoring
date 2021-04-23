@@ -1718,6 +1718,10 @@ namespace StandingOut.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(2000);
 
+                    b.Property<decimal>("ConversionFlat");
+
+                    b.Property<decimal>("ConversionPercent");
+
                     b.Property<string>("CreatedBy");
 
                     b.Property<DateTime?>("CreatedDate");
@@ -1828,12 +1832,12 @@ namespace StandingOut.Data.Migrations
                     b.Property<string>("CurrencyCode")
                         .HasMaxLength(10);
 
-                    b.Property<int?>("CurrencyOrder");
+                    b.Property<int>("CurrencyOrder");
 
                     b.Property<string>("CurrencySymbol")
                         .HasMaxLength(10);
 
-                    b.Property<int?>("DecimalMultiplier");
+                    b.Property<decimal>("DecimalMultiplier");
 
                     b.Property<bool>("IsDeleted");
 

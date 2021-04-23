@@ -641,7 +641,7 @@ ul.tabs li:hover, ul.tabs li.active {
     color: #9b9b9d;
     width: 23px;
     text-align: center;
-    z-index: 999;
+    z-index: 100;
 }
 
 .top-search-feild .form-control {

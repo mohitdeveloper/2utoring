@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { StudyLevelsService, SubjectsService, SubjectStudyLevelSetupService } from '../../../services';
+import { StudyLevelsService, SubjectsService, SubjectStudyLevelSetupService, StripeCountrysService } from '../../../services';
 import { ToastrService } from 'ngx-toastr';
 declare var stripeCountry: any;
 
@@ -33,7 +33,7 @@ export class SubjectStudylevelCreateDialogComponent {
 
 
     constructor(public dialogRef: MatDialogRef<SubjectStudylevelCreateDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data, private fb: FormBuilder, private StudyLevelsService: StudyLevelsService, private subjectService: SubjectsService, private SubjectStudyLevelSetupService: SubjectStudyLevelSetupService, private toastr: ToastrService) {
+        @Inject(MAT_DIALOG_DATA) public data, private fb: FormBuilder, private StudyLevelsService: StudyLevelsService, private subjectService: SubjectsService, private SubjectStudyLevelSetupService: SubjectStudyLevelSetupService, private toastr: ToastrService, private stripeCountrysService: StripeCountrysService) {
         this.subjectPriceId = data.id;
         debugger;
         
@@ -55,7 +55,14 @@ export class SubjectStudylevelCreateDialogComponent {
     ngOnInit() {
         this.getAllSubject();
         this.getStudyLevels();
-
+        if (this.stripeCountry.currencySymbol == null) {
+            this.stripeCountrysService.getMyStripeCountry()
+                .subscribe(success => {
+                    debugger;
+                    this.stripeCountry = success;
+                }, error => {
+                });
+        }
         //on edit case
         if (this.subjectPriceId) {
             this.SubjectStudyLevelSetupService.getById(this.subjectPriceId)
@@ -78,10 +85,11 @@ export class SubjectStudylevelCreateDialogComponent {
         this.CreateSubjectPrice = this.fb.group({
             subjectId: ['', [Validators.required]],
             studyLevelId: ['', [Validators.required]],
-            pricePerPerson: ['', [Validators.required, Validators.min(5), Validators.max(999)]],
-            groupPricePerPerson: ['', [Validators.required, Validators.min(5), Validators.max(999)]],
+            pricePerPerson: ['', [Validators.required, Validators.min(10), Validators.max(999)]],
+            groupPricePerPerson: ['', [Validators.required, Validators.min(10), Validators.max(999)]],
             subjectStudyLevelSetupId: [null],
         });
+
     }
 
 

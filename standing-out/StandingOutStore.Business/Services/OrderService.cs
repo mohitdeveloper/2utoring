@@ -53,7 +53,7 @@ namespace StandingOutStore.Business.Services
 
         public async Task<Models.Order> GetById(Guid id)
         {
-            return await _UnitOfWork.Repository<Models.Order>().GetSingle(o => o.OrderId == id, includeProperties: "PayerUser, PaymentProviderFields, OrderItems, OrderRefunds, SessionAttendees");
+            return await _UnitOfWork.Repository<Models.Order>().GetSingle(o => o.OrderId == id, includeProperties: "PayerUser.StripeCountry, PaymentProviderFields, OrderItems, OrderRefunds, SessionAttendees");
         }
 
         public async Task<Order> CreateNewOrder(User user, BasketDto basket)
@@ -68,7 +68,11 @@ namespace StandingOutStore.Business.Services
             };
             AddOrderItemsFromBasket(user, order, basket.BasketItems);
             var numCreated = await _UnitOfWork.Repository<Order>().Insert(order);
-
+            if(numCreated >= 1 && basket.Payment.StripeCountryId != null) 
+            {
+                user.StripeCountryID = basket.Payment.StripeCountryId;
+                await _UserManager.UpdateAsync(user);
+            }
             return (numCreated >= 1) ? order : null;
         }
 
@@ -126,8 +130,11 @@ namespace StandingOutStore.Business.Services
                     var inviteOut = await courseInviteService.Create(sender, invite);
                 }
             }
-            sender.StripeCountryID = basketModel.Payment.StripeCountryId;
-            await _UserManager.UpdateAsync(sender);
+            if (sender.StripeCountryID == null)
+            {
+                sender.StripeCountryID = basketModel.Payment.StripeCountryId;
+                await _UserManager.UpdateAsync(sender);
+            }
         }
     }
 }

@@ -29,9 +29,11 @@
                             <div class="form-group col-sm-12 col-lg-6">
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <select  [attr.disabled]="isFilterVisible == 3 ? 'disabled' : null" id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" placeholder="Enter a promo code">
+                                    <select [attr.disabled]="isFilterVisible == 3 ? 'disabled' : null" id="stripeCountryId" name="stripeCountryId" formControlName="stripeCountryId" class="form-control" placeholder="Enter a promo code">
                                         <!--<option [ngValue]="null">Select your country</option>-->
-                                        <option *ngFor="let stripeCountry of stripeCountrys; let i = index" [selected]="i == 1" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>    
+                                        <ng-container *ngFor="let stripeCountry of stripeCountrys; let i = index">
+                                            <option *ngIf="stripeCountry.supportedPayout==true" [selected]="i == 1" [ngValue]="stripeCountry.stripeCountryId">{{stripeCountry.name}}</option>
+                                        </ng-container>
                                     </select>
                                 </div>
                             </div>
@@ -679,8 +681,6 @@
                     </div>-->
                     <!--</form>-->
                     <div class="col-12 col-lg-auto mb-14 mb-lg-0" id="priceStp">
-                        b-
-                        ct
                         <app-subject-studylevel-setup-index [isRegistrationDone]="isRegistrationDone" [isFilterVisible]="isFilterVisible" [ownerEntityId]="tutorId" [ownerEntityType]="ownerEntityType" [ownerRegisterTitle]="true"></app-subject-studylevel-setup-index>
                     </div>
 
@@ -700,7 +700,6 @@
                 </app-calender>-->
 
                 <div class="full-celander-box">
-                    s=
                     <!--<mat-slide-toggle style="float:right;" [(ngModel)]="editSlot" [ngModelOptions]="{standalone: true}">Edit Availability Slots</mat-slide-toggle>-->
                     <app-calender-scheduler #calendarRef [registerdEvents]="registerdEvents" [tutorId]="tutorId" [isDateEventEditable]="true" [isViewOnly]="false">
                     </app-calender-scheduler>

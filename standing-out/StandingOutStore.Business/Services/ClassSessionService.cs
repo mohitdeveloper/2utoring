@@ -29,10 +29,11 @@ namespace StandingOutStore.Business.Services
         private readonly UserManager<Models.User> _UserManager;
         private readonly IGoogleHelper _GoogleHelper;
         private readonly ISessionAttendeeService _SessionAttendeeService;
+        private readonly IStripeCountryService _StripeCountryService;
 
         private bool _Disposed;
 
-        public ClassSessionService(IUnitOfWork unitOfWork, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings, UserManager<Models.User> userManager, IGoogleHelper googleHelper, ISessionAttendeeService sessionAttendeeService)
+        public ClassSessionService(IUnitOfWork unitOfWork, IHostingEnvironment hosting, IHttpContextAccessor httpContext, IOptions<AppSettings> appSettings, UserManager<Models.User> userManager, IGoogleHelper googleHelper, ISessionAttendeeService sessionAttendeeService, IStripeCountryService stripeCountryService)
         {
             _UnitOfWork = unitOfWork;
             _Enviroment = hosting;
@@ -41,6 +42,7 @@ namespace StandingOutStore.Business.Services
             _UserManager = userManager;
             _GoogleHelper = googleHelper;
             _SessionAttendeeService = sessionAttendeeService;
+            _StripeCountryService = stripeCountryService;
         }
 
         public ClassSessionService(IUnitOfWork unitOfWork, IOptions<AppSettings> appSettings)
@@ -71,7 +73,7 @@ namespace StandingOutStore.Business.Services
                                     ||
                                  x.Owner.Tutor.ProfileApprovalStatus == TutorApprovalStatus.NotRequired)
                 && x.Type == ClassSessionType.Public,
-                includeProperties: "Subject, SubjectCategory, StudyLevel, Owner, Owner.Tutor, Owner.Tutor.TutorSubjects, Owner.Tutor.TutorSubjects.Subject, SessionAttendees")
+                includeProperties: "Subject, SubjectCategory, StudyLevel, Owner.StripeCountry, Owner.Tutor, Owner.Tutor.TutorSubjects, Owner.Tutor.TutorSubjects.Subject, SessionAttendees")
                 .AsNoTracking();
 
             query = query.Where(x => x.StartDate.UtcDateTime > DateTime.UtcNow.AddHours(1));
@@ -107,7 +109,7 @@ namespace StandingOutStore.Business.Services
                 (x.Owner.Tutor.ProfileApprovalStatus == TutorApprovalStatus.Approved
                 ||
                 x.Owner.Tutor.ProfileApprovalStatus == TutorApprovalStatus.NotRequired)
-                    , includeProperties: "Subject, SubjectCategory, StudyLevel, Owner, Owner.Tutor, Owner.Tutor.TutorSubjects, Owner.Tutor.TutorSubjects.Subject, SessionAttendees")
+                    , includeProperties: "Subject, SubjectCategory, StudyLevel, Owner.StripeCountry, Owner.Tutor, Owner.Tutor.TutorSubjects, Owner.Tutor.TutorSubjects.Subject, SessionAttendees")
                 .AsNoTracking()
                 .Select(x => Mapping.Mappings.Mapper.Map<Models.ClassSession, DTO.LessonCard>(x))
                 .FirstOrDefaultAsync();
@@ -120,7 +122,7 @@ namespace StandingOutStore.Business.Services
                 (x.Owner.Tutor.ProfileApprovalStatus == TutorApprovalStatus.Approved
                 ||
                 x.Owner.Tutor.ProfileApprovalStatus == TutorApprovalStatus.NotRequired),
-                includeProperties: "Subject, SubjectCategory, StudyLevel, Owner, Owner.Tutor, Owner.Tutor.TutorQualifications, Owner.Tutor.TutorSubjects, Owner.Tutor.TutorSubjects.Subject, SessionAttendees")
+                includeProperties: "Subject, SubjectCategory, StudyLevel, Owner.StripeCountry, Owner.Tutor, Owner.Tutor.TutorQualifications, Owner.Tutor.TutorSubjects, Owner.Tutor.TutorSubjects.Subject, SessionAttendees")
                 .AsNoTracking()
                 .Select(x => new DTO.CardSet()
                 {
@@ -206,16 +208,16 @@ namespace StandingOutStore.Business.Services
             {
                 var sessions = await _UnitOfWork.Repository<Models.ClassSession>()
              .GetSingle(x => x.ClassSessionId == item.ClassSessionId, includeProperties: "Course");
-                
-                if(sessions!=null)
+
+                if (sessions != null)
                 {
                     var tutorId = sessions.Course.TutorId;
                     if (tutorId != null)
                     {
-                        var tutorsubscription = await _UnitOfWork.Repository<Models.TutorSubscription>().GetSingle(x => x.TutorId == tutorId && x.IsDeleted==false, includeProperties: "Subscription");
+                        var tutorsubscription = await _UnitOfWork.Repository<Models.TutorSubscription>().GetSingle(x => x.TutorId == tutorId && x.IsDeleted == false, includeProperties: "Subscription");
                         if (tutorsubscription != null)
                         {
-                            if (tutorsubscription.Subscription.SubscriptionName == "NoFeeTutorPlan" && tutorsubscription.Subscription.SubscriptionPrice==0)
+                            if (tutorsubscription.Subscription.SubscriptionName == "NoFeeTutorPlan" && tutorsubscription.Subscription.SubscriptionPrice == 0)
                             {
                                 item.IsBasicTutor = true;
                             }
@@ -466,7 +468,7 @@ namespace StandingOutStore.Business.Services
         public async Task<Models.SessionAttendee> Enrol(User user, Guid classSessionId, Order newOrder)
         {
             var classSession = await GetById(classSessionId);
-            if (classSession!=null && classSession.MaxPersons > classSession.SessionAttendees.Count(x => !x.Refunded && !x.Removed && !x.IsDeleted))
+            if (classSession != null && classSession.MaxPersons > classSession.SessionAttendees.Count(x => !x.Refunded && !x.Removed && !x.IsDeleted))
             {
                 var newAttendee = new SessionAttendee
                 {
@@ -542,7 +544,7 @@ namespace StandingOutStore.Business.Services
             var session = await _UnitOfWork.Repository<Models.ClassSession>().GetSingle(x => x.ClassSessionId == id);
             if (session != null)
             {
-                if (session.Started==true && session.Complete==false && session.EndDate.ToUniversalTime() < DateTime.Now.ToUniversalTime())
+                if (session.Started == true && session.Complete == false && session.EndDate.ToUniversalTime() < DateTime.Now.ToUniversalTime())
                 {
                     session.Complete = true;
                     session.Ended = true;
@@ -550,7 +552,7 @@ namespace StandingOutStore.Business.Services
                     await _UnitOfWork.Repository<Models.ClassSession>().Update(session);
                     return "Completed";
                 }
-                else if (session.Started==false && session.Cancel==false && DateTime.Now.ToUniversalTime() > session.StartDate.AddMinutes(15).UtcDateTime)
+                else if (session.Started == false && session.Cancel == false && DateTime.Now.ToUniversalTime() > session.StartDate.AddMinutes(15).UtcDateTime)
                 {
                     session.Cancel = true;
                     await _UnitOfWork.Repository<Models.ClassSession>().Update(session);

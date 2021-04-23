@@ -15,4 +15,8 @@ export class StripeCountrysService {
     get(): Observable<StripeCountry[]> {
         return this.http.get<StripeCountry[]>(this.serviceHelper.baseApi + '/api/stripeCountrys', { headers: this.serviceHelper.buildHeader() });
     }
+    getMyStripeCountry(): Observable<StripeCountry> {
+        return this.http.get<StripeCountry>(this.serviceHelper.baseApi + '/api/stripeCountrys/getMyStripeCountry', { headers: this.serviceHelper.buildHeader() });
+    }
+    
 }

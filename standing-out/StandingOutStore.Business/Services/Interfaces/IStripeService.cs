@@ -14,7 +14,7 @@ namespace StandingOutStore.Business.Services.Interfaces
         Task<Stripe.PaymentMethod> GetPaymentMethodByCustomer(string stripeCustomerId);
         Task DeletePaymentMethodByCustomer(string stripeCustomerId);
         Task<DTO.PaymentResponse> ConfirmSessionPayment(Models.User user, DTO.Payment model, decimal standingOutCut);
-        Task<DTO.PaymentResponse> ConfirmOrderPayment(User user, Order newOrder, BasketDto basketModel);
+        Task<DTO.PaymentResponse> ConfirmOrderPayment(User user, Order newOrder, BasketDto basketModel,Models.StripeCountry stripeCountry);
 
         Task<DTO.StripeCard> ConnectPaymentMethod(Models.User user, DTO.PaymentCardConnect model);
         Task<DTO.StripePagedList<DTO.ReceiptIndex>> GetPagedReceipts(DTO.StripeSearch model, Models.User user);
@@ -29,7 +29,7 @@ namespace StandingOutStore.Business.Services.Interfaces
         Task<(decimal amount, Stripe.Payout payout)> ApproveTransfer(Models.Setting settings, Models.Tutor tutor, Models.SessionAttendee attendee);
         Task<Stripe.Balance> GetBalance(Models.Setting settings, Models.Tutor tutor);
         Task<Stripe.Balance> GetBalance(Models.Setting settings, string stripeConnectAccountId);
-        Task<(decimal amount, Stripe.Payout payout)> DoPayout(string StripeKey, decimal totalAmount, Models.ClassSession lesson, string stripeConnectAccountId, string stripeConnectBankAccountId, string currency = "GBP");
+        Task<(decimal amount, Stripe.Payout payout)> DoPayout(string StripeKey, decimal totalAmount, Models.ClassSession lesson, string stripeConnectAccountId, string stripeConnectBankAccountId);
         Task<Models.Setting> GetSetting();
       
     }

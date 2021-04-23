@@ -54,7 +54,7 @@ var CompanyRegisterComponent = /** @class */ (function () {
         this.sanitizer = sanitizer;
         this.serviceHelper = new service_helper_1.ServiceHelper();
         this.ownerEntityType = 'Company';
-        this.stripeCountryId = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
+        //stripeCountryId: string = '0: 87017cf8-e86a-4a98-191b-08d7e6c57416';
         this.stripePlanId = stripePlanId; // '81070046-8dc3-4ca9-3129-08d7e6c57421';
         this.companyId = undefined;
         this.companyFirstName = '';
@@ -172,7 +172,7 @@ var CompanyRegisterComponent = /** @class */ (function () {
             title: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
             firstName: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(20)]],
             lastName: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(20)]],
-            stripeCountryId: [this.stripeCountryId, [forms_1.Validators.required]],
+            stripeCountryId: ['', [forms_1.Validators.required]],
             telephoneNumber: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250), forms_1.Validators.pattern('^[0-9]+$')]],
             email: [''],
             mobileNumber: ['', [forms_1.Validators.maxLength(250), forms_1.Validators.pattern('^[0-9]+$')]],

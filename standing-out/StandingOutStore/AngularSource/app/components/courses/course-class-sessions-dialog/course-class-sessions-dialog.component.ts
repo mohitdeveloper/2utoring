@@ -65,7 +65,7 @@ export class CourseClassSessionsDialogComponent {
             });
         }
         else {
-            this.toastr.error('Action not allowed.');
+                this.toastr.error('There are no attendees for this lesson.');
             return;
         }
     }
@@ -80,7 +80,7 @@ export class CourseClassSessionsDialogComponent {
             });
         }
         else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('You are unable to create groups with one student or after your lesson has started.');
             return;
         }
     }
@@ -102,7 +102,7 @@ export class CourseClassSessionsDialogComponent {
                 
             }
             else {
-                this.toastr.error('Action not allowed.');
+                this.toastr.error('Please add lesson resources from within your classroom.');
                 return;
             }
     }
@@ -180,12 +180,12 @@ export class CourseClassSessionsDialogComponent {
                 }
             }
             else {
-                this.toastr.error('Action not allowed.');
+                this.toastr.error('Agencies cannot view lessons.');
                 return;
             }
         }
         else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Lesson start time has passed.');
             return;
         }
     }
@@ -205,7 +205,7 @@ export class CourseClassSessionsDialogComponent {
     addGroup(items): void {
         if (!items.started && items.sessionAttendeesCount > 1) {
             if (!this.canAddGroup()) {
-                this.toastr.error('Action not allowed.');
+                this.toastr.error('Max number of groups reached under current subscription.');
                 return;
             }
 
@@ -228,7 +228,7 @@ export class CourseClassSessionsDialogComponent {
             });
         }
         else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('You are unable to create groups with one student.');
             return;
         }
     };

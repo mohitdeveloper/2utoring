@@ -56,9 +56,9 @@ course.classSessionsTotalAmount | currency : lesson.sessionCurrency
 </div>-->
 
 <div  class="payment-col" *ngIf="course != undefined && course != null" (click)="moreInfo()" [ngStyle]="{'cursor': moreInfoNavOn ? 'pointer' : ''}">
-    <div  class="summary-box">
-        <div  class="row">
-            <div  class="col-sm-12">
+    <div class="summary-box">
+        <div class="row">
+            <div class="col-sm-12">
                 <p>
                     <span>COURSE NAME</span>
                     {{course?.name}}
@@ -68,15 +68,15 @@ course.classSessionsTotalAmount | currency : lesson.sessionCurrency
                 <p>
                     <span>TUTOR</span>
                     <span class="tutor-icon">
-                        <img *ngIf="course?.tutorImage != ''" src="{{course?.tutorImage}}" alt="{{course?.tutorName}}" width="50px;"/>
+                        <img *ngIf="course?.tutorImage != ''" src="{{course?.tutorImage}}" alt="{{course?.tutorName}}" width="50px;" />
                     </span>
                     {{ course?.tutorName }}
                 </p>
 
             </div>
         </div>
-        <div  class="row">
-            <div class="col-sm-12 col-lg-6 col-md-12">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12 col-md-12">
                 <div class="summary-col">
                     <p>
                         <span>SUBJECT</span>
@@ -105,7 +105,7 @@ course.classSessionsTotalAmount | currency : lesson.sessionCurrency
                 </div>
 
                 <div class="booked-courses">
-                    <p><span>DATES</span></p> 
+                    <p><span>DATES</span></p>
                     <p class="lessons-date-time" *ngFor="let t of course.classSessions; let i = index;">
                         <i><img src="/lib/assets/images/celander-icon.svg" alt=""></i> {{t.startDate | date:'EEEE d MMMM' }}
                         <i><img src="/lib/assets/images/watch-icon.svg" alt=""></i> {{t.startDate | date:' h:mm a' }}
@@ -113,14 +113,29 @@ course.classSessionsTotalAmount | currency : lesson.sessionCurrency
                 </div>
 
             </div>
-            </div>
+        </div>
+       
         <div class="summary-total" style="border-bottom:none;">
-            <div class="summary-total-left">
+            <div class="summary-total-left" *ngIf="isSupportedPayout==true">
                 <p>
                     {{course?.stripeCountry.currencySymbol + (course?.classSessionsTotalAmount | number : '1.2-2') }}
                     <span>TOTAL COURSE PRICE</span>
                 </p>
-            </div>  
+            </div>
+            <div class="summary-total-left" *ngIf="isSupportedPayout==false">
+                <p>
+                    {{course?.stripeCountry.currencySymbol + (course?.classSessionsTotalAmount | number : '1.2-2') }}
+                    <span>COURSE PRICE</span>
+                </p>
+                <p>
+                    {{course?.stripeCountry.currencySymbol + (((course?.classSessionsTotalAmount*conversionPercent/100)+conversionFlat) | number : '1.2-2') }}
+                    <span>CONVERSION CHARGES</span>
+                </p>
+                <p>
+                    {{course?.stripeCountry.currencySymbol + ((course?.classSessionsTotalAmount+((course?.classSessionsTotalAmount*conversionPercent/100)+conversionFlat)) | number : '1.2-2') }}
+                    <span>TOTAL COURSE PRICE</span>
+                </p>
+            </div>
         </div>
     </div>
 </div>

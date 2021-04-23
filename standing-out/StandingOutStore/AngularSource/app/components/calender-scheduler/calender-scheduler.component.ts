@@ -272,7 +272,7 @@ export class CalenderSchedulerComponent implements OnInit, AfterViewInit {
         }
         //if (clickedEvent.event.extendedProps.custom.titleClass == 'slot-disabled') {
         if (['slot-disabled', 'ava-slot slot-active'].includes(clickedEvent.event.extendedProps.custom.titleClass)) {
-            this.toastr.error('Action not allowed', 'Prohibated');
+            this.toastr.error('Slot already selected', 'Prohibated');
             return;
         }
         let d1 = new Date();

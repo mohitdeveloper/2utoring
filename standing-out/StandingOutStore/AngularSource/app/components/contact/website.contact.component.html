@@ -1,22 +1,22 @@
 ﻿        <div class="row">
             <div class="col-12 col-lg-12 mb-28 mb-lg-0">
                 <form (ngSubmit)="submitContactForm()" [formGroup]="contactForm">
-                    <h3 class="text-center"><b>Find me a tutor</b></h3>
+                    <h3 class="text-left"><b>Find me a tutor</b></h3>
                     <p class="_2u_body-1 _2u_centre _2u_bottom-spacing _2u_reduced-bottom-mobile">Want to find a tutor! Leave us your details and we will find one for you. Once we have identified a selection of tutors we will send you their profile links for you to browse over.</p>
                     <div class="Form__Block">
                         <div class="form-row">
                             <div class="form-group col-lg-6">
                                 <input type="text" id="firstName" name="firstName" formControlName="firstName" class="form-control" placeholder="* First Name" />
                                 <div *ngIf="contactFormControls.firstName.errors && (contactFormControls.firstName.dirty || contactFormControls.firstName.touched || contactFormSubmitted)" class="error" role="alert">
-                                    <div *ngIf="contactFormControls.firstName.errors.maxlength">First Name has a character limit of 100 inc. spaces.</div>
-                                    <div *ngIf="contactFormControls.firstName.errors.required">Please enter your first name</div>
+                                    <div class="text-left" *ngIf="contactFormControls.firstName.errors.maxlength">First Name has a character limit of 100 inc. spaces.</div>
+                                    <div class="text-left" *ngIf="contactFormControls.firstName.errors.required">Please enter your first name</div>
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
                                 <input type="text" id="lastName" name="lastName" formControlName="lastName" class="form-control" placeholder="* Last Name" />
                                 <div *ngIf="contactFormControls.lastName.errors && (contactFormControls.lastName.dirty || contactFormControls.lastName.touched || contactFormSubmitted)" class="error" role="alert">
-                                    <div *ngIf="contactFormControls.lastName.errors.maxlength">Last has a character limit of 100 inc. spaces</div>
-                                    <div *ngIf="contactFormControls.lastName.errors.required">Please enter your last name</div>
+                                    <div class="text-left" *ngIf="contactFormControls.lastName.errors.maxlength">Last has a character limit of 100 inc. spaces</div>
+                                    <div class="text-left" *ngIf="contactFormControls.lastName.errors.required">Please enter your last name</div>
                                 </div>
                             </div>
                            
@@ -25,19 +25,19 @@
                             <div class="form-group col-lg-6">
                                 <input type="email" id="contactEmail" name="contactEmail" formControlName="contactEmail" class="form-control" placeholder="* Email Address" />
                                 <div *ngIf="contactFormControls.contactEmail.errors && (contactFormControls.contactEmail.dirty || contactFormControls.contactEmail.touched || contactFormSubmitted)" class="error" role="alert">
-                                    <div *ngIf="contactFormControls.contactEmail.errors.email">Email must be a valid email address</div>
-                                    <div *ngIf="contactFormControls.contactEmail.errors.required">Please enter your email address</div>
+                                    <div class="text-left" *ngIf="contactFormControls.contactEmail.errors.email">Email must be a valid email address</div>
+                                    <div class="text-left" *ngIf="contactFormControls.contactEmail.errors.required">Please enter your email address</div>
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
                                 <select id="subjectId" name="subjectId" formControlName="subjectId" class="form-control">
-                                    <option value="">* Subject</option>
+                                    <option [ngValue]="null" selected disabled> * Subject</option>
                                     <option *ngFor="let subject of subjectList" [value]="subject.id">
                                         {{ subject.name }}
                                     </option>
                                 </select>
                                 <div *ngIf="contactFormControls.subjectId.errors && (contactFormControls.subjectId.dirty || contactFormControls.subjectId.touched || contactFormSubmitted)" class="error" role="alert">
-                                    <div *ngIf="contactFormControls.subjectId.errors.required">Please select subject</div>
+                                    <div class="text-left" *ngIf="contactFormControls.subjectId.errors.required">Please select subject</div>
                                 </div>
                             </div>
                             
@@ -45,21 +45,21 @@
                         <div class="form-row">
                             <div class="form-group col-lg-6">
                                 <select id="studyLevelId" name="studyLevelId" formControlName="studyLevelId" class="form-control">
-                                    <option value=""> * Level</option>
+                                    <option  [ngValue]="null" selected disabled> * Level</option>
                                     <option *ngFor="let level of studyLevelList" [value]="level.id">{{level.name}}</option>
                                 </select>
                                 <div *ngIf="contactFormControls.studyLevelId.errors && (contactFormControls.studyLevelId.dirty || contactFormControls.studyLevelId.touched || contactFormSubmitted)" class="error" role="alert">
-                                    <div *ngIf="contactFormControls.studyLevelId.errors.required">Please select level</div>
+                                    <div class="text-left" *ngIf="contactFormControls.studyLevelId.errors.required">Please select level</div>
                                 </div>
                             </div>
                             <div class="form-group col-lg-6">
                                 <select class="form-control" name="searchFor" formControlName="searchFor">
-                                    <option value="">  Is the tutor for yourself or a child?</option>
+                                    <option [ngValue]="null" selected disabled> Is the tutor for yourself or a child?</option>
                                     <option value="Myself">Myself</option>
                                     <option value="ForChild">For a child</option>
                                 </select>
                                 <div *ngIf="contactFormControls.searchFor.errors && (contactFormControls.searchFor.dirty || contactFormControls.searchFor.touched || contactFormSubmitted)" class="error" role="alert">
-                                    <div *ngIf="contactFormControls.searchFor.errors.required">Please select choice</div>
+                                    <div class="text-left" *ngIf="contactFormControls.searchFor.errors.required">Please select choice</div>
                                 </div>
                             </div>
                         </div>
@@ -70,12 +70,12 @@
                                     <input type="time" class="col-md-10 myTimeSelection" name="time" formControlName="time" value="00:00" #filterTime (change)="getFilterTime()">
                                 </div>
                                 <div *ngIf="contactFormControls.time.errors && (contactFormControls.time.dirty || contactFormControls.time.touched || contactFormSubmitted)" class="error" role="alert">
-                                    <div *ngIf="contactFormControls.time.errors.required">Please select preferred time</div>
+                                    <div class="text-left" *ngIf="contactFormControls.time.errors.required">Please select preferred time</div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
-                            
+
                             <div class="form-group col-lg-12" style="text-align:left">
                                 <label>Please identify your preferred days?</label>
                                 <ul class="wday" style="float: left;">
@@ -84,16 +84,16 @@
                                         <span class="checkmark"></span>
                                     </li>
                                 </ul>
-                                <div *ngIf="contactFormControls.days.errors && (contactFormControls.days.dirty || contactFormControls.days.touched || contactFormSubmitted)" class="error" role="alert">
-                                    <div *ngIf="contactFormControls.days.errors.required">Please select preferred days</div>
-                                </div>
+                            </div>
+                            <div *ngIf="contactFormControls.days.errors && (contactFormControls.days.dirty || contactFormControls.days.touched || contactFormSubmitted)" class="error" role="alert">
+                                <div class="text-left" *ngIf="contactFormControls.days.errors.required">Please select preferred days</div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-lg-12">
                                 <textarea rows="6" id="description" name="description" formControlName="description" class="form-control" placeholder="Is there any more information you would like to add?" maxlength="2000"></textarea>
                                 <div *ngIf="contactFormControls.description.errors && (contactFormControls.description.dirty || contactFormControls.description.touched || contactFormSubmitted)" class="error" role="alert">
-                                    <div *ngIf="contactFormControls.description.errors.maxlength"> Maximum of 2000 characters allowed.</div>
+                                    <div class="text-left" *ngIf="contactFormControls.description.errors.maxlength"> Maximum of 2000 characters allowed.</div>
                                     <!--<div *ngIf="contactFormControls.description.errors.required">Description is required</div>-->
                                 </div>
                             </div>

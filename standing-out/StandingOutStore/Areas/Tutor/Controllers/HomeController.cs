@@ -55,9 +55,17 @@ namespace StandingOutStore.Areas.Tutor.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> DownloadTutorProfileImage(Guid id)
         {
-            var tutor = await _TutorService.GetById(id);
-            var stream = await _AzureFileHelper.DownloadBlob(tutor.ProfileImageFileLocation, "tutorprofileimages");
-            return File(stream, "image/jpeg", tutor.ProfileImageFileName);
+            try
+            {
+                var tutor = await _TutorService.GetById(id);
+                var stream = await _AzureFileHelper.DownloadBlob(tutor.ProfileImageFileLocation, "tutorprofileimages");
+                return File(stream, "image/jpeg", tutor.ProfileImageFileName);
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
         }
         [Route("tutor-id-verification")]
         public async Task<IActionResult> GetPayoutStatus()

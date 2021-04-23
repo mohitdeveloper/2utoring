@@ -43,13 +43,13 @@ var TutorSubscriptionDetailsComponent = /** @class */ (function () {
         this.tutorsService.getMy()
             .subscribe(function (successOne) {
             _this.currentStripePlanId = successOne.stripePlanId;
+            _this.stripeCountryId = successOne.stripeCountryID;
             _this.tutor = successOne;
             _this.setUpPaymentForm();
             _this.loadPaymentMethod();
             _this.loadSubscription();
             _this.stripePlansService.getSubscriptionPlan().subscribe(function (success) {
                 _this.stripePlans = success;
-                debugger;
                 if (success[0].stripePlanId == _this.currentStripePlanId) {
                     _this.selectedPlan(success[0].stripePlanId, success[0].subscription.subscriptionId);
                 }
@@ -87,12 +87,13 @@ var TutorSubscriptionDetailsComponent = /** @class */ (function () {
         var _this = this;
         this.stripeCountrysService.get()
             .subscribe(function (countrySuccess) {
+            debugger;
             _this.stripeCountrys = countrySuccess;
             _this.paymentFormSubmitted = false;
             _this.paymentForm = _this.fb.group({
                 tutorId: [_this.tutor.tutorId],
                 stripePlanId: [_this.tutor.stripePlanId, [forms_1.Validators.required]],
-                stripeCountryId: [_this.stripeCountrys[0].stripeCountryId, [forms_1.Validators.required]],
+                stripeCountryId: [_this.stripeCountryId, [forms_1.Validators.required]],
                 cardName: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
                 addressLine1: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
                 paymentMethodId: [''],

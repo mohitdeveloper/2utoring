@@ -19,5 +19,8 @@ export class SettingsService {
     getIdentitySiteUrl(): Observable<string> {
         return this.http.get<string>(this.serviceHelper.baseApi + '/api/settings/getIdentitySiteUrl', { headers: this.serviceHelper.buildHeader() });
     }
+    getSetting(): Observable<any> {
+        return this.http.get<any>(this.serviceHelper.baseApi + '/api/settings/getSetting', { headers: this.serviceHelper.buildHeader() });
+    }
 }
     

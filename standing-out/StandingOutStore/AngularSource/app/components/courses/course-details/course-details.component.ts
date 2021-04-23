@@ -19,11 +19,13 @@ export class CourseDetailsComponent implements OnInit {
     currentURL: any;
     userType: any;
     alertMessage: any = null;
+    checkOutButtonTxt: string;
     subjectsImages = subjectImages;
     constructor(public dialog: MatDialog, private tutorsService: TutorsService, private coursesService: CoursesService, private toastr: ToastrService, private classSessionFeaturesService: ClassSessionFeaturesService, private usersService: UsersService) { }
     isAuthenticated = isAuthenticated;
 
     ngOnInit() {
+        debugger;
         $('.loading').show();
         this.getUserAlertMessage();
         var n = window.location.pathname.split('/');
@@ -40,6 +42,11 @@ export class CourseDetailsComponent implements OnInit {
         this.coursesService.getCourseDataById(this.courseId)
             .subscribe(success => {
                 this.courseData = success;
+                if (this.courseData.course.maxClassSize - this.courseData.course.courseAttendeesCount == 0) {
+                    this.checkOutButtonTxt = 'Sold Out';
+                } else {
+                    this.checkOutButtonTxt = 'Next: Checkout';
+                }
                 $('.loading').hide();
             }, error => {
             });
@@ -110,7 +117,7 @@ export class CourseDetailsComponent implements OnInit {
             //alert("Parent/Student")
             this.toastr.warning("If you can't find an appropriate time slot, send your chosen tutor a message from their profile area specifying your requirements.");
         } else {
-            this.toastr.warning("Action not allowed.");
+            this.toastr.warning("Please go to create a course to book your sessions.");
             //alert("CompanyTutor, Tutor, Company");
         }
     }

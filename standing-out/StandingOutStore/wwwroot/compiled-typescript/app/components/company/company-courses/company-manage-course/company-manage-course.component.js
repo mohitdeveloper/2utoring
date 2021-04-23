@@ -55,6 +55,11 @@ var CompanyManageCourseComponent = /** @class */ (function () {
         this.SubjectCategoriesService = SubjectCategoriesService;
         this.sessionInvitesService = sessionInvitesService;
         this.cdref = cdref;
+        //@HostListener('window:beforeunload')
+        //doSomething() {
+        //    alert(1);
+        //}
+        this.stripeCountry = stripeCountry;
         this.subjectData = [];
         this.tutorsData = [];
         this.subjectCategories = [];

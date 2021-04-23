@@ -26,6 +26,7 @@ var TutorEarningsComponent = /** @class */ (function () {
         this.colspan = 7;
         this.alertMessage = null;
         this.showReloadList = false;
+        this.stripeCountry = stripeCountry;
         this.area = area;
         this.takeValues = [
             { take: 10, name: 'Show 10' },

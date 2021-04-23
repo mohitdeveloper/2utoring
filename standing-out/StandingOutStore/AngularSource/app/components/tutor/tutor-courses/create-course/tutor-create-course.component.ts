@@ -1383,7 +1383,7 @@ export class TutorCreateCourseComponent implements OnInit {
                 localStorage.removeItem('clasSize');
             });
         } else {
-            this.toastr.error('Action not allowed.');
+            this.toastr.error('Lesson start time has passed.');
             $event.target.checked = false;
             return false;
         }

@@ -14,6 +14,7 @@ namespace StandingOutStore.Business.Services.Interfaces
         Task<List<Models.Course>> GetCompanyCoureses(Guid companyId);
         Task<Models.Course> GetCouresClassSession(Guid courseId);
         Task<Models.Course> GetById(Guid courseId);
+        Task<Models.Course> GetOrderedCourseById(Guid courseId);
         Task<DTO.PagedList<DTO.Course>> GetPaged(DTO.SearchModel model, Guid id, string role);
         Task<Models.Course> Create(Models.Course model);
         //Task<Models.Course> CreateCourse(Models.Course model);

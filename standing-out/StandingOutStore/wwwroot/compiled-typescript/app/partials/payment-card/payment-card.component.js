@@ -34,6 +34,7 @@ var PaymentCardComponent = /** @class */ (function () {
     ;
     PaymentCardComponent.prototype.submitPaymentForm = function () {
         var _this = this;
+        debugger;
         this.paymentFormSubmitted = true;
         if (this.paymentForm.valid) {
             $('.loading').show();
@@ -51,7 +52,7 @@ var PaymentCardComponent = /** @class */ (function () {
                     $('.loading').hide();
                 }
                 else {
-                    _this.stripeService.connectPaymentMethod({ paymentMethodId: response.paymentMethod.id, cardName: _this.paymentForm.controls.cardName.value })
+                    _this.stripeService.connectPaymentMethod({ paymentMethodId: response.paymentMethod.id, cardName: _this.paymentForm.controls.cardName.value, stripeCountryId: _this.paymentForm.controls.stripeCountryId.value, userType: 'Student' })
                         .subscribe(function (success) {
                         _this.paymentCard = success;
                         _this.showStripeError = false;

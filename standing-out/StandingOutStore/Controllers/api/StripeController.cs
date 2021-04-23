@@ -33,12 +33,15 @@ namespace StandingOutStore.Controllers.api
         private readonly IOrderService orderService;
         private readonly ICourseService courseService;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IStripeCountryService _StripeCountryService;
+        private readonly ISettingService _SettingService;
+
 
         public StripeController(UserManager<Models.User> userManager, IStripeService stripeService,
             ISessionAttendeeService sessionAttendeeService, ITutorService tutorService, ICompanyService companyService,
             IClassSessionSubscriptionFeatureService classSessionSubscriptionFeatureService,
             IClassSessionService classSessionService, IOrderService orderService, ICourseService courseService,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,IStripeCountryService stripeCountryService, ISettingService settingService)
         {
             _UserManager = userManager;
             _StripeService = stripeService;
@@ -50,6 +53,8 @@ namespace StandingOutStore.Controllers.api
             this.orderService = orderService;
             this.courseService = courseService;
             this.unitOfWork = unitOfWork;
+            _StripeCountryService = stripeCountryService;
+            _SettingService = settingService;
         }
 
         [HttpGet("validatePromoCode")]
@@ -159,7 +164,12 @@ namespace StandingOutStore.Controllers.api
                 if (newOrder.OrderPaymentStatus == OrderPaymentStatus.Paid)
                     return Ok("Order already paid..");
 
-                var paymentResult = await _StripeService.ConfirmOrderPayment(user, newOrder, basketModel);
+
+                var courseId = basketModel.BasketItems.FirstOrDefault().CourseId;
+                var course = await this.courseService.GetOrderedCourseById(courseId);
+                var stripeCountry = course.Tutor.Users.FirstOrDefault().StripeCountry;
+
+                var paymentResult = await _StripeService.ConfirmOrderPayment(user, newOrder, basketModel, stripeCountry);
                 await orderService.SetOrderPaymentProgress(paymentResult);
                 if (paymentResult.PaymentSucceeded)
                     await orderService.SendCourseInvites(user, newOrder, basketModel);
@@ -188,7 +198,7 @@ namespace StandingOutStore.Controllers.api
         {
             var response = new DTO.BasketCreateOrderResponse { Basket = basketModel };
             var user = await _UserManager.FindByEmailAsync(User.Identity.Name); // Buyer
-
+           
             using (var transaction = unitOfWork.GetContext().Database.BeginTransaction())
             {
                 Models.Order newOrder;
@@ -203,14 +213,19 @@ namespace StandingOutStore.Controllers.api
                 if (newOrder == null) response.FailResponses.Add(
                     new KeyValuePair<string, string>(basketModel.BasketId.ToString(), "Unable to create order"));
 
+                var stripeCountry = await _StripeCountryService.GetById(Guid.Parse(user.StripeCountryID.ToString()));
+                bool supportedPayout = stripeCountry != null ? stripeCountry.SupportedPayout : true;
+                var setting = await _SettingService.Get();
                 // Course-lesson has age, maxpersons, priceperperson
                 var createEnrolmentsResult = await CreateCourseEnrolments(user, newOrder, basketModel);
                 if (createEnrolmentsResult.response.FailResponses.Any())
                 {
                     return BadRequest(createEnrolmentsResult.response);
                 }
-
-                basketModel.TotalToPay = CalculateOrderTotal(createEnrolmentsResult.attendees);
+                //basketModel.TotalToPay = CalculateOrderTotal(createEnrolmentsResult.attendees);
+                decimal totalCourseAmount = CalculateOrderTotal(createEnrolmentsResult.attendees);
+                decimal finalCourseAmount = supportedPayout == false ? (totalCourseAmount + ((totalCourseAmount * setting.ConversionPercent) / 100) + setting.ConversionFlat) : totalCourseAmount;
+                basketModel.TotalToPay = finalCourseAmount;
                 var updOrder = await orderService.UpdateOrderTotal(newOrder, basketModel.TotalToPay);
                 if (updOrder == null)
                     response.FailResponses.Add(

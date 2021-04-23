@@ -34,6 +34,7 @@ var PurchaseJourneyComponent = /** @class */ (function () {
         this.promoCodeService = promoCodeService;
         this.sessionInvitesService = sessionInvitesService;
         this.location = location;
+        this.supportedPayout = new core_1.EventEmitter();
         this.payment = new index_1.Payment();
         this.basket = new index_1.Basket();
         this.toLoad = 2;
@@ -96,9 +97,10 @@ var PurchaseJourneyComponent = /** @class */ (function () {
     };
     ;
     PurchaseJourneyComponent.prototype.setupPaymentForm = function () {
+        debugger;
         this.paymentForm = this.formBuilder.group({
             cardName: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250)]],
-            stripeCountryId: [this.getDefaultCountry(), [forms_1.Validators.required]],
+            stripeCountryId: [this.userStripeCountryId != null ? this.userStripeCountryId : this.getDefaultCountry(), [forms_1.Validators.required]],
             addressLine1: ['', [forms_1.Validators.required, forms_1.Validators.maxLength(250)]]
         });
         this.setupCardField();
@@ -217,6 +219,7 @@ var PurchaseJourneyComponent = /** @class */ (function () {
     PurchaseJourneyComponent.prototype.confirmPayment = function () {
         var _this = this;
         console.log(this.promoCodeDetails);
+        debugger;
         // this.payment.classSessionId = this.classSessionId; 
         this.payment.paymentMethodId = this.paymentMethodId;
         this.payment.promoCode = this.promoCodeDetails == null ? null : this.promoCodeDetails.promoCodeId;
@@ -390,6 +393,7 @@ var PurchaseJourneyComponent = /** @class */ (function () {
     };
     ;
     PurchaseJourneyComponent.prototype.ngOnInit = function () {
+        debugger;
         $('.loading').show();
         this.getCard();
         this.getStripeCountries();
@@ -423,6 +427,17 @@ var PurchaseJourneyComponent = /** @class */ (function () {
         localStorage.setItem('week', weekOffset);
         //return daysDifference;
     };
+    PurchaseJourneyComponent.prototype.onCountryChange = function (id) {
+        debugger;
+        var newId = id.split(':');
+        var selectedValue = this.stripeCountrys.filter(function (t) { return t.stripeCountryId == newId[1].trim(); });
+        if (selectedValue[0].supportedPayout) {
+            this.supportedPayout.emit(true);
+        }
+        else {
+            this.supportedPayout.emit(false);
+        }
+    };
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
@@ -443,6 +458,14 @@ var PurchaseJourneyComponent = /** @class */ (function () {
         core_1.Input(),
         __metadata("design:type", Object)
     ], PurchaseJourneyComponent.prototype, "currentStep", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", Object)
+    ], PurchaseJourneyComponent.prototype, "supportedPayout", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Object)
+    ], PurchaseJourneyComponent.prototype, "userStripeCountryId", void 0);
     PurchaseJourneyComponent = __decorate([
         core_1.Component({
             selector: 'app-purchase-journey',

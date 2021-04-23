@@ -125,9 +125,9 @@
                                     </p>
                                 </div>
 
-                                <a *ngIf="isAuthenticated == 'False'" href="javascript:void(0);" (click)="checkOutEvent(courseData.course?.maxClassSize - courseData.course?.courseAttendeesCount)" class="full-btn">Next: Checkout</a>
-                                <a *ngIf="isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="checkOutEvent(courseData.course?.maxClassSize - courseData.course?.courseAttendeesCount)" href="javascript:void(0);" class="full-btn">Next: Checkouts</a>
-                                <a *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" href="javascript:void(0);" disabled="disabled" class="full-btn">Next: Checkout</a>
+                                <a *ngIf="isAuthenticated == 'False'" href="javascript:void(0);" (click)="checkOutEvent(courseData.course?.maxClassSize - courseData.course?.courseAttendeesCount)" class="full-btn">{{ checkOutButtonTxt }}</a>
+                                <a *ngIf="isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="checkOutEvent(courseData.course?.maxClassSize - courseData.course?.courseAttendeesCount)" href="javascript:void(0);" class="full-btn">{{ checkOutButtonTxt }}</a>
+                                <a *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" href="javascript:void(0);" disabled="disabled" class="full-btn">{{ checkOutButtonTxt }}</a>
                             </div>
                         </div>
 
@@ -174,11 +174,11 @@
                             </div>
                             <div class="d-flex mt-3 btn-group-right">
                                 <!--<a href="javascript:void(0);" *ngIf="isAuthenticated == 'False'" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
-                <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
-                <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" disabled="disabled" class="custom-btn btn-green">Book Tutor</a>-->
+                                <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                <a href="javascript:void(0);" *ngIf="isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" disabled="disabled" class="custom-btn btn-green">Book Tutor</a>-->
                                 <!--<a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
-                <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
-                <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>-->
+                                <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
+                                <a href="javascript:void(0);" *ngIf="(isAuthenticated == 'True' && (['CompanyTutor','Tutor','Company'].includes(userType))) || (t.totalSlotCount - t.totalBookedSlot)<= 0" class="custom-btn btn-green" (click)="handleDesableBookTutor()">Book Tutor</a>-->
 
                                 <a href="javascript:void(0);" *ngIf="isAuthenticated == 'False' && (t.totalSlotCount - t.totalBookedSlot)> 0" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>
                                 <a href="javascript:void(0);" *ngIf="(t.totalSlotCount - t.totalBookedSlot)> 0 && isAuthenticated == 'True' && (!['CompanyTutor','Tutor','Company'].includes(alertMessage?.userType))" (click)="redirectMe('myCourse',t?.tutorId)" class="custom-btn btn-green">Book Tutor</a>

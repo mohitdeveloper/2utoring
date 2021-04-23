@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { PagedList, SubjectStudyLevelSetup, SubjectStudyLevelSearchModel, SubjectStudyLevelSetupType } from '../../../models/index';
-import { SubjectStudyLevelSetupService, UsersService } from '../../../services/index';
+import { SubjectStudyLevelSetupService, UsersService, StripeCountrysService } from '../../../services/index';
 import * as $ from 'jquery';
 import { environment } from '../../../../environments/environment';
 import { SubjectStudylevelCreateDialogComponent } from '../subject-studylevel-create-dialog/subject-studylevel-create-dialog.component';
@@ -29,7 +29,7 @@ export class SubjectStudyLevelSetupIndexComponent implements OnInit {
     @Input() isFilterVisible: number = 1;
     @Input() isRegistrationDone: boolean;
     
-    constructor(private subjectStudyLevelSetupService: SubjectStudyLevelSetupService, public dialog: MatDialog, private toastr: ToastrService, private usersService: UsersService) {
+    constructor(private subjectStudyLevelSetupService: SubjectStudyLevelSetupService, public dialog: MatDialog, private toastr: ToastrService, private usersService: UsersService, private stripeCountrysService:StripeCountrysService ) {
 
         //if (this.tutorId == null) {
         //    this.owningEntityId = document.getElementById("app-angular").getAttribute("owningEntityId") || this.tutorId;
@@ -134,6 +134,7 @@ export class SubjectStudyLevelSetupIndexComponent implements OnInit {
     };
 
     ngOnInit() {
+        debugger;
         this.getUserAlertMessage();
 
         this.subjectStudyLevelSetupService.getUserType()
@@ -167,6 +168,16 @@ export class SubjectStudyLevelSetupIndexComponent implements OnInit {
 
 
         this.getSubjectStudyLevelSetupData();
+
+        if (this.stripeCountry.currencySymbol==null) {
+            this.stripeCountrysService.getMyStripeCountry()
+                .subscribe(success => {
+                    debugger;
+                    this.stripeCountry = success;
+                }, error => {
+                });
+        }
+
     };
 
     onType(event): void {

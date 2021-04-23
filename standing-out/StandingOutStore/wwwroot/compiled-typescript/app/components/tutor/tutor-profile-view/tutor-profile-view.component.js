@@ -27,6 +27,7 @@ var $ = require("jquery");
 var calender_component_1 = require("../../calender/calender.component");
 var forms_1 = require("@angular/forms");
 var ngx_toastr_1 = require("ngx-toastr");
+/*declare var stripeCountry: any;*/
 var TutorProfileViewComponent = /** @class */ (function () {
     function TutorProfileViewComponent(fb, toastr, tutorsService, tutorQualificationsService, tutorSubjectsService, usersService, companyService) {
         this.fb = fb;
@@ -37,6 +38,7 @@ var TutorProfileViewComponent = /** @class */ (function () {
         this.usersService = usersService;
         this.companyService = companyService;
         this.isAuthenticated = isAuthenticated;
+        /*stripeCountry: any = stripeCountry;*/
         this.loaded = 0;
         this.toLoad = 3;
         this.qualifications = [];

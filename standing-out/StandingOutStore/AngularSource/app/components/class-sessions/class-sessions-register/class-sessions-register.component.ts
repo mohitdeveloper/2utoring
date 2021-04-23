@@ -106,14 +106,14 @@ export class ClassSessionsRegisterComponent implements OnInit {
         let dt1 = new Date().getTime();
         let dt2 = new Date(this.lessondetail.endDate).getTime();
         if (dt1 > dt2) {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson has ended.');
             return true;
         }
         return false;
     }
     remove(sessionAttendee: SessionAttendee): void {
         if (this.classSession.started) {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson start time has passed.');
             return;
         }
         if (this.checkLessonValiditityByTime()) {
@@ -157,7 +157,7 @@ export class ClassSessionsRegisterComponent implements OnInit {
     refund(sessionAttendee: SessionAttendee): void {
         debugger;
         if (this.classSession.started) {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson start time has passed.');
             return;
         }
         if (this.checkLessonValiditityByTime()) {
@@ -219,7 +219,7 @@ export class ClassSessionsRegisterComponent implements OnInit {
         }
         if (!this.classSession.started && this.sessionAttendeesCount > 1) {
             if (!this.canAddGroup()) {
-                this.toastrService.error('Action not allowed.');
+                this.toastrService.error('Max number of groups reached under current subscription.');
                 //this.addGroupNotAllowed();
                 return;
             }
@@ -246,7 +246,7 @@ export class ClassSessionsRegisterComponent implements OnInit {
             });
         }
         else {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson start time has passed.');
             return;
         }
     };
@@ -315,7 +315,7 @@ export class ClassSessionsRegisterComponent implements OnInit {
 
     selectUser(userId: string): void {
         if (this.classSession.started) {
-            this.toastrService.error('Action not allowed.');
+            this.toastrService.error('Lesson start time has passed.');
             return;
         }
         if (this.checkLessonValiditityByTime()) {
